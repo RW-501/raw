@@ -573,18 +573,28 @@ body {
   }
   
 .breadcrumb {
+    display: flex;
+    background-color: var(--button-hover-color);
 
 
 }
 .breadcrumb-item {
-
+    text-decoration: none;
+    margin-right: 2rem;
+    border-color: var(--primary-color);
+    font-weight: bold;
+    text-transform: uppercase;
 
 }
-.breadcrumb-item:hover{
-
+.breadcrumb-item:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
 
 }
-.breadcrumb-item .active{
+.breadcrumb-item .active {
+    background-color: var(--button-hover-color);
+    border-color: var(--primary-color);
 
 
 }
