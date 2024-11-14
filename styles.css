@@ -397,7 +397,11 @@ body {
     border-radius: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   }
-  
+  #Main_Footer .btn-primary a {
+
+    text-decoration: none;
+  }
+
   #Main_Footer .btn-primary:hover {
     background-color: var(--button-hover-color);
     transform: translateY(-2px);
@@ -428,6 +432,11 @@ body {
   unicode-bidi: isolate;
 }
 
+#Main_Footer a {
+    font-size: 1.1rem;
+    font-weight: bold;
+
+}
 
   /* Fade In Animation for Text */
   @keyframes fadeIn {
