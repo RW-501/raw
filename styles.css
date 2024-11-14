@@ -21,7 +21,12 @@
     }
   }
   
+html {
+  margin: 0;
+padding: 0;
+overflow: hidden !important;
 
+}
 
   /* General body styling */
 body {
@@ -29,7 +34,6 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    overflow: hidden !important;
     color: #333;
     line-height: 1.6;
     user-select: none; /* Prevent text selection */
