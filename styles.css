@@ -60,6 +60,7 @@ body {
     box-shadow: 0 4px 20px var(--shadow-color);
     z-index: 999;
     transition: background-color 0.3s ease;
+    padding: 2%;
   }
   
   #Main_Nav .navbar-brand {
@@ -69,6 +70,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     transition: color 0.3s ease;
+    text-decoration: none;
   }
   
   #Main_Nav .navbar-brand:hover {
@@ -156,6 +158,14 @@ body {
 
         /* Responsive design */
         @media (max-width: 768px) {
+            #Main_Nav .nav-links a {
+                font-size: 2rem;
+            }
+            #Main_Nav .nav-links a:hover {
+                font-size: 1.5rem;
+            }
+
+
             .navbar {
                 justify-content: space-between;
             }
@@ -182,11 +192,13 @@ body {
             #nav-toggle:checked + .nav-toggle-label + .nav-links {
                 max-height: 300px;
                 opacity: 1;
+                font-size: 2rem;
             }
         }
   /* Hero Section Styles */
   #Main_Header {
-    background: linear-gradient(to right, var(--secondary-color), var(--primary-color)), url('path-to-image.jpg');
+   /* background: linear-gradient(to right, var(--secondary-color), var(--primary-color)), url('path-to-image.jpg'); */
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
     background-size: cover;
     background-position: center;
     color: white;
@@ -491,7 +503,7 @@ body {
     }
   
     #Main_Nav .navbar-brand {
-      font-size: 1.6rem;
+      font-size: 2.5rem;
     }
   
     #Main_Nav .nav-link {
