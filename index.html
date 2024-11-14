@@ -1,15 +1,60 @@
 <!DOCTYPE html> 
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="RAW Photography - Showcase of professional photography work">
-  <meta name="keywords" content="Photography, Portraits, Events, RAW Photography">
-  <title>RAW Photography</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RAW Photography – A showcase of professional photography, specializing in capturing the RAW beauty of your moments in portraits and events.">
+    <meta name="keywords" content="RAW Photography, Portraits, Events, Arkansas Photography, Professional Photography">
+    <meta name="author" content="RAW Photography">
+    <meta property="og:title" content="RAW Photography – Your Moments, Captured Right">
+    <meta property="og:description" content="Explore professional photography services specializing in portraits, events, and unique RAW beauty. Book your session today!">
+    <meta property="og:image" content="/images/main.gif">
+    <meta property="og:url" content="https://rawphotographysite.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RAW Photography">
+    <meta name="twitter:description" content="Explore professional photography services specializing in portraits, events, and unique RAW beauty.">
+    <meta name="twitter:image" content="/images/main.gif">
+    <meta name="twitter:creator" content="@ms_raw3">
+    <title>RAW Photography – Capturing Your RAW Beauty</title>
+    <link rel="icon" href="/images/fav/favicon.ico">
+    <link rel="canonical" href="https://rawphotographysite.com">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PhotographyStudio",
+      "name": "RAW Photography",
+      "description": "RAW Photography offers professional photography services, specializing in portraits and events, capturing your RAW beauty.",
+      "url": "https://rawphotographysite.com",
+      "logo": "/images/main.gif",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-501-555-0000",
+        "contactType": "customer service",
+        "areaServed": "US",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.facebook.com/ThatsR.A.W.Photography",
+        "https://www.instagram.com/ms_raw3/"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Little Rock",
+        "addressRegion": "AR",
+        "postalCode": "72201",
+        "addressCountry": "US"
+      }
+    }
+    </script>
+    
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0VJz2W3vsThg1sQCbGyF56V1HzCZ8zGnAYO1xznRzRmu6r2h" crossorigin="anonymous">
   <!-- Font Awesome for social icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
 
 <style>
     #gallery-images .col img {
@@ -24,63 +69,92 @@
 </style>
 
 
-</head>
 <body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav id="Main_Nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">RAW Photography</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#gallery">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#private">Private Access</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header class="hero bg-dark text-white text-center py-5" style="background-image: url('path-to-image.jpg'); background-size: cover; background-position: center;">
-    <div class="container">
-      <h1 class="display-4">Welcome to RAW Photography</h1>
-      <p class="lead">Capturing Moments, Creating Memories</p>
-    </div>
-  </header>
+      <!-- Logo/Brand Name -->
+      <a class="navbar-brand" href="/" title="Go to homepage of RAW Photography">RAW Photography</a>
   
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">RAW Photography</a>
+      <!-- Toggle Button for Mobile View -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+  
+      <!-- Navbar Links -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#gallery">Gallery</a>
+            <a class="nav-link" href="/about" title="Learn more about RAW Photography">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#contact">Contact</a>
+            <a class="nav-link" href="/gallery" title="Explore the gallery of RAW Photography">Gallery</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#private">Private Access</a>
+            <a class="nav-link" href="/events" title="View upcoming events hosted by RAW Photography">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact" title="Contact RAW Photography for bookings and inquiries">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   
-  <!-- Public Gallery Section -->
+  
+
+
+<!-- Hero Section -->
+<header id="Main_Header" class="hero bg-dark text-white text-center py-5" style="background-image: url('path-to-image.jpg'); background-size: cover; background-position: center;" role="banner" aria-label="Photography Hero Section">
+  <div class="container">
+    <!-- Main Heading for SEO -->
+    <h1 class="display-4" aria-label="RAW Photography Services">Welcome to RAW Photography</h1>
+
+    <!-- Descriptive Subheading -->
+    <p class="lead" aria-label="Your photos, done right!">RAW Photography - Where your Photos are Done Right, Let’s focus on your RAW Beauty and book!</p>
+
+    <!-- Call-to-Action Button -->
+    <a href="/contact/#book" class="btn btn-primary btn-lg mt-3" role="button" aria-label="Book your session now">Book Your Session Now</a>
+
+    <!-- Additional Info / Social Links -->
+    <div class="mt-4">
+      <p class="mt-2" aria-label="Follow us on social media">Follow us on:
+        <a href="https://www.facebook.com/ThatsR.A.W.Photography" target="_blank" aria-label="Facebook Page">Facebook</a>,
+        <a href="https://www.instagram.com/ms_raw3/" target="_blank" aria-label="Instagram Profile">Instagram</a>
+      </p>
+    </div>
+  </div>
+</header>
+
+  <!-- Home Page Description -->
+  <p id="home-description" class="page-desc" style="display: none;">Welcome to RAW Photography - The best place to capture your most important moments!</p>
+
+<!-- Hero Section -->
+<header id="Main_Header" class="hero bg-dark text-white text-center py-5" style="background-image: url('path-to-image.jpg'); background-size: cover; background-position: center;" role="banner" aria-label="Photography Hero Section">
+  <div class="container">
+    <!-- Main Heading for SEO -->
+    <h1 class="display-4" aria-label="RAW Photography Services">Welcome to RAW Photography</h1>
+
+    <!-- Descriptive Subheading -->
+    <p class="lead" aria-label="Your photos, done right!">RAW Photography - Where your Photos are Done Right, Let’s focus on your RAW Beauty and book!</p>
+
+    <!-- Call-to-Action Button -->
+    <a href="/contact/#book" class="btn btn-primary btn-lg mt-3" role="button" aria-label="Book your session now">Book Your Session Now</a>
+
+    <!-- Additional Info / Social Links -->
+    <div class="mt-4">
+      <p class="mt-2" aria-label="Follow us on social media">Follow us on:
+        <a href="https://www.facebook.com/ThatsR.A.W.Photography" target="_blank" aria-label="Facebook Page">Facebook</a>,
+        <a href="https://www.instagram.com/ms_raw3/" target="_blank" aria-label="Instagram Profile">Instagram</a>
+      </p>
+    </div>
+  </div>
+</header>
+
+  
+  <main id="main-content">
+
+
+    <!-- Public Gallery Section -->
   <section id="gallery" class="py-5">
     <div class="container">
       <h2 class="text-center mb-4">Gallery</h2>
@@ -128,19 +202,57 @@
     </div>
   </section>
 
-  <!-- Footer Section -->
-  <footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-      <p>&copy; 2024 RAW Photography</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="https://facebook.com" class="text-white"><i class="fab fa-facebook"></i></a></li>
-        <li class="list-inline-item"><a href="https://instagram.com" class="text-white"><i class="fab fa-instagram"></i></a></li>
-        <li class="list-inline-item"><a href="https://linkedin.com" class="text-white"><i class="fab fa-linkedin"></i></a></li>
-        <li class="list-inline-item"><a href="https://snapchat.com" class="text-white"><i class="fab fa-snapchat"></i></a></li>
-      </ul>
-      <p><a href="mailto:contact@rawphotography.com" class="text-white">Email Us</a></p>
-    </div>
-  </footer>
+</main>
+
+
+<!-- Footer Section -->
+<footer id="Main_Footer" class="bg-dark text-white py-4">
+  <!-- Footer Social Media Links -->
+  <div id="Main_Footer_Top">
+    <ul class="list-inline">
+      <li class="list-inline-item">
+        <a href="https://www.facebook.com/ThatsR.A.W.Photography" class="text-white" aria-label="Visit our Facebook page">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a href="https://www.instagram.com/ms_raw3/" class="text-white" aria-label="Follow us on Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </li>
+      <!-- Hidden Snapchat link, visible if applicable -->
+      <li style="display: none;" class="list-inline-item">
+        <a href="https://snapchat.com" class="text-white" aria-label="Follow us on Snapchat">
+          <i class="fab fa-snapchat"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Footer Content Section -->
+  <div class="container text-center">
+    <small id="footer-text">Let’s focus on your RAW Beauty and book your session today!</small>
+
+    <!-- Additional Navigation Links -->
+    <p>
+      <a href="/about" class="text-white" aria-label="Learn more about RAW Photography">About Us</a> |
+      <a href="/gallery" class="text-white" aria-label="Browse our Photography Gallery">Gallery</a> |
+      <a href="/events" class="text-white" aria-label="Check out upcoming events">Events</a> |
+      <a href="/contact" class="text-white" aria-label="Contact RAW Photography">Contact</a>
+    </p>
+
+    <!-- Footer Copyright -->
+    <p id="Footer_CopyWrite">&copy; 2024 RAW Photography</p>
+
+    <!-- Call to Action -->
+    <p>
+      <a href="/book" class="text-white btn btn-primary" aria-label="Book a Session with RAW Photography">Book Your Session Now</a>
+    </p>
+  </div>
+</footer>
+<script src="/js/main.js" ></script>
+<script src="./js/module.js" type="module"></script>
+
   
 
   <!-- Image Modal -->
