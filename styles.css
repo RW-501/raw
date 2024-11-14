@@ -68,6 +68,11 @@ body {
   #Main_Nav .navbar-brand:hover {
     color: var(--accent-color);
   }
+
+  #Main_Nav .nav-links {
+    background: transparent;
+
+  }
   
   #Main_Nav .nav-links a {
     color: #fff !important;
