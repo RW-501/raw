@@ -583,9 +583,8 @@ body {
   
 .breadcrumb {
     display: flex;
-    background-color: var(--button-hover-color);
 
-
+    list-style: none;
 }
 .breadcrumb-item {
     text-decoration: none;
@@ -604,6 +603,7 @@ body {
 .breadcrumb-item .active {
     background-color: var(--button-hover-color);
     border-color: var(--primary-color);
+    color: var(--button-hover-color);
 
 
 }
