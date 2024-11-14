@@ -126,3 +126,86 @@ document.querySelectorAll('.nav-link').forEach(link => {
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
   
+
+  function createFilm() { 
+    const header = document.getElementById('Main_Header');
+    header.style.position = "relative";
+    header.style.overflow = "hidden";
+
+    const filmImages = [
+        'https://rw-501.github.io/raw/images/main.jpg',
+        'https://rw-501.github.io/raw/images/main.png',
+        'https://rw-501.github.io/raw/images/main.jpg',
+        'https://rw-501.github.io/raw/images/main.png'
+    ];
+    let currentImageIndex = 0;
+
+    // Create overlay to hold the film strip and sprocket holes
+    const overlay = document.createElement('div');
+    overlay.className = 'film-strip-overlay';
+
+    // Loop through each film image to create a film overlay for each
+    filmImages.forEach((src) => {
+        // Create the main film strip container for each image
+        const filmStrip = document.createElement('div');
+        filmStrip.className = 'film-strip';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'film-image';
+        filmStrip.appendChild(img);
+
+        // Create a film overlay for each image in the film strip
+        const filmOverlay = document.createElement('div');
+        filmOverlay.className = 'film-overlay';
+
+        // Create sprocket holes for top and bottom for each film strip
+        const topSprockets = createSprockets();
+        const bottomSprockets = createSprockets();
+
+        // Add the sprockets and the film strip to the film overlay
+        filmOverlay.appendChild(topSprockets);
+        filmOverlay.appendChild(filmStrip);
+        filmOverlay.appendChild(bottomSprockets);
+
+        // Append the film overlay to the main overlay
+        overlay.appendChild(filmOverlay);
+    });
+
+    // Append the overlay to the header
+    header.appendChild(overlay);
+
+    // Function to create sprockets with holes for each film strip
+    function createSprockets() {
+        const sprockets = document.createElement('div');
+        sprockets.className = 'sprocket-holes';
+        for (let i = 0; i < 6; i++) {
+            const hole = document.createElement('div');
+            hole.className = 'sprocket-hole';
+            sprockets.appendChild(hole);
+        }
+        return sprockets;
+    }
+
+    // Animate the film strip and sprockets movement
+    setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % filmImages.length;
+
+        // Find the current film overlay and animate it
+        const filmOverlays = document.querySelectorAll('.film-overlay');
+        filmOverlays.forEach((overlay) => {
+            overlay.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        });
+    }, 5000);
+}
+
+function applyFilmStripEffect() {
+    let useFilmStripEffect = true;
+
+    if (useFilmStripEffect) {
+        createFilm();
+    }
+}
+
+// Load the film effect on window load
+window.addEventListener('load', applyFilmStripEffect);

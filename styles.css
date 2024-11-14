@@ -225,6 +225,101 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
+
+
+
+  /* Style the film strip container */
+.film-strip {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+/* Style for each image in the film strip */
+.film-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Overlay to contain film and sprockets */
+.film-strip-overlay {
+    position: relative;
+    overflow: hidden;
+    display: ruby-text;
+    width: 500px;
+}
+
+/* Container to hold both film and sprockets */
+.film-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+      position: relative;
+    overflow: hidden;
+    display: ruby-text;
+    width: 500px;
+    transition: transform 1s ease-in-out;
+}
+
+/* Style the sprocket holes at top and bottom */
+.sprocket-holes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.sprocket-hole {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #333;
+}
+/* Style the film strip container */
+.film-strip {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+/* Style for each image in the film strip */
+.film-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Overlay to contain film and sprockets */
+.film-strip-overlay {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container to hold both film and sprockets */
+.film-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 1s ease-in-out;
+}
+
+/* Style the sprocket holes at top and bottom */
+.sprocket-holes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.sprocket-hole {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #333;
+}
+
+
+
   /* Footer Section Styles */
   #Main_Footer {
     background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
