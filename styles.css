@@ -606,8 +606,14 @@ body {
     margin: auto;
     padding: 2rem;
     margin: 0;
-  }
+    height: 100%;
+    display: block;
 
+
+  }
+/*
   * {
     box-sizing: border-box;
   }
+
+  */
