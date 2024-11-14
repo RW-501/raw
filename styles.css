@@ -290,19 +290,19 @@ right: 0;
 bottom: 0;
 margin: auto;
 width: 100%;
-background-color: bisque;
+background-color: rgba(59, 59, 59, 0.577);
 }
 /* Style the sprocket holes at top and bottom */
 .sprocket-holes {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin: 5px 0;
+    width: 90%;
+    margin: 5px auto;
 }
 
 .sprocket-hole {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: #333;
 }
@@ -351,20 +351,7 @@ background-color: bisque;
     height: 500px;
 }
 
-/* Style the sprocket holes at top and bottom */
-.sprocket-holes {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 5px 0;
-}
 
-.sprocket-hole {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #333;
-}
 
 
 
