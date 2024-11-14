@@ -451,6 +451,10 @@ body {
     color: inherit;
     text-decoration: none;
 }
+#footer-CTA {
+    margin: auto;
+    display: block;
+}
   /* Fade In Animation for Text */
   @keyframes fadeIn {
     0% {
