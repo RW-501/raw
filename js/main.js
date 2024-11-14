@@ -99,7 +99,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     
     // Set initial background as image with shadow/fade
     header.style.transition = "background 1s ease-in-out";  // Add smooth transition
-    header.style.backgroundImage = "url('path-to-image.jpg')";
+    header.style.backgroundImage = "url('https://rw-501.github.io/raw/images/main.jpg')";
     header.style.backgroundSize = "cover";
     header.style.backgroundPosition = "center";
     header.style.position = "relative";
