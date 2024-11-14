@@ -560,8 +560,25 @@ body {
     transform: translateY(-2px);
   }
   
+.breadcrumb {
 
-  
+
+}
+.breadcrumb-item {
+
+
+}
+.breadcrumb-item:hover{
+
+
+}
+.breadcrumb-item .active{
+
+
+}
+
+
+
   main {
     width: 90%;
     margin: auto;
