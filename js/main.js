@@ -81,10 +81,10 @@ document.querySelectorAll('.nav-link').forEach(link => {
     footerLinks.forEach(link => {
       if (screenWidth <= 767) {
         // Hide text on mobile, but show icons
-        link.querySelector('small')?.style.display = 'none';
+        link.querySelector('small').style.display = 'none';
       } else {
         // Show text on larger screens
-        link.querySelector('small')?.style.display = 'inline';
+        link.querySelector('small').style.display = 'inline';
       }
     });
   }
