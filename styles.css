@@ -69,7 +69,7 @@ body {
     color: var(--accent-color);
   }
   
-  #Main_Nav .nav-links {
+  #Main_Nav .nav-links a {
     color: #fff !important;
     font-weight: bold;
     font-size: 1.1rem;
@@ -79,7 +79,7 @@ body {
     text-decoration: none;
   }
   
-  #Main_Nav .nav-links:hover {
+  #Main_Nav .nav-links a:hover {
     color: var(--link-hover-color) !important;
     transform: translateY(-3px);
     text-shadow: 1px 1px 8px rgba(255, 255, 255, 0.6);
@@ -91,7 +91,11 @@ body {
     transition: background-color 0.3s;
 }
   
-
+.nav-links li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    unicode-bidi: normal;
+}
 
         /* Checkbox input for toggle */
         #nav-toggle {
