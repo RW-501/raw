@@ -44,36 +44,30 @@
 </head>
 
 <body>
-  <nav id="Main_Nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
-    <div class="container-fluid">
+     <!-- Navbar section -->
+     <nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
       <!-- Logo/Brand Name -->
       <a class="navbar-brand" href="/" title="Go to homepage of RAW Photography">RAW Photography</a>
-  
-      <!-- Toggle Button for Mobile View -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <!-- Navbar Links -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/about" title="Learn more about RAW Photography">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/gallery" title="Explore the gallery of RAW Photography">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/events" title="View upcoming events hosted by RAW Photography">Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/contact" title="Contact RAW Photography for bookings and inquiries">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+      
+      <!-- Menu toggle checkbox and label -->
+      <input type="checkbox" id="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">
+          <span class="bar1"></span>
+          <span class="bar2"></span>
+          <span class="bar3"></span>
+      </label>
+
+      <!-- Navigation links -->
+      <ul class="nav-links" id="navbarNav">
+          <li><a href="./about" title="Learn more about RAW Photography">About</a></li>
+          <li><a href="./gallery" title="Explore the gallery of RAW Photography">Gallery</a></li>
+          <li><a href="./events" title="View upcoming events hosted by RAW Photography">Events</a></li>
+          <li><a href="./contact" title="Contact RAW Photography for bookings and inquiries">Contact</a></li>
+      </ul>
   </nav>
-    <!-- About Page Description -->
+  
+  
+  <!-- About Page Description -->
     <p id="about-description" class="page-desc" style="display: none;">Learn more about RAW Photography, our mission, and the passion behind capturing beautiful moments for our clients.</p>
 
 <!-- Hero Section -->

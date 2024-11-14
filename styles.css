@@ -87,10 +87,85 @@ body {
     text-decoration: underline;
   }
   
-  #Main_Nav .navbar-toggler-icon {
-    background-color: #fff;
-  }
+
   
+
+
+        /* Checkbox input for toggle */
+        #nav-toggle {
+            display: none;
+        }
+
+
+ /* Menu toggle button (hamburger icon) */
+ .nav-toggle-label {
+    display: none; /* Hide by default */
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+    padding-right: 1rem;
+    position: absolute;
+    right: 1%;
+    top: 2%;
+    transition: transform 0.3s ease;
+}
+
+/* Hamburger icon bars */
+.nav-toggle-label span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    margin: 6px auto;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+        /* Animation when toggled */
+        #nav-toggle:checked + .nav-toggle-label .bar1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        #nav-toggle:checked + .nav-toggle-label .bar2 {
+            opacity: 0;
+        }
+
+        #nav-toggle:checked + .nav-toggle-label .bar3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar {
+                justify-content: space-between;
+            }
+
+            /* Show hamburger icon on mobile */
+            .nav-toggle-label {
+                display: block;
+            }
+
+            /* Nav links for mobile */
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                background-color: #333;
+                width: 100%;
+                text-align: center;
+                max-height: 0; /* Initially hidden */
+                overflow: hidden;
+                opacity: 0;
+                margin-top: 1rem;
+            }
+
+            /* Toggle navigation display with animation */
+            #nav-toggle:checked + .nav-toggle-label + .nav-links {
+                max-height: 300px;
+                opacity: 1;
+            }
+        }
   /* Hero Section Styles */
   #Main_Header {
     background: linear-gradient(to right, var(--secondary-color), var(--primary-color)), url('path-to-image.jpg');
