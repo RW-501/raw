@@ -73,3 +73,56 @@ document.querySelectorAll('.nav-link').forEach(link => {
     return pageName.trim() ? pageName : 'home';
   }
   
+
+  function adjustFooterForMobile() {
+    const footerLinks = document.querySelectorAll('#Main_Footer_Top ul li a');
+    const screenWidth = window.innerWidth;
+  
+    footerLinks.forEach(link => {
+      if (screenWidth <= 767) {
+        // Hide text on mobile, but show icons
+        link.querySelector('small')?.style.display = 'none';
+      } else {
+        // Show text on larger screens
+        link.querySelector('small')?.style.display = 'inline';
+      }
+    });
+  }
+  
+  // Run the function on load and on resize
+  window.addEventListener('load', adjustFooterForMobile);
+  window.addEventListener('resize', adjustFooterForMobile);
+  
+
+  function applyBackgroundEffect() {
+    const header = document.getElementById('Main_Header');
+    
+    // Set initial background as image with shadow/fade
+    header.style.transition = "background 1s ease-in-out";  // Add smooth transition
+    header.style.backgroundImage = "url('path-to-image.jpg')";
+    header.style.backgroundSize = "cover";
+    header.style.backgroundPosition = "center";
+    header.style.position = "relative";
+    
+    // Create overlay div for shadow/fade effect
+    const overlay = document.createElement('div');
+    overlay.style.position = "absolute";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.right = "0";
+    overlay.style.bottom = "0";
+    overlay.style.background = "rgba(0, 0, 0, 0.5)"; // Black fade effect
+    overlay.style.transition = "background 1s ease-in-out"; // Smooth fade effect
+    overlay.style.zIndex = "1"; // Place overlay on top of the background
+    header.appendChild(overlay);
+    
+    // Optionally add a gradient instead of an image after 5 seconds for example (can be toggled as needed)
+    setTimeout(() => {
+      header.style.backgroundImage = "linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('path-to-image.jpg')";
+      overlay.style.background = "rgba(0, 0, 0, 0.3)"; // Lighter fade effect for gradient
+    }, 5000);  // Change background after 5 seconds, you can adjust this as needed
+  }
+  
+  // Run the function when the page loads
+  window.addEventListener('load', applyBackgroundEffect);
+  
