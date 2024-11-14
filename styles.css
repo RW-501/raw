@@ -359,6 +359,9 @@ body {
     border-radius: 5px;
     padding: 5px 10px;
     text-decoration: none;
+    justify-content: space-evenly;
+    display: flex;
+    gap: 2rem;
   }
   
   #Main_Footer .list-inline-item a:hover {
@@ -376,7 +379,7 @@ body {
   #Main_Footer small,
   #Main_Footer p {
     font-size: 1.1rem;
-    line-height: 1.6;
+    line-height: 400%;
   }
   
   #Footer_CopyWrite {
