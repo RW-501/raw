@@ -61,7 +61,6 @@ body {
     z-index: 999;
     transition: background-color 0.3s ease;
     padding: 2%;
-    margin-top: 2rem;
   }
   
   #Main_Nav .navbar-brand {
@@ -305,50 +304,6 @@ background-color: rgba(59, 59, 59, 0.577);
     height: 20px;
     border-radius: 50%;
     background-color: #333;
-}
-/* Style the film strip container */
-.film-strip {
-    display: flex;
-    transition: transform 1s ease-in-out;
-}
-
-/* Style for each image in the film strip */
-.film-image {
-    width: 100%;
-    height: auto;
-}
-
-/* Overlay to contain film and sprockets */
-.film-strip-overlay {
-    position: absolute;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: auto;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    justify-content: center;
-}
-/* Container to hold both film and sprockets */
-.film-overlay {
-
-    transition: transform 1s ease-in-out;
-    overflow: hidden;
-    display: grid;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    height: 500px;
 }
 
 
