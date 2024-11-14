@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 200px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        /* Card Hover Effect */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Adjust the text for better clarity */
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Modal image size and styling */
+        #modal-image {
+            max-height: 400px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 768px) {
+            .card-img-top {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Upcoming Events</h1>
+
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-6 offset-md-3">
+                <input type="text" id="event-search" class="form-control" placeholder="Search events by title..." oninput="searchEvents()">
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="text-center mt-4">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="loading-text">Fetching the latest events...</p>
+        </div>
+
+        <!-- Events List -->
+        <div id="events-list" class="row mt-4" style="display: none;">
+            <!-- Event cards will be dynamically populated here -->
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="text-center text-danger mt-4" style="display: none;">
+            <p>Failed to load events. Please try again later.</p>
+            <button class="btn btn-primary" onclick="fetchEvents()">Retry</button>
+        </div>
+    </div>
+
+    <!-- Modal for Image Preview -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modal-image" class="img-fluid" src="" alt="Event Image">
+                    <p id="modal-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase JS SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Format date to a specific format (including time)
+        function formatDate(date) {
+            return new Intl.DateTimeFormat('en-US', {
+                weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
+            }).format(date);
+        }
+
+        // Function to fetch events from Firestore
+        function fetchEvents() {
+            db.collection('Events').get().then((querySnapshot) => {
+                const eventsList = document.getElementById('events-list');
+                const loading = document.getElementById('loading');
+                const errorMessage = document.getElementById('error-message');
+
+                loading.style.display = 'none';  // Hide loading spinner once data is fetched
+                eventsList.style.display = 'block'; // Show event list
+
+                if (querySnapshot.empty) {
+                    eventsList.innerHTML = '<p class="text-center">No upcoming events at the moment.</p>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const event = doc.data();
+                        const eventCard = `
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow-sm">
+                                    <img src="${event.coverPhotoUrl}" class="card-img-top" alt="${event.title}" 
+                                        data-bs-toggle="modal" data-bs-target="#imageModal" 
+                                        data-bs-image="${event.coverPhotoUrl}" data-bs-title="${event.title}" 
+                                        data-bs-description="${event.description}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${event.title}</h5>
+                                        <p class="card-text">${formatDate(event.date.toDate())}</p>
+                                        <a href="eventDetails.html?id=${doc.id}" class="btn btn-primary">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        eventsList.innerHTML += eventCard;
+                    });
+                }
+            }).catch((error) => {
+                console.error("Error fetching events: ", error);
+                const loading = document.getElementById('loading');
+                const errorMessage = document.getElementById('error-message');
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+            });
+        }
+
+        // Search Events based on title
+        function searchEvents() {
+            const searchQuery = document.getElementById('event-search').value.toLowerCase();
+            const eventCards = document.querySelectorAll('.card');
+            eventCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchQuery)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Show image in modal
+        const imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const imageUrl = button.getAttribute('data-bs-image');
+            const title = button.getAttribute('data-bs-title');
+            const description = button.getAttribute('data-bs-description');
+
+            document.getElementById('modal-image').src = imageUrl;
+            document.getElementById('modal-description').innerText = description;
+            document.getElementById('imageModalLabel').innerText = title;
+        });
+
+        // Fetch events on page load
+        window.onload = fetchEvents;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

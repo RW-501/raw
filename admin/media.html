@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event & Photo Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.0.2/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.0.2/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.0.2/firebase-storage.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Event & Photo Management</h2>
+
+    <!-- Event Upload Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Upload New Event</h5>
+            <form id="eventForm">
+                <div class="mb-3">
+                    <label for="eventTitle" class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="eventTitle" required>
+                </div>
+                <div class="mb-3">
+                    <label for="eventDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="eventDescription"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="eventDate" class="form-label">Event Date</label>
+                    <input type="date" class="form-control" id="eventDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="eventCover" class="form-label">Cover Photo</label>
+                    <input type="file" class="form-control" id="eventCover" accept="image/*" required>
+                </div>
+                <div class="mb-3">
+                    <label for="accessCode" class="form-label">Access Code (if private)</label>
+                    <input type="text" class="form-control" id="accessCode">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="uploadEvent()">Upload Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Sorting and Filtering Section -->
+    <div class="mb-4">
+        <h5 class="mb-3">Sort & Filter Events</h5>
+        <div class="form-inline">
+            <input type="text" class="form-control mb-2 mr-2" id="eventFilter" placeholder="Search by name or description" onkeyup="fetchEvents()">
+            <select class="form-control mb-2" id="sortBy" onchange="fetchEvents()">
+                <option value="date">Sort by Date</option>
+                <option value="name">Sort by Name</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Bulk Photo Upload Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Upload Photos for Events</h5>
+            <input type="file" id="photoUpload" class="form-control" multiple accept="image/*">
+            <div class="mt-3">
+                <label for="watermarkText" class="form-label">Watermark Text</label>
+                <input type="text" class="form-control" id="watermarkText" placeholder="Enter watermark text">
+            </div>
+            <div class="mt-3">
+                <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
+                <input type="file" class="form-control" id="logoOverlay" accept="image/*">
+            </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="bulkUploadPhotos()">Upload Photos with Watermark</button>
+        </div>
+    </div>
+
+    <!-- Event List with Edit & Delete Options -->
+    <div id="eventList" class="mb-4">
+        <h5 class="mb-3">Manage Events</h5>
+        <div class="list-group" id="eventsContainer"></div>
+    </div>
+</div>
+
+<script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Function to upload an event
+    async function uploadEvent() {
+        const title = document.getElementById('eventTitle').value;
+        const description = document.getElementById('eventDescription').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const cover = document.getElementById('eventCover').files[0];
+        const accessCode = document.getElementById('accessCode').value;
+
+        // Client-side file validation
+        if (cover.size > 5000000) {
+            alert("File is too large, please upload a file less than 5MB.");
+            return;
+        }
+
+        const storageRef = storage.ref(`events/${title}/cover.jpg`);
+        await storageRef.put(cover);
+        const coverUrl = await storageRef.getDownloadURL();
+
+        // Hashing the access code for better security (placeholder)
+        const hashedAccessCode = btoa(accessCode); // replace with a hashing library in production
+
+        await db.collection('events').add({
+            title,
+            description,
+            eventDate,
+            coverUrl,
+            accessCode: hashedAccessCode
+        });
+
+        alert('Event Uploaded');
+        document.getElementById('eventForm').reset(); // Clear form after submission
+        fetchEvents();
+    }
+
+    // Fetch and display events with sorting and filtering
+    async function fetchEvents() {
+        const filterText = document.getElementById('eventFilter').value.toLowerCase();
+        const sortBy = document.getElementById('sortBy').value;
+        const eventList = document.getElementById('eventsContainer');
+        eventList.innerHTML = '';
+
+        let query = db.collection('events');
+
+        if (sortBy === 'date') {
+            query = query.orderBy('eventDate');
+        } else if (sortBy === 'name') {
+            query = query.orderBy('title');
+        }
+
+        const snapshot = await query.get();
+        snapshot.forEach(doc => {
+            const event = doc.data();
+
+            // Filter by text
+            if (
+                event.title.toLowerCase().includes(filterText) ||
+                event.description.toLowerCase().includes(filterText)
+            ) {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const eventInfo = document.createElement('div');
+                eventInfo.innerHTML = `<strong>${event.title}</strong><br>${event.eventDate}<br>${event.description}`;
+                const thumbnail = document.createElement('img');
+                thumbnail.src = event.coverUrl;
+                thumbnail.alt = "Thumbnail";
+                thumbnail.style.width = '50px';
+                thumbnail.style.height = '50px';
+                thumbnail.classList.add('mr-2');
+
+                const btnGroup = document.createElement('div');
+                btnGroup.classList.add('btn-group');
+
+                const editBtn = document.createElement('button');
+                editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
+                editBtn.innerText = 'Edit';
+                editBtn.onclick = () => editEvent(doc.id, event);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+                deleteBtn.innerText = 'Delete';
+                deleteBtn.onclick = () => deleteEvent(doc.id);
+
+                btnGroup.appendChild(editBtn);
+                btnGroup.appendChild(deleteBtn);
+                eventItem.appendChild(thumbnail);
+                eventItem.appendChild(eventInfo);
+                eventItem.appendChild(btnGroup);
+                eventList.appendChild(eventItem);
+            }
+        });
+    }
+
+    // Pre-fill form for editing
+    function editEvent(eventId, event) {
+        document.getElementById('eventTitle').value = event.title;
+        document.getElementById('eventDescription').value = event.description;
+        document.getElementById('eventDate').value = event.eventDate;
+        document.getElementById('accessCode').value = event.accessCode;
+    }
+
+    // Delete event
+    async function deleteEvent(eventId) {
+        if (confirm('Are you sure you want to delete this event?')) {
+            await db.collection('events').doc(eventId).delete();
+            fetchEvents();
+        }
+    }
+
+    // Bulk upload photos with watermark
+    async function bulkUploadPhotos() {
+        const files = document.getElementById('photoUpload').files;
+        const watermarkText = document.getElementById('watermarkText').value;
+        const logoOverlay = document.getElementById('logoOverlay').files[0];
+
+        if (files.length > 0) {
+            const uploadPromises = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const storageRef = storage.ref(`photos/${file.name}`);
+                uploadPromises.push(storageRef.put(file));
+            }
+            await Promise.all(uploadPromises);
+            alert('Photos Uploaded');
+        }
+    }
+
+    // Initial fetch of events
+    fetchEvents();
+</script>
+</body>
+</html>

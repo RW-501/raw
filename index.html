@@ -1,0 +1,258 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RAW Photography - Showcase of professional photography work">
+  <meta name="keywords" content="Photography, Portraits, Events, RAW Photography">
+  <title>RAW Photography</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0VJz2W3vsThg1sQCbGyF56V1HzCZ8zGnAYO1xznRzRmu6r2h" crossorigin="anonymous">
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    #gallery-images .col img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#gallery-images .col img:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+</style>
+
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">RAW Photography</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#gallery">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#private">Private Access</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero bg-dark text-white text-center py-5" style="background-image: url('path-to-image.jpg'); background-size: cover; background-position: center;">
+    <div class="container">
+      <h1 class="display-4">Welcome to RAW Photography</h1>
+      <p class="lead">Capturing Moments, Creating Memories</p>
+    </div>
+  </header>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">RAW Photography</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#gallery">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#private">Private Access</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Public Gallery Section -->
+  <section id="gallery" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Gallery</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery-images">
+        <!-- Dynamic content from Firebase -->
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Private Access Code Section -->
+  <section id="private" class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Private Access</h2>
+      <form id="private-form">
+        <div class="mb-3">
+          <label for="accessCode" class="form-label">Enter Access Code</label>
+          <input type="text" class="form-control" id="accessCode" placeholder="Enter your code">
+        </div>
+        <button type="submit" class="btn btn-primary">Access Gallery</button>
+        <p id="error-msg" class="text-danger mt-3" style="display: none;">Invalid code. Please try again.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Contact</h2>
+      <form id="contact-form">
+        <div class="mb-3">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Your name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="4" placeholder="Your message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+      <p>&copy; 2024 RAW Photography</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="https://facebook.com" class="text-white"><i class="fab fa-facebook"></i></a></li>
+        <li class="list-inline-item"><a href="https://instagram.com" class="text-white"><i class="fab fa-instagram"></i></a></li>
+        <li class="list-inline-item"><a href="https://linkedin.com" class="text-white"><i class="fab fa-linkedin"></i></a></li>
+        <li class="list-inline-item"><a href="https://snapchat.com" class="text-white"><i class="fab fa-snapchat"></i></a></li>
+      </ul>
+      <p><a href="mailto:contact@rawphotography.com" class="text-white">Email Us</a></p>
+    </div>
+  </footer>
+  
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Image Title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="" class="img-fluid" id="modal-image" alt="Full-size image">
+          <p id="modal-description"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Firebase JS SDK and Custom Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <script>
+    // Firebase Initialization
+    const firebaseConfig = {
+      apiKey: "your-api-key",
+      authDomain: "your-auth-domain",
+      projectId: "your-project-id",
+      storageBucket: "your-storage-bucket",
+      messagingSenderId: "your-sender-id",
+      appId: "your-app-id",
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+
+    db.collection('HomePage').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageElement = `
+          <div class="col">
+            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${data.imageUrl}" 
+              data-bs-title="${data.title}" 
+              data-bs-description="${data.description}">
+              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+            </a>
+          </div>`;
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+    });
+
+    // Validate Access Code
+    document.getElementById('private-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const accessCode = document.getElementById('accessCode').value;
+
+  if (accessCode.trim() === "") {
+    alert('Please enter a valid access code!');
+    return;
+  }
+
+  db.collection('Events').where('accessCode', '==', accessCode).get()
+    .then(querySnapshot => {
+      if (querySnapshot.empty) {
+        document.getElementById('error-msg').style.display = 'block';
+      } else {
+        document.getElementById('error-msg').style.display = 'none';
+        alert('Access granted!');
+        // Add redirect or display private content
+      }
+    });
+});
+
+
+    // Submit Contact Form Data
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+
+  db.collection('Contacts').add({
+    name: name,
+    email: email,
+    message: message,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  }).then(() => {
+    alert('Message sent successfully!');
+    document.getElementById('contact-form').reset();
+  });
+});
+
+    // Handle Image Modal
+    const imageModal = document.getElementById('imageModal');
+    imageModal.addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget;
+      const imageUrl = button.getAttribute('data-bs-image');
+      const title = button.getAttribute('data-bs-title');
+      const description = button.getAttribute('data-bs-description');
+
+      document.getElementById('modal-image').src = imageUrl;
+      document.getElementById('modal-description').innerText = description;
+      document.getElementById('imageModalLabel').innerText = title;
+    });
+
+  </script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

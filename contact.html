@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with [Photographer’s Name] for inquiries, booking, or portfolio questions. Find the contact form and studio location.">
+    <meta name="keywords" content="contact photographer, photography studio location, photography inquiries">
+    <meta name="author" content="[Photographer’s Name]">
+    <title>Contact [Photographer’s Name] – Photography Services</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding-top: 50px;
+}
+
+#contact-page {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.contact-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    padding: 16px;
+    font-size: 17px;
+}
+
+.toast-error {
+    background-color: #f44336;
+}
+
+.toast-show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+.map-container {
+    margin-top: 50px;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.additional-contact-methods ul {
+    list-style-type: none;
+}
+
+.additional-contact-methods li {
+    margin: 10px 0;
+}
+
+.additional-contact-methods a {
+    color: #333;
+    text-decoration: none;
+}
+
+.additional-contact-methods a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    #contact-page {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+    <section id="contact-page">
+        <!-- Contact Form Section -->
+        <div class="contact-form-container">
+            <h2>Contact Us</h2>
+            <p>We’d love to hear from you! Please fill out the form below and we’ll get back to you shortly.</p>
+            <form id="contact-form" method="POST" action="submit_form">
+                <label for="name">Name (required)</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email (required)</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="phone">Phone Number (optional)</label>
+                <input type="tel" id="phone" name="phone">
+                
+                <label for="message">Message (required)</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <!-- Captcha (optional) -->
+                <div id="captcha-container">
+                    <!-- Example, replace with real CAPTCHA -->
+                    <label for="captcha">Please verify you're human</label>
+                    <input type="text" id="captcha" name="captcha" required>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+            <!-- Toast notifications -->
+            <div id="toast-success" class="toast">Your message has been sent!</div>
+            <div id="toast-error" class="toast">There was an error sending your message. Please try again.</div>
+        </div>
+
+        <!-- Google Map Section -->
+        <div class="map-container">
+            <h2>Find Us</h2>
+            <div id="map"></div>
+            <p>Business Hours:</p>
+            <p>Monday - Friday: 9:00 AM – 5:00 PM</p>
+            <p>Saturday: 10:00 AM – 3:00 PM</p>
+            <p>Sunday: Closed</p>
+        </div>
+
+        <!-- Additional Contact Methods -->
+        <div class="additional-contact-methods">
+            <p>Contact us via phone, email, or follow us on social media:</p>
+            <ul>
+                <li><a href="tel:+1234567890">Call: (123) 456-7890</a></li>
+                <li><a href="mailto:contact@photographer.com">Email: contact@photographer.com</a></li>
+                <li><a href="https://www.instagram.com/photographer" target="_blank">Instagram</a></li>
+                <li><a href="https://www.facebook.com/photographer" target="_blank">Facebook</a></li>
+            </ul>
+        </div>
+    </section>
+<script>
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let formValid = true;
+
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value; // optional
+    const message = document.getElementById('message').value;
+
+    // Basic validation
+    if (!name || !email || !message) {
+        formValid = false;
+    }
+
+    // If form is valid, save to Firestore
+    if (formValid) {
+        // Create a new contact object
+        const contactData = {
+            name: name,
+            email: email,
+            phone: phone || '', // if phone is empty, use an empty string
+            message: message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Save the contact data to Firestore's 'Contact' collection
+        db.collection('Contact').add(contactData)
+            .then(() => {
+                showToast('success');
+                document.getElementById('contact-form').reset(); // Reset the form after successful submission
+            })
+            .catch((error) => {
+                showToast('error');
+                console.error("Error submitting contact form: ", error);
+            });
+    } else {
+        showToast('error');
+    }
+});
+
+// Show toast notification
+function showToast(type) {
+    const toast = document.getElementById(type === 'success' ? 'toast-success' : 'toast-error');
+    toast.classList.add('toast-show');
+    setTimeout(function() {
+        toast.classList.remove('toast-show');
+    }, 3000);
+}
+
+// Google Map Embed (this is an example; customize with your location)
+function initMap() {
+    const location = { lat: -34.397, lng: 150.644 };
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: location,
+    });
+    new google.maps.Marker({
+        position: location,
+        map: map,
+    });
+}
+
+
+
+
+</script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

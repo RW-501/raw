@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .dashboard-container { padding: 20px; display: none; } /* Initially hidden */
+        .card { margin-bottom: 20px; }
+        .stats-box { text-align: center; color: #fff; padding: 20px; border-radius: 8px; }
+        .bg-primary-custom { background-color: #007bff; }
+        .bg-success-custom { background-color: #28a745; }
+        .bg-warning-custom { background-color: #ffc107; }
+        .bg-danger-custom { background-color: #dc3545; }
+    </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+<!-- Login Section -->
+<div id="firebaseLogin" class="container-fluid">
+    <h1 class="mb-4">Login to Access Dashboard</h1>
+    <button onclick="googleLogin()" class="btn btn-primary">Login with Google</button>
+    <button onclick="phoneLogin()" class="btn btn-secondary">Login with Phone</button>
+    <button onclick="emailLogin()" class="btn btn-info">Login with Email</button>
+</div>
+
+<!-- Dashboard Section (hidden by default) -->
+<div id="dashboardContent" class="container-fluid dashboard-container">
+    <h1 class="mb-4">Admin Dashboard</h1>
+    
+    <!-- Quick Links Section -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <a href="event_photo_management.html" class="card nav-link">
+                <div class="card-body text-center">
+                    <h5>Event & Photo Management</h5>
+                    <p>Upload, edit, and organize events and photos.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Additional quick links as in previous code... -->
+    </div>
+
+    <!-- Notifications & Statistics Summary -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Recent Notifications</div>
+                <div class="card-body">
+                    <ul id="notificationList" class="list-group"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Statistics Summary</div>
+                <div class="card-body row text-center">
+                    <!-- Statistics content as in previous code... -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // Firebase authentication and Firestore database references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Allowed emails and phone numbers
+    const allowedEmails = ["alloweduser@example.com", "admin@example.com"];
+    const allowedPhoneNumbers = ["+1234567890", "+1987654321"];
+
+    // Login functions
+    function googleLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then((result) => {
+            const userEmail = result.user.email;
+            if (allowedEmails.includes(userEmail)) {
+                showDashboard();
+            } else {
+                alert("Access denied: Email not authorized.");
+                auth.signOut();
+            }
+        }).catch((error) => console.error("Google login error:", error));
+    }
+
+    function phoneLogin() {
+        const phoneNumber = prompt("Enter your phone number with country code (e.g., +1xxxxxxxxxx):");
+        const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
+        
+        auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                const verificationCode = prompt("Enter the verification code sent to your phone:");
+                return confirmationResult.confirm(verificationCode);
+            })
+            .then((result) => {
+                const userPhoneNumber = result.user.phoneNumber;
+                if (allowedPhoneNumbers.includes(userPhoneNumber)) {
+                    showDashboard();
+                } else {
+                    alert("Access denied: Phone number not authorized.");
+                    auth.signOut();
+                }
+            })
+            .catch((error) => console.error("Phone login error:", error));
+    }
+
+    function emailLogin() {
+        const email = prompt("Enter your email:");
+        const password = prompt("Enter your password:");
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then((result) => {
+                const userEmail = result.user.email;
+                if (allowedEmails.includes(userEmail)) {
+                    showDashboard();
+                } else {
+                    alert("Access denied: Email not authorized.");
+                    auth.signOut();
+                }
+            })
+            .catch((error) => console.error("Email login error:", error));
+    }
+
+    // Show the dashboard content
+    function showDashboard() {
+        document.getElementById("firebaseLogin").style.display = "none";
+        document.getElementById("dashboardContent").style.display = "block";
+    }
+
+    // Fetch Notifications
+    db.collection("Notifications").onSnapshot((snapshot) => {
+        const notificationList = document.getElementById("notificationList");
+        notificationList.innerHTML = ""; // Clear existing notifications
+        snapshot.forEach((doc) => {
+            const notification = doc.data().message;
+            const listItem = document.createElement("li");
+            listItem.className = "list-group-item";
+            listItem.textContent = notification;
+            notificationList.appendChild(listItem);
+        });
+    });
+</script>
+</body>
+</html>
