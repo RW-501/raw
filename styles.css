@@ -332,7 +332,7 @@ body {
   
   #Main_Footer .list-inline-item a {
     color: white;
-    font-size: 1.3rem;
+    font-size: 4rem;
     font-weight: bold;
     margin: 0 15px;
     transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
@@ -388,7 +388,25 @@ body {
   #Main_Header:hover {
     background-size: 110%;
   }
-  
+
+#Main_Footer_Top {
+    width: 100%;
+    margin: 2rem;
+}
+  .list-inline {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+
+  #Main_Footer li    {
+     display: block;
+  text-align: -webkit-match-parent;
+  unicode-bidi: isolate;
+}
+
+
   /* Fade In Animation for Text */
   @keyframes fadeIn {
     0% {
