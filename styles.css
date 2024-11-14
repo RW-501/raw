@@ -379,9 +379,16 @@ body {
   #Main_Footer small,
   #Main_Footer p {
     font-size: 1.1rem;
-    line-height: 400%;
+    line-height: 1.6;
   }
   
+
+  #Main_Footer small,
+  #Main_Footer i {
+    line-height: 400%;
+
+  }
+
   #Footer_CopyWrite {
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
