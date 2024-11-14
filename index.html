@@ -85,35 +85,84 @@
 
 
 <body>
-  <nav id="Main_Nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
+  <nav id="Main_Nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
     <div class="container-fluid">
-      <!-- Logo/Brand Name -->
-      <a class="navbar-brand" href="/" title="Go to homepage of RAW Photography">RAW Photography</a>
-  
-      <!-- Toggle Button for Mobile View -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <!-- Navbar Links -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/about" title="Learn more about RAW Photography">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/gallery" title="Explore the gallery of RAW Photography">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/events" title="View upcoming events hosted by RAW Photography">Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/contact" title="Contact RAW Photography for bookings and inquiries">Contact</a>
-          </li>
-        </ul>
-      </div>
+        <!-- Logo/Brand Name with subtle fade-in animation -->
+        <a class="navbar-brand fw-bold text-uppercase" href="/" title="Go to homepage of RAW Photography">
+            RAW Photography
+        </a>
+        
+        <!-- Toggle Button for Mobile View with an animated hamburger icon -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links (right-aligned) -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-dark hover-underline-animation" href="./about" title="Learn more about RAW Photography" aria-label="About RAW Photography">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark hover-underline-animation" href="./gallery" title="Explore the gallery of RAW Photography" aria-label="Gallery of RAW Photography">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark hover-underline-animation" href="./events" title="View upcoming events by RAW Photography" aria-label="RAW Photography Events">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark hover-underline-animation" href="./contact" title="Contact RAW Photography" aria-label="Contact RAW Photography">Contact</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
+
+<style>
+    /* Add a shadow for better visibility and a modern look */
+    #Main_Nav {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Smooth hover effect for links */
+    .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #0056b3; /* Adjust color as needed */
+    }
+
+    /* Hover underline animation for links */
+    .hover-underline-animation {
+        position: relative;
+        display: inline-block;
+    }
+
+    .hover-underline-animation::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #0056b3;
+        visibility: hidden;
+        transform: scaleX(0);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hover-underline-animation:hover::after {
+        visibility: visible;
+        transform: scaleX(1);
+    }
+
+    /* Transition effect on nav open and collapse */
+    .navbar-collapse.collapse {
+        transition: height 0.3s ease;
+    }
+</style>
+
   
   <!-- Home Page Description -->
   <p id="home-description" class="page-desc" style="display: none;">Welcome to RAW Photography - The best place to capture your most important moments!</p>
