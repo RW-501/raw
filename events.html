@@ -262,27 +262,20 @@
         </div>
     </div>
 
-    <!-- Firebase JS SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+  <!-- Firebase JS SDK and Custom Scripts -->
+  <script type="module">
+    import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,arrayUnion ,
+    signOut, addDoc , increment,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
-    <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-  apiKey: "AIzaSyC2bb6osv0jnvpnETCVoG6bvBynGGsOVaw",
-  authDomain: "raw-photography-12616.firebaseapp.com",
-  databaseURL: "https://raw-photography-12616-default-rtdb.firebaseio.com",
-  projectId: "raw-photography-12616",
-  storageBucket: "raw-photography-12616.firebasestorage.app",
-  messagingSenderId: "1078385378836",
-  appId: "1:1078385378836:web:bb8f9611bfbdac1e480901",
-  measurementId: "G-0DLEHE7DEK"
-};
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
+    
         // Format date to a specific format (including time)
         function formatDate(date) {
             return new Intl.DateTimeFormat('en-US', {

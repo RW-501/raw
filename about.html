@@ -178,7 +178,20 @@
 <script src="./js/main.js" ></script>
 <script src="./js/module.js" type="module"></script>
 
+    <!-- Firebase JS SDK and Custom Scripts -->
+    <script type="module">
+      import {  db, doc,getDoc, query, updateDoc,
+      setDoc,     signInWithPopup,
+      GoogleAuthProvider,
+      FacebookAuthProvider,
+      OAuthProvider,arrayUnion ,
+      signOut, addDoc , increment,
+      onAuthStateChanged,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
   
+    </script>  
 </body>
 
 </html>
