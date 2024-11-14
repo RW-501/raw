@@ -592,6 +592,7 @@ body {
     border-color: var(--primary-color);
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 2rem;
 
 }
 .breadcrumb-item:hover {
