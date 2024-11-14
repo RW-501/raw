@@ -97,8 +97,8 @@ body {
 }
   
 .nav-links li {
-    display: list-item;
-    text-align: -webkit-match-parent;
+    display: block; /* block or content */
+    text-align: -webkit-match-parent; /* center or end */
     unicode-bidi: normal;
 }
 
