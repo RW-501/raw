@@ -309,11 +309,18 @@ body {
 
 /* Overlay to contain film and sprockets */
 .film-strip-overlay {
-    position: relative;
+    position: absolute;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 /* Container to hold both film and sprockets */
@@ -322,8 +329,8 @@ body {
     transition: transform 1s ease-in-out;
     position: absolute;
     overflow: hidden;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    flex-direction: column;
     align-items: stretch;
     width: 100%;
     top: 0;
