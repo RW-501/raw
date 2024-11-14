@@ -118,7 +118,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     
     // Optionally add a gradient instead of an image after 5 seconds for example (can be toggled as needed)
     setTimeout(() => {
-      header.style.backgroundImage = "linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('path-to-image.jpg')";
+      header.style.backgroundImage = "linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://rw-501.github.io/raw/images/main.jpg')";
       overlay.style.background = "rgba(0, 0, 0, 0.3)"; // Lighter fade effect for gradient
     }, 5000);  // Change background after 5 seconds, you can adjust this as needed
   }
