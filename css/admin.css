@@ -20,10 +20,13 @@ html {
       user-select: none; /* Prevent text selection */
     }
     
-       .navbar {
-        background-color: #343a40;
-    }
-
+nav {
+        background: linear-gradient(45deg, #6075b1, #3f36b6bf);
+}
+footer  {
+    background: linear-gradient(307deg, #6075b1, #3f36b6bf);
+    text-align: center;
+}
     .navbar-brand {
         font-weight: bold;
         color: #ffffff;
