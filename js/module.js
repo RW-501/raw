@@ -6,8 +6,8 @@ import {
     doc, 
     getDoc, 
     query, 
-    updateDoc, 
-    setDoc,
+    updateDoc,orderBy, 
+    setDoc,           
     addDoc, deleteDoc,
     getDocs, increment,
     where, arrayUnion,
@@ -81,12 +81,11 @@ document.addEventListener('DOMContentLoaded', initializeFirebase);
 // Export Firestore, Storage, and Auth instances for use in other modules
 export { db,getStorage, ref, uploadBytes, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc,
-      query, updateDoc, setDoc, addDoc,signInAnonymously ,
+      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
-        OAuthProvider, signOut, onAuthStateChanged, deleteDoc,
+        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
          createUserWithEmailAndPassword, signInWithEmailAndPassword,
           where, getDocs, storage, collection, auth, analytics };
-
 
 
   //console.log("Page loaded Module ?????????????");
