@@ -454,6 +454,29 @@ window.fetchEvents = fetchEvents;
 
     window.deleteEvent = deleteEvent;
 
+
+    document.addEventListener('DOMContentLoaded', () => {
+    // Listener for the "Upload Event" button
+    const uploadEventButton = document.getElementById('uploadEvent');
+    if (uploadEventButton) {
+        uploadEventButton.addEventListener('click', uploadEvent);
+    }
+
+
+    // Listener for the "Sort by" dropdown
+    const sortByDropdown = document.getElementById('sortBy');
+    if (sortByDropdown) {
+        sortByDropdown.addEventListener('change', fetchEvents);
+    }
+
+    // Listener for the "Bulk Upload Photos" button
+    const bulkUploadButton = document.getElementById('bulkUploadPhotos');
+    if (bulkUploadButton) {
+        bulkUploadButton.addEventListener('click', bulkUploadPhotos);
+    }
+});
+
+
 </script>
 
 </body>
