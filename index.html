@@ -304,66 +304,78 @@
 });
 
 
-    // Submit Contact Form Data
-    document.addEventListener('DOMContentLoaded', function() {
-
-      console.log("?????????????????? ");
-
   // Attach submit event listener to the contact form
-  document.getElementById('main-contact-btn').addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    console.log("event ",event);
-    // Capture the form input values
+  
+ function sendContact(){
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    console.log("name ",name);
-    console.log("email ",email);
-    console.log("message ",message);
 
-    // Add data to Firestore 'Contacts' collection
     db.collection('Contacts').add({
       name: name,
       email: email,
       message: message,
-      timestamp: Date(),
+      timestamp: new Date()
     }).then(() => {
-      // Notify the user of successful submission
       alert('Message sent successfully!');
       document.getElementById('main-contact-form').reset();
     }).catch((error) => {
-      // Handle any errors with a user-friendly message
       console.error("Error sending message: ", error);
       alert("There was an error sending your message. Please try again.");
     });
-  });
+  }
+
+    // Submit Contact Form Data
+    document.addEventListener('DOMContentLoaded', function() {
+
+console.log("?????????????????? ");
+
+
+   // Contact Form Submission
+   document.getElementById('main-contact-btn').addEventListener('click', sendContact());
+
+
+
 });
 
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
-    const mainTextArea = document.getElementById("text-area");
+const mainTextArea = document.getElementById("text-area");
 
-    db.collection('HomePage').get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const imageElement = `
-          <div class="col">
-            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
-              data-bs-image="${data.imageUrl}" 
-              data-bs-title="${data.title}" 
-              data-bs-description="${data.description}">
-              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
-            </a>
-          </div>`;
-        galleryImagesContainer.innerHTML += imageElement;
-      });
-      mainTextArea.innerHTML = mainTextArea;
+// Fetch HomePage Data
+async function fetchGalleryAndSiteInfo() {
+  try {
+    // Get collection reference
+    const querySnapshot = await getDocs(collection(db, "HomePage"));
 
-
+    // Iterate through documents
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      const imageElement = `
+        <div class="col">
+          <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+            data-bs-image="${data.imageUrl}" 
+            data-bs-title="${data.title}" 
+            data-bs-description="${data.description}">
+            <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+          </a>
+        </div>`;
+      galleryImagesContainer.innerHTML += imageElement;
     });
 
-    // Handle Image Modal
+    // Update main text area
+    mainTextArea.innerHTML = mainTextArea.innerHTML; // This doesn't do anything, consider revisiting this logic.
+  } catch (error) {
+    console.error("Error fetching gallery and site info: ", error);
+  }
+}
+
+// Execute the function on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", fetchGalleryAndSiteInfo);
+  
+
+
+// Handle Image Modal
     const imageModal = document.getElementById('imageModal');
     imageModal.addEventListener('show.bs.modal', function(event) {
       const button = event.relatedTarget;
