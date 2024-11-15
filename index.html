@@ -333,21 +333,25 @@
   document.getElementById('main-contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
+    console.log("event ",event);
     // Capture the form input values
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
+    console.log("name ",name);
+    console.log("email ",email);
+    console.log("message ",message);
 
     // Add data to Firestore 'Contacts' collection
     db.collection('Contacts').add({
       name: name,
       email: email,
       message: message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: Date(),
     }).then(() => {
       // Notify the user of successful submission
       alert('Message sent successfully!');
-      document.getElementById('contact-form').reset();
+      document.getElementById('main-contact-form').reset();
     }).catch((error) => {
       // Handle any errors with a user-friendly message
       console.error("Error sending message: ", error);
