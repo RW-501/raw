@@ -1,5 +1,260 @@
 
+const styles = ` 
+  #loadingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
 
+  #cameraSpinner {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  /* DSLR Camera Body */
+  .camera-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 60px;
+    background-color: #333;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Shutter button on the camera */
+  .camera-icon::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+  }
+
+  /* Flash on the camera */
+  .camera-icon::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 15px;
+    width: 6px;
+    height: 10px;
+    background-color: #999;
+    border-radius: 2px;
+            animation: flash 0.3s ease-in-out infinite;
+        }
+
+        /* Smooth flash effect */
+        @keyframes flash {
+            from {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            to {
+                   background-color: rgb(233 224 93);
+                    box-shadow: 0 6px 12px rgb(242 229 42);
+            }
+        }
+
+  /* Lens     background-color: #222;  */
+  .lens {
+    width: 35px;
+    height: 35px;
+    border: 5px solid #666;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+    position: relative;
+    animation: lensSpin 1s linear infinite;
+
+  }
+
+  @keyframes lensSpin {
+    0% {
+      transform: rotate(0deg);
+border: 5px solid rgb(126 126 126);
+
+    }
+    100% {
+      transform: rotate(90deg);
+        border: 5px solid rgb(135 135 135);
+    }
+  }
+
+
+
+  /* Inner lens glass effect */
+.lens::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    animation: lensGradientAnimation 100;
+    border-radius: 50%;
+    animation-duration: 5000ms;
+    top: 5px;
+    left: 5px;
+}
+   @keyframes lensGradientAnimation {
+            from {
+        background: linear-gradient(180deg,  #2575fc, #6a11cb);
+                    box-shadow: 0 6px 12px rgb(242 229 42);
+                 transform: rotate(0deg);
+opacity: 0;
+              }
+            to {
+        background: linear-gradient(90deg, #6a11cb, #2575fc);
+                    box-shadow: 0 6px 12px rgb(242 229 42);
+                          transform: rotate(360deg);
+opacity: 1;
+            }
+        }
+
+
+        
+  /* Spinner Circle to simulate rotating lens */
+  .spinner-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 6px solid transparent;
+    border-top-color: #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: -1;
+
+  }
+
+
+
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+       border-top-color rgba(255, 255, 255, 0.2);
+
+    }
+    100% {
+      transform: rotate(360deg);
+                    border-top-color rgb(132 173 234);
+                   box-shadow: 0 6px 12px rgb(242 229 42);
+    }
+  }
+`;
+
+// Create a style element and add the CSS to the document head
+const styleSheet = document.createElement('style');
+styleSheet.type = 'text/css';
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
+
+// Create the main loading container
+const loadingContainer = document.createElement('div');
+loadingContainer.id = 'loadingContainer';
+
+// Create the camera icon with spinner
+const cameraSpinner = document.createElement('div');
+cameraSpinner.id = 'cameraSpinner';
+cameraSpinner.innerHTML = `
+  <div class="camera-icon">
+    <div class="lens"></div>
+  </div>
+  <div class="spinner-circle"></div>
+`;
+
+// Append camera spinner to loading container
+loadingContainer.appendChild(cameraSpinner);
+
+// Add the loading container to the body
+document.body.appendChild(loadingContainer);
+
+// Optionally, set display to none initially if you want it hidden by default
+loadingContainer.style.display = 'none';
+
+// Define and call the function to apply spinner colors
+async function applyLoadingSpinnerColors(data) {
+  // Check if data is defined
+  if (!data) {
+      console.log("User Data is not set");
+      return; // Exit the function if data is not valid
+  }
+
+  // Utility function to set style properties with a fallback
+  const setStyle = (element, property, value) => {
+      if (value) {
+          element.style[property] = value;
+      }
+  };
+
+  // Select DOM elements
+  const loadingContainer = document.querySelector("#loadingContainer");
+  const cameraIcon = document.querySelector(".camera-icon");
+  const lens = document.querySelector(".lens");
+  const spinnerCircle = document.querySelector(".spinner-circle");
+
+  // Apply styles using the utility function
+  setStyle(loadingContainer, 'backgroundColor', data.backgroundColor);
+  setStyle(cameraIcon, 'backgroundColor', data.cameraBodyColor);
+  setStyle(lens, 'backgroundColor', data.lensColor);
+  setStyle(lens, 'borderColor', data.lensBorderColor);
+  setStyle(spinnerCircle, 'borderTopColor', data.spinnerCircleColor);
+
+  // Add class to camera icon if it exists
+  if (cameraIcon) {
+      cameraIcon.classList.add("apply-spinner-colors");
+  }
+
+  // Set CSS variables with fallbacks
+  const setCssVariable = (variable, value, defaultColor) => {
+      const finalValue = value || defaultColor;
+      document.documentElement.style.setProperty(variable, finalValue);
+      if (!value) {
+          console.warn(`${variable} is null or undefined, using default: ${defaultColor}`);
+      }
+  };
+
+  setCssVariable("--shutter-button-color", data.shutterButtonColor, "#defaultShutterColor"); // Replace with actual default
+  setCssVariable("--flash-color", data.flashColor, "#defaultFlashColor"); // Replace with actual default
+}
+
+  window.showLoadingSpinner = function(automatic = true) {
+
+// Function to show the loading spinner on page load
+  const loadingContainer = document.querySelector("#loadingContainer");
+  //console.log("Loading Container:", loadingContainer);
+    loadingContainer.style.display = 'flex';
+
+
+    if (automatic.isTrusted == true || automatic == true) {
+      setTimeout(() => {
+            hideLoadingSpinner();
+        }, 700); // 3000 milliseconds = 3 seconds
+    }
+}
+window.hideLoadingSpinner = function() {
+  const loadingContainer = document.querySelector("#loadingContainer"); // Example selector
+  loadingContainer.style.display = 'none';
+}
+
+  // Call the function when the page loads
+  window.addEventListener('load', showLoadingSpinner);
+  
 
 function setUpdateFooterContent(){
 // Function to update the active class on the navigation links
