@@ -317,9 +317,13 @@ function sanitizeInput(input) {
   // Helper for cycling default images
  // Function to get a random image from the default images
 // Function to get a random default image from the array
-function getRandomDefaultImage(defaultImages) { 
-    return defaultImages[Math.floor(Math.random() * defaultImages.length)];
+function getRandomDefaultImage(defaultImages) {
+    const randomIndex = Math.floor(Math.random() * defaultImages.length);
+    const image = defaultImages[randomIndex];
+    defaultImages.splice(randomIndex, 1); // Remove the chosen image
+    return image;
   }
+  
   
   // Fetch HomePage Data
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {

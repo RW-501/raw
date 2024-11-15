@@ -732,59 +732,106 @@ section {
 
 /* Modal Styling */
 .modal-custom {
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-out;
+}
+
+.modal-custom.show {
+  transform: scale(1.05); /* Slight zoom-in effect when modal appears */
 }
 
 .modal-header {
-  background-color: #343a40; /* Dark theme for header */
+  background-color: #1c1e22; /* Darker background for a more professional look */
   color: #fff;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid #495057;
+  padding: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .modal-header .modal-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .modal-header .btn-close {
-  filter: brightness(0) invert(1); /* Makes close button white */
+  filter: brightness(0) invert(1); /* White close button */
 }
 
 .modal-body {
-  padding: 20px;
-  background-color: #f8f9fa; /* Light contrast for body */
+  padding: 25px;
+  background-color: #f4f5f7; /* Light gray background to contrast with header */
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  max-height: 80vh;
+  overflow-y: auto; /* Allows scrolling for long descriptions */
 }
 
 .modal-image {
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  max-height: 70vh; /* Keeps image within viewport */
-  object-fit: contain; /* Ensures image scales nicely */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* Ensures image fits nicely */
+  margin-bottom: 20px; /* Adds space between image and description */
+  transition: transform 0.3s ease-out;
+}
+
+.modal-image:hover {
+  transform: scale(1.05); /* Slight zoom effect when hovered */
 }
 
 .modal-description {
-  font-size: 1rem;
-  color: #555;
+  font-size: 1.1rem;
+  color: #333;
   font-style: italic;
-  margin-top: 15px;
+  line-height: 1.5;
+  margin-top: 10px;
+  text-align: justify;
 }
 
 .modal-description::before {
   content: "Description: ";
   font-weight: bold;
-  color: #333;
+  color: #555;
+}
+
+/* Add subtle transition to modal visibility */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: translate(0, 0);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+  .modal-custom {
+    border-radius: 10px; /* Rounded corners for smaller devices */
+  }
+
   .modal-image {
-    max-height: 50vh; /* Adjusts for smaller screens */
+    max-height: 60vh; /* Adjusts for smaller screens */
+  }
+
+  .modal-header .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-description {
+    font-size: 1rem;
   }
 }
 
+
+/*
 #imageModal {
   display: none;
 }
+
+*/
