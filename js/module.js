@@ -328,54 +328,62 @@ function getRandomDefaultImage(defaultImages) {
   // Fetch HomePage Data
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
     try {
-      // Get collection reference
-      const querySnapshot = await getDocs(collection(db, Collection));
-  console.log("mainTextArea, galleryImagesContainer, Collection",mainTextArea, galleryImagesContainer, Collection);
-      const defaultImages = [
-        "https://shutterworx.co/images/default_1.gif",
-        "https://shutterworx.co/images/default_2.gif",
-        "https://shutterworx.co/images/default_3.gif",
-        "https://shutterworx.co/images/default_4.gif",
-        "https://shutterworx.co/images/placeholder1.gif",
-        "https://shutterworx.co/images/placeholder2.gif",
-        "https://shutterworx.co/images/placeholder3.gif",
-        "https://shutterworx.co/images/placeholder4.gif"
-      ];
-  
-      querySnapshot.forEach(doc => {
-        const data = doc.data();
-        
-        // Update main text area if the data contains mainText
-        if (data?.mainText) {
-            mainTextArea.innerHTML = data?.mainText || 'Default text if mainText is missing';
-        }
-  
-        // Get random default images if no URLs are provided for image or thumbnail
-        const imageUrl = data.imageUrl || getRandomDefaultImage(defaultImages);
-        const thumbnailUrl = data.thumbnailUrl || getRandomDefaultImage(defaultImages);
-  
-        // Create and append image element with dynamic image URL
-        const imageElement = `
-          <div class="col gallery-item">
-            <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
-              data-bs-image="${imageUrl}" 
-              data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
-              data-bs-description="${sanitizeInput(data.description || 'No description available')}">
-              <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
-            </a>
-          </div>`;
-  
-        // Add the image element to the gallery container
-        galleryImagesContainer.innerHTML += imageElement;
-      });
-  
-      // Call the styleGalleryImages function to adjust the layout
-      const galleryContainer = document.getElementById('gallery-images');
-      styleGalleryImages(galleryContainer);
-  
+        // Get collection reference
+        const querySnapshot = await getDocs(collection(db, Collection));
+        console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
+
+        // Define default images
+        const defaultImages = [
+            "https://shutterworx.co/images/default_1.gif",
+            "https://shutterworx.co/images/default_2.gif",
+            "https://shutterworx.co/images/default_3.gif",
+            "https://shutterworx.co/images/default_4.gif",
+            "https://shutterworx.co/images/placeholder1.gif",
+            "https://shutterworx.co/images/placeholder2.gif",
+            "https://shutterworx.co/images/placeholder3.gif",
+            "https://shutterworx.co/images/placeholder4.gif"
+        ];
+
+        // Helper function to get a random image from the defaultImages array
+        const getRandomDefaultImage = () => {
+            return defaultImages[Math.floor(Math.random() * defaultImages.length)];
+        };
+
+        // Loop through the documents in the collection
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+
+            // Update main text area if the data contains mainText
+            if (data?.mainText) {
+                mainTextArea.innerHTML = data?.mainText || 'Default text if mainText is missing';
+            }
+
+            // Use default images if no imageUrl or thumbnailUrl is provided
+            const imageUrl = data.imageUrl || getRandomDefaultImage();
+            const thumbnailUrl = data.thumbnailUrl || getRandomDefaultImage();
+
+            // Create and append image element with dynamic image URL
+            const imageElement = `
+                <div class="col gallery-item">
+                    <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                        data-bs-image="${imageUrl}" 
+                        data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
+                        data-bs-description="${sanitizeInput(data.description || 'No description available')}">
+                        <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
+                    </a>
+                </div>`;
+            
+            // Add the image element to the gallery container
+            galleryImagesContainer.innerHTML += imageElement;
+        });
+
+        // Call the styleGalleryImages function to adjust the layout
+        const galleryContainer = document.getElementById('gallery-images');
+        styleGalleryImages(galleryContainer);
+
     } catch (error) {
-      console.error("Error fetching gallery and site info: ", error);
-      galleryImagesContainer.innerHTML = `<p class="text-danger">Failed to load gallery. Please try again later.</p>`;
+        console.error("Error fetching gallery and site info: ", error);
+        galleryImagesContainer.innerHTML = `<p class="text-danger">Failed to load gallery. Please try again later.</p>`;
     }
-  };
+};
   
