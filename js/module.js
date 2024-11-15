@@ -63,10 +63,10 @@ const firebaseConfig = {
         
           // You can now use `auth`, `db`, `storage`, and `analytics` as needed in your app.
         
-/*
-        console.log("Firebase initialized successfully.");
+
+     //   console.log("Firebase initialized successfully.");
         console.log("Firestore initialized:", db);
-*/
+
         // Export your Firebase instances if needed
 
     } catch (error) {
