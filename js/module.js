@@ -65,7 +65,7 @@ const firebaseConfig = {
         
 
      //   console.log("Firebase initialized successfully.");
-        console.log("Firestore initialized:", db);
+      //  console.log("Firestore initialized:", db);
 
         // Export your Firebase instances if needed
 
@@ -236,7 +236,7 @@ function getViewedByField() {
     };
 
     try {
-        await setDoc(doc(db, 'SW_Analytics', ipAddress), viewData, { merge: true });
+        await setDoc(doc(db, 'Analytics', ipAddress), viewData, { merge: true });
         console.log(`${viewedByField} data updated successfully.`);
     } catch (error) {
         console.error(`Error updating ${viewedByField} data:`, error);
@@ -247,11 +247,11 @@ function getViewedByField() {
  function setTrackingListeners(ipAddress) {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
-   // console.log("2 startViewTimer");
+    console.log("startViewTimer");
 
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
-          console.log("3 updateViewData  last");
+          console.log("TrackingListeners  last");
 
             updateViewData(ipAddress);
         }
@@ -263,7 +263,7 @@ function getViewedByField() {
  window.checkUrl = function(keyword) {
     // Get the current URL
     const currentUrl = window.location.href;
-    console.log("currentUrl:", currentUrl);
+   // console.log("currentUrl:", currentUrl);
     //console.log("keyword:", keyword);
   
     // Return true if the keyword is found in the URL, otherwise false

@@ -397,7 +397,7 @@
         db.collection('Contact').add(contactData)
             .then(() => {
                 showToast('Message sent successfully!', "success");
-                document.getElementById('contact-form').reset(); // Reset the form after successful submission
+                document.getElementById('main-contact-form').reset(); // Reset the form after successful submission
 
                 // Save the current timestamp to the message history
                 messageHistory.push(now);

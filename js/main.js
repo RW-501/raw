@@ -297,26 +297,37 @@ window.addEventListener('load', applyFilmStripEffect);
             return !dangerousPatterns.test(input);
         }
         
-          // Auto move to next input (if applicable)
-          const inputs = document.querySelectorAll('input');
-          inputs.forEach((input, index) => {
-              input.addEventListener('keydown', (e) => {
-                  if (e.key === 'Enter') {
-                    //  console.log("Pressed Enter on:", input);
-                      
-                      // Prevent form submission if Enter is pressed
-                      e.preventDefault();
-          
-                      // Find the next input in the NodeList
-                      const nextInput = inputs[index + 1];
-                      
-                      if (nextInput) {
-                          nextInput.focus();
-                         // console.log("Focused on next input:", nextInput);
-                      }
-                  }
-              });
-          });
+// Auto move to next input (if applicable) on Enter key press
+function viewDidLoad() {
+  const form = document.querySelector('form'); // Select the form or parent container
+  const inputs = form.querySelectorAll('input'); // Only select inputs within the form
+  
+  inputs.forEach((input, index) => {
+      input.addEventListener('keydown', (e) => {
+          // Check if the Enter key was pressed
+          if (e.key === 'Enter') {
+              e.preventDefault(); // Prevent form submission or default Enter behavior
+              
+              // Find the next input in the NodeList
+              const nextInput = inputs[index + 1];
+              
+              // Focus on the next input, if available
+              if (nextInput) {
+                  nextInput.focus();
+              } else {
+                  // If there are no more inputs, optionally submit the form or do nothing
+                  form.submit();  // This is optional; remove if not needed
+                  // Or do nothing, if you don't want automatic form submission
+                  // console.log('All inputs filled, ready to submit');
+              }
+          }
+      });
+  });
+}
+
+// Run viewDidLoad when the document is ready
+document.addEventListener('DOMContentLoaded', viewDidLoad);
+
           
   
   // Toast Notification Function

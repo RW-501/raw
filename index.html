@@ -438,7 +438,7 @@ async function sendContact() {
     contact_Message.className = "alert alert-success"; // Apply success styling
 
     // Reset form fields
-    document.getElementById("contact-form").reset();
+    document.getElementById("main-contact-form").reset();
 
     // Add the current timestamp to the history and save back to localStorage
     messageHistory.push(Date.now());
