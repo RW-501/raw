@@ -165,8 +165,6 @@ async function fetchMessages(status = 'all') {
 }
 
 // Display messages in the table
-import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "./firebase"; // Adjust the import path based on your file structure
 
 // Fetch messages based on status
 async function fetchMessages(status = "all") {
