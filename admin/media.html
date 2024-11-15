@@ -353,76 +353,82 @@
 
     // Fetch and display events with sorting and filtering
     async function fetchEvents() {
-        const filterText = document.getElementById('eventFilter').value.toLowerCase();
-        const sortBy = document.getElementById('sortBy').value;
-        const eventList = document.getElementById('eventsContainer');
-        eventList.innerHTML = ''; // Clear previous list
+    const filterText = document.getElementById('eventFilter').value.toLowerCase();
+    const sortBy = document.getElementById('sortBy').value;
+    const eventList = document.getElementById('eventsContainer');
+    eventList.innerHTML = ''; // Clear previous list
 
-        const eventsCollection = collection(db, 'Events');
-        let eventQuery;
+    const eventsCollection = collection(db, 'Events');
+    let eventQuery;
 
-        // Sort events
-        if (sortBy === 'date') {
-            eventQuery = query(eventsCollection, orderBy('eventDate'));
-        } else {
-            eventQuery = query(eventsCollection, orderBy('title'));
-        }
-
-        try {
-            const snapshot = await getDocs(eventQuery);
-
-            snapshot.forEach((doc) => {
-                const event = doc.data();
-
-                if (
-                    event.title.toLowerCase().includes(filterText) ||
-                    event.description.toLowerCase().includes(filterText)
-                ) {
-                    const eventItem = document.createElement('div');
-                    eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-
-                    const eventInfo = document.createElement('div');
-                    eventInfo.innerHTML = `
-                        <strong>${event.title}</strong><br>
-                        ${new Date(event.eventDate).toLocaleDateString()}<br>
-                        ${event.description}
-                    `;
-
-                    const thumbnail = document.createElement('img');
-                    thumbnail.src = event.coverUrl || 'default-thumbnail.png';
-                    thumbnail.alt = "Event Thumbnail";
-                    thumbnail.style.width = '50px';
-                    thumbnail.style.height = '50px';
-                    thumbnail.classList.add('mr-2');
-
-                    const btnGroup = document.createElement('div');
-                    btnGroup.classList.add('btn-group');
-
-                    const editBtn = document.createElement('button');
-                    editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
-                    editBtn.innerText = 'Edit';
-                    editBtn.onclick = () => editEvent(doc.id, event);
-
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
-                    deleteBtn.innerText = 'Delete';
-                    deleteBtn.onclick = () => deleteEvent(doc.id);
-
-                    btnGroup.appendChild(editBtn);
-                    btnGroup.appendChild(deleteBtn);
-                    eventItem.appendChild(thumbnail);
-                    eventItem.appendChild(eventInfo);
-                    eventItem.appendChild(btnGroup);
-                    eventList.appendChild(eventItem);
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching events:", error);
-        }
+    // Sort events
+    if (sortBy === 'date') {
+        eventQuery = query(eventsCollection, orderBy('eventDate'));
+    } else {
+        eventQuery = query(eventsCollection, orderBy('title'));
     }
 
-    window.fetchEvents = fetchEvents;
+    try {
+        const snapshot = await getDocs(eventQuery);
 
+        snapshot.forEach((doc) => {
+            const event = doc.data();
+
+            // Check for missing or null event properties
+            const title = event.title ? event.title : 'Untitled Event';
+            const description = event.description ? event.description : 'No description available';
+            const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
+            const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
+
+            // Check if the event matches the filter text
+            if (
+                title.toLowerCase().includes(filterText) ||
+                description.toLowerCase().includes(filterText)
+            ) {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const eventInfo = document.createElement('div');
+                eventInfo.innerHTML = `
+                    <strong>${title}</strong><br>
+                    ${eventDate}<br>
+                    ${description}
+                `;
+
+                const thumbnail = document.createElement('img');
+                thumbnail.src = coverUrl;
+                thumbnail.alt = "Event Thumbnail";
+                thumbnail.style.width = '50px';
+                thumbnail.style.height = '50px';
+                thumbnail.classList.add('mr-2');
+
+                const btnGroup = document.createElement('div');
+                btnGroup.classList.add('btn-group');
+
+                const editBtn = document.createElement('button');
+                editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
+                editBtn.innerText = 'Edit';
+                editBtn.onclick = () => editEvent(doc.id, event);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+                deleteBtn.innerText = 'Delete';
+                deleteBtn.onclick = () => deleteEvent(doc.id);
+
+                btnGroup.appendChild(editBtn);
+                btnGroup.appendChild(deleteBtn);
+                eventItem.appendChild(thumbnail);
+                eventItem.appendChild(eventInfo);
+                eventItem.appendChild(btnGroup);
+                eventList.appendChild(eventItem);
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching events:", error);
+    }
+}
+
+window.fetchEvents = fetchEvents;
     // Edit Event Function
     function editEvent(eventId, event) {
         document.getElementById('eventTitle').value = event.title;
