@@ -114,25 +114,27 @@
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
+// Editor setup for About Page
+let bioEditor, specialtiesEditor, awardsEditor;
 
-    // Editor setup for About Page
-    let bioEditor, specialtiesEditor, awardsEditor;
+// Initialize CKEditor for rich text editing
+const editorSetup = async () => {
+    bioEditor = await ClassicEditor.create(document.querySelector('#bioEditor'));
+    specialtiesEditor = await ClassicEditor.create(document.querySelector('#specialtiesEditor'));
+    awardsEditor = await ClassicEditor.create(document.querySelector('#awardsEditor'));
+};
+editorSetup();
 
-    // Initialize CKEditor for rich text editing
-    ClassicEditor.create(document.querySelector('#bioEditor')).then(editor => { bioEditor = editor; });
-    ClassicEditor.create(document.querySelector('#specialtiesEditor')).then(editor => { specialtiesEditor = editor; });
-    ClassicEditor.create(document.querySelector('#awardsEditor')).then(editor => { awardsEditor = editor; });
-
-    // Function to update the About Page details
-    async function updateAboutPage() {
+// Function to update the About Page details
+async function updateAboutPage() {
     try {
         const bio = bioEditor.getData();
         const specialties = specialtiesEditor.getData();
         const awards = awardsEditor.getData();
         const testimonials = document.getElementById('testimonials').value;
         const profilePic = document.getElementById('profilePic').files[0];
-
         let profilePicUrl = '';
+
         if (profilePic) {
             const profilePicRef = storage.ref(`about/profilePic/${profilePic.name}`);
             await profilePicRef.put(profilePic);
@@ -147,20 +149,21 @@
             profilePicUrl
         });
 
-        alert('About Page updated successfully');
+        showToast('About Page updated successfully');
     } catch (error) {
         console.error('Error updating About Page:', error);
-        alert('There was an error updating the About Page. Please try again later.');
+        showToast('Error updating About Page. Please try again later.');
     }
 }
+window.updateAboutPage = updateAboutPage;
 
-
-    // Function to upload gallery images and descriptions
-    async function uploadGalleryImages() {
+// Function to upload gallery images and descriptions
+async function uploadGalleryImages() {
     try {
         const files = document.getElementById('galleryUpload').files;
         const galleryImages = document.getElementById('galleryImages');
-        
+        const fragment = document.createDocumentFragment();
+
         for (const file of files) {
             const galleryRef = storage.ref(`gallery/${file.name}`);
             await galleryRef.put(file);
@@ -174,59 +177,75 @@
                 <button type="button" class="btn btn-warning btn-sm mt-2" onclick="markAsFeatured('${imageUrl}')">Mark as Featured</button>
                 <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeImage('${imageUrl}')">Remove Image</button>
             `;
-            galleryImages.appendChild(listItem);
+            fragment.appendChild(listItem);
         }
+
+        galleryImages.appendChild(fragment);
+        showToast('Gallery images uploaded successfully');
     } catch (error) {
         console.error('Error uploading gallery images:', error);
-        showToast('There was an error uploading the images. Please try again.');
+        showToast('Error uploading images. Please try again.');
     }
-
-    galleryImages.appendChild(fragment);  // Append all items at once
 }
 window.uploadGalleryImages = uploadGalleryImages;
 
-    // Function to mark an image as featured
-    async function markAsFeatured(imageUrl) {
+// Function to mark an image as featured
+async function markAsFeatured(imageUrl) {
+    try {
         await db.collection('gallery').doc('featured').set({ imageUrl }, { merge: true });
         showToast('Image marked as featured');
+    } catch (error) {
+        console.error('Error marking image as featured:', error);
+        showToast('Error marking image. Please try again.');
     }
-    window.markAsFeatured = markAsFeatured;
+}
+window.markAsFeatured = markAsFeatured;
 
-    // Function to remove an image from the gallery
-    async function removeImage(imageUrl) {
+// Function to remove an image from the gallery
+async function removeImage(imageUrl) {
+    try {
         const galleryImages = document.getElementById('galleryImages');
         galleryImages.querySelector(`img[src="${imageUrl}"]`).parentElement.remove();
         await storage.refFromURL(imageUrl).delete();
         showToast('Image removed from gallery');
+    } catch (error) {
+        console.error('Error removing image:', error);
+        showToast('Error removing image. Please try again.');
     }
-    window.removeImage = removeImage;
+}
+window.removeImage = removeImage;
 
-    // Function to update event details
-    async function updateEventDetails() {
-    const eventTitle = document.getElementById('eventTitle').value;
-    const eventDescription = document.getElementById('eventDescription').value;
-    const eventDate = document.getElementById('eventDate').value;
-    const eventImage = document.getElementById('eventImage').files[0];
+// Function to update event details
+async function updateEventDetails() {
+    try {
+        const eventTitle = document.getElementById('eventTitle').value;
+        const eventDescription = document.getElementById('eventDescription').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventImage = document.getElementById('eventImage').files[0];
 
-    if (!eventTitle || !eventDescription || !eventDate) {
-        showToast('Please fill in all event details.');
-        return;
+        if (!eventTitle || !eventDescription || !eventDate) {
+            showToast('Please fill in all event details.');
+            return;
+        }
+
+        let eventImageUrl = '';
+        if (eventImage) {
+            const eventImageRef = storage.ref(`events/${eventImage.name}`);
+            await eventImageRef.put(eventImage);
+            eventImageUrl = await eventImageRef.getDownloadURL();
+        }
+
+        await db.collection('Events').doc(eventTitle).set({
+            eventDescription,
+            eventDate,
+            eventImageUrl
+        });
+
+        showToast('Event updated successfully');
+    } catch (error) {
+        console.error('Error updating event details:', error);
+        showToast('Error updating event. Please try again.');
     }
-
-    let eventImageUrl = '';
-    if (eventImage) {
-        const eventImageRef = storage.ref(`events/${eventImage.name}`);
-        await eventImageRef.put(eventImage);
-        eventImageUrl = await eventImageRef.getDownloadURL();
-    }
-
-    await db.collection('Events').doc(eventTitle).set({
-        eventDescription,
-        eventDate,
-        eventImageUrl
-    });
-
-    showToast('Event updated successfully');
 }
 window.updateEventDetails = updateEventDetails;
 

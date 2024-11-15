@@ -80,119 +80,124 @@
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
+import { getFunctions, httpsCallable } from "firebase/functions";
 
-    // Fetch messages from Firestore
-    async function fetchMessages(status = 'all') {
-        let query = db.collection('Contacts');
+const db = getFirestore(); // Initialize Firestore
 
-        if (status !== 'all') {
-            query = query.where('status', '==', status);
-        }
+// Fetch messages from Firestore
+async function fetchMessages(status = 'all') {
+    let messagesQuery = collection(db, 'Contacts');
 
-        const snapshot = await query.get();
-        const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        displayMessages(messages);
+    if (status !== 'all') {
+        messagesQuery = query(messagesQuery, where('status', '==', status));
     }
 
-    // Display messages in the table
-    function displayMessages(messages) {
-        const messagesList = document.getElementById('messagesList');
-        messagesList.innerHTML = '';
+    const snapshot = await getDocs(messagesQuery);
+    const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        messages.forEach((message, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${message.name}</td>
-                <td>${message.email}</td>
-                <td>${message.message.slice(0, 50)}...</td>
-                <td>
-                    <span class="badge ${message.status === 'unread' ? 'bg-warning' : message.status === 'read' ? 'bg-success' : 'bg-secondary'}">
-                        ${message.status.charAt(0).toUpperCase() + message.status.slice(1)}
-                    </span>
-                </td>
-                <td>
-                    <button class="btn btn-info" onclick="viewMessageDetails('${message.id}')">View</button>
-                    <button class="btn btn-secondary" onclick="toggleReadStatus('${message.id}', '${message.status}')">${message.status === 'read' ? 'Mark as Unread' : 'Mark as Read'}</button>
-                    <button class="btn btn-danger" onclick="archiveMessage('${message.id}')">Archive</button>
-                </td>
-            `;
-            messagesList.appendChild(row);
-        });
-    }
+    displayMessages(messages);
+}
 
-    // View full message details in a modal
-    async function viewMessageDetails(messageId) {
-        const messageDoc = await db.collection('Contacts').doc(messageId).get();
-        const message = messageDoc.data();
-        
-        document.getElementById('messageDetailModalLabel').innerText = `Message from ${message.name}`;
-        document.getElementById('messageDetailsContent').innerText = message.message;
-        
-        $('#messageDetailModal').modal('show');
-    }
-    window.viewMessageDetails = viewMessageDetails;
+// Display messages in the table
+function displayMessages(messages) {
+    const messagesList = document.getElementById('messagesList');
+    messagesList.innerHTML = '';
 
-    // Mark message as read/unread
-    async function toggleReadStatus(messageId, currentStatus) {
-        const newStatus = currentStatus === 'read' ? 'unread' : 'read';
-        await db.collection('Contacts').doc(messageId).update({ status: newStatus });
+    messages.forEach((message, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${message.name}</td>
+            <td>${message.email}</td>
+            <td>${message.message.slice(0, 50)}...</td>
+            <td>
+                <span class="badge ${message.status === 'unread' ? 'bg-warning' : message.status === 'read' ? 'bg-success' : 'bg-secondary'}">
+                    ${message.status.charAt(0).toUpperCase() + message.status.slice(1)}
+                </span>
+            </td>
+            <td>
+                <button class="btn btn-info" onclick="viewMessageDetails('${message.id}')">View</button>
+                <button class="btn btn-secondary" onclick="toggleReadStatus('${message.id}', '${message.status}')">${message.status === 'read' ? 'Mark as Unread' : 'Mark as Read'}</button>
+                <button class="btn btn-danger" onclick="archiveMessage('${message.id}')">Archive</button>
+            </td>
+        `;
+        messagesList.appendChild(row);
+    });
+}
 
-        fetchMessages();
-    }
-    window.toggleReadStatus = toggleReadStatus;
+// View full message details in a modal
+async function viewMessageDetails(messageId) {
+    const messageDoc = await getDoc(doc(db, 'Contacts', messageId));
+    const message = messageDoc.data();
+    
+    document.getElementById('messageDetailModalLabel').innerText = `Message from ${message.name}`;
+    document.getElementById('messageDetailsContent').innerText = message.message;
+    
+    $('#messageDetailModal').modal('show');
+}
+window.viewMessageDetails = viewMessageDetails;
 
-    // Archive a message
-    async function archiveMessage(messageId) {
-        await db.collection('Contacts').doc(messageId).update({ status: 'archived' });
-        fetchMessages();
-    }
-    window.archiveMessage = archiveMessage;
+// Mark message as read/unread
+async function toggleReadStatus(messageId, currentStatus) {
+    const newStatus = currentStatus === 'read' ? 'unread' : 'read';
+    await updateDoc(doc(db, 'Contacts', messageId), { status: newStatus });
 
-    // Reply to a message (send an email notification and reply in the database)
-    async function sendReply() {
-        const replyContent = document.getElementById('replyMessage').value;
-        const messageId = document.getElementById('messageDetailModalLabel').innerText.split(' ')[2];  // Extract messageId from modal title
-
-        // Send the reply in Firestore
-        await db.collection('Contacts').doc(messageId).update({
-            reply: replyContent,
-            status: 'read' // mark as read once replied
-        });
-
-        // Trigger email notification (e.g., using Firebase Functions or a third-party service)
-        await sendEmailNotification(replyContent);
-
-        // Close modal and refresh the message list
-        $('#messageDetailModal').modal('hide');
-        fetchMessages();
-    }
-    window.sendReply = sendReply;
-
-    // Send an email notification (simplified example)
-    async function sendEmailNotification(replyContent) {
-        const emailPayload = {
-            to: "photographer@example.com", // Use the sender's email address dynamically
-            subject: "New Contact Message Reply",
-            body: `You have received a new reply: \n\n${replyContent}`
-        };
-
-        // Call Firebase Cloud Functions to send an email (this is a placeholder function)
-        const sendEmail = firebase.functions().httpsCallable('sendEmail');
-        await sendEmail(emailPayload);
-    }
-    window.sendEmailNotification = sendEmailNotification;
-
-    // Filter messages by status (unread, read, archived)
-    function filterMessages() {
-        const status = document.getElementById('filterStatus').value;
-        fetchMessages(status);
-    }
-    window.filterMessages = filterMessages;
-
-    // Initial load of all messages
     fetchMessages();
+}
+window.toggleReadStatus = toggleReadStatus;
+
+// Archive a message
+async function archiveMessage(messageId) {
+    await updateDoc(doc(db, 'Contacts', messageId), { status: 'archived' });
+    fetchMessages();
+}
+window.archiveMessage = archiveMessage;
+
+// Reply to a message (send an email notification and reply in the database)
+async function sendReply() {
+    const replyContent = document.getElementById('replyMessage').value;
+    const messageId = document.getElementById('messageDetailModalLabel').innerText.split(' ')[2];  // Extract messageId from modal title
+
+    // Send the reply in Firestore
+    await updateDoc(doc(db, 'Contacts', messageId), {
+        reply: replyContent,
+        status: 'read' // mark as read once replied
+    });
+
+    // Trigger email notification
+    await sendEmailNotification(replyContent);
+
+    // Close modal and refresh the message list
+    $('#messageDetailModal').modal('hide');
+    fetchMessages();
+}
+window.sendReply = sendReply;
+
+// Send an email notification (simplified example)
+async function sendEmailNotification(replyContent) {
+    const functions = getFunctions();
+    const sendEmail = httpsCallable(functions, 'sendEmail');
+    
+    const emailPayload = {
+        to: "photographer@example.com", // Use the sender's email address dynamically
+        subject: "New Contact Message Reply",
+        body: `You have received a new reply: \n\n${replyContent}`
+    };
+
+    await sendEmail(emailPayload);
+}
+window.sendEmailNotification = sendEmailNotification;
+
+// Filter messages by status (unread, read, archived)
+function filterMessages() {
+    const status = document.getElementById('filterStatus').value;
+    fetchMessages(status);
+}
+window.filterMessages = filterMessages;
+
+// Initial load of all messages
+fetchMessages();
+
 </script>
 
 <!-- Bootstrap JS for modal functionality -->

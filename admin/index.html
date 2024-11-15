@@ -184,9 +184,11 @@ function showDashboard() {
 }
 
 // Fetch notifications
-db.collection("Notifications").onSnapshot((snapshot) => {
+// Listen for real-time updates in the "Notifications" collection
+onSnapshot(collection(db, "Notifications"), (snapshot) => {
     const notificationList = document.getElementById("notificationList");
     notificationList.innerHTML = ""; // Clear existing notifications
+
     snapshot.forEach((doc) => {
         const notification = doc.data().message;
         const listItem = document.createElement("li");

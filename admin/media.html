@@ -93,141 +93,169 @@
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
+// Import Firebase modules
+import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, orderBy, query } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { initializeApp } from 'firebase/app';
 
+// Firebase config
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-    // Function to upload an event
-    async function uploadEvent() {
-        const title = document.getElementById('eventTitle').value;
-        const description = document.getElementById('eventDescription').value;
-        const eventDate = document.getElementById('eventDate').value;
-        const cover = document.getElementById('eventCover').files[0];
-        const accessCode = document.getElementById('accessCode').value;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-        // Client-side file validation
-        if (cover.size > 5000000) {
-            alert("File is too large, please upload a file less than 5MB.");
-            return;
+// Function to upload an event
+async function uploadEvent() {
+    const title = document.getElementById('eventTitle').value;
+    const description = document.getElementById('eventDescription').value;
+    const eventDate = document.getElementById('eventDate').value;
+    const cover = document.getElementById('eventCover').files[0];
+    const accessCode = document.getElementById('accessCode').value;
+
+    // Client-side file validation
+    if (cover.size > 5000000) {
+        alert("File is too large, please upload a file less than 5MB.");
+        return;
+    }
+
+    const storageRef = ref(storage, `events/${title}/cover.jpg`);
+    await uploadBytes(storageRef, cover);
+    const coverUrl = await getDownloadURL(storageRef);
+
+    // Hashing the access code for better security (placeholder)
+    const hashedAccessCode = btoa(accessCode); // replace with a hashing library in production
+
+    // Add event to the Firestore database
+    await addDoc(collection(db, 'Events'), {
+        title,
+        description,
+        eventDate,
+        coverUrl,
+        accessCode: hashedAccessCode
+    });
+
+    showToast('Event Uploaded');
+    document.getElementById('eventForm').reset(); // Clear form after submission
+    fetchEvents(); // Refresh the event list
+}
+window.uploadEvent = uploadEvent;
+
+// Fetch and display events with sorting and filtering
+async function fetchEvents() {
+    const filterText = document.getElementById('eventFilter').value.toLowerCase();
+    const sortBy = document.getElementById('sortBy').value;
+    const eventList = document.getElementById('eventsContainer');
+    eventList.innerHTML = '';
+
+    let eventQuery = collection(db, 'events');
+
+    // Sort by date or title
+    if (sortBy === 'date') {
+        eventQuery = query(eventQuery, orderBy('eventDate'));
+    } else if (sortBy === 'name') {
+        eventQuery = query(eventQuery, orderBy('title'));
+    }
+
+    const snapshot = await getDocs(eventQuery);
+    snapshot.forEach(doc => {
+        const event = doc.data();
+
+        // Filter events based on the search text
+        if (
+            event.title.toLowerCase().includes(filterText) ||
+            event.description.toLowerCase().includes(filterText)
+        ) {
+            const eventItem = document.createElement('div');
+            eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+            const eventInfo = document.createElement('div');
+            eventInfo.innerHTML = `<strong>${event.title}</strong><br>${event.eventDate}<br>${event.description}`;
+            
+            const thumbnail = document.createElement('img');
+            thumbnail.src = event.coverUrl;
+            thumbnail.alt = "Thumbnail";
+            thumbnail.style.width = '50px';
+            thumbnail.style.height = '50px';
+            thumbnail.classList.add('mr-2');
+
+            const btnGroup = document.createElement('div');
+            btnGroup.classList.add('btn-group');
+
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
+            editBtn.innerText = 'Edit';
+            editBtn.onclick = () => editEvent(doc.id, event);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+            deleteBtn.innerText = 'Delete';
+            deleteBtn.onclick = () => deleteEvent(doc.id);
+
+            btnGroup.appendChild(editBtn);
+            btnGroup.appendChild(deleteBtn);
+            eventItem.appendChild(thumbnail);
+            eventItem.appendChild(eventInfo);
+            eventItem.appendChild(btnGroup);
+            eventList.appendChild(eventItem);
+        }
+    });
+}
+
+// Pre-fill form for editing
+function editEvent(eventId, event) {
+    document.getElementById('eventTitle').value = event.title;
+    document.getElementById('eventDescription').value = event.description;
+    document.getElementById('eventDate').value = event.eventDate;
+    document.getElementById('accessCode').value = event.accessCode;
+}
+window.editEvent = editEvent;
+
+// Delete event
+async function deleteEvent(eventId) {
+    if (confirm('Are you sure you want to delete this event?')) {
+        await deleteDoc(doc(db, 'events', eventId));
+        fetchEvents(); // Refresh the event list
+    }
+}
+window.deleteEvent = deleteEvent;
+
+// Bulk upload photos with watermark
+async function bulkUploadPhotos() {
+    const files = document.getElementById('photoUpload').files;
+    const watermarkText = document.getElementById('watermarkText').value;
+    const logoOverlay = document.getElementById('logoOverlay').files[0];
+
+    if (files.length > 0) {
+        const uploadPromises = [];
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const storageRef = ref(storage, `photos/${file.name}`);
+
+            // Apply watermark or logo if required before uploading (Optional: you may use a server-side function or library)
+            // For simplicity, skipping watermark logic here
+            uploadPromises.push(uploadBytes(storageRef, file));
         }
 
-        const storageRef = storage.ref(`events/${title}/cover.jpg`);
-        await storageRef.put(cover);
-        const coverUrl = await storageRef.getDownloadURL();
-
-        // Hashing the access code for better security (placeholder)
-        const hashedAccessCode = btoa(accessCode); // replace with a hashing library in production
-
-        await db.collection('Events').add({
-            title,
-            description,
-            eventDate,
-            coverUrl,
-            accessCode: hashedAccessCode
-        });
-
-        showToast('Event Uploaded');
-        document.getElementById('eventForm').reset(); // Clear form after submission
-        fetchEvents();
+        await Promise.all(uploadPromises);
+        showToast('Photos Uploaded');
+    } else {
+        showToast('No photos selected for upload');
     }
-    window.uploadEvent = uploadEvent;
+}
+window.bulkUploadPhotos = bulkUploadPhotos;
 
-    // Fetch and display events with sorting and filtering
-    async function fetchEvents() {
-        const filterText = document.getElementById('eventFilter').value.toLowerCase();
-        const sortBy = document.getElementById('sortBy').value;
-        const eventList = document.getElementById('eventsContainer');
-        eventList.innerHTML = '';
+// Initial fetch of events
+fetchEvents();
 
-        let query = db.collection('events');
-
-        if (sortBy === 'date') {
-            query = query.orderBy('eventDate');
-        } else if (sortBy === 'name') {
-            query = query.orderBy('title');
-        }
-
-        const snapshot = await query.get();
-        snapshot.forEach(doc => {
-            const event = doc.data();
-
-            // Filter by text
-            if (
-                event.title.toLowerCase().includes(filterText) ||
-                event.description.toLowerCase().includes(filterText)
-            ) {
-                const eventItem = document.createElement('div');
-                eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-
-                const eventInfo = document.createElement('div');
-                eventInfo.innerHTML = `<strong>${event.title}</strong><br>${event.eventDate}<br>${event.description}`;
-                const thumbnail = document.createElement('img');
-                thumbnail.src = event.coverUrl;
-                thumbnail.alt = "Thumbnail";
-                thumbnail.style.width = '50px';
-                thumbnail.style.height = '50px';
-                thumbnail.classList.add('mr-2');
-
-                const btnGroup = document.createElement('div');
-                btnGroup.classList.add('btn-group');
-
-                const editBtn = document.createElement('button');
-                editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
-                editBtn.innerText = 'Edit';
-                editBtn.onclick = () => editEvent(doc.id, event);
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
-                deleteBtn.innerText = 'Delete';
-                deleteBtn.onclick = () => deleteEvent(doc.id);
-
-                btnGroup.appendChild(editBtn);
-                btnGroup.appendChild(deleteBtn);
-                eventItem.appendChild(thumbnail);
-                eventItem.appendChild(eventInfo);
-                eventItem.appendChild(btnGroup);
-                eventList.appendChild(eventItem);
-            }
-        });
-    }
-
-    // Pre-fill form for editing
-    function editEvent(eventId, event) {
-        document.getElementById('eventTitle').value = event.title;
-        document.getElementById('eventDescription').value = event.description;
-        document.getElementById('eventDate').value = event.eventDate;
-        document.getElementById('accessCode').value = event.accessCode;
-    }
-    window.editEvent = editEvent;
-
-    // Delete event
-    async function deleteEvent(eventId) {
-        if (confirm('Are you sure you want to delete this event?')) {
-            await db.collection('events').doc(eventId).delete();
-            fetchEvents();
-        }
-    }
-    window.deleteEvent = deleteEvent;
-
-    // Bulk upload photos with watermark
-    async function bulkUploadPhotos() {
-        const files = document.getElementById('photoUpload').files;
-        const watermarkText = document.getElementById('watermarkText').value;
-        const logoOverlay = document.getElementById('logoOverlay').files[0];
-
-        if (files.length > 0) {
-            const uploadPromises = [];
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const storageRef = storage.ref(`photos/${file.name}`);
-                uploadPromises.push(storageRef.put(file));
-            }
-            await Promise.all(uploadPromises);
-            showToast('Photos Uploaded');
-        }
-    }
-    window.bulkUploadPhotos = bulkUploadPhotos;
-
-    // Initial fetch of events
-    fetchEvents();
 </script>
 </body>
 </html>

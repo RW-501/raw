@@ -146,127 +146,135 @@
       signInWithEmailAndPassword,
       where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
     
-    
+      async function fetchAnalyticsData() {
+    showLoading('pageViews');
+    try {
+        const metricsRef = db.collection('analytics').doc('metrics');
+        const metricsDoc = await metricsRef.get();
 
-        async function fetchAnalyticsData() {
-            showLoading('pageViews');
-            try {
-                const metricsRef = db.collection('analytics').doc('metrics');
-                const metricsDoc = await metricsRef.get();
-                const metricsData = metricsDoc.data();
-
-                document.getElementById('pageViews').textContent = metricsData.pageViews || '0';
-                document.getElementById('imageDownloads').textContent = metricsData.imageDownloads || '0';
-                document.getElementById('eventPurchases').textContent = metricsData.eventPurchases || '0';
-                document.getElementById('userEngagement').textContent = metricsData.userEngagement || '0';
-
-                hideLoading('pageViews');
-            } catch (error) {
-                displayError("Failed to load analytics data.");
-            }
+        if (!metricsDoc.exists) {
+            throw new Error("Metrics document does not exist.");
         }
 
-        function displayTrendAnalysis(data) {
-            const ctx = document.getElementById('trendChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Page Views',
-                        data: data.pageViews,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        fill: false
-                    }]
+        const metricsData = metricsDoc.data();
+        document.getElementById('pageViews').textContent = metricsData.pageViews || '0';
+        document.getElementById('imageDownloads').textContent = metricsData.imageDownloads || '0';
+        document.getElementById('eventPurchases').textContent = metricsData.eventPurchases || '0';
+        document.getElementById('userEngagement').textContent = metricsData.userEngagement || '0';
+
+        hideLoading('pageViews');
+    } catch (error) {
+        displayError("Failed to load analytics data.");
+        hideLoading('pageViews');
+    }
+}
+
+function displayTrendAnalysis(data) {
+    const ctx = document.getElementById('trendChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Page Views',
+                data: data.pageViews,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Date'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Number of Views'
-                            }
-                        }
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Views'
                     }
                 }
-            });
-        }
-
-        async function fetchTrendData() {
-            try {
-                const trendRef = db.collection('analytics').doc('trendData');
-                const trendDoc = await trendRef.get();
-                const trendData = trendDoc.data();
-
-                const data = {
-                    labels: trendData.dates || [],
-                    pageViews: trendData.pageViews || []
-                };
-
-                displayTrendAnalysis(data);
-            } catch (error) {
-                displayError("Failed to load trend data.");
             }
         }
+    });
+}
 
-        async function updateAnalytics() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
+async function fetchTrendData() {
+    try {
+        const trendRef = db.collection('analytics').doc('trendData');
+        const trendDoc = await trendRef.get();
 
-            showLoading('pageViews');
-            try {
-                const rangeRef = db.collection('analytics')
-                    .where('date', '>=', new Date(startDate))
-                    .where('date', '<=', new Date(endDate));
-                const rangeSnapshot = await rangeRef.get();
-
-                let pageViews = 0;
-                let imageDownloads = 0;
-                let eventPurchases = 0;
-
-                rangeSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    pageViews += data.pageViews || 0;
-                    imageDownloads += data.imageDownloads || 0;
-                    eventPurchases += data.eventPurchases || 0;
-                });
-
-                document.getElementById('pageViews').textContent = pageViews;
-                document.getElementById('imageDownloads').textContent = imageDownloads;
-                document.getElementById('eventPurchases').textContent = eventPurchases;
-
-                hideLoading('pageViews');
-            } catch (error) {
-                displayError("Failed to update analytics.");
-            }
-        }
-        window.updateAnalytics = updateAnalytics;
-
-        function showLoading(metric) {
-            document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
-            document.getElementById(metric).style.display = 'none';
+        if (!trendDoc.exists) {
+            throw new Error("Trend data document does not exist.");
         }
 
-        function hideLoading(metric) {
-            document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
-            document.getElementById(metric).style.display = 'block';
-        }
-
-        function displayError(message) {
-            document.getElementById('errorMessage').textContent = message;
-        }
-
-        window.onload = function () {
-            fetchAnalyticsData();
-            fetchTrendData();
+        const trendData = trendDoc.data();
+        const data = {
+            labels: trendData.dates || [],
+            pageViews: trendData.pageViews || []
         };
+
+        displayTrendAnalysis(data);
+    } catch (error) {
+        displayError("Failed to load trend data.");
+    }
+}
+
+async function updateAnalytics() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    showLoading('pageViews');
+    try {
+        const rangeRef = db.collection('analytics')
+            .where('date', '>=', new Date(startDate))
+            .where('date', '<=', new Date(endDate));
+        const rangeSnapshot = await rangeRef.get();
+
+        let pageViews = 0;
+        let imageDownloads = 0;
+        let eventPurchases = 0;
+
+        rangeSnapshot.forEach(doc => {
+            const data = doc.data();
+            pageViews += data.pageViews || 0;
+            imageDownloads += data.imageDownloads || 0;
+            eventPurchases += data.eventPurchases || 0;
+        });
+
+        document.getElementById('pageViews').textContent = pageViews;
+        document.getElementById('imageDownloads').textContent = imageDownloads;
+        document.getElementById('eventPurchases').textContent = eventPurchases;
+
+        hideLoading('pageViews');
+    } catch (error) {
+        displayError("Failed to update analytics.");
+        hideLoading('pageViews');
+    }
+}
+
+function showLoading(metric) {
+    document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
+    document.getElementById(metric).style.display = 'none';
+}
+
+function hideLoading(metric) {
+    document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
+    document.getElementById(metric).style.display = 'block';
+}
+
+function displayError(message) {
+    document.getElementById('errorMessage').textContent = message;
+}
+
+window.onload = function () {
+    fetchAnalyticsData();
+    fetchTrendData();
+};
+
     </script>
 </body>
 
