@@ -559,21 +559,28 @@ function viewDidLoad() {
   
   inputs.forEach((input, index) => {
       input.addEventListener('keydown', (e) => {
-          // Check if the Enter key was pressed
+          // Check if the Enter key was pressed and the input is not empty or invalid
           if (e.key === 'Enter') {
               e.preventDefault(); // Prevent form submission or default Enter behavior
               
-              // Find the next input in the NodeList
-              const nextInput = inputs[index + 1];
-              
-              // Focus on the next input, if available
-              if (nextInput) {
-                  nextInput.focus();
+              // Check if the current input is valid (optional, depending on your needs)
+              if (input.checkValidity()) {
+                  // Find the next input in the NodeList
+                  const nextInput = inputs[index + 1];
+                  
+                  // Focus on the next input, if available
+                  if (nextInput && nextInput.type !== 'checkbox' && nextInput.type !== 'radio') {
+                      nextInput.focus();
+                  } else {
+                      // If there are no more inputs or next is a checkbox/radio, optionally submit the form
+                      if (index + 1 === inputs.length) {
+                          form.submit();  // Submit the form when the last input is reached
+                      }
+                  }
               } else {
-                  // If there are no more inputs, optionally submit the form or do nothing
-                  form.submit();  // This is optional; remove if not needed
-                  // Or do nothing, if you don't want automatic form submission
-                  // console.log('All inputs filled, ready to submit');
+                  // Optionally, highlight invalid inputs or display a message
+                  input.classList.add('is-invalid');
+                  console.log('Please fill out this field');
               }
           }
       });
@@ -582,8 +589,7 @@ function viewDidLoad() {
 
 // Run viewDidLoad when the document is ready
 document.addEventListener('DOMContentLoaded', viewDidLoad);
-
-          
+        
   
   // Toast Notification Function
   //function showToast(message, type = 'info', duration = 3000) {
