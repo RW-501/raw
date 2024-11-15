@@ -344,21 +344,37 @@
     </div>
   </footer>
 
-    <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="imageModalLabel">Image Title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
+     <!-- Enhanced Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Image Title</h5>
+          <!-- Close Button positioned top right -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">close</button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="image-container">
+            <!-- Full-size image -->
             <img src="" class="img-fluid" id="modal-image" alt="Full-size image">
-            <p id="modal-description"></p>
           </div>
+          <!-- Image description/caption -->
+          <p id="modal-description" class="mt-3"></p>
+        </div>
+        <!-- Modal Footer (optional, for extra controls) -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="prev-btn"><i class="bi bi-arrow-left-circle"></i> Previous</button>
+          <button type="button" class="btn btn-secondary" id="next-btn"><i class="bi bi-arrow-right-circle"></i> Next</button>
         </div>
       </div>
     </div>
+  </div>
+  
+<!-- Modal Overlay -->
+<div class="modal-backdrop fade" id="modal-backdrop" style="display: none;"></div>
+
 
 
   <script src="./js/main.js" ></script>
