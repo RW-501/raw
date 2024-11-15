@@ -133,16 +133,20 @@
   
   <main id="main-content">
 
+    
+  <!-- About Content Section -->
+  <section class="about-content">
+    <div id="text-area" ></div></section>
 
     <!-- Public Gallery Section -->
-  <section id="gallery" class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Gallery</h2>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery-images">
-        <!-- Dynamic content from Firebase -->
+    <section id="gallery" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Gallery</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery-images">
+          <!-- Dynamic content from Firebase -->
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
   
 
   <!-- Private Access Code Section -->
@@ -279,6 +283,7 @@
 
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
+    const mainTextArea = document.getElementById("text-area");
 
     db.collection('HomePage').get().then(snapshot => {
       snapshot.forEach(doc => {
@@ -294,6 +299,9 @@
           </div>`;
         galleryImagesContainer.innerHTML += imageElement;
       });
+      mainTextArea.innerHTML = mainTextArea;
+
+
     });
 
     // Validate Access Code

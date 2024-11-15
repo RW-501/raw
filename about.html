@@ -103,7 +103,7 @@
 
   <!-- About Content Section -->
   <section class="about-content">
-    <div class="container_CTA">
+    <div id="text-area" class="container">
       <h2>Welcome to RAW Photography</h2>
       <p>At RAW Photography, we believe in capturing moments in their most authentic form. Based in Little Rock, Arkansas, we specialize in portraits, events, and showcasing the raw beauty of every individual. Our goal is to deliver stunning images that you can cherish for a lifetime.</p>
       
@@ -129,6 +129,17 @@
       <p><a href="./contact">Contact us today</a> to book your session or for any inquiries!</p>
     </div>
   </section>
+
+      <!-- Public Gallery Section -->
+      <section id="gallery" class="py-5">
+        <div class="container">
+          <h2 class="text-center mb-4">Gallery</h2>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery-images">
+            <!-- Dynamic content from Firebase -->
+          </div>
+        </div>
+      </section>
+
 </main>
 
 
@@ -202,7 +213,27 @@
 
 
 
+      const galleryImagesContainer = document.getElementById("gallery-images");
+    const mainTextArea = document.getElementById("text-area");
 
+    db.collection('AboutPage').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageElement = `
+          <div class="col">
+            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${data.imageUrl}" 
+              data-bs-title="${data.title}" 
+              data-bs-description="${data.description}">
+              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+            </a>
+          </div>`;
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+      mainTextArea.innerHTML = mainTextArea;
+
+
+    });
 
 
 

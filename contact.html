@@ -206,7 +206,10 @@
 
     <main id="main-content">
 
-        
+          <!-- About Content Section -->
+  <section class="about-content">
+    <div id="text-area" ></div></section>
+
     <section id="contact-page">
         <!-- Contact Form Section -->
         <div class="contact-form-container">
@@ -239,7 +242,20 @@
             <div id="toast-success" class="toast">Your message has been sent!</div>
             <div id="toast-error" class="toast">There was an error sending your message. Please try again.</div>
         </div>
+      </section>
 
+
+    <!-- Public Gallery Section -->
+    <section id="gallery" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Gallery</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery-images">
+          <!-- Dynamic content from Firebase -->
+        </div>
+      </div>
+    </section>
+
+    <section id="text-area">
         <!-- Google Map Section -->
         <div class="map-container">
             <h2>Find Us</h2>
@@ -260,7 +276,10 @@
                 <li><a href="https://www.facebook.com/photographer" target="_blank">Facebook</a></li>
             </ul>
         </div>
-    </section>
+
+      </section>
+
+
 
 </main>
 
@@ -330,6 +349,32 @@
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
+
+
+
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+    const mainTextArea = document.getElementById("text-area");
+
+    db.collection('ContactPage').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageElement = `
+          <div class="col">
+            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${data.imageUrl}" 
+              data-bs-title="${data.title}" 
+              data-bs-description="${data.description}">
+              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+            </a>
+          </div>`;
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+      mainTextArea.innerHTML = mainTextArea;
+
+
+    });
+
 
     
 document.getElementById('contact-form').addEventListener('submit', function(event) {
