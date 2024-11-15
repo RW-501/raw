@@ -165,25 +165,58 @@ async function fetchMessages(status = 'all') {
 }
 
 // Display messages in the table
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from "./firebase"; // Adjust the import path based on your file structure
+
+// Fetch messages based on status
+async function fetchMessages(status = "all") {
+    try {
+        let messagesQuery = collection(db, "Contacts"); // Correctly reference db and collection name
+
+        // Add a query if the status is not 'all'
+        if (status !== "all") {
+            messagesQuery = query(messagesQuery, where("status", "==", status));
+        }
+
+        // Get the documents
+        const snapshot = await getDocs(messagesQuery);
+        const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+        // Display the messages
+        displayMessages(messages);
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+    }
+}
+
+// Function to display messages
 function displayMessages(messages) {
-    const messagesList = document.getElementById('messagesList');
-    messagesList.innerHTML = '';
+    const messagesList = document.getElementById("messagesList");
+    messagesList.innerHTML = "";
 
     messages.forEach((message, index) => {
-        const row = document.createElement('tr');
+        const row = document.createElement("tr");
         row.innerHTML = `
             <td>${index + 1}</td>
-            <td>${message.name}</td>
-            <td>${message.email}</td>
-            <td>${message.message.slice(0, 50)}...</td>
+            <td>${message.name || "Unknown"}</td>
+            <td>${message.email || "N/A"}</td>
+            <td>${message.message?.slice(0, 50) || ""}...</td>
             <td>
-                <span class="badge ${message.status === 'unread' ? 'bg-warning' : message.status === 'read' ? 'bg-success' : 'bg-secondary'}">
-                    ${message.status.charAt(0).toUpperCase() + message.status.slice(1)}
+                <span class="badge ${
+                    message.status === "unread" 
+                        ? "bg-warning" 
+                        : message.status === "read" 
+                        ? "bg-success" 
+                        : "bg-secondary"
+                }">
+                    ${message.status?.charAt(0).toUpperCase() + message.status?.slice(1)}
                 </span>
             </td>
             <td>
                 <button class="btn btn-info" onclick="viewMessageDetails('${message.id}')">View</button>
-                <button class="btn btn-secondary" onclick="toggleReadStatus('${message.id}', '${message.status}')">${message.status === 'read' ? 'Mark as Unread' : 'Mark as Read'}</button>
+                <button class="btn btn-secondary" onclick="toggleReadStatus('${message.id}', '${message.status}')">
+                    ${message.status === "read" ? "Mark as Unread" : "Mark as Read"}
+                </button>
                 <button class="btn btn-danger" onclick="archiveMessage('${message.id}')">Archive</button>
             </td>
         `;
@@ -191,17 +224,27 @@ function displayMessages(messages) {
     });
 }
 
-// View full message details in a modal
+// Function to view message details
 async function viewMessageDetails(messageId) {
-    const messageDoc = await getDoc(doc(db, 'Contacts', messageId));
-    const message = messageDoc.data();
-    
-    document.getElementById('messageDetailModalLabel').innerText = `Message from ${message.name}`;
-    document.getElementById('messageDetailsContent').innerText = message.message;
-    
-    $('#messageDetailModal').modal('show');
+    try {
+        const messageDoc = await getDoc(doc(db, "Contacts", messageId));
+        if (messageDoc.exists()) {
+            const message = messageDoc.data();
+            document.getElementById("messageDetailModalLabel").innerText = `Message from ${message.name || "Unknown"}`;
+            document.getElementById("messageDetailsContent").innerText = message.message || "No message content.";
+            $('#messageDetailModal').modal('show'); // Ensure you're using Bootstrap 4/5 modal properly
+        } else {
+            console.warn("No such document!");
+        }
+    } catch (error) {
+        console.error("Error fetching message details:", error);
+    }
 }
+
+// Export or attach functions to the global window object if needed
+window.fetchMessages = fetchMessages;
 window.viewMessageDetails = viewMessageDetails;
+
 
 // Mark message as read/unread
 async function toggleReadStatus(messageId, currentStatus) {
