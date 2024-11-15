@@ -139,7 +139,7 @@
             profilePicUrl = await profilePicRef.getDownloadURL();
         }
 
-        await db.collection('about').doc('photographerInfo').set({
+        await db.collection('AboutPage').doc('photographerInfo').set({
             bio,
             specialties,
             awards,
@@ -178,25 +178,28 @@
         }
     } catch (error) {
         console.error('Error uploading gallery images:', error);
-        alert('There was an error uploading the images. Please try again.');
+        showToast('There was an error uploading the images. Please try again.');
     }
 
     galleryImages.appendChild(fragment);  // Append all items at once
 }
+window.uploadGalleryImages = uploadGalleryImages;
 
     // Function to mark an image as featured
     async function markAsFeatured(imageUrl) {
         await db.collection('gallery').doc('featured').set({ imageUrl }, { merge: true });
-        alert('Image marked as featured');
+        showToast('Image marked as featured');
     }
+    window.markAsFeatured = markAsFeatured;
 
     // Function to remove an image from the gallery
     async function removeImage(imageUrl) {
         const galleryImages = document.getElementById('galleryImages');
         galleryImages.querySelector(`img[src="${imageUrl}"]`).parentElement.remove();
         await storage.refFromURL(imageUrl).delete();
-        alert('Image removed from gallery');
+        showToast('Image removed from gallery');
     }
+    window.removeImage = removeImage;
 
     // Function to update event details
     async function updateEventDetails() {
@@ -206,7 +209,7 @@
     const eventImage = document.getElementById('eventImage').files[0];
 
     if (!eventTitle || !eventDescription || !eventDate) {
-        alert('Please fill in all event details.');
+        showToast('Please fill in all event details.');
         return;
     }
 
@@ -217,14 +220,15 @@
         eventImageUrl = await eventImageRef.getDownloadURL();
     }
 
-    await db.collection('events').doc(eventTitle).set({
+    await db.collection('Events').doc(eventTitle).set({
         eventDescription,
         eventDate,
         eventImageUrl
     });
 
-    alert('Event updated successfully');
+    showToast('Event updated successfully');
 }
+window.updateEventDetails = updateEventDetails;
 
 </script>
 

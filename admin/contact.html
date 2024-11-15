@@ -132,6 +132,7 @@
         
         $('#messageDetailModal').modal('show');
     }
+    window.viewMessageDetails = viewMessageDetails;
 
     // Mark message as read/unread
     async function toggleReadStatus(messageId, currentStatus) {
@@ -140,12 +141,14 @@
 
         fetchMessages();
     }
+    window.toggleReadStatus = toggleReadStatus;
 
     // Archive a message
     async function archiveMessage(messageId) {
         await db.collection('Contacts').doc(messageId).update({ status: 'archived' });
         fetchMessages();
     }
+    window.archiveMessage = archiveMessage;
 
     // Reply to a message (send an email notification and reply in the database)
     async function sendReply() {
@@ -165,6 +168,7 @@
         $('#messageDetailModal').modal('hide');
         fetchMessages();
     }
+    window.sendReply = sendReply;
 
     // Send an email notification (simplified example)
     async function sendEmailNotification(replyContent) {
@@ -178,12 +182,14 @@
         const sendEmail = firebase.functions().httpsCallable('sendEmail');
         await sendEmail(emailPayload);
     }
+    window.sendEmailNotification = sendEmailNotification;
 
     // Filter messages by status (unread, read, archived)
     function filterMessages() {
         const status = document.getElementById('filterStatus').value;
         fetchMessages(status);
     }
+    window.filterMessages = filterMessages;
 
     // Initial load of all messages
     fetchMessages();

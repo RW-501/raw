@@ -116,7 +116,7 @@
         // Hashing the access code for better security (placeholder)
         const hashedAccessCode = btoa(accessCode); // replace with a hashing library in production
 
-        await db.collection('events').add({
+        await db.collection('Events').add({
             title,
             description,
             eventDate,
@@ -124,10 +124,11 @@
             accessCode: hashedAccessCode
         });
 
-        alert('Event Uploaded');
+        showToast('Event Uploaded');
         document.getElementById('eventForm').reset(); // Clear form after submission
         fetchEvents();
     }
+    window.uploadEvent = uploadEvent;
 
     // Fetch and display events with sorting and filtering
     async function fetchEvents() {
@@ -195,6 +196,7 @@
         document.getElementById('eventDate').value = event.eventDate;
         document.getElementById('accessCode').value = event.accessCode;
     }
+    window.editEvent = editEvent;
 
     // Delete event
     async function deleteEvent(eventId) {
@@ -203,6 +205,7 @@
             fetchEvents();
         }
     }
+    window.deleteEvent = deleteEvent;
 
     // Bulk upload photos with watermark
     async function bulkUploadPhotos() {
@@ -218,9 +221,10 @@
                 uploadPromises.push(storageRef.put(file));
             }
             await Promise.all(uploadPromises);
-            alert('Photos Uploaded');
+            showToast('Photos Uploaded');
         }
     }
+    window.bulkUploadPhotos = bulkUploadPhotos;
 
     // Initial fetch of events
     fetchEvents();
