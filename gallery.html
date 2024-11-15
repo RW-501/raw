@@ -238,19 +238,6 @@
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
     
-    // Fetch Gallery and Site Info from HomePage collection
-    const mainTextArea = document.getElementById("text-area");
-
-    db.collection('GalleryPage').get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
- 
-      });
-      mainTextArea.innerHTML = data.mainTextArea;
-
-
-    });
-    
         let currentCategory = 'all';
         let lastVisible = null; // Store the last document snapshot for pagination
         const LIMIT = 12; // Number of images per page
@@ -334,6 +321,21 @@
                 });
             }
         }
+
+
+        
+    // Fetch Gallery and Site Info from HomePage collection
+    const mainTextArea = document.getElementById("text-area");
+
+db.collection('GalleryPage').get().then(snapshot => {
+  snapshot.forEach(doc => {
+    const data = doc.data();
+
+  });
+  mainTextArea.innerHTML = data.mainTextArea;
+
+
+});
 
         // Initialize gallery on page load
         window.onload = function() {

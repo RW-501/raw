@@ -299,31 +299,6 @@
     
 
 
-    // Fetch Gallery and Site Info from HomePage collection
-    const galleryImagesContainer = document.getElementById("gallery-images");
-    const mainTextArea = document.getElementById("text-area");
-
-    db.collection('EventsPage').get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const imageElement = `
-          <div class="col">
-            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
-              data-bs-image="${data.imageUrl}" 
-              data-bs-title="${data.title}" 
-              data-bs-description="${data.description}">
-              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
-            </a>
-          </div>`;
-        galleryImagesContainer.innerHTML += imageElement;
-      });
-      mainTextArea.innerHTML = mainTextArea;
-
-
-    });
-
-
-
 
 
 
@@ -404,6 +379,34 @@
             document.getElementById('modal-description').innerText = description;
             document.getElementById('imageModalLabel').innerText = title;
         });
+
+
+
+        
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+    const mainTextArea = document.getElementById("text-area");
+
+    db.collection('EventsPage').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageElement = `
+          <div class="col">
+            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${data.imageUrl}" 
+              data-bs-title="${data.title}" 
+              data-bs-description="${data.description}">
+              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+            </a>
+          </div>`;
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+      mainTextArea.innerHTML = mainTextArea;
+
+
+    });
+
+
 
         // Fetch events on page load
         window.onload = fetchEvents;

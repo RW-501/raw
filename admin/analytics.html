@@ -217,7 +217,7 @@
       async function fetchAnalyticsData() {
     showLoading('pageViews');
     try {
-        const metricsRef = db.collection('analytics').doc('metrics');
+        const metricsRef = db.collection('Analytics').doc('metrics');
         const metricsDoc = await metricsRef.get();
 
         if (!metricsDoc.exists) {
@@ -272,7 +272,7 @@ function displayTrendAnalysis(data) {
 
 async function fetchTrendData() {
     try {
-        const trendRef = db.collection('analytics').doc('trendData');
+        const trendRef = db.collection('Analytics').doc('trendData');
         const trendDoc = await trendRef.get();
 
         if (!trendDoc.exists) {
@@ -297,7 +297,7 @@ async function updateAnalytics() {
 
     showLoading('pageViews');
     try {
-        const rangeRef = db.collection('analytics')
+        const rangeRef = db.collection('Analytics')
             .where('date', '>=', new Date(startDate))
             .where('date', '<=', new Date(endDate));
         const rangeSnapshot = await rangeRef.get();

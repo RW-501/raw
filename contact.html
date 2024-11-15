@@ -325,31 +325,6 @@
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
 
-
-    // Fetch Gallery and Site Info from HomePage collection
-    const galleryImagesContainer = document.getElementById("gallery-images");
-    const mainTextArea = document.getElementById("text-area");
-
-    db.collection('ContactPage').get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const imageElement = `
-          <div class="col">
-            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
-              data-bs-image="${data.imageUrl}" 
-              data-bs-title="${data.title}" 
-              data-bs-description="${data.description}">
-              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
-            </a>
-          </div>`;
-        galleryImagesContainer.innerHTML += imageElement;
-      });
-      mainTextArea.innerHTML = mainTextArea;
-
-
-    });
-
-
     
 document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -374,21 +349,21 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             email: email,
             phone: phone || '', // if phone is empty, use an empty string
             message: message,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: new Date
         };
 
         // Save the contact data to Firestore's 'Contact' collection
         db.collection('Contact').add(contactData)
             .then(() => {
-                showToast('success');
+                showToast('Message sent successfully!',"succees");
                 document.getElementById('contact-form').reset(); // Reset the form after successful submission
             })
             .catch((error) => {
-                showToast('error');
+                showToast('Error submitting contact',"error");
                 console.error("Error submitting contact form: ", error);
             });
     } else {
-        showToast('error');
+        showToast('Error submitting contact',"error");
     }
 });
 
@@ -406,6 +381,31 @@ function initMap() {
         map: map,
     });
 }
+
+
+
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+    const mainTextArea = document.getElementById("text-area");
+
+    db.collection('ContactPage').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageElement = `
+          <div class="col">
+            <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${data.imageUrl}" 
+              data-bs-title="${data.title}" 
+              data-bs-description="${data.description}">
+              <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
+            </a>
+          </div>`;
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+      mainTextArea.innerHTML = mainTextArea;
+
+
+    });
 
 
 

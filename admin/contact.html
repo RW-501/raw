@@ -148,10 +148,8 @@
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
-import { getFunctions, httpsCallable } from "firebase/functions";
 
-const db = getFirestore(); // Initialize Firestore
-
+  
 // Fetch messages from Firestore
 async function fetchMessages(status = 'all') {
     let messagesQuery = collection(db, 'Contacts');
