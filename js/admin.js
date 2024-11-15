@@ -138,7 +138,7 @@ async function initMessages() {
   setInterval(() => {
     const message = getRandomUnseenMessage(messages);
     displayMessage(message);
-  }, 5000);
+  }, 50000);
 
   // Initial Message Display
   displayMessage(getRandomUnseenMessage(messages));
