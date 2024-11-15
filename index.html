@@ -485,55 +485,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+// Execute the function on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
 const mainTextArea = document.getElementById("text-area");
 
-// Fetch HomePage Data
-async function fetchGalleryAndSiteInfo() {
-  try {
-    // Get collection reference
-    const querySnapshot = await getDocs(collection(db, "HomePage"));
-
-    // Iterate through documents
-    querySnapshot.forEach(doc => {
-      const data = doc.data();
-      const imageElement = `
-        <div class="col">
-          <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#imageModal" 
-            data-bs-image="${data.imageUrl}" 
-            data-bs-title="${data.title}" 
-            data-bs-description="${data.description}">
-            <img src="${data.thumbnailUrl}" class="img-fluid" alt="${data.title}" loading="lazy">
-          </a>
-        </div>`;
-      galleryImagesContainer.innerHTML += imageElement;
-    });
-
-    // Update main text area
-    mainTextArea.innerHTML = mainTextArea.innerHTML; // This doesn't do anything, consider revisiting this logic.
-  } catch (error) {
-    console.error("Error fetching gallery and site info: ", error);
+  if (mainTextArea && galleryImagesContainer) {
+    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "HomePage");
+  } else {
+    console.error("Required elements are missing in the DOM.");
   }
-}
-
-// Execute the function on DOMContentLoaded
-document.addEventListener("DOMContentLoaded", fetchGalleryAndSiteInfo);
-  
-
+});
 
 // Handle Image Modal
-    const imageModal = document.getElementById('imageModal');
-    imageModal.addEventListener('show.bs.modal', function(event) {
+document.addEventListener("DOMContentLoaded", () => {
+  const imageModal = document.getElementById("imageModal");
+  if (imageModal) {
+    imageModal.addEventListener("show.bs.modal", function (event) {
       const button = event.relatedTarget;
-      const imageUrl = button.getAttribute('data-bs-image');
-      const title = button.getAttribute('data-bs-title');
-      const description = button.getAttribute('data-bs-description');
 
-      document.getElementById('modal-image').src = imageUrl;
-      document.getElementById('modal-description').innerText = description;
-      document.getElementById('imageModalLabel').innerText = title;
+      const imageUrl = button?.getAttribute("data-bs-image");
+      const title = button?.getAttribute("data-bs-title");
+      const description = button?.getAttribute("data-bs-description");
+
+      document.getElementById("modal-image").src = imageUrl || "";
+      document.getElementById("modal-description").innerText = description || "No description provided.";
+      document.getElementById("imageModalLabel").innerText = title || "Untitled";
     });
+  }
+});
 
   </script>
 </body>

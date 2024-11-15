@@ -280,3 +280,60 @@ function getViewedByField() {
     attachTrackingListeners();
   }
 
+
+// Reusable sanitize input function
+function sanitizeInput(input) {
+    const temp = document.createElement("div");
+    temp.textContent = input;
+    return temp.innerHTML;
+  }
+  
+  // Helper for cycling default images
+  function getDefaultImage(defaultImages, index) {
+    return defaultImages[index % defaultImages.length];
+  }
+  
+  // Fetch HomePage Data
+   window.fetchGalleryAndSiteInfo = async function(mainTextArea, galleryImagesContainer, Collection) {
+
+  //async function fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, Collection) {
+    try {
+      // Get collection reference
+      const querySnapshot = await getDocs(collection(db, Collection));
+  
+      const defaultImages = [
+        "https://shutterworx.co/images/default_1.gif",
+        "https://shutterworx.co/images/default_2.gif",
+        "https://shutterworx.co/images/default_3.gif",
+        "https://shutterworx.co/images/default_4.gif"
+      ];
+  
+      let defaultImageIndex = 0;
+  
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+  
+        const imageUrl = data.imageUrl || getDefaultImage(defaultImages, defaultImageIndex);
+        const thumbnailUrl = data.thumbnailUrl || getDefaultImage(defaultImages, defaultImageIndex);
+  
+        defaultImageIndex++;
+  
+        const imageElement = `
+          <div class="col gallery-item">
+            <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
+              data-bs-image="${imageUrl}" 
+              data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
+              data-bs-description="${sanitizeInput(data.description || 'No description available')}">
+              <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
+            </a>
+          </div>`;
+  
+        galleryImagesContainer.innerHTML += imageElement;
+      });
+  
+    } catch (error) {
+      console.error("Error fetching gallery and site info: ", error);
+      galleryImagesContainer.innerHTML = `<p class="text-danger">Failed to load gallery. Please try again later.</p>`;
+    }
+  }
+  
