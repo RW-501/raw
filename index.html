@@ -342,8 +342,12 @@
   }).then(() => {
     alert('Message sent successfully!');
     document.getElementById('contact-form').reset();
+  }).catch((error) => {
+      // Handle any errors with a user-friendly message
+      console.error("Error sending message: ", error);
+      alert("There was an error sending your message. Please try again.");
+    });
   });
-});
 
     // Handle Image Modal
     const imageModal = document.getElementById('imageModal');
