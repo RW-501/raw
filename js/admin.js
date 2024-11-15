@@ -1,3 +1,77 @@
+
+// Run viewDidLoad when the document is ready
+document.addEventListener('DOMContentLoaded', viewDidLoad);
+     
+  
+  // Toast Notification Function
+  //function showToast(message, type = 'info', duration = 3000) {
+    window.showToast = function(message, type = 'info', duration = 3000) {
+  
+      // Create a div for the toast
+      const toast = document.createElement('div');
+      
+      toast.setAttribute('role', 'alert'); // Accessibility
+  
+      // Add styles to the toast
+      toast.style.position = 'fixed';
+      toast.style.bottom = '20px';
+      toast.style.right = '20px';
+      toast.style.padding = '15px 20px';
+      toast.style.margin = '10px';
+      toast.style.borderRadius = '5px';
+      toast.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+      toast.style.color = '#fff';
+      toast.style.zIndex = '9999999999999999';
+      toast.style.transition = 'opacity 0.5s ease-in-out';
+      toast.style.opacity = '1';
+  
+      // Set background color based on toast type
+      switch (type) {
+          case 'success':
+              toast.style.backgroundColor = '#4CAF50'; // Green for success
+              break;
+          case 'error':
+              toast.style.backgroundColor = '#F44336'; // Red for error
+              break;
+          case 'info':
+              toast.style.backgroundColor = '#2196F3'; // Blue for info
+              break;
+          case 'warning':
+              toast.style.backgroundColor = '#FF9800'; // Orange for warning
+              break;
+          default:
+              toast.style.backgroundColor = '#2196F3'; // Default to info
+      }
+  
+               // Implement your toast display logic here
+            //   `${type.toUpperCase()}: ${message}`);
+            console.log("?????????/");
+      toast.className = `toast toast-${type}`; // Add classes for styling
+      toast.innerText = message; // Set the message text
+  
+      // Append the toast to the body
+      document.body.appendChild(toast);
+  
+      // Set a timer to remove the toast after the specified duration
+      setTimeout(() => {
+        toast.style.opacity = '0'; // Start fade-out
+          toast.classList.add('fade-out'); // Add fade-out effect
+          setTimeout(() => {
+              document.body.removeChild(toast); // Remove toast from DOM
+          }, 500); // Time to wait for fade-out animation
+      }, duration);
+  }
+  
+  // Example usage: Replace alerts with showToast
+  // showToast('This is a success message!', 'success');
+  // showToast('This is an error message!', 'error', duration);
+  // showToast('This is an info message!', 'info');
+  // showToast('This is a warning message!', 'warning');
+  
+  
+  
+
+
 // DOM Elements 
 const messageText = document.getElementById("message-text");
 const messageActions = document.getElementById("message-actions");
