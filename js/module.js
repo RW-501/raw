@@ -28,7 +28,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
 
 // Storage import
-import { getDownloadURL,uploadBytes, Resumable, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
+import { getDownloadURL,uploadBytes, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
 
 // Analytics import
 import { initializeAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js';
@@ -79,7 +79,7 @@ const firebaseConfig = {
 document.addEventListener('DOMContentLoaded', initializeFirebase);
 
 // Export Firestore, Storage, and Auth instances for use in other modules
-export { db,getStorage, ref, uploadBytes, Resumable, getDownloadURL,
+export { db,getStorage, ref, uploadBytes, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc,
       query, updateDoc, setDoc, addDoc,signInAnonymously ,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
