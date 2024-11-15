@@ -244,7 +244,13 @@ footer  {
   min-height: 5rem;
  }
 
+.message-btn {
+  border-radius: 50px;
+  border: 1px solid #4f4c4c;
+  background-color: rgb(56, 96, 213);
 
+
+}
 
 
 
