@@ -792,7 +792,8 @@ display: none;
   max-height: 80vh;
   display: grid;
   justify-content: center;
-  overflow-y: auto; /* Allows scrolling for long descriptions */
+  overflow-y: auto;
+  padding-bottom: 20vh; /* Allows scrolling for long descriptions */
 }
 
 .modal-image {
