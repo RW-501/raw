@@ -328,26 +328,33 @@
 
 
     // Submit Contact Form Data
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message').value;
+    document.addEventListener('DOMContentLoaded', function() {
+  // Attach submit event listener to the contact form
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Capture the form input values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
 
-  db.collection('Contacts').add({
-    name: name,
-    email: email,
-    message: message,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  }).then(() => {
-    alert('Message sent successfully!');
-    document.getElementById('contact-form').reset();
-  }).catch((error) => {
+    // Add data to Firestore 'Contacts' collection
+    db.collection('Contacts').add({
+      name: name,
+      email: email,
+      message: message,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    }).then(() => {
+      // Notify the user of successful submission
+      alert('Message sent successfully!');
+      document.getElementById('contact-form').reset();
+    }).catch((error) => {
       // Handle any errors with a user-friendly message
       console.error("Error sending message: ", error);
       alert("There was an error sending your message. Please try again.");
     });
   });
+});
 
     // Handle Image Modal
     const imageModal = document.getElementById('imageModal');
