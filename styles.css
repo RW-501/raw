@@ -738,3 +738,61 @@ section {
   opacity: 1;
 }
 
+
+
+
+/* Modal Styling */
+.modal-custom {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background-color: #343a40; /* Dark theme for header */
+  color: #fff;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.modal-header .modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1); /* Makes close button white */
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light contrast for body */
+}
+
+.modal-image {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  max-height: 70vh; /* Keeps image within viewport */
+  object-fit: contain; /* Ensures image scales nicely */
+}
+
+.modal-description {
+  font-size: 1rem;
+  color: #555;
+  font-style: italic;
+  margin-top: 15px;
+}
+
+.modal-description::before {
+  content: "Description: ";
+  font-weight: bold;
+  color: #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .modal-image {
+    max-height: 50vh; /* Adjusts for smaller screens */
+  }
+}
+

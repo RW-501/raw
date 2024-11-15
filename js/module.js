@@ -330,6 +330,10 @@ function sanitizeInput(input) {
   
         galleryImagesContainer.innerHTML += imageElement;
       });
+
+      if(data.mainText ){
+        mainTextArea.innerHTML = data.mainText;
+      }
   
     } catch (error) {
       console.error("Error fetching gallery and site info: ", error);
