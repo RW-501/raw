@@ -555,6 +555,13 @@ window.addEventListener('load', applyFilmStripEffect);
 // Auto move to next input (if applicable) on Enter key press
 function viewDidLoad() {
   const form = document.querySelector('form'); // Select the form or parent container
+
+  // Check if the form exists before proceeding
+  if (!form) {
+      console.error('Form element not found');
+      return; // Exit the function if no form is found
+  }
+
   const inputs = form.querySelectorAll('input'); // Only select inputs within the form
   
   inputs.forEach((input, index) => {
@@ -589,7 +596,7 @@ function viewDidLoad() {
 
 // Run viewDidLoad when the document is ready
 document.addEventListener('DOMContentLoaded', viewDidLoad);
-        
+     
   
   // Toast Notification Function
   //function showToast(message, type = 'info', duration = 3000) {
