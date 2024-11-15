@@ -761,3 +761,39 @@ document.addEventListener('DOMContentLoaded', viewDidLoad);
   console.log(shortenedFileName);  // Output: "Very_Long_File.jpg"
   
   */
+
+
+  
+// Handle Image Modal
+document.addEventListener("DOMContentLoaded", () => {
+  const imageModal = document.getElementById("imageModal");
+  
+  if (imageModal) {
+    imageModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+
+      // Get data attributes from the button that triggered the modal
+      const imageUrl = button?.getAttribute("data-bs-image");
+      const title = button?.getAttribute("data-bs-title");
+      const description = button?.getAttribute("data-bs-description");
+
+      // Update modal content
+      const modalImage = document.getElementById("modal-image");
+      const modalDescription = document.getElementById("modal-description");
+      const modalLabel = document.getElementById("imageModalLabel");
+
+      if (modalImage) modalImage.src = imageUrl || "";
+      if (modalDescription) modalDescription.innerText = description || "No description provided.";
+      if (modalLabel) modalLabel.innerText = title || "Untitled";
+
+      // Make sure the modal is visible
+      imageModal.style.display = "block"; // Attach display block
+    });
+
+    imageModal.addEventListener("hide.bs.modal", () => {
+      // Optionally reset the display property when the modal is hidden
+      imageModal.style.display = "none"; // Revert to hidden when modal is closed
+    });
+  }
+});
+

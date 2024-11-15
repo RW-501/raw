@@ -738,7 +738,7 @@ section {
 
   transition: opacity 0.3s ease; /* Smooth transition effect */
 
-
+display: none;
   top: 0;
     z-index: 5000;
     bottom: 0;

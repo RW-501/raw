@@ -506,24 +506,6 @@ const mainTextArea = document.getElementById("text-area");
   }
 });
 
-// Handle Image Modal
-document.addEventListener("DOMContentLoaded", () => {
-  const imageModal = document.getElementById("imageModal");
-  if (imageModal) {
-    imageModal.addEventListener("show.bs.modal", function (event) {
-      const button = event.relatedTarget;
-
-      const imageUrl = button?.getAttribute("data-bs-image");
-      const title = button?.getAttribute("data-bs-title");
-      const description = button?.getAttribute("data-bs-description");
-
-      document.getElementById("modal-image").src = imageUrl || "";
-      document.getElementById("modal-description").innerText = description || "No description provided.";
-      document.getElementById("imageModalLabel").innerText = title || "Untitled";
-    });
-  }
-});
-
   </script>
 </body>
 </html>
