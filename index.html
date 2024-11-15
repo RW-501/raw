@@ -181,7 +181,7 @@
           <label for="message" class="form-label">Message</label>
           <textarea class="form-control" id="message" rows="4" placeholder="Your message" required></textarea>
         </div>
-        <button type="button" class="btn btn-primary">Send Message</button>
+        <button id="main-contact-btn" type="button" class="btn btn-primary">Send Message</button>
       </form>
     </div>
   </section>
@@ -330,7 +330,7 @@
     // Submit Contact Form Data
     document.addEventListener('DOMContentLoaded', function() {
   // Attach submit event listener to the contact form
-  document.getElementById('main-contact-form').addEventListener('submit', function(event) {
+  document.getElementById('main-contact-btn').addEventListener('click', function(event) {
     event.preventDefault();
     
     console.log("event ",event);
