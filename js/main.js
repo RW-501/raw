@@ -639,8 +639,8 @@ document.addEventListener('DOMContentLoaded', viewDidLoad);
       }
   
                // Implement your toast display logic here
-            //   console.log(`${type.toUpperCase()}: ${message}`);
-  
+            //   `${type.toUpperCase()}: ${message}`);
+            console.log("?????????/");
       toast.className = `toast toast-${type}`; // Add classes for styling
       toast.innerText = message; // Set the message text
   
