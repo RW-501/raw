@@ -149,23 +149,8 @@
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
 
+
   
-// Fetch messages from Firestore
-async function fetchMessages(status = 'all') {
-    let messagesQuery = collection(db, 'Contacts');
-
-    if (status !== 'all') {
-        messagesQuery = query(messagesQuery, where('status', '==', status));
-    }
-
-    const snapshot = await getDocs(messagesQuery);
-    const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    displayMessages(messages);
-}
-
-// Display messages in the table
-
 // Fetch messages based on status
 async function fetchMessages(status = "all") {
     try {
