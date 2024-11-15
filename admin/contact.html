@@ -154,26 +154,20 @@
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
-
-
-  
-// Fetch messages based on status
-async function fetchMessages(status = "all") {
+  async function fetchMessages(status = "all") {
     try {
-        let messagesQuery = collection(db, "Contacts"); // Correctly reference db and collection name
+        // Reference to the collection
+        const contactsCollectionRef = collection(db, "Contacts");
 
-        // Add a query if the status is not 'all'
+        // Build the query
+        let messagesQuery;
+        if (status !== "all") {
+            messagesQuery = query(contactsCollectionRef, where("status", "==", status));
+        } else {
+            messagesQuery = contactsCollectionRef; // Use the collection directly
+        }
 
-if (status !== "all") {
-    // Apply the "status" filter if specified
-    messagesQuery = query(collection(db, "Contacts"), where("status", "==", status));
-} else {
-    // No filters, use the collection directly
-    messagesQuery = collection(db, "Contacts");
-}
-
-
-        // Get the documents
+        // Fetch documents
         const snapshot = await getDocs(messagesQuery);
         const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
