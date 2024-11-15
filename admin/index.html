@@ -73,99 +73,133 @@
 
 <!-- Firebase JS SDK and Custom Scripts -->
 <script type="module">
-  import {  db, doc,getDoc, query, updateDoc,
-  setDoc,     signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  OAuthProvider,arrayUnion ,
-  signOut, addDoc , increment,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
+    import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,arrayUnion ,
+    signOut, addDoc , increment,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
+  
+  
+// Allowed emails and phone numbers
+const allowedEmails = ["1988lrp@gmail.com", "admin@example.com"];
+const allowedPhoneNumbers = ["+9725977878", "+1987654321"];
 
-
-
-    // Allowed emails and phone numbers
-    const allowedEmails = ["1988lrp@gmail.com", "admin@example.com"];
-    const allowedPhoneNumbers = ["+9725977878", "+1987654321"];
-
-    // Login functions
-    function googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then((result) => {
-        const userEmail = result.user.email;
-        if (allowedEmails.includes(userEmail)) {
-            showDashboard();
-        } else {
-            alert("Access denied: Email not authorized.");
-            auth.signOut();
-        }
-    }).catch((error) => console.error("Google login error:", error));
+// Function to update login record in the 'Logins' collection
+async function updateLoginRecord(user) {
+    try {
+        const loginDoc = doc(collection(db, "Logins"), user.uid);
+        await setDoc(loginDoc, {
+            email: user.email || null,
+            phoneNumber: user.phoneNumber || null,
+            lastLogin: serverTimestamp()
+        }, { merge: true });
+        console.log("Login record updated for:", user.uid);
+    } catch (error) {
+        console.error("Error updating login record:", error);
+    }
 }
 
-// Attach googleLogin to the window object
+// Google Login function
+function googleLogin() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const user = result.user;
+            const userEmail = user.email;
+            if (allowedEmails.includes(userEmail)) {
+                updateLoginRecord(user); // Update login record
+                showDashboard();
+            } else {
+                alert("Access denied: Email not authorized.");
+                auth.signOut();
+            }
+        })
+        .catch((error) => console.error("Google login error:", error));
+}
 window.googleLogin = googleLogin;
 
-
-    function phoneLogin() {
-        const phoneNumber = prompt("Enter your phone number with country code (e.g., +1xxxxxxxxxx):");
-        const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
-        
-        auth.signInWithPhoneNumber(phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-                const verificationCode = prompt("Enter the verification code sent to your phone:");
-                return confirmationResult.confirm(verificationCode);
-            })
-            .then((result) => {
-                const userPhoneNumber = result.user.phoneNumber;
-                if (allowedPhoneNumbers.includes(userPhoneNumber)) {
-                    showDashboard();
-                } else {
-                    alert("Access denied: Phone number not authorized.");
-                    auth.signOut();
-                }
-            })
-            .catch((error) => console.error("Phone login error:", error));
-    }
-    window.phoneLogin = phoneLogin;
-
-    function emailLogin() {
-        const email = prompt("Enter your email:");
-        const password = prompt("Enter your password:");
-
-        auth.signInWithEmailAndPassword(email, password)
-            .then((result) => {
-                const userEmail = result.user.email;
-                if (allowedEmails.includes(userEmail)) {
-                    showDashboard();
-                } else {
-                    alert("Access denied: Email not authorized.");
-                    auth.signOut();
-                }
-            })
-            .catch((error) => console.error("Email login error:", error));
-    }
-    window.emailLogin = emailLogin;
-
-    // Show the dashboard content
-    function showDashboard() {
-        document.getElementById("firebaseLogin").style.display = "none";
-        document.getElementById("dashboardContent").style.display = "block";
-    }
-
-    // Fetch Notifications
-    db.collection("Notifications").onSnapshot((snapshot) => {
-        const notificationList = document.getElementById("notificationList");
-        notificationList.innerHTML = ""; // Clear existing notifications
-        snapshot.forEach((doc) => {
-            const notification = doc.data().message;
-            const listItem = document.createElement("li");
-            listItem.className = "list-group-item";
-            listItem.textContent = notification;
-            notificationList.appendChild(listItem);
-        });
+// Phone Login function
+function phoneLogin() {
+    const phoneNumber = prompt("Enter your phone number with country code (e.g., +1xxxxxxxxxx):");
+    const appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+        size: "invisible",
+        callback: (response) => { /* reCAPTCHA solved - allow signInWithPhoneNumber. */ },
+        "expired-callback": () => alert("reCAPTCHA expired, please try again.")
     });
+
+    appVerifier.render();
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+            const verificationCode = prompt("Enter the verification code sent to your phone:");
+            return confirmationResult.confirm(verificationCode);
+        })
+        .then((result) => {
+            const user = result.user;
+            if (allowedPhoneNumbers.includes(user.phoneNumber)) {
+                updateLoginRecord(user); // Update login record
+                showDashboard();
+            } else {
+                alert("Access denied: Phone number not authorized.");
+                auth.signOut();
+            }
+        })
+        .catch((error) => {
+            console.error("Phone login error:", error);
+            alert("Error during phone login: " + error.message);
+        });
+}
+window.phoneLogin = phoneLogin;
+
+// Email Login function
+function emailLogin() {
+    const email = prompt("Enter your email:");
+    const password = prompt("Enter your password:");
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+            const user = result.user;
+            const userEmail = user.email;
+            if (allowedEmails.includes(userEmail)) {
+                updateLoginRecord(user); // Update login record
+                showDashboard();
+            } else {
+                alert("Access denied: Email not authorized.");
+                auth.signOut();
+            }
+        })
+        .catch((error) => console.error("Email login error:", error));
+}
+window.emailLogin = emailLogin;
+
+// Show the dashboard content
+function showDashboard() {
+    document.getElementById("firebaseLogin").style.display = "none";
+    document.getElementById("dashboardContent").style.display = "block";
+}
+
+// Fetch notifications
+db.collection("Notifications").onSnapshot((snapshot) => {
+    const notificationList = document.getElementById("notificationList");
+    notificationList.innerHTML = ""; // Clear existing notifications
+    snapshot.forEach((doc) => {
+        const notification = doc.data().message;
+        const listItem = document.createElement("li");
+        listItem.className = "list-group-item";
+        listItem.textContent = notification;
+        notificationList.appendChild(listItem);
+    });
+});
+
+// Add event listeners
+document.getElementById("googleLoginButton").addEventListener("click", googleLogin);
+document.getElementById("emailLoginButton").addEventListener("click", emailLogin);
 </script>
+
 </body>
 </html>
