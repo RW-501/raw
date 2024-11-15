@@ -232,7 +232,7 @@ async function viewMessageDetails(messageId) {
 }
 
 // Export or attach functions to the global window object if needed
-window.fetchMessages = fetchMessages;
+window.fetchMessages = fetchMessages("all");
 window.viewMessageDetails = viewMessageDetails;
 
 
