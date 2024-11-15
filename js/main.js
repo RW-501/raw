@@ -190,6 +190,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     // Animate the film strip and sprockets movement
     setInterval(() => {
         currentImageIndex = (currentImageIndex + 1) % filmImages.length;
+// container_CTA opc
 
         // Find the current film overlay and animate it
         const filmOverlays = document.querySelectorAll('.film-overlay');
