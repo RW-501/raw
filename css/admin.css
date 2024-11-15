@@ -240,6 +240,10 @@ footer  {
   font-family: Arial, sans-serif;
 }
 
+#admin-messages {
+  min-height: 5rem;
+ }
+
 
 
 

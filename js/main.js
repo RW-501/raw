@@ -207,6 +207,16 @@ function applyFilmStripEffect() {
     }
 }
 
+ // Define the  function to check if a specific keyword is in the URL
+ window.checkUrl = function(keyword) {
+  // Get the current URL
+  const currentUrl = window.location.href;
+  console.log("currentUrl:", currentUrl);
+  //console.log("keyword:", keyword);
+
+  // Return true if the keyword is found in the URL, otherwise false
+  return currentUrl.includes(keyword);
+};
 
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
