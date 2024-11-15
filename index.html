@@ -165,7 +165,7 @@
   </section>
 
   <!-- Contact Form Section -->
-  <section id="contact" class="py-5">
+  <section id="contact" class="py-5"> 
     <div class="container">
       <h2 class="text-center mb-4">Contact</h2>
       <form id="main-contact-form">
@@ -174,18 +174,24 @@
           <input type="text" class="form-control" id="name" placeholder="Your name" required>
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="Your email" required>
+          <label for="subject" class="form-label">Subject</label>
+          <select class="form-control" id="subject" required>
+            <option value="">Select a subject</option>
+            <option value="General Inquiry">General Inquiry</option>
+            <option value="Photoshoot Inquiry">Photoshoot Inquiry</option>
+            <option value="Portfolio Feedback">Portfolio Feedback</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div class="mb-3">
           <label for="message" class="form-label">Message</label>
           <textarea class="form-control" id="message" rows="4" placeholder="Your message" required></textarea>
         </div>
-        <button id="main-contact-btn" type="button" class="btn btn-primary">Send Message</button>
+        <button id="main-contact-btn" type="submit" class="btn btn-primary">Send Message</button>
       </form>
     </div>
   </section>
-
+  
 </main>
 
 
@@ -297,7 +303,7 @@ document.getElementById('private-form').addEventListener('submit', async functio
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      alert("Access code is invalid!");
+      showToast("Access code is invalid!","error");
     } else {
       alert("Access granted!");
       querySnapshot.forEach((doc) => {
@@ -316,23 +322,23 @@ async function sendContact() {
   try {
     // Capture input values
     const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
+    const subject = document.getElementById("subject").value;
 
-    if (!name || !email || !message) {
-      alert("All fields are required!");
+    if (!name || !message) {
+      showToast("All fields are required!","error");
       return;
     }
 
     // Add a document to the "Contacts" collection
     await addDoc(collection(db, "Contacts"), {
       name: name,
-      email: email,
       message: message,
+      subject:subject,
       timestamp: new Date(),
     });
 
-    alert("Message sent successfully!");
+    showToast("Message sent successfully!","success");
 
     // Reset form fields
     document.getElementById("contact-form").reset();
