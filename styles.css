@@ -726,6 +726,12 @@ section {
   transform: scale(1.05);
 }
 
+#imageModal {
+  opacity: 0; /* Make it invisible */
+  position: absolute;
+  top: -9999px; /* Place it off-screen */
+  transition: opacity 0.3s ease; /* Smooth transition effect */
+}
 
 
 
