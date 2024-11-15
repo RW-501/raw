@@ -558,7 +558,7 @@ function viewDidLoad() {
 
   // Check if the form exists before proceeding
   if (!form) {
-      console.error('Form element not found');
+  //    console.error('Form element not found');
       return; // Exit the function if no form is found
   }
 
