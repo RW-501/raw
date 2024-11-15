@@ -281,6 +281,33 @@ function getViewedByField() {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+  // Function to dynamically style images based on their dimensions
+function styleGalleryImages(galleryContainer) {
+    const galleryItems = galleryContainer.querySelectorAll('.gallery-item img');
+  
+    galleryItems.forEach(img => {
+      img.onload = () => {
+        const aspectRatio = img.naturalWidth / img.naturalHeight;
+  
+        // Add aspect ratio as a custom property for styling
+        img.parentElement.style.setProperty('--aspect-ratio', aspectRatio.toFixed(2));
+      };
+    });
+  }
+  
+
+  
+  
 // Reusable sanitize input function
 function sanitizeInput(input) {
     const temp = document.createElement("div");
@@ -289,14 +316,13 @@ function sanitizeInput(input) {
   }
   
   // Helper for cycling default images
-  function getDefaultImage(defaultImages, index) {
-    return defaultImages[index % defaultImages.length];
+ // Function to get a random image from the default images
+function getRandomDefaultImage(defaultImages) {
+    return defaultImages[Math.floor(Math.random() * defaultImages.length)];
   }
   
   // Fetch HomePage Data
-   window.fetchGalleryAndSiteInfo = async function(mainTextArea, galleryImagesContainer, Collection) {
-
-  //async function fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, Collection) {
+  window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
     try {
       // Get collection reference
       const querySnapshot = await getDocs(collection(db, Collection));
@@ -308,16 +334,14 @@ function sanitizeInput(input) {
         "https://shutterworx.co/images/default_4.gif"
       ];
   
-      let defaultImageIndex = 0;
-  
       querySnapshot.forEach(doc => {
         const data = doc.data();
   
-        const imageUrl = data.imageUrl || getDefaultImage(defaultImages, defaultImageIndex);
-        const thumbnailUrl = data.thumbnailUrl || getDefaultImage(defaultImages, defaultImageIndex);
+        // Get random default images if no URLs are provided
+        const imageUrl = data.imageUrl || getRandomDefaultImage(defaultImages);
+        const thumbnailUrl = data.thumbnailUrl || getRandomDefaultImage(defaultImages);
   
-        defaultImageIndex++;
-  
+        // Create and append image element
         const imageElement = `
           <div class="col gallery-item">
             <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
@@ -330,14 +354,17 @@ function sanitizeInput(input) {
   
         galleryImagesContainer.innerHTML += imageElement;
       });
-
-      if(data.mainText ){
+  
+      // Update main text area if the data contains mainText
+      if (data?.mainText) {
         mainTextArea.innerHTML = data.mainText;
       }
-  
+      const galleryContainer = document.getElementById('gallery-images');
+    styleGalleryImages(galleryContainer);
+    
     } catch (error) {
       console.error("Error fetching gallery and site info: ", error);
       galleryImagesContainer.innerHTML = `<p class="text-danger">Failed to load gallery. Please try again later.</p>`;
     }
-  }
+  };
   
