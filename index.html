@@ -304,18 +304,7 @@ function startViewTimer() {
 
 
 
-    // Determine the source
-    const externalSource = document.referrer && !document.referrer.includes(window.location.origin)
-        ? document.referrer
-        : null;
-    const internalSource = sessionStorage.getItem('lastInternalPage');
-    const viewSource = externalSource || internalSource || 'Direct Visit';
-
-
-
-    const locationDataString = sessionStorage.getItem('userLocation');
-    const locationData = JSON.parse(locationDataString);
-    const ipAddress = sessionStorage.getItem('userIP');
+ 
 
 
 
@@ -325,7 +314,6 @@ document.getElementById('private-form').addEventListener('submit', async functio
   event.preventDefault();
 
   const privateAccess_Message = document.getElementById('privateAccess_Message');
-
   const accessCode = sanitizeInput(document.getElementById('accessCode').value.trim());
   const submitButton = document.getElementById('privateAccessBTN');
   
@@ -362,10 +350,29 @@ document.getElementById('private-form').addEventListener('submit', async functio
     } else {
       // Reset attempt count on success
       localStorage.removeItem('accessCodeAttempts');
-      alert("Access granted!");
-      querySnapshot.forEach((doc) => {
-        console.log("Event Data: ", doc.data());
-        // Add logic here to handle retrieved events
+      showToast("Access granted!","success");
+
+      // Retrieve the IP address from sessionStorage
+      const ipAddress = sessionStorage.getItem('userIP');
+
+      querySnapshot.forEach(async (doc) => {
+        const docData = doc.data();
+
+        // Update document to increment the retrieve count
+        const eventRef = doc.ref;
+        await updateDoc(eventRef, {
+          retrieveCount: (docData.retrieveCount || 0) + 1,
+          ipAddress: ipAddress,
+        });
+
+        // Retrieve the accessHandShake value
+        const accessHandShake = docData.accessHandShake;
+
+        // Timeout before redirecting
+        setTimeout(() => {
+          // Redirect with the accessGranted and handShake parameters
+          window.location.href = `./events/?accessGranted=true&hs=${accessHandShake}`;
+        }, 3000); // 3-second delay
       });
     }
   } catch (error) {
@@ -379,15 +386,21 @@ document.getElementById('private-form').addEventListener('submit', async functio
 async function sendContact() {
   try {
     const contact_Message = document.getElementById('contact_Message');
-
-    // Capture input values
-    const name = sanitizeInput(document.getElementById("name").value.trim());
-    const message = document.getElementById("message").value.trim();
-    const subject = document.getElementById("subject").value.trim();
     const sendButton = document.getElementById("main-contact-btn");
+
+    // Capture and sanitize input values
+    const name = sanitizeInput(document.getElementById("name").value.trim());
+    const message = sanitizeInput(document.getElementById("message").value.trim());
+    const subject = sanitizeInput(document.getElementById("subject").value.trim());
+    
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = locationDataString ? JSON.parse(locationDataString) : {};
+    const ipAddress = sessionStorage.getItem('userIP');
 
     if (!name || !message || !subject) {
       showToast("All fields are required!", "error");
+      contact_Message.textContent = "Please fill in all fields.";
+      contact_Message.className = "alert alert-danger"; // Apply error styling
       return;
     }
 
@@ -401,6 +414,8 @@ async function sendContact() {
     // Check if user exceeded the limit
     if (messageHistory.length >= 3) {
       showToast("You have reached the message limit. Please try again later.", "error");
+      contact_Message.textContent = "You have exceeded the message limit. Try again in 30 minutes.";
+      contact_Message.className = "alert alert-warning"; // Apply warning styling
       sendButton.disabled = true; // Disable the button
       return;
     }
@@ -410,10 +425,17 @@ async function sendContact() {
       name: name,
       message: message,
       subject: subject,
-      timestamp: new Date()
+      city: locationData.city || "Unknown",
+      zipCode: locationData.zip || "Unknown",
+      state: locationData.state || "Unknown",
+      country: locationData.country || "Unknown",
+      ipAddress: ipAddress || "Unknown",
+      timestamp: new Date(),
     });
 
     showToast("Message sent successfully!", "success");
+    contact_Message.textContent = "Message sent successfully!";
+    contact_Message.className = "alert alert-success"; // Apply success styling
 
     // Reset form fields
     document.getElementById("contact-form").reset();
@@ -425,10 +447,15 @@ async function sendContact() {
     // Re-enable the button after 30 minutes
     setTimeout(() => {
       sendButton.disabled = false;
+      contact_Message.textContent = ""; // Clear the message after the cooldown
+      contact_Message.className = "";
     }, 30 * 60 * 1000);
+
   } catch (error) {
     console.error("Error in sendContact: ", error);
-    alert("An error occurred. Please try again.");
+    showToast("An error occurred. Please try again.", "error");
+    contact_Message.textContent = "An error occurred while sending your message. Please try again.";
+    contact_Message.className = "alert alert-danger"; // Apply error styling
   }
 }
 

@@ -656,7 +656,9 @@ background-color: rgba(59, 59, 59, 0.577);
 }
 
 
-
+section {
+  display: grid;
+}
   main {
     width: 90%;
     margin: auto;
@@ -671,4 +673,9 @@ background-color: rgba(59, 59, 59, 0.577);
     margin: auto 2rem ;
     justify-content: center;
     
+ }
+
+
+ #admin-messages {
+  min-height: 5rem;
  }
