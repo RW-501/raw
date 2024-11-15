@@ -372,13 +372,11 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
-
-
-
-    document.getElementById("messageType").addEventListener("change", function () {
+// Handle the change event for the message type dropdown
+document.getElementById("messageType").addEventListener("change", function () {
     const form = document.getElementById("main-contact-form");
 
-    // Check if "Event Booking" is selected
+    // Add/remove fields based on selected message type
     if (this.value === "book") {
         // Add Budget field if not already present
         if (!document.getElementById("budget")) {
@@ -386,7 +384,7 @@
             budgetField.className = "form-group";
             budgetField.innerHTML = `
                 <label for="budget">Budget:</label>
-<input type="text" id="budget" name="budget" aria-label="Estimated budget for the event" placeholder="$500" onkeydown="restrictKeys(event)" oninput="updateCurrency(this)">
+                <input type="text" id="budget" name="budget" aria-label="Estimated budget for the event" placeholder="$500" onkeydown="restrictKeys(event)" oninput="updateCurrency(this)">
             `;
             form.insertBefore(budgetField, document.getElementById("subject").parentNode);
         }
@@ -397,7 +395,7 @@
             calendarField.className = "form-group";
             calendarField.innerHTML = `
                 <label for="eventDate">Event Date:</label>
-                <input type="date" id="eventDate" name="eventDate" aria-label="Select the date for your event" >
+                <input type="date" id="eventDate" name="eventDate" aria-label="Select the date for your event">
             `;
             form.insertBefore(calendarField, document.getElementById("subject").parentNode);
         }
@@ -411,38 +409,26 @@
     }
 });
 
-
-
-
-       
+// Pre-select "book" in messageType dropdown if URL contains '#book'
 document.addEventListener("DOMContentLoaded", () => {
     if (window.checkUrl("#book")) {
         const messageTypeSelect = document.getElementById("messageType");
+        messageTypeSelect.value = "book";
 
-// Set the value to "event"
-messageTypeSelect.value = "book";
-
-// Create and dispatch a change event
-const book = new Event('change', {
-    bubbles: true,
-    cancelable: true
-});
-messageTypeSelect.dispatchEvent(book);
-} 
+        // Trigger the change event manually
+        const changeEvent = new Event('change', { bubbles: true, cancelable: true });
+        messageTypeSelect.dispatchEvent(changeEvent);
+    }
 });
 
-
-
-
-
-    document.getElementById('main-contact-form').addEventListener('submit', function(event) {
+// Form submission handler
+document.getElementById('main-contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
     let formValid = true;
-
-    // Get form values
-
-    document.getElementById("submitButton").disabled = true; // Disable button
-document.getElementById("submitButton").innerHTML = "Sending..."; // Show loading state
+    const submitButton = document.getElementById("submitButton");
+    submitButton.disabled = true; // Disable button
+    submitButton.innerHTML = "Sending..."; // Show loading state
 
     // Retrieve and sanitize input values
     const name = sanitizeInput(document.getElementById('name').value);
@@ -456,10 +442,12 @@ document.getElementById("submitButton").innerHTML = "Sending..."; // Show loadin
     if (!name || !message) {
         formValid = false;
         showToast('Please fill in all required fields!', "error");
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Send Message";
         return;
     }
 
-    // Retrieve the message history from localStorage
+    // Check message history to enforce the limit
     let messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
     const now = Date.now();
     const thirtyMinutesAgo = now - 30 * 60 * 1000;
@@ -474,72 +462,66 @@ document.getElementById("submitButton").innerHTML = "Sending..."; // Show loadin
         setTimeout(() => {
             document.getElementById('contact-submit-btn').disabled = false;
         }, 30 * 60 * 1000); // Re-enable button after 30 minutes
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Send Message";
         return;
     }
-// Additional fields for "Event Booking"
-let budget = null;
+
+    // Additional fields for "Event Booking"
+    let budget = null;
     let eventDate = null;
     if (messageType === "book") {
         budget = sanitizeInput(document.getElementById('budget')?.value);
         eventDate = sanitizeInput(document.getElementById('eventDate')?.value);
-        const contact_Message = document.getElementById('contact_Message');
 
+        // Validation for Budget and Event Date
         if (!budget || isNaN(budget) || budget < 0) {
-          contact_Message.textContent = 'Please provide a valid budget.';
-          contact_Message.style.color = 'red';
-            window.hideLoadingSpinner();
+            showToast('Please provide a valid budget.', "error");
+            submitButton.disabled = false;
+            submitButton.innerHTML = "Send Message";
             return;
         }
 
         if (!eventDate) {
-          contact_Message.textContent = 'Please select a valid event date.';
-          contact_Message.style.color = 'red';
-            window.hideLoadingSpinner();
+            showToast('Please select a valid event date.', "error");
+            submitButton.disabled = false;
+            submitButton.innerHTML = "Send Message";
             return;
         }
     }
 
-    // Input validation
+    // Input validation (sanitize all fields)
     if (!isSafeInput(name) || !isSafeInput(email) || !isSafeInput(phone) || !isSafeInput(subject) || !isSafeInput(message)) {
-      const contact_Message = document.getElementById('contact_Message');
-
-      contact_Message.textContent = 'Invalid characters detected in form. Please remove any special characters.';
-        contact_Message.style.color = 'red';
-        window.hideLoadingSpinner();
+        showToast('Invalid characters detected in form. Please remove any special characters.', "error");
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Send Message";
         return;
     }
 
     // If form is valid, save to Firestore
     if (formValid) {
-        // Create a new contact object
         const contactData = {
-            name: name,
-            email: email,
+            name,
+            email,
             phone: phone || '', // if phone is empty, use an empty string
-            message: message,
+            message,
             messageType,
-        message,
-        budget: messageType === "book" ? budget : null,
-        eventDate: messageType === "book" ? eventDate : null,
-        externalSource,
-        internalSource,
-        ipAddress: ipAddress,                       // ID of the user or 'guest'
+            budget: messageType === "book" ? budget : null,
+            eventDate: messageType === "book" ? eventDate : null,
+            ipAddress: ipAddress, // Should be fetched properly
             city: locationData.city,
             zipCode: locationData.zip,
-    state: locationData.state,
-    country: locationData.country,
-        contact_form: "Contact Page",
-        timestamp: new Date(),
+            state: locationData.state,
+            country: locationData.country,
+            timestamp: new Date(),
         };
 
-        // Save the contact data to Firestore's 'Contact' collection
+        // Save the contact data to Firestore
         db.collection('Contact').add(contactData)
             .then(() => {
                 showToast('Message sent successfully!', "success");
                 document.getElementById('main-contact-form').reset(); // Reset the form after successful submission
-                document.getElementById("submitButton").innerHTML = "Sent"; // Show loading state
-
-                // Save the current timestamp to the message history
+                submitButton.innerHTML = "Sent"; // Show "Sent" state
                 messageHistory.push(now);
                 localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
             })
@@ -549,10 +531,12 @@ let budget = null;
             });
     } else {
         showToast('Error submitting contact. Please check your input.', "error");
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Send Message";
     }
 });
 
-// Check if the user is still blocked on page load
+// Check if the user is blocked on page load
 document.addEventListener("DOMContentLoaded", function () {
     const messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
     const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
@@ -563,7 +547,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast("You are temporarily blocked from sending messages. Please try again later.", "error");
     }
 });
-
 
 // Google Map Embed (this is an example; customize with your location)
 function initMap() {
