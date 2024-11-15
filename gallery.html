@@ -241,7 +241,7 @@
     // Fetch Gallery and Site Info from HomePage collection
     const mainTextArea = document.getElementById("text-area");
 
-    db.collection('HomePage').get().then(snapshot => {
+    db.collection('GalleryPage').get().then(snapshot => {
       snapshot.forEach(doc => {
         const data = doc.data();
  
@@ -257,7 +257,7 @@
 
         // Function to fetch and display images based on category
         async function fetchImages(category = 'all') {
-            let galleryRef = db.collection('gallery');
+            let galleryRef = db.collection('Gallery');
             if (category !== 'all') {
                 galleryRef = galleryRef.where('category', '==', category);
             }
