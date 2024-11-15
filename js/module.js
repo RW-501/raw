@@ -28,7 +28,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
 
 // Storage import
-import { getDownloadURL,uploadBytesResumable, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
+import { getDownloadURL,uploadBytes, Resumable, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
 
 // Analytics import
 import { initializeAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js';
