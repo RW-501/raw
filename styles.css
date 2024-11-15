@@ -749,6 +749,8 @@ section {
   padding: 20px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  justify-content: center;
+
 }
 
 .modal-header .modal-title {
@@ -759,15 +761,17 @@ section {
 }
 
 .modal-header .btn-close {
-  filter: brightness(0) invert(1); /* White close button */
+  display: contents;
+ /*   filter: brightness(0) invert(1); /* White close button */
 }
 
 .modal-body {
   padding: 25px;
-  background-color: #f4f5f7; /* Light gray background to contrast with header */
+  background-color: #292a2cc1; /* Light gray background to contrast with header */
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   max-height: 80vh;
+  justify-content: center;
   overflow-y: auto; /* Allows scrolling for long descriptions */
 }
 
@@ -829,12 +833,12 @@ section {
 }
 
 
-/*
+
 #imageModal {
-  display: none;
+  position: absolute;
 }
 
-*/
+
 
 .is-invalid {
   border: 2px solid red;
