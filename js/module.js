@@ -340,7 +340,7 @@ function getRandomDefaultImage(defaultImages) {
         
         // Update main text area if the data contains mainText
         if (data?.mainText) {
-          mainTextArea.innerHTML = data.mainText;
+            mainTextArea.innerHTML = data?.mainText || 'Default text if mainText is missing';
         }
   
         // Get random default images if no URLs are provided for image or thumbnail
