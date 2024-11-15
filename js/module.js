@@ -332,7 +332,11 @@ function getRandomDefaultImage(defaultImages) {
         "https://shutterworx.co/images/default_1.gif",
         "https://shutterworx.co/images/default_2.gif",
         "https://shutterworx.co/images/default_3.gif",
-        "https://shutterworx.co/images/default_4.gif"
+        "https://shutterworx.co/images/default_4.gif",
+        "https://shutterworx.co/images/placeholder1.gif",
+        "https://shutterworx.co/images/placeholder2.gif",
+        "https://shutterworx.co/images/placeholder3.gif",
+        "https://shutterworx.co/images/placeholder4.gif"
       ];
   
       querySnapshot.forEach(doc => {
