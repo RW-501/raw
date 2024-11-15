@@ -282,61 +282,83 @@
 
 
     // Validate Access Code
-    document.getElementById('private-form').addEventListener('submit', function(event) {
+   // Initialize Firebase Firestore
+import { getFirestore, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+
+const db = getFirestore();
+
+// Validate Access Code
+document.getElementById('private-form').addEventListener('submit', async function (event) {
   event.preventDefault();
   const accessCode = document.getElementById('accessCode').value;
 
   if (accessCode.trim() === "") {
-    alert('Please enter a valid access code!');
+    alert("Please enter a valid access code!");
     return;
   }
 
-  db.collection('Events').where('accessCode', '==', accessCode).get()
-    .then(querySnapshot => {
-      if (querySnapshot.empty) {
-        document.getElementById('error-msg').style.display = 'block';
-      } else {
-        document.getElementById('error-msg').style.display = 'none';
-        alert('Access granted!');
-        // Add redirect or display private content
-      }
-    });
+  try {
+    // Query documents from the "Events" collection
+    const q = query(collection(db, "Events"), where("accessCode", "==", accessCode));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      alert("Access code is invalid!");
+    } else {
+      alert("Access granted!");
+      querySnapshot.forEach((doc) => {
+        console.log("Event Data: ", doc.data());
+        // Add logic here to handle retrieved events
+      });
+    }
+  } catch (error) {
+    console.error("Error validating access code: ", error);
+    alert("An error occurred while validating the access code. Please try again.");
+  }
 });
 
+// Send Contact Data Function
+async function sendContact() {
+  try {
+    // Capture input values
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-  // Attach submit event listener to the contact form
-  
- function sendContact(){
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    if (!name || !email || !message) {
+      alert("All fields are required!");
+      return;
+    }
 
-    db.collection('Contacts').add({
+    // Add a document to the "Contacts" collection
+    await addDoc(collection(db, "Contacts"), {
       name: name,
       email: email,
       message: message,
-      timestamp: new Date()
-    }).then(() => {
-      alert('Message sent successfully!');
-      document.getElementById('main-contact-form').reset();
-    }).catch((error) => {
-      console.error("Error sending message: ", error);
-      alert("There was an error sending your message. Please try again.");
+      timestamp: new Date(),
     });
+
+    alert("Message sent successfully!");
+
+    // Reset form fields
+    document.getElementById("contact-form").reset();
+  } catch (error) {
+    console.error("Error in sendContact: ", error);
+    alert("An error occurred. Please try again.");
   }
+}
 
-    // Submit Contact Form Data
-    document.addEventListener('DOMContentLoaded', function() {
+// Attach submit event listener to the contact form
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded event triggered");
 
-console.log("?????????????????? ");
-
-
-   // Contact Form Submission
-   document.getElementById('main-contact-btn').addEventListener('click', sendContact());
-
-
-
+  // Attach the contact form submission handler
+  document.getElementById("main-contact-btn").addEventListener("click", function (event) {
+    event.preventDefault();
+    sendContact();
+  });
 });
+
 
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
