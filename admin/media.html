@@ -58,7 +58,13 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">Event & Photo Management</h2>
-
+    <section>
+        <div id="admin-messages" class="admin-messages-container">
+            <p id="message-text" class="fade-in"></p>
+            <div id="message-actions" class="message-actions"></div>
+          </div>
+          
+    </section>
     <!-- Event Upload Form -->
     <div class="card mb-4">
         <div class="card-body">
@@ -149,42 +155,27 @@
     </div>
 </footer>
 
-
 <script src="../js/main.js" ></script>
 <script src="../js/admin.js" ></script>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
 <!-- Firebase JS SDK and Custom Scripts -->
 <script type="module">
-  import {  db, doc,getDoc, query, updateDoc,
-  setDoc,     signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  OAuthProvider,arrayUnion ,
-  signOut, addDoc , increment,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
-// Import Firebase modules
-import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, orderBy, query } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { initializeApp } from 'firebase/app';
-
-// Firebase config
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
+    import {  db, doc,getDoc, query, updateDoc,
+    setDoc,     signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,arrayUnion ,
+    signOut, addDoc , increment,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
+  
+  
 // Function to upload an event
 async function uploadEvent() {
     const title = document.getElementById('eventTitle').value;
