@@ -508,7 +508,7 @@ document.getElementById('main-contact-form').addEventListener('submit', function
     const locationData = locationDataString ? JSON.parse(locationDataString) : {};
     const ipAddress = sessionStorage.getItem('userIP');
 
-    
+
     // If form is valid, save to Firestore
     if (formValid) {
         const contactData = {
@@ -517,6 +517,7 @@ document.getElementById('main-contact-form').addEventListener('submit', function
             phone: phone || '', // if phone is empty, use an empty string
             message,
             messageType,
+            status: "unread",
             budget: messageType === "book" ? budget : null,
             eventDate: messageType === "book" ? eventDate : null,
             ipAddress: ipAddress, // Should be fetched properly
