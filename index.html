@@ -168,7 +168,7 @@
   <section id="contact" class="py-5">
     <div class="container">
       <h2 class="text-center mb-4">Contact</h2>
-      <form id="contact-form">
+      <form id="main-contact-form">
         <div class="mb-3">
           <label for="name" class="form-label">Your Name</label>
           <input type="text" class="form-control" id="name" placeholder="Your name" required>
@@ -330,7 +330,7 @@
     // Submit Contact Form Data
     document.addEventListener('DOMContentLoaded', function() {
   // Attach submit event listener to the contact form
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
+  document.getElementById('main-contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
     // Capture the form input values
