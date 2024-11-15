@@ -90,7 +90,7 @@
                     <label for="accessCode" class="form-label">Access Code (if private)</label>
                     <input type="text" class="form-control" id="accessCode">
                 </div>
-                <button id="uploadEvent" type="button" class="btn btn-primary">Upload Event</button>
+                <button id="uploadEvent" type="button" class="btn btn-primary" onclick="uploadEvent()">Upload Event</button>
             </form>
         </div>
     </div>
@@ -165,7 +165,7 @@
 <!-- Firebase JS SDK and Custom Scripts -->
 <script type="module">
     import {  db, doc,getDoc, query, updateDoc,
-    setDoc, ref,     signInWithPopup,
+    setDoc,  ref,   signInWithPopup,
     GoogleAuthProvider,
     FacebookAuthProvider,
     OAuthProvider,arrayUnion ,
