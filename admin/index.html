@@ -92,17 +92,21 @@
 
     // Login functions
     function googleLogin() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).then((result) => {
-            const userEmail = result.user.email;
-            if (allowedEmails.includes(userEmail)) {
-                showDashboard();
-            } else {
-                alert("Access denied: Email not authorized.");
-                auth.signOut();
-            }
-        }).catch((error) => console.error("Google login error:", error));
-    }
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then((result) => {
+        const userEmail = result.user.email;
+        if (allowedEmails.includes(userEmail)) {
+            showDashboard();
+        } else {
+            alert("Access denied: Email not authorized.");
+            auth.signOut();
+        }
+    }).catch((error) => console.error("Google login error:", error));
+}
+
+// Attach googleLogin to the window object
+window.googleLogin = googleLogin;
+
 
     function phoneLogin() {
         const phoneNumber = prompt("Enter your phone number with country code (e.g., +1xxxxxxxxxx):");
@@ -124,6 +128,7 @@
             })
             .catch((error) => console.error("Phone login error:", error));
     }
+    window.phoneLogin = phoneLogin;
 
     function emailLogin() {
         const email = prompt("Enter your email:");
@@ -141,6 +146,7 @@
             })
             .catch((error) => console.error("Email login error:", error));
     }
+    window.emailLogin = emailLogin;
 
     // Show the dashboard content
     function showDashboard() {
