@@ -222,7 +222,9 @@ async function viewMessageDetails(messageId) {
             const message = messageDoc.data();
             document.getElementById("messageDetailModalLabel").innerText = `Message from ${message.name || "Unknown"}`;
             document.getElementById("messageDetailsContent").innerText = message.message || "No message content.";
-            $('#messageDetailModal').modal('show'); // Ensure you're using Bootstrap 4/5 modal properly
+            const messageDetailModal = document.getElementById('messageDetailModal');
+const bootstrapModal = new bootstrap.Modal(messageDetailModal);
+bootstrapModal.show();
         } else {
             console.warn("No such document!");
         }
