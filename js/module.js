@@ -317,7 +317,8 @@ function sanitizeInput(input) {
   
   // Helper for cycling default images
  // Function to get a random image from the default images
-function getRandomDefaultImage(defaultImages) {
+// Function to get a random default image from the array
+function getRandomDefaultImage(defaultImages) { 
     return defaultImages[Math.floor(Math.random() * defaultImages.length)];
   }
   
@@ -336,12 +337,17 @@ function getRandomDefaultImage(defaultImages) {
   
       querySnapshot.forEach(doc => {
         const data = doc.data();
+        
+        // Update main text area if the data contains mainText
+        if (data?.mainText) {
+          mainTextArea.innerHTML = data.mainText;
+        }
   
-        // Get random default images if no URLs are provided
+        // Get random default images if no URLs are provided for image or thumbnail
         const imageUrl = data.imageUrl || getRandomDefaultImage(defaultImages);
         const thumbnailUrl = data.thumbnailUrl || getRandomDefaultImage(defaultImages);
   
-        // Create and append image element
+        // Create and append image element with dynamic image URL
         const imageElement = `
           <div class="col gallery-item">
             <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
@@ -352,16 +358,14 @@ function getRandomDefaultImage(defaultImages) {
             </a>
           </div>`;
   
+        // Add the image element to the gallery container
         galleryImagesContainer.innerHTML += imageElement;
       });
   
-      // Update main text area if the data contains mainText
-      if (data?.mainText) {
-        mainTextArea.innerHTML = data.mainText;
-      }
+      // Call the styleGalleryImages function to adjust the layout
       const galleryContainer = document.getElementById('gallery-images');
-    styleGalleryImages(galleryContainer);
-    
+      styleGalleryImages(galleryContainer);
+  
     } catch (error) {
       console.error("Error fetching gallery and site info: ", error);
       galleryImagesContainer.innerHTML = `<p class="text-danger">Failed to load gallery. Please try again later.</p>`;
