@@ -54,3 +54,48 @@
             margin-top: 10px;
         }
     }
+
+
+    .breadcrumb {
+        display: flex;
+    
+        list-style: none;
+    }
+    .breadcrumb-item {
+        text-decoration: none;
+        margin-right: 2rem;
+        border-color: rgba(72, 72, 72, 0.679);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 2rem;
+    
+    }
+    .breadcrumb-item:hover {
+        transform: translateY(-2px);
+    
+    }
+    .breadcrumb-item .active {
+        background-color: rgb(56, 96, 213);
+        border-color: rgb(235, 231, 224);
+        color: rgb(41, 39, 39);
+    
+    
+    }
+    
+    
+    
+      main {
+        width: 90%;
+        margin: auto;
+        padding: 2rem;
+        height: 100%;
+        display: block;
+    
+    
+      }
+    section {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+
