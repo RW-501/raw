@@ -196,7 +196,7 @@ footer  {
     
       main {
         width: 90%;
-        margin: auto;
+        margin: auto 2rem;
         padding: 2rem;
         height: 100%;
         display: block;
