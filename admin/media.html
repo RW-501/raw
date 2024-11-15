@@ -191,10 +191,11 @@ async function uploadEvent() {
     }
 
     const storageRef = ref(storage, `events/${title}/cover.jpg`);
-    await uploadBytes(storageRef, cover);
-    const coverUrl = await getDownloadURL(storageRef);
+await uploadBytes(storageRef, cover);
+const coverUrl = await getDownloadURL(storageRef);
 
-    // Hashing the access code for better security (placeholder)
+
+// Hashing the access code for better security (placeholder)
     const hashedAccessCode = btoa(accessCode); // replace with a hashing library in production
 
     // Add event to the Firestore database
