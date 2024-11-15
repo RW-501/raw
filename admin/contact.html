@@ -83,7 +83,7 @@
 
     // Fetch messages from Firestore
     async function fetchMessages(status = 'all') {
-        let query = db.collection('contactMessages');
+        let query = db.collection('Contacts');
 
         if (status !== 'all') {
             query = query.where('status', '==', status);
@@ -124,7 +124,7 @@
 
     // View full message details in a modal
     async function viewMessageDetails(messageId) {
-        const messageDoc = await db.collection('contactMessages').doc(messageId).get();
+        const messageDoc = await db.collection('Contacts').doc(messageId).get();
         const message = messageDoc.data();
         
         document.getElementById('messageDetailModalLabel').innerText = `Message from ${message.name}`;
@@ -136,14 +136,14 @@
     // Mark message as read/unread
     async function toggleReadStatus(messageId, currentStatus) {
         const newStatus = currentStatus === 'read' ? 'unread' : 'read';
-        await db.collection('contactMessages').doc(messageId).update({ status: newStatus });
+        await db.collection('Contacts').doc(messageId).update({ status: newStatus });
 
         fetchMessages();
     }
 
     // Archive a message
     async function archiveMessage(messageId) {
-        await db.collection('contactMessages').doc(messageId).update({ status: 'archived' });
+        await db.collection('Contacts').doc(messageId).update({ status: 'archived' });
         fetchMessages();
     }
 
@@ -153,7 +153,7 @@
         const messageId = document.getElementById('messageDetailModalLabel').innerText.split(' ')[2];  // Extract messageId from modal title
 
         // Send the reply in Firestore
-        await db.collection('contactMessages').doc(messageId).update({
+        await db.collection('Contacts').doc(messageId).update({
             reply: replyContent,
             status: 'read' // mark as read once replied
         });
