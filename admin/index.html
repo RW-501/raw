@@ -16,8 +16,54 @@
         .bg-danger-custom { background-color: #dc3545; }
     </style>
 
+
+<script src="../css/admin.css"></script>
+
 </head>
 <body>
+
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="../admin/index">ShutterWorx Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/analytics">Analytics</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/contact">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/design">Design</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/media">Media</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/transactions">Transactions</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../admin/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">About</li>
+    </ol>
+  </nav>
+  
+
+
+  <main id="main-content">
 
 <!-- Login Section -->
 <div id="firebaseLogin" class="container-fluid">
@@ -65,11 +111,35 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+</main>
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+              <p>&copy; 2024 <a href="https://ShutterWorx.co" class="text-light">ShutterWorx</a> All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-right">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href="https://ShutterWorx.co/FAQ" class="text-light">FAQs</a></li>
+                  <li class="list-inline-item"><a href="https://ShutterWorx.co/join" class="text-light">Upgrade</a></li>
+                  <li class="list-inline-item"><a href="https://ShutterWorx.co/contact" class="text-light">Contact Us</a></li>
+                  <li class="list-inline-item"><a href="https://ShutterWorx.co/privacy" class="text-light">Privacy Policy</a></li>
+                  <li class="list-inline-item"><a href="https://ShutterWorx.co/terms" class="text-light">Terms of Service</a></li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</footer>
 
 
 <script src="../js/main.js" ></script>
+<script src="../js/admin.js" ></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 
 <!-- Firebase JS SDK and Custom Scripts -->
 <script type="module">
