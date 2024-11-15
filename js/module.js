@@ -79,7 +79,7 @@ const firebaseConfig = {
 document.addEventListener('DOMContentLoaded', initializeFirebase);
 
 // Export Firestore, Storage, and Auth instances for use in other modules
-export { db,getStorage, ref, uploadBytesResumable, getDownloadURL,
+export { db,getStorage, ref, uploadBytes, Resumable, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc,
       query, updateDoc, setDoc, addDoc,signInAnonymously ,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
