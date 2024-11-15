@@ -1,4 +1,25 @@
        /* Custom styles for the navbar */
+
+       
+html {
+    margin: 0;
+  padding: 0;
+  
+  }
+  
+    /* General body styling */
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      color: #333;
+      line-height: 1.6;
+      user-select: none; /* Prevent text selection */
+    }
+    
        .navbar {
         background-color: #343a40;
     }
