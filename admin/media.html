@@ -302,6 +302,34 @@
 
         return canvas.toDataURL();
     }
+
+    // Function to upload event details
+function uploadEvent() {
+    const eventTitle = document.getElementById('eventTitle').value;
+    const eventDescription = document.getElementById('eventDescription').value;
+    const eventDate = document.getElementById('eventDate').value;
+    const eventCover = document.getElementById('eventCover').files[0];
+    const accessCode = document.getElementById('accessCode').value;
+
+    if (!eventTitle || !eventDescription || !eventDate || !eventCover) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    // Proceed with uploading event (this is an example, you should add your logic)
+    const eventDetails = {
+        title: eventTitle,
+        description: eventDescription,
+        date: eventDate,
+        cover: eventCover,
+        accessCode: accessCode || null, // Optional
+    };
+
+    console.log("Event to upload:", eventDetails);
+
+    // You can now use Firebase, for example, to save the event.
+}
+
 </script>
 
 </body>
