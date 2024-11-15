@@ -503,6 +503,12 @@ document.getElementById('main-contact-form').addEventListener('submit', function
         return;
     }
 
+
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = locationDataString ? JSON.parse(locationDataString) : {};
+    const ipAddress = sessionStorage.getItem('userIP');
+
+    
     // If form is valid, save to Firestore
     if (formValid) {
         const contactData = {
