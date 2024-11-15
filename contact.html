@@ -551,17 +551,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Google Map Embed (this is an example; customize with your location)
 function initMap() {
-    const location = { lat: 34.7465, lng: -92.2896 }; // Little Rock, Arkansas
-    const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: location,
-    });
-    new google.maps.Marker({
-        position: location,
-        map: map,
-    });
-}
-initMap();
+        const location = { lat: 34.7465, lng: -92.2896 }; // Little Rock, Arkansas
+
+        // Create a new map centered at the given location
+        const map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: location,
+        });
+
+        // Create a new advanced marker element
+        const marker = new google.maps.marker.AdvancedMarkerElement({
+          position: location,
+          map: map,
+          content: '<div style="color: red;">📍</div>',  // You can replace this with your own custom HTML or image
+        });
+      }
+
+      // Initialize the map when the API is loaded
+      window.initMap = initMap;
 
 
 // Execute the function on DOMContentLoaded
