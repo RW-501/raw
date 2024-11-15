@@ -330,7 +330,7 @@ function getRandomDefaultImage(defaultImages) {
     try {
       // Get collection reference
       const querySnapshot = await getDocs(collection(db, Collection));
-  
+  console.log("mainTextArea, galleryImagesContainer, Collection",mainTextArea, galleryImagesContainer, Collection);
       const defaultImages = [
         "https://shutterworx.co/images/default_1.gif",
         "https://shutterworx.co/images/default_2.gif",
