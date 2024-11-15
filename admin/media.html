@@ -90,7 +90,7 @@
                     <label for="accessCode" class="form-label">Access Code (if private)</label>
                     <input type="text" class="form-control" id="accessCode">
                 </div>
-                <button id="uploadEvent" type="button" class="btn btn-primary">Upload Event</button>
+                <button id="uploadEvent" type="button" class="btn btn-primary" onclick="uploadEvent()">Upload Event</button>
             </form>
         </div>
     </div>
@@ -100,7 +100,7 @@
         <h5 class="mb-3">Sort & Filter Events</h5>
         <div class="form-inline">
             <input type="text" class="form-control mb-2 mr-2" id="eventFilter" placeholder="Search by name or description" onkeyup="fetchEvents()">
-            <select id="fetchEvents" class="form-control mb-2" id="sortBy">
+            <select id="fetchEvents" class="form-control mb-2" id="sortBy" onchange="fetchEvents()">
                 <option value="date">Sort by Date</option>
                 <option value="name">Sort by Name</option>
             </select>
@@ -120,7 +120,7 @@
                 <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
                 <input type="file" class="form-control" id="logoOverlay" accept="image/*">
             </div>
-            <button id="bulkUploadPhotos" type="button" class="btn btn-primary mt-3" >Upload Photos with Watermark</button>
+            <button id="bulkUploadPhotos" type="button" class="btn btn-primary mt-3" onclick="bulkUploadPhotos()">Upload Photos with Watermark</button>
         </div>
     </div>
 
@@ -333,31 +333,6 @@ window.bulkUploadPhotos = bulkUploadPhotos;
 
 // Initial fetch of events
 fetchEvents();
-document.addEventListener('DOMContentLoaded', () => {
-    // Listener for the "Upload Event" button
-    const uploadEventButton = document.getElementById('uploadEvent');
-    if (uploadEventButton) {
-        uploadEventButton.addEventListener('click', uploadEvent);
-    }
-
-    // Listener for the event filter input
-    const eventFilterInput = document.getElementById('eventFilter');
-    if (eventFilterInput) {
-        eventFilterInput.addEventListener('keyup', fetchEvents);
-    }
-
-    // Listener for the "Sort by" dropdown
-    const sortByDropdown = document.getElementById('sortBy');
-    if (sortByDropdown) {
-        sortByDropdown.addEventListener('change', fetchEvents);
-    }
-
-    // Listener for the "Bulk Upload Photos" button
-    const bulkUploadButton = document.getElementById('bulkUploadPhotos');
-    if (bulkUploadButton) {
-        bulkUploadButton.addEventListener('click', bulkUploadPhotos);
-    }
-});
 
 </script>
 </body>
