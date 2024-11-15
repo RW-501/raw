@@ -830,6 +830,8 @@ display: none;
 
 .modal.show .modal-dialog {
   transform: translate(0, 0);
+  width: 100%;
+  
 }
 
 /* Responsive Adjustments */

@@ -8,7 +8,7 @@ import {
     query, 
     updateDoc,orderBy, 
     setDoc,           
-    addDoc, deleteDoc,uploadBytes ,
+    addDoc, deleteDoc ,
     getDocs, increment,
     where, arrayUnion,
     collection 
