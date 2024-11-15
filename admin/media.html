@@ -303,32 +303,150 @@
         return canvas.toDataURL();
     }
 
-    // Function to upload event details
-function uploadEvent() {
-    const eventTitle = document.getElementById('eventTitle').value;
-    const eventDescription = document.getElementById('eventDescription').value;
-    const eventDate = document.getElementById('eventDate').value;
-    const eventCover = document.getElementById('eventCover').files[0];
-    const accessCode = document.getElementById('accessCode').value;
+  // Upload Event Function
+  async function uploadEvent() {
+        const title = document.getElementById('eventTitle').value;
+        const description = document.getElementById('eventDescription').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const cover = document.getElementById('eventCover').files[0];
+        const accessCode = document.getElementById('accessCode').value;
 
-    if (!eventTitle || !eventDescription || !eventDate || !eventCover) {
-        alert("Please fill in all required fields.");
-        return;
+        // Client-side validation
+        if (!title || !description || !eventDate || !cover || !accessCode) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        if (cover.size > 5000000) {
+            alert("File size is too large. Please upload a file less than 5MB.");
+            return;
+        }
+
+        const storageRef = ref(storage, `events/${title}/cover.jpg`);
+        try {
+            // Upload cover image to Firebase storage
+            await uploadBytes(storageRef, cover);
+            const coverUrl = await getDownloadURL(storageRef);
+
+            // Hash the access code (for demo, using btoa)
+            const hashedAccessCode = btoa(accessCode);
+
+            // Add event to Firestore
+            await addDoc(collection(db, 'Events'), {
+                title,
+                description,
+                eventDate,
+                coverUrl,
+                accessCode: hashedAccessCode
+            });
+
+            showToast('Event uploaded successfully');
+            document.getElementById('eventForm').reset();
+            fetchEvents(); // Refresh event list
+        } catch (error) {
+            console.error("Error uploading event:", error);
+            alert("An error occurred while uploading the event.");
+        }
     }
 
-    // Proceed with uploading event (this is an example, you should add your logic)
-    const eventDetails = {
-        title: eventTitle,
-        description: eventDescription,
-        date: eventDate,
-        cover: eventCover,
-        accessCode: accessCode || null, // Optional
-    };
+    window.uploadEvent = uploadEvent;
 
-    console.log("Event to upload:", eventDetails);
+    // Fetch and display events with sorting and filtering
+    async function fetchEvents() {
+        const filterText = document.getElementById('eventFilter').value.toLowerCase();
+        const sortBy = document.getElementById('sortBy').value;
+        const eventList = document.getElementById('eventsContainer');
+        eventList.innerHTML = ''; // Clear previous list
 
-    // You can now use Firebase, for example, to save the event.
-}
+        const eventsCollection = collection(db, 'Events');
+        let eventQuery;
+
+        // Sort events
+        if (sortBy === 'date') {
+            eventQuery = query(eventsCollection, orderBy('eventDate'));
+        } else {
+            eventQuery = query(eventsCollection, orderBy('title'));
+        }
+
+        try {
+            const snapshot = await getDocs(eventQuery);
+
+            snapshot.forEach((doc) => {
+                const event = doc.data();
+
+                if (
+                    event.title.toLowerCase().includes(filterText) ||
+                    event.description.toLowerCase().includes(filterText)
+                ) {
+                    const eventItem = document.createElement('div');
+                    eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                    const eventInfo = document.createElement('div');
+                    eventInfo.innerHTML = `
+                        <strong>${event.title}</strong><br>
+                        ${new Date(event.eventDate).toLocaleDateString()}<br>
+                        ${event.description}
+                    `;
+
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = event.coverUrl || 'default-thumbnail.png';
+                    thumbnail.alt = "Event Thumbnail";
+                    thumbnail.style.width = '50px';
+                    thumbnail.style.height = '50px';
+                    thumbnail.classList.add('mr-2');
+
+                    const btnGroup = document.createElement('div');
+                    btnGroup.classList.add('btn-group');
+
+                    const editBtn = document.createElement('button');
+                    editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
+                    editBtn.innerText = 'Edit';
+                    editBtn.onclick = () => editEvent(doc.id, event);
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+                    deleteBtn.innerText = 'Delete';
+                    deleteBtn.onclick = () => deleteEvent(doc.id);
+
+                    btnGroup.appendChild(editBtn);
+                    btnGroup.appendChild(deleteBtn);
+                    eventItem.appendChild(thumbnail);
+                    eventItem.appendChild(eventInfo);
+                    eventItem.appendChild(btnGroup);
+                    eventList.appendChild(eventItem);
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        }
+    }
+
+    window.fetchEvents = fetchEvents;
+
+    // Edit Event Function
+    function editEvent(eventId, event) {
+        document.getElementById('eventTitle').value = event.title;
+        document.getElementById('eventDescription').value = event.description;
+        document.getElementById('eventDate').value = event.eventDate;
+        document.getElementById('accessCode').value = event.accessCode;
+    }
+
+    window.editEvent = editEvent;
+
+    // Delete Event Function
+    async function deleteEvent(eventId) {
+        if (confirm('Are you sure you want to delete this event?')) {
+            try {
+                await deleteDoc(doc(db, 'Events', eventId));
+                showToast('Event deleted successfully');
+                fetchEvents(); // Refresh event list
+            } catch (error) {
+                console.error("Error deleting event:", error);
+            }
+        }
+    }
+
+    window.deleteEvent = deleteEvent;
 
 </script>
 
