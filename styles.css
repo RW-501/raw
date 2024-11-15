@@ -790,6 +790,7 @@ display: none;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   max-height: 80vh;
+  display: grid;
   justify-content: center;
   overflow-y: auto; /* Allows scrolling for long descriptions */
 }
@@ -857,6 +858,7 @@ display: none;
 
 #imageModal {
   position: absolute;
+  width: 100%;
 }
 
 
