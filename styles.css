@@ -475,6 +475,19 @@ background-color: rgba(59, 59, 59, 0.577);
     display: block;
 }
   /* Fade In Animation for Text */
+
+
+  
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  
+  .fade-out {
+    animation: fadeOut 1s forwards;
+  }
+  
+  
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -485,7 +498,6 @@ background-color: rgba(59, 59, 59, 0.577);
       transform: translateY(0);
     }
   }
-  
   /* Input, Select, and Other Elements Styling */
   input,
   select,

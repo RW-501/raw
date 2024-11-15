@@ -192,6 +192,7 @@
             <h2>Contact Us</h2>
             <p>We’d love to hear from you! Please fill out the form below and we’ll get back to you shortly.</p>
             <form id="main-contact-form" >
+              <p id="contact_Message"></p>
                 <label for="name">Name (required)</label>
                 <input type="text" id="name" name="name" required>
                 
@@ -324,21 +325,39 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
-
-    
-document.getElementById('contact-form').addEventListener('submit', function(event) {
+    document.getElementById('main-contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
     let formValid = true;
 
     // Get form values
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value; // optional
-    const message = document.getElementById('message').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim(); // optional
+    const message = document.getElementById('message').value.trim();
 
     // Basic validation
     if (!name || !email || !message) {
         formValid = false;
+        showToast('Please fill in all required fields!', "error");
+        return;
+    }
+
+    // Retrieve the message history from localStorage
+    let messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
+    const now = Date.now();
+    const thirtyMinutesAgo = now - 30 * 60 * 1000;
+
+    // Filter out messages older than 30 minutes
+    messageHistory = messageHistory.filter((timestamp) => timestamp > thirtyMinutesAgo);
+
+    // Check if the user has exceeded the message limit
+    if (messageHistory.length >= 3) {
+        showToast('You have reached the message limit. Please try again in 30 minutes.', "error");
+        document.getElementById('contact-submit-btn').disabled = true;
+        setTimeout(() => {
+            document.getElementById('contact-submit-btn').disabled = false;
+        }, 30 * 60 * 1000); // Re-enable button after 30 minutes
+        return;
     }
 
     // If form is valid, save to Firestore
@@ -349,24 +368,39 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             email: email,
             phone: phone || '', // if phone is empty, use an empty string
             message: message,
-            timestamp: new Date
+            timestamp: new Date()
         };
 
         // Save the contact data to Firestore's 'Contact' collection
         db.collection('Contact').add(contactData)
             .then(() => {
-                showToast('Message sent successfully!',"succees");
+                showToast('Message sent successfully!', "success");
                 document.getElementById('contact-form').reset(); // Reset the form after successful submission
+
+                // Save the current timestamp to the message history
+                messageHistory.push(now);
+                localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
             })
             .catch((error) => {
-                showToast('Error submitting contact',"error");
+                showToast('Error submitting contact. Please try again.', "error");
                 console.error("Error submitting contact form: ", error);
             });
     } else {
-        showToast('Error submitting contact',"error");
+        showToast('Error submitting contact. Please check your input.', "error");
     }
 });
 
+// Check if the user is still blocked on page load
+document.addEventListener("DOMContentLoaded", function () {
+    const messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
+    const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
+    const validMessages = messageHistory.filter((timestamp) => timestamp > thirtyMinutesAgo);
+
+    if (validMessages.length >= 3) {
+        document.getElementById('contact-submit-btn').disabled = true;
+        showToast("You are temporarily blocked from sending messages. Please try again later.", "error");
+    }
+});
 
 
 // Google Map Embed (this is an example; customize with your location)

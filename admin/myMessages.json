@@ -1,0 +1,1310 @@
+ {
+        "messages": [
+          {
+            "id": "1",
+            "text": "Welcome back, Admin! 🌟 Check out our latest features and enhancements.",
+            "type": "info",
+            "icon": "🎉",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/join", "label": "Explore New Features" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "2",
+            "text": "Looking to level up? 🚀 Check out our Pro and Elite Memberships today!",
+            "type": "alert",
+            "icon": "🔑",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Upgrade Now" }
+              ],
+              "expiryDate": "2025-11-01"
+            }
+          },
+          {
+            "id": "3",
+            "text": "🎨 New Customizable Watermarks are now available for Pro and Elite Members!",
+            "type": "info",
+            "icon": "🖼️",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Learn More" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "4",
+            "text": "🔒 Secure your photos with our advanced watermarking tools available for Pro members.",
+            "type": "info",
+            "icon": "🔐",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Upgrade for Extra Security" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "5",
+            "text": "🎥 Pro Members now get access to an exclusive built-in photo editor for quick edits.",
+            "type": "info",
+            "icon": "🛠️",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Try the Editor" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "6",
+            "text": "🚀 Introducing QR code generation for easier event sharing for Pro members!",
+            "type": "info",
+            "icon": "📲",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Learn More About QR Codes" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "7",
+            "text": "⚡ Get 24/7 priority customer support with our Elite Membership! 🌟",
+            "type": "alert",
+            "icon": "💬",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Upgrade for Priority Support" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "8",
+            "text": "📅 Manage your events like a pro with advanced event management tools, available in Elite Membership.",
+            "type": "info",
+            "icon": "🗓️",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Explore Event Management" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "9",
+            "text": "💥 Your custom domain is coming soon with Elite Membership! Stay tuned for updates.",
+            "type": "info",
+            "icon": "🌐",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Get Elite Access" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "10",
+            "text": "📈 Boost your site analytics with Premium features, only available in Elite Membership.",
+            "type": "info",
+            "icon": "📊",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Upgrade to Elite for Analytics" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "11",
+            "text": "🛠️ Elite Members can add unlimited pages to their site! Manage more content than ever.",
+            "type": "info",
+            "icon": "📂",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Unlock Unlimited Pages" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "12",
+            "text": "🔧 New Help Bot for Pro Members! Instant support at your fingertips.",
+            "type": "info",
+            "icon": "🤖",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Explore Help Bot Features" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "13",
+            "text": "📸 Need advanced photo tools? Upgrade to Elite for unlimited uploads and event management.",
+            "type": "info",
+            "icon": "📷",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Learn More About Elite Features" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "14",
+            "text": "📦 Add multiple users to your account with our Elite Membership! More collaborators, more possibilities.",
+            "type": "info",
+            "icon": "👥",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-elite", "label": "Get Elite Membership Now" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+          },
+          {
+            "id": "15",
+            "text": "⚡ Unlock faster, easier photo editing with our new built-in editor—now available in Pro Membership!",
+            "type": "info",
+            "icon": "✂️",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/signup-pro", "label": "Try the New Editor" }
+              ],
+              "expiryDate": "2025-12-31"
+            }
+
+        },
+      
+        {
+            "id": "16",
+            "text": "Learn more about ShutterWorx platform on out FAQ page.",
+            "type": "help",
+            "icon": "🔍",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/faq", "label": "FAQ page" }
+              ]
+            }
+          },      
+          {
+            "id": "17",
+            "text": "Contact us about billing, support, etc on our Contact page",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": true,
+             "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/contact", "label": "Contact us" }
+              ]
+            }
+          },      
+          {
+            "id": "18",
+            "text": "Learn more about our new features",
+            "type": "help",
+            "icon": "🔍",
+            "priority": 2,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/features", "label": "New features" }
+              ]
+            }
+          },  
+          {
+            "id": "19",
+            "text": "Get started with the ShutterWorx platform by visiting our 'Getting Started' page.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/join", "label": "Getting Started" }
+              ]
+            }
+          },
+          {
+            "id": "20",
+            "text": "Browse our portfolio to see the amazing work created on ShutterWorx.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/my", "label": "Portfolio" }
+              ]
+            }
+          },
+          {
+            "id": "21",
+            "text": "Check out our tutorials for step-by-step guides on using ShutterWorx.",
+            "type": "help",
+            "icon": "🔍",
+            "priority": 5,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/tutorials", "label": "Tutorials" }
+              ]
+            }
+          },
+          {
+            "id": "22",
+            "text": "Stay updated with the latest news and announcements on our Blog page.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 5,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/blog", "label": "Blog" }
+              ]
+            }
+          },
+          {
+            "id": "23",
+            "text": "Need help? Visit our Knowledge Base for troubleshooting and guides.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/faq", "label": "Knowledge Base" }
+              ]
+            }
+          },
+          {
+            "id": "24",
+            "text": "Learn more about our pricing plans and features on the Pricing page.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/join", "label": "Pricing" }
+              ]
+            }
+          },
+          {
+            "id": "25",
+            "text": "Visit our Testimonials page to hear from our satisfied users.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/testimonials", "label": "Testimonials" }
+              ]
+            }
+          },
+          {
+            "id": "26",
+            "text": "Explore our Services page for detailed information on what we offer.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/services", "label": "Services" }
+              ]
+            }
+          },
+          {
+            "id": "27",
+            "text": "Check out our API documentation to integrate ShutterWorx with your platform.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/api", "label": "API Documentation" }
+              ]
+            }
+          },
+          {
+            "id": "28",
+            "text": "Get in touch with our Sales team for inquiries or custom requests.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/sales", "label": "Sales" }
+              ]
+            }
+          },
+          {
+            "id": "29",
+            "text": "Join our community forum to discuss tips, tricks, and features with other users.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/forum", "label": "Community Forum" }
+              ]
+            }
+          },
+          {
+            "id": "30",
+            "text": "Enable Event sharing and your public events will show on our Community page on the ShutterWorx platform.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/community", "label": "Community" }
+              ]
+            }
+          },
+          {
+            "id": "31",
+            "text": "Check out our affiliate program to earn by referring new customers.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/affiliate", "label": "Affiliate Program" }
+              ]
+            }
+          },
+          {
+            "id": "32",
+            "text": "Learn about our security measures and how we protect your data.",
+            "type": "tip",
+            "icon": "🔒",
+            "priority": 2,
+            "active": false,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/security", "label": "Security" }
+              ]
+            }
+          },
+          {
+            "id": "33",
+            "text": "Find answers to common questions on our FAQ page.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 2,
+            "active": true,            "meta": {
+              "links": [
+                { "url": "https://shutterworx.co/faq", "label": "FAQ Page" }
+              ]
+            }
+          },
+          {
+            "id": "34",
+            "text": "Tip of the Day: Always check your camera settings before every shoot to ensure optimal results.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "35",
+            "text": "Tip of the Day: Invest in a quality tripod to ensure steady shots, especially for long exposure photography.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "36",
+            "text": "Tip of the Day: Learn how to properly use natural light for stunning portraits.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "37",
+            "text": "Tip of the Day: Master the rule of thirds to make your photos more dynamic and engaging.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "38",
+            "text": "Tip of the Day: Invest in a good lens to improve the quality of your photos without buying an expensive camera.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "39",
+            "text": "Tip of the Day: When editing your photos, don’t overdo the saturation; aim for natural, realistic colors.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "40",
+            "text": "Tip of the Day: Use reflectors or diffusers to soften harsh sunlight when shooting outdoors.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "41",
+            "text": "Tip of the Day: For better marketing, share behind-the-scenes content to engage with your audience.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "42",
+            "text": "Tip of the Day: Create a professional portfolio website to showcase your best work and attract potential clients.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "43",
+            "text": "Tip of the Day: Develop a clear pricing structure for your services to help clients make informed decisions.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "44",
+            "text": "Tip of the Day: Always back up your photos to multiple locations to avoid losing valuable work.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "45",
+            "text": "Tip of the Day: Experiment with long exposure techniques to capture movement, such as light trails or water flow.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "46",
+            "text": "Tip of the Day: Create an email list and send newsletters with promotions, tips, and updates to keep your clients engaged.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "47",
+            "text": "Tip of the Day: Always have a shot list prepared for photo sessions to maximize your time with clients.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "48",
+            "text": "Tip of the Day: Optimize your website for SEO to help clients find you easily online.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "49",
+            "text": "Tip of the Day: Invest in a fast memory card to prevent delays and maximize shooting efficiency.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "50",
+            "text": "Tip of the Day: When booking clients, always confirm details in writing to avoid miscommunication.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "51",
+            "text": "Tip of the Day: Use a light meter or app to measure exposure accurately when working with artificial lighting.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "52",
+            "text": "Tip of the Day: Create an engaging Instagram feed with a consistent style to attract followers and clients.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "53",
+            "text": "Tip of the Day: Invest in a quality camera bag to protect your gear and stay organized on shoots.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "54",
+            "text": "Tip of the Day: Use a variety of lenses to add creativity and versatility to your photography portfolio.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "55",
+            "text": "Tip of the Day: Offer online booking to make it easier for clients to schedule their photo sessions.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "56",
+            "text": "Tip of the Day: Update your portfolio regularly to showcase your latest and best work.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "57",
+            "text": "Tip of the Day: To book more clients, offer a variety of packages and price points that cater to different needs.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "58",
+            "text": "Tip of the Day: Learn the art of storytelling with your photos to create a more engaging portfolio.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "59",
+            "text": "Tip of the Day: Experiment with bokeh effects to add artistic flair to your portraits.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+          },
+          {
+            "id": "60",
+            "text": "Tip of the Day: Always communicate with your clients about expectations and deliverables before the shoot.",
+            "type": "tip",
+            "icon": "💡",
+            "priority": 1,
+            "active": true,
+            "meta": {
+              "links": [
+                { "url": "NA", "label": "NA" }
+              ]
+            }
+    },
+            {
+          "id": "61",
+          "text": "Success is the sum of small efforts repeated day in and day out.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "62",
+          "text": "The only limit to our realization of tomorrow is our doubts of today.",
+          "type": "motivation",
+          "priority": 1,
+          "icon": "💬",
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "63",
+          "text": "Believe you can and you're halfway there.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "64",
+          "text": "The future belongs to those who believe in the beauty of their dreams.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "65",
+          "text": "Don’t watch the clock; do what it does. Keep going.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "66",
+          "text": "It always seems impossible until it’s done.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "67",
+          "text": "The key to success is to focus on goals, not obstacles.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "68",
+          "text": "You are never too old to set another goal or to dream a new dream.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "69",
+          "text": "Your limitation—it’s only your imagination.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "70",
+          "text": "Great things never come from comfort zones.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "71",
+          "text": "Dream it. Wish it. Do it.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "72",
+          "text": "Success doesn’t just find you. You have to go out and get it.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "73",
+          "text": "The harder you work for something, the greater you’ll feel when you achieve it.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "74",
+          "text": "Dream bigger. Do bigger.",
+          "type": "motivation",
+          "icon": "�",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "75",
+          "text": "Little things make big days.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "76",
+          "text": "It’s going to be hard, but hard does not mean impossible.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "77",
+          "text": "Don’t stop when you’re tired. Stop when you’re done.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "78",
+          "text": "Wake up with determination. Go to bed with satisfaction.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "79",
+          "text": "The only way to achieve the impossible is to believe it is possible.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+        {
+          "id": "80",
+          "text": "Do something today that your future self will thank you for.",
+          "type": "motivation",
+          "icon": "💬",
+          "priority": 1,
+          "active": true,
+          "meta": {
+            "links": [
+              { "url": "NA", "label": "NA" }
+            ]
+          }
+        },
+            {
+              "id": "61",
+              "text": "Question: What's the best lens for portrait photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "50mm f/1.8", "correct": true },
+                { "text": "18-55mm kit lens", "correct": false },
+                { "text": "70-200mm f/2.8", "correct": true }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "62",
+              "text": "Question: What is the rule of thirds in photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Dividing the frame into three equal parts vertically", "correct": false },
+                { "text": "Placing your subject off-center to create balance", "correct": true },
+                { "text": "Using a tripod for stability", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "63",
+              "text": "Question: Which of these is a common camera format for professional photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "JPEG", "correct": false },
+                { "text": "RAW", "correct": true },
+                { "text": "GIF", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "64",
+              "text": "Question: What does the aperture control in a camera?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Shutter speed", "correct": false },
+                { "text": "Depth of field", "correct": true },
+                { "text": "ISO sensitivity", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "65",
+              "text": "Question: Which is the best camera setting for low-light situations?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "High ISO", "correct": true },
+                { "text": "Fast shutter speed", "correct": false },
+                { "text": "Low aperture", "correct": true }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "66",
+              "text": "Question: What is the ideal focal length for landscape photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "35mm", "correct": false },
+                { "text": "70mm", "correct": false },
+                { "text": "16-35mm", "correct": true }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "67",
+              "text": "Question: What does a higher ISO setting result in?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "More grain in photos", "correct": true },
+                { "text": "Sharper images", "correct": false },
+                { "text": "Less exposure time", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "68",
+              "text": "Question: Which lighting is typically used for dramatic portrait photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Soft, diffuse lighting", "correct": false },
+                { "text": "Hard, direct lighting", "correct": true },
+                { "text": "Natural light", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "69",
+              "text": "Question: What does the shutter speed control in a camera?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "The exposure time", "correct": true },
+                { "text": "The amount of light entering", "correct": false },
+                { "text": "The white balance", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "70",
+              "text": "Question: What is the purpose of a tripod in photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Increase ISO", "correct": false },
+                { "text": "Provide stability for long exposures", "correct": true },
+                { "text": "Change aperture size", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "71",
+              "text": "Question: Which of these techniques helps achieve a shallow depth of field?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Wide aperture (low f-stop)", "correct": true },
+                { "text": "Fast shutter speed", "correct": false },
+                { "text": "High ISO", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "72",
+              "text": "Question: Which camera sensor size offers the best image quality in most situations?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Full-frame", "correct": true },
+                { "text": "Crop sensor", "correct": false },
+                { "text": "Medium format", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "73",
+              "text": "Question: What does a high dynamic range (HDR) image represent?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Increased contrast", "correct": false },
+                { "text": "Detailed shadows and highlights", "correct": true },
+                { "text": "Low exposure", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "74",
+              "text": "Question: Which of the following is a common tool for post-processing images?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Lightroom", "correct": true },
+                { "text": "Photoshop Express", "correct": false },
+                { "text": "Camera RAW", "correct": true }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "75",
+              "text": "Question: What is a commonly used lens for macro photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "85mm f/1.4", "correct": false },
+                { "text": "100mm f/2.8 macro", "correct": true },
+                { "text": "18-55mm", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "76",
+              "text": "Question: Which of these is an important factor for capturing action shots?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Fast shutter speed", "correct": true },
+                { "text": "Low ISO", "correct": false },
+                { "text": "Wide aperture", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "77",
+              "text": "Question: What is the best time of day for outdoor photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Midday", "correct": false },
+                { "text": "Golden hour (sunrise or sunset)", "correct": true },
+                { "text": "Night", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "78",
+              "text": "Question: What does 'bokeh' refer to in photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "The subject of the photo", "correct": false },
+                { "text": "The blurry background effect", "correct": true },
+                { "text": "The camera brand", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "79",
+              "text": "Question: What type of lens is best for landscape photography?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Wide-angle lens", "correct": true },
+                { "text": "Telephoto lens", "correct": false },
+                { "text": "Macro lens", "correct": false }
+              ],
+              "priority": 3,
+              "active": true
+            },
+            {
+              "id": "80",
+              "text": "Question: How can you prevent motion blur in your photos?",
+              "type": "question",
+              "icon": "❓",
+              "options": [
+                { "text": "Increase ISO", "correct": false },
+                { "text": "Use a tripod", "correct": true },
+                { "text": "Use a faster shutter speed", "correct": true }
+              ],
+              "priority": 3,
+              "active": true
+            }
+          ]
+          
+  }
+
+
+  

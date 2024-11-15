@@ -184,11 +184,13 @@ const getViewSource = () => {
 };
 
 // Function to initialize user IP and location data
-async function initializeLocation() {
+async function attachTrackingListeners() {
     try {
         const { ipAddress: ip, locationData: location } = await userLocationService.getUserIPAndLocation(); // Fixed destructuring
         ipAddress = ip;
         locationData = location;
+
+        setTrackingListeners(ipAddress);
     } catch (error) {
         console.error("Error fetching user IP and location:", error);
     }
@@ -243,7 +245,7 @@ function getViewedByField() {
 }
 
 // Attach event listeners for tracking
- function attachTrackingListeners(ipAddress) {
+ function setTrackingListeners(ipAddress) {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
    // console.log("2 startViewTimer");
@@ -257,7 +259,6 @@ function getViewedByField() {
     });
 }
 
-attachTrackingListeners(ipAddress);
 
  // Define the  function to check if a specific keyword is in the URL
  window.checkUrl = function(keyword) {
@@ -270,6 +271,12 @@ attachTrackingListeners(ipAddress);
     return currentUrl.includes(keyword);
   };
 
+  if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+    console.log("Admin View");
 
 
+  } else {
+    console.log("User View");
+    attachTrackingListeners();
+  }
 

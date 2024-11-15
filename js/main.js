@@ -1,3 +1,7 @@
+
+
+
+function setUpdateFooterContent(){
 // Function to update the active class on the navigation links
 document.querySelectorAll('.nav-link').forEach(link => {
     // Check if the link's href matches the current page URL
@@ -9,7 +13,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
       updateFooterContent(pageName);
     }
   });
-  
+}
+
   // Function to update the footer content based on the page name
   function updateFooterContent(pageName) {
     // Define the footer texts for different pages
@@ -89,10 +94,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
   }
   
-  // Run the function on load and on resize
-  window.addEventListener('load', adjustFooterForMobile);
-  window.addEventListener('resize', adjustFooterForMobile);
-  
+
 
   function applyBackgroundEffect() {
     const header = document.getElementById('Main_Header');
@@ -123,10 +125,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     }, 5000);  // Change background after 5 seconds, you can adjust this as needed
   }
   
-  // Run the function when the page loads
-  window.addEventListener('load', applyBackgroundEffect);
-  
-
+ 
   function createFilm() { 
     const header = document.getElementById('Main_Header');
     header.style.position = "relative";
@@ -208,10 +207,26 @@ function applyFilmStripEffect() {
     }
 }
 
+
+
+if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+  console.log("Admin View");
+
+
+} else {
+  //console.log("User View");
+  
+  setUpdateFooterContent();
+  // Run the function on load and on resize
+window.addEventListener('load', adjustFooterForMobile);
+window.addEventListener('resize', adjustFooterForMobile);
+  
+// Run the function when the page loads
+window.addEventListener('load', applyBackgroundEffect);
+  
 // Load the film effect on window load
 window.addEventListener('load', applyFilmStripEffect);
-
-
+}
 
 
 
@@ -337,7 +352,7 @@ window.addEventListener('load', applyFilmStripEffect);
                // Implement your toast display logic here
                console.log(`${type.toUpperCase()}: ${message}`);
   
-      toast.className = `toast toast-${type}  noCopy`; // Add classes for styling
+      toast.className = `toast toast-${type}`; // Add classes for styling
       toast.innerText = message; // Set the message text
   
       // Append the toast to the body

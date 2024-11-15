@@ -77,10 +77,19 @@
 <div id="dashboardContent" class="container-fluid dashboard-container">
     <h1 class="mb-4">Admin Dashboard</h1>
     
+    <section>
+        <div id="admin-messages" class="admin-messages-container">
+            <p id="message-text" class="fade-in"></p>
+            <div id="message-actions" class="message-actions"></div>
+          </div>
+          
+    </section>
+
+    <section>
     <!-- Quick Links Section -->
     <div class="row mb-4">
         <div class="col-md-3">
-            <a href="event_photo_management.html" class="card nav-link">
+            <a href="media" class="card nav-link">
                 <div class="card-body text-center">
                     <h5>Event & Photo Management</h5>
                     <p>Upload, edit, and organize events and photos.</p>
@@ -89,7 +98,9 @@
         </div>
         <!-- Additional quick links as in previous code... -->
     </div>
+</section>
 
+<section>
     <!-- Notifications & Statistics Summary -->
     <div class="row">
         <div class="col-md-8">
@@ -109,8 +120,8 @@
             </div>
         </div>
     </div>
+</section>
 </div>
-
 
 </main>
 <!-- Footer -->
@@ -166,7 +177,7 @@ async function updateLoginRecord(user) {
         await setDoc(loginDoc, {
             email: user.email || null,
             phoneNumber: user.phoneNumber || null,
-            lastLogin: serverTimestamp()
+            lastLogin: new Date()
         }, { merge: true });
         console.log("Login record updated for:", user.uid);
     } catch (error) {
@@ -253,6 +264,15 @@ function showDashboard() {
     document.getElementById("dashboardContent").style.display = "block";
 }
 
+
+
+
+
+
+
+
+
+
 // Fetch notifications
 // Listen for real-time updates in the "Notifications" collection
 onSnapshot(collection(db, "Notifications"), (snapshot) => {
@@ -268,9 +288,7 @@ onSnapshot(collection(db, "Notifications"), (snapshot) => {
     });
 });
 
-// Add event listeners
-document.getElementById("googleLoginButton").addEventListener("click", googleLogin);
-document.getElementById("emailLoginButton").addEventListener("click", emailLogin);
+
 </script>
 
 </body>

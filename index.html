@@ -154,11 +154,12 @@
     <div class="container">
       <h2 class="text-center mb-4">Private Access</h2>
       <form id="private-form">
+        <p id="privateAccess_Message"></p>
         <div class="mb-3">
           <label for="accessCode" class="form-label">Enter Access Code</label>
           <input type="text" class="form-control" id="accessCode" placeholder="Enter your code">
         </div>
-        <button type="submit" class="btn btn-primary">Access Gallery</button>
+        <button id="privateAccessBTN" type="submit" class="btn btn-primary">Access Gallery</button>
         <p id="error-msg" class="text-danger mt-3" style="display: none;">Invalid code. Please try again.</p>
       </form>
     </div>
@@ -169,6 +170,7 @@
     <div class="container">
       <h2 class="text-center mb-4">Contact</h2>
       <form id="main-contact-form">
+        <p id="contact_Message"></p>
         <div class="mb-3">
           <label for="name" class="form-label">Your Name</label>
           <input type="text" class="form-control" id="name" placeholder="Your name" required>
@@ -286,13 +288,57 @@
 
     
 
+    let viewStartTime;
+
+// Function to set the last internal page in sessionStorage before navigating
+function setInternalPageSource() {
+    sessionStorage.setItem('lastInternalPage', window.location.href);
+}
+
+// Function to start tracking the view time when the page loads
+function startViewTimer() {
+    viewStartTime = Date.now();
+    //console.log("viewStartTime   ",viewStartTime);
+
+}
+
+
+
+    // Determine the source
+    const externalSource = document.referrer && !document.referrer.includes(window.location.origin)
+        ? document.referrer
+        : null;
+    const internalSource = sessionStorage.getItem('lastInternalPage');
+    const viewSource = externalSource || internalSource || 'Direct Visit';
+
+
+
+    const locationDataString = sessionStorage.getItem('userLocation');
+    const locationData = JSON.parse(locationDataString);
+    const ipAddress = sessionStorage.getItem('userIP');
+
+
+
 
 // Validate Access Code
 document.getElementById('private-form').addEventListener('submit', async function (event) {
   event.preventDefault();
-  const accessCode = document.getElementById('accessCode').value;
 
-  if (accessCode.trim() === "") {
+  const privateAccess_Message = document.getElementById('privateAccess_Message');
+
+  const accessCode = sanitizeInput(document.getElementById('accessCode').value.trim());
+  const submitButton = document.getElementById('privateAccessBTN');
+  
+  // Retrieve attempt count from localStorage or initialize
+  let attempts = parseInt(localStorage.getItem('accessCodeAttempts')) || 0;
+
+  if (attempts >= 3) {
+    alert("You have been locked out due to too many failed attempts.");
+    submitButton.disabled = true;
+    return;
+  }
+
+  if (accessCode === "") {
     alert("Please enter a valid access code!");
     return;
   }
@@ -303,8 +349,19 @@ document.getElementById('private-form').addEventListener('submit', async functio
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      showToast("Access code is invalid!","error");
+      // Increment attempt count and store in localStorage
+      attempts++;
+      localStorage.setItem('accessCodeAttempts', attempts);
+
+      if (attempts >= 3) {
+        alert("You have been locked out due to too many failed attempts.");
+        submitButton.disabled = true; // Disable the submit button
+      } else {
+        alert(`Access code is invalid! You have ${3 - attempts} attempts left.`);
+      }
     } else {
+      // Reset attempt count on success
+      localStorage.removeItem('accessCodeAttempts');
       alert("Access granted!");
       querySnapshot.forEach((doc) => {
         console.log("Event Data: ", doc.data());
@@ -317,16 +374,34 @@ document.getElementById('private-form').addEventListener('submit', async functio
   }
 });
 
+
 // Send Contact Data Function
 async function sendContact() {
   try {
-    // Capture input values
-    const name = document.getElementById("name").value;
-    const message = document.getElementById("message").value;
-    const subject = document.getElementById("subject").value;
+    const contact_Message = document.getElementById('contact_Message');
 
-    if (!name || !message) {
-      showToast("All fields are required!","error");
+    // Capture input values
+    const name = sanitizeInput(document.getElementById("name").value.trim());
+    const message = document.getElementById("message").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const sendButton = document.getElementById("main-contact-btn");
+
+    if (!name || !message || !subject) {
+      showToast("All fields are required!", "error");
+      return;
+    }
+
+    // Get message history from localStorage
+    let messageHistory = JSON.parse(localStorage.getItem("messageHistory")) || [];
+
+    // Filter out timestamps older than 30 minutes
+    const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
+    messageHistory = messageHistory.filter((timestamp) => timestamp > thirtyMinutesAgo);
+
+    // Check if user exceeded the limit
+    if (messageHistory.length >= 3) {
+      showToast("You have reached the message limit. Please try again later.", "error");
+      sendButton.disabled = true; // Disable the button
       return;
     }
 
@@ -334,14 +409,23 @@ async function sendContact() {
     await addDoc(collection(db, "Contacts"), {
       name: name,
       message: message,
-      subject:subject,
+      subject: subject,
       timestamp: new Date()
     });
 
-    showToast("Message sent successfully!","success");
+    showToast("Message sent successfully!", "success");
 
     // Reset form fields
     document.getElementById("contact-form").reset();
+
+    // Add the current timestamp to the history and save back to localStorage
+    messageHistory.push(Date.now());
+    localStorage.setItem("messageHistory", JSON.stringify(messageHistory));
+
+    // Re-enable the button after 30 minutes
+    setTimeout(() => {
+      sendButton.disabled = false;
+    }, 30 * 60 * 1000);
   } catch (error) {
     console.error("Error in sendContact: ", error);
     alert("An error occurred. Please try again.");
@@ -357,7 +441,21 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     sendContact();
   });
+
+  // Check if user is still within the limit on page load
+  const messageHistory = JSON.parse(localStorage.getItem("messageHistory")) || [];
+  const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
+  const validMessages = messageHistory.filter((timestamp) => timestamp > thirtyMinutesAgo);
+
+  if (validMessages.length >= 3) {
+    const sendButton = document.getElementById("main-contact-btn");
+    sendButton.disabled = true; // Disable the button
+    showToast("You are temporarily blocked from sending messages. Try again later.", "error");
+  }
 });
+
+
+
 
 
     // Fetch Gallery and Site Info from HomePage collection
