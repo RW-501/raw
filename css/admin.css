@@ -19,7 +19,7 @@ html {
       color: #333;
       line-height: 1.6;
       user-select: none; /* Prevent text selection */
-      height: 100%;
+      height: auto;
     }
     
 nav {
