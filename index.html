@@ -328,9 +328,12 @@
 
 
     // Submit Contact Form Data
-    document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function() {
+
+      console.log("?????????????????? ");
+
   // Attach submit event listener to the contact form
-  document.getElementById('main-contact-btn').addEventListener('click', function(event) {
+  window.getElementById('main-contact-btn').addEventListener('click', function(event) {
     event.preventDefault();
     
     console.log("event ",event);
