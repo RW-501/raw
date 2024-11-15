@@ -163,13 +163,15 @@ async function fetchMessages(status = "all") {
         let messagesQuery = collection(db, "Contacts"); // Correctly reference db and collection name
 
         // Add a query if the status is not 'all'
-        if (status !== "all") {
-            messagesQuery = query(messagesQuery, where("status", "==", status));
-        }else{
 
-            messagesQuery = query(messagesQuery);
+if (status !== "all") {
+    // Apply the "status" filter if specified
+    messagesQuery = query(collection(db, "Contacts"), where("status", "==", status));
+} else {
+    // No filters, use the collection directly
+    messagesQuery = collection(db, "Contacts");
+}
 
-        }
 
         // Get the documents
         const snapshot = await getDocs(messagesQuery);
