@@ -231,6 +231,7 @@ function getViewedByField() {
         ...locationData,
         lastViewDate: new Date().toISOString(),
         userActivitiesCount: increment(1),
+        totalDuration: increment(durationOfView),
         userBlocked: false
     };
 

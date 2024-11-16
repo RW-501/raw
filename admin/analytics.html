@@ -114,15 +114,13 @@
 
 
   <main id="main-content">
-
     <div class="container mt-5">
         <h2 class="text-center mb-4">Website Analytics Dashboard</h2>
         <section>
             <div id="admin-messages" class="admin-messages-container">
                 <p id="message-text" class="fade-in"></p>
                 <div id="message-actions" class="message-actions"></div>
-              </div>
-              
+            </div>
         </section>
         <div class="row mb-4">
             <div class="col-md-3">
@@ -162,27 +160,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="section-title">Trend Analysis</h5>
-                <canvas id="trendChart"></canvas>
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <label for="customDateRange" class="form-label">Select Date Range</label>
-            <input type="date" id="startDate" class="form-control d-inline-block" style="width: 48%;" />
-            <input type="date" id="endDate" class="form-control d-inline-block" style="width: 48%;" />
-            <button class="btn btn-primary mt-3" onclick="updateAnalytics()">Update Data</button>
-        </div>
-
-        <div class="error-message" id="errorMessage"></div>
+        <!-- Add more event-specific or general analytics as needed -->
     </div>
-
-
-
 </main>
+
+
+
+
 <!-- Footer -->
 <footer class="bg-dark text-light py-3">
   <div class="container">
@@ -209,157 +193,193 @@
 
     <!-- Firebase JS SDK and Custom Scripts -->
     <script type="module">
-      import {  db, doc,getDoc, query, updateDoc,
-      setDoc,     signInWithPopup,
-      GoogleAuthProvider,
-      FacebookAuthProvider,
-      OAuthProvider,arrayUnion ,
-      signOut, addDoc , increment,
-      onAuthStateChanged,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
+        import { db, doc, getDoc, query, updateDoc, increment, collection, where } from '../js/module.js';
     
-      async function fetchAnalyticsData() {
-    showLoading('pageViews');
-    try {
-        const metricsRef = db.collection('Analytics').doc('metrics');
-        const metricsDoc = await metricsRef.get();
-
-        if (!metricsDoc.exists) {
-            throw new Error("Metrics document does not exist.");
-        }
-
-        const metricsData = metricsDoc.data();
-        document.getElementById('pageViews').textContent = metricsData.pageViews || '0';
-        document.getElementById('imageDownloads').textContent = metricsData.imageDownloads || '0';
-        document.getElementById('eventPurchases').textContent = metricsData.eventPurchases || '0';
-        document.getElementById('userEngagement').textContent = metricsData.userEngagement || '0';
-
-        hideLoading('pageViews');
-    } catch (error) {
-        displayError("Failed to load analytics data.");
-        hideLoading('pageViews');
-    }
-}
-
-function displayTrendAnalysis(data) {
-    const ctx = document.getElementById('trendChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Page Views',
-                data: data.pageViews,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Number of Views'
-                    }
+        // Function to fetch and display analytics for a specific event
+        async function fetchEventAnalytics(eventId) {
+            showLoading('eventAnalytics');
+            try {
+                const eventRef = db.collection('Events').doc(eventId);
+                const eventDoc = await eventRef.get();
+                
+                if (!eventDoc.exists) {
+                    throw new Error("Event not found.");
                 }
+                
+                const eventData = eventDoc.data();
+                const views = eventData.views || 0;
+                const retrieveCount = eventData.retrieveCount || 0;
+                const ipAddressList = eventData.retriever_IP || [];
+                const accessHandShake = eventData.accessHandShake || '';
+                const eventStatus = eventData.status || 'active';
+                const eventTags = eventData.eventTags || [];
+                const galleryBool = eventData.galleryBool || false;
+    
+                // Display Event Data
+                document.getElementById('eventViews').textContent = views;
+                document.getElementById('eventRetrieveCount').textContent = retrieveCount;
+                document.getElementById('eventIPAddresses').textContent = ipAddressList.join(', ');
+                document.getElementById('eventAccessHandShake').textContent = accessHandShake;
+                document.getElementById('eventStatus').textContent = eventStatus;
+                document.getElementById('eventTags').textContent = eventTags.join(', ');
+                document.getElementById('eventGallery').textContent = galleryBool ? 'Yes' : 'No';
+    
+                hideLoading('eventAnalytics');
+            } catch (error) {
+                displayError("Failed to load event analytics.");
+                hideLoading('eventAnalytics');
             }
         }
-    });
-}
-
-async function fetchTrendData() {
-    try {
-        const trendRef = db.collection('Analytics').doc('trendData');
-        const trendDoc = await trendRef.get();
-
-        if (!trendDoc.exists) {
-            throw new Error("Trend data document does not exist.");
+    
+        // Function to fetch and display general analytics
+        async function fetchAnalyticsData() {
+            showLoading('pageViews');
+            try {
+                const metricsRef = db.collection('Analytics').doc('metrics');
+                const metricsDoc = await metricsRef.get();
+                
+                if (!metricsDoc.exists) {
+                    throw new Error("Metrics document does not exist.");
+                }
+    
+                const metricsData = metricsDoc.data();
+                document.getElementById('pageViews').textContent = metricsData.pageViews || '0';
+                document.getElementById('imageDownloads').textContent = metricsData.imageDownloads || '0';
+                document.getElementById('eventPurchases').textContent = metricsData.eventPurchases || '0';
+                document.getElementById('userEngagement').textContent = metricsData.userEngagement || '0';
+    
+                hideLoading('pageViews');
+            } catch (error) {
+                displayError("Failed to load analytics data.");
+                hideLoading('pageViews');
+            }
         }
-
-        const trendData = trendDoc.data();
-        const data = {
-            labels: trendData.dates || [],
-            pageViews: trendData.pageViews || []
+    
+        // Function to show loading spinner
+        function showLoading(metric) {
+            document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
+            document.getElementById(metric).style.display = 'none';
+        }
+    
+        // Function to hide loading spinner
+        function hideLoading(metric) {
+            document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
+            document.getElementById(metric).style.display = 'block';
+        }
+    
+        // Function to display error message
+        function displayError(message) {
+            document.getElementById('errorMessage').textContent = message;
+        }
+    
+        // Function to update analytics data based on date range
+        async function updateAnalytics() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+    
+            showLoading('pageViews');
+            try {
+                const rangeRef = db.collection('Analytics')
+                    .where('date', '>=', new Date(startDate))
+                    .where('date', '<=', new Date(endDate));
+                const rangeSnapshot = await rangeRef.get();
+    
+                let pageViews = 0;
+                let imageDownloads = 0;
+                let eventPurchases = 0;
+    
+                rangeSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    pageViews += data.pageViews || 0;
+                    imageDownloads += data.imageDownloads || 0;
+                    eventPurchases += data.eventPurchases || 0;
+                });
+    
+                document.getElementById('pageViews').textContent = pageViews;
+                document.getElementById('imageDownloads').textContent = imageDownloads;
+                document.getElementById('eventPurchases').textContent = eventPurchases;
+    
+                hideLoading('pageViews');
+            } catch (error) {
+                displayError("Failed to update analytics.");
+                hideLoading('pageViews');
+            }
+        }
+    
+        // Window onload event to fetch data when the page loads
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get("eventId");
+    
+            if (eventId) {
+                fetchEventAnalytics(eventId);  // Fetch data for the specific event
+            } else {
+                fetchAnalyticsData();  // Fetch general analytics data
+            }
+    
+            fetchTrendData();  // Fetch and display trend data for general metrics
         };
-
-        displayTrendAnalysis(data);
-    } catch (error) {
-        displayError("Failed to load trend data.");
-    }
-}
-
-async function updateAnalytics() {
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-
-    showLoading('pageViews');
-    try {
-        const rangeRef = db.collection('Analytics')
-            .where('date', '>=', new Date(startDate))
-            .where('date', '<=', new Date(endDate));
-        const rangeSnapshot = await rangeRef.get();
-
-        let pageViews = 0;
-        let imageDownloads = 0;
-        let eventPurchases = 0;
-
-        rangeSnapshot.forEach(doc => {
-            const data = doc.data();
-            pageViews += data.pageViews || 0;
-            imageDownloads += data.imageDownloads || 0;
-            eventPurchases += data.eventPurchases || 0;
-        });
-
-        document.getElementById('pageViews').textContent = pageViews;
-        document.getElementById('imageDownloads').textContent = imageDownloads;
-        document.getElementById('eventPurchases').textContent = eventPurchases;
-
-        hideLoading('pageViews');
-    } catch (error) {
-        displayError("Failed to update analytics.");
-        hideLoading('pageViews');
-    }
-}
-
-function showLoading(metric) {
-    document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
-    document.getElementById(metric).style.display = 'none';
-}
-
-function hideLoading(metric) {
-    document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
-    document.getElementById(metric).style.display = 'block';
-}
-
-function displayError(message) {
-    document.getElementById('errorMessage').textContent = message;
-}
-
-window.onload = function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get("eventId");
-
-    if (eventId) {
-        // Fetch the analytics data for this event from Firestore
-        fetchEventAnalytics(eventId);
-    } else {
-        fetchAnalyticsData();
-        fetchTrendData();
+    
+        // Fetch trend data and display on the trend chart
+        async function fetchTrendData() {
+            try {
+                const trendRef = db.collection('Analytics').doc('trendData');
+                const trendDoc = await trendRef.get();
+    
+                if (!trendDoc.exists) {
+                    throw new Error("Trend data document does not exist.");
+                }
+    
+                const trendData = trendDoc.data();
+                const data = {
+                    labels: trendData.dates || [],
+                    pageViews: trendData.pageViews || []
+                };
+    
+                displayTrendAnalysis(data);
+            } catch (error) {
+                displayError("Failed to load trend data.");
+            }
         }
-
-
-};
-
+    
+        // Display trend data on the trend chart
+        function displayTrendAnalysis(data) {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Page Views',
+                        data: data.pageViews,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Views'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    
     </script>
+    
+
+    
 </body>
 
 </html>
