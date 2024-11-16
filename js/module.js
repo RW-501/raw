@@ -70,14 +70,6 @@ const firebaseConfig = {
 
 document.addEventListener('DOMContentLoaded', initializeFirebase);
 
-// Export Firestore, Storage, and Auth instances for use in other modules
-export {  db,getStorage, ref, uploadBytes, getDownloadURL,
-     doc,arrayUnion, RecaptchaVerifier ,increment, getDoc ,
-      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
-       signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
-        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
-         createUserWithEmailAndPassword, signInWithEmailAndPassword,
-          where, getDocs, storage, collection, auth, analytics };
 
 
   console.log("Page loaded Module ?????????????");
@@ -149,12 +141,35 @@ function logout() {
   // Initialization
   document.addEventListener('DOMContentLoaded', () => {
     checkLogin(); // Ensure login is valid on page load
+
+      
+  if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+    console.log("Admin View");
+    checkUserLoginStatus();
+
+  } else {
+    console.log("User View");
+    attachTrackingListeners();
+  }
+
+
   });
   
   
   
   
   window.setAutoLogout = setAutoLogout;
+
+
+
+  // Export Firestore, Storage, and Auth instances for use in other modules
+export {  db,getStorage, ref, uploadBytes, getDownloadURL,
+    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc ,
+     query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
+      signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
+       OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
+        createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         where, getDocs, storage, collection, auth, analytics };
 
 
 // Utility variables
@@ -333,14 +348,7 @@ function getViewedByField() {
     return currentUrl.includes(keyword);
   };
 
-  if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
-    console.log("Admin View");
-    checkUserLoginStatus();
 
-  } else {
-    console.log("User View");
-    attachTrackingListeners();
-  }
 
 
 
