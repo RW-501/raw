@@ -68,7 +68,52 @@
   
   
   window.showToast = showToast;
+// Auto move to next input (if applicable) on Enter key press
+function viewDidLoad() {
+  const form = document.querySelector('form'); // Select the form or parent container
 
+  // Check if the form exists before proceeding
+  if (!form) {
+  //    console.error('Form element not found');
+      return; // Exit the function if no form is found
+  }
+
+  const inputs = form.querySelectorAll('input'); // Only select inputs within the form
+  
+  inputs.forEach((input, index) => {
+      input.addEventListener('keydown', (e) => {
+          // Check if the Enter key was pressed and the input is not empty or invalid
+          if (e.key === 'Enter') {
+              e.preventDefault(); // Prevent form submission or default Enter behavior
+              
+              // Check if the current input is valid (optional, depending on your needs)
+              if (input.checkValidity()) {
+                  // Find the next input in the NodeList
+                  const nextInput = inputs[index + 1];
+                  
+                  // Focus on the next input, if available
+                  if (nextInput && nextInput.type !== 'checkbox' && nextInput.type !== 'radio') {
+                      nextInput.focus();
+                  } else {
+                      // If there are no more inputs or next is a checkbox/radio, optionally submit the form
+                      if (index + 1 === inputs.length) {
+                          form.submit();  // Submit the form when the last input is reached
+                      }
+                  }
+              } else {
+                  // Optionally, highlight invalid inputs or display a message
+                  input.classList.add('is-invalid');
+                  console.log('Please fill out this field');
+              }
+          }
+      });
+  });
+}
+
+// Run viewDidLoad when the document is ready
+document.addEventListener('DOMContentLoaded', viewDidLoad);
+     
+  
 
 // DOM Elements 
 const messageText = document.getElementById("message-text");
