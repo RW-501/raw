@@ -248,10 +248,6 @@ async function viewMessageDetails(messageId) {
 }
 
 
-// Export or attach functions to the global window object if needed
-window.fetchMessages = fetchMessages("all");
-window.viewMessageDetails = viewMessageDetails;
-
 
 // Mark message as read/unread
 async function toggleReadStatus(messageId, currentStatus) {
@@ -314,6 +310,9 @@ window.onload = function () {
     window.filterMessages = filterMessages;
 // Ensure global scope exposure for event actions
 window.fetchMessages = fetchMessages;
+// Export or attach functions to the global window object if needed
+window.viewMessageDetails = viewMessageDetails;
+
 
 fetchMessages("all");
 
