@@ -196,7 +196,7 @@ Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
     
         <div  class="card mb-4 shadow-lg">
       <!-- Event Sorting and Filtering Section onchange="fetchEvents()"-->
-      <div class="mb-4">
+      <div class="mb-4 card-body">
         <h5 class="mb-3">Sort & Filter Events</h5>
         <div class="form-inline">
             <input type="text" class="form-control mb-2 mr-2" id="eventFilter" placeholder="Search by name or description" onkeyup="fetchEvents()">
@@ -207,7 +207,7 @@ Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
         </div>
     </div>
 
-        <!-- Event List with Edit & Delete Options -->
+    <!-- Event List with Edit & Delete Options -->
         <div id="eventList" class="mb-4">
             <h5 class="mb-3">Manage Events</h5>
             <div class="list-group" id="eventsContainer"></div>
@@ -224,11 +224,11 @@ Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
     </div>
 </div>
 
+                <!-- Media Gallery Section -->
 
     <div id="Manage_Gallery" class="media_tabs">
-<div  class="card mb-4 shadow-lg">
-<!-- Media Gallery Section -->
-<div id="mainGallerySection">
+        <div class="card mb-4 shadow-lg">
+<div id="mainGallerySection" class="card-body">
     <h5 class="mb-3">Manage Gallery</h5>
 
     <div id="galleryContainer"></div>
