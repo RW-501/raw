@@ -8,7 +8,44 @@
 
 
     <link rel="stylesheet" href="../css/admin.css">
+<style>
 
+    /* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+</style>
 </head>
 <body>
 
@@ -66,6 +103,14 @@
             </div>
         </section>
     
+<!-- Add to Gallery Button -->
+<button onclick="openAddToGalleryModal()">Add to Gallery</button>
+
+Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
+
+
+<div id="Add_Event" class="media_tabs">
+
         <!-- Event Upload Form -->
         <div class="card mb-4 shadow-lg">
             <div class="card-body">
@@ -96,6 +141,11 @@
                 </form>
             </div>
         </div>
+
+
+    </div>
+    <div id="Add_Media" class="media_tabs">
+    
         <!-- onclick="uploadEvent()" -->
         <!-- Bulk Photo Upload Section -->
         <div class="card mb-4 shadow-lg">
@@ -141,6 +191,9 @@
             </div>
         </div>
 
+    </div>
+    <div id="Manage_Events" class="media_tabs">
+    
       <!-- Event Sorting and Filtering Section onchange="fetchEvents()"-->
       <div class="mb-4">
         <h5 class="mb-3">Sort & Filter Events</h5>
@@ -167,11 +220,38 @@
             </div>
         </div>
         
+    </div>
+    
+    <div id="Manage_Gallery" class="media_tabs">
+
+
+
+
+       
+
+
 
     </div>
 
   </main>
+
+
   <div id="currentEventID" ></div>
+
+ <!-- Add to Gallery Modal -->
+ <div id="addToGalleryModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h3>Add Media to Gallery</h3>
+        <p>Select a category:</p>
+        <button onclick="addMediaToGallery('portrait')">Portrait</button>
+        <button onclick="addMediaToGallery('event')">Event</button>
+        <button onclick="addMediaToGallery('commercial')">Commercial</button>
+        <button onclick="addMediaToGallery('family')">Family</button>
+        <button onclick="addMediaToGallery('other')">Other</button>
+        <button onclick="closeModal()">Cancel</button>
+    </div>
+</div>
+
 
   <!-- Footer style="display: none;" -->
 <footer class="bg-dark text-light py-3">
@@ -784,10 +864,68 @@ async function saveEvent() {
     }
     
 
+    async function addMediaToGallery(category) {
+    const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
+    
+    // Get the selected media
+    const mediaCollectionRef = collection(db, "Media");
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+    
+    // Get the media details and send to MainGallery
+    mediaSnapshot.forEach(async (doc) => {
+        const mediaData = doc.data();
+        const mediaId = doc.id;
+        const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
+
+        // Prepare the data to be added to MainGallery
+        const mainGalleryData = {
+            eventId: eventId,
+            mediaId: mediaId,
+            category: category, // Portrait, Event, Commercial, Family, Other
+            isPublic: isPublic,
+            photoUrl: photoUrl,
+            status: status,
+            watermarkedImageUrl: watermarkedImageUrl,
+            price: price,
+        };
+
+        // Add the media to the MainGallery collection
+        await addDoc(collection(db, "MainGallery"), mainGalleryData);
+
+        // Optionally display a success message
+        alert('Media successfully added to the gallery!');
+    });
+
+    // Close the modal after adding the media
+    closeModal();
+}
+
+
+
+    function openAddToGalleryModal() {
+    // Show the modal
+    document.getElementById("addToGalleryModal").style.display = "block";
+}
+function closeModal() {
+    // Hide the modal
+    document.getElementById("addToGalleryModal").style.display = "none";
+}
+
+
+
+
+
+
 
     document.addEventListener('DOMContentLoaded', () => {
 
         
+        window.addMediaToGallery = addMediaToGallery;
+
+        window.openAddToGalleryModal = openAddToGalleryModal;
+        window.closeModal = closeModal;
+
         window.applyWatermark = applyWatermark;
         window.editEvent = editEvent;
 
