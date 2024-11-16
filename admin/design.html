@@ -327,7 +327,11 @@ async function updateEventDetails() {
         showToast('Error updating event. Please try again.');
     }
 }
-window.updateEventDetails = updateEventDetails;
+
+window.onload = function () {
+    window.updateEventDetails = updateEventDetails;
+
+ };
 
 </script>
 
