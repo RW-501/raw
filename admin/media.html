@@ -619,7 +619,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
                 <button onclick="updatePrice('${item.id}')">Update Price</button>
                 <button onclick="toggleDetails('${item.id}')">View Details</button>
             </div>
-            <div id="details-${item.id}" class="media-details collapsed">
+            <div id="details-${item.id}" class="media-details collapse">
                 <p>File Type: ${item.fileType}</p>
                 <p>File Size: ${item.fileSize} MB</p>
                 <p>Status: ${item.status}</p>
@@ -710,11 +710,6 @@ async function updatePrice(docId) {
     viewMedia(eventInfo); // Refresh the list
 }
 
-// Function to toggle details view
-function toggleDetails(docId) {
-    const detailsDiv = document.getElementById(`details-${docId}`);
-    detailsDiv.classList.toggle("collapsed");
-}
 
 
 
