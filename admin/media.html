@@ -453,7 +453,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-        fetchEvents(); 
         
         window.applyWatermark = applyWatermark;
         window.editEvent = editEvent;
@@ -463,6 +462,11 @@
         window.fetchEvents = fetchEvents;
 
         window.deleteEvent = deleteEvent;
+
+
+
+        fetchEvents(); 
+
     // Listener for the "Upload Event" button
     const uploadEventButton = document.getElementById('uploadEvent');
     if (uploadEventButton) {
