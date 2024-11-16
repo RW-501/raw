@@ -194,6 +194,7 @@ Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
     </div>
     <div id="Manage_Events" class="media_tabs">
     
+        <div  class="card mb-4 shadow-lg">
       <!-- Event Sorting and Filtering Section onchange="fetchEvents()"-->
       <div class="mb-4">
         <h5 class="mb-3">Sort & Filter Events</h5>
@@ -221,17 +222,16 @@ Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
         </div>
         
     </div>
-    
+</div>
+
+
     <div id="Manage_Gallery" class="media_tabs">
+<div  class="card mb-4 shadow-lg">
 
+    
+</div>
 
-
-
-       
-
-
-
-    </div>
+ </div>
 
   </main>
 
@@ -607,7 +607,7 @@ function showToast(message, type = "info") {
             </div>
         `;
 
-        eventList.innerHTML = eventItem;
+        eventList.appendChild(eventItem);
 
 }
 });
