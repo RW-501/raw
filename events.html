@@ -387,7 +387,9 @@
                         </div>
                     </div>
                 `;
-                eventsList.innerHTML += eventCard;
+                eventsList.appendChild(eventCard);
+
+                //eventsList.innerHTML += eventCard;
             });
         }
     } catch (error) {
