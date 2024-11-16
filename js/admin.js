@@ -1,8 +1,6 @@
 
-// Run viewDidLoad when the document is ready
-document.addEventListener('DOMContentLoaded', viewDidLoad);
-     
-  
+
+
   // Toast Notification Function
   //function showToast(message, type = 'info', duration = 3000) {
     function showToast(message, type = 'info', duration = 3000) {
@@ -69,7 +67,7 @@ document.addEventListener('DOMContentLoaded', viewDidLoad);
   // showToast('This is a warning message!', 'warning');
   
   
-  
+  window.showToast = showToast;
 
 
 // DOM Elements 
