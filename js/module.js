@@ -60,26 +60,30 @@ const firebaseConfig = {
          storage = getStorage(app); // Initialize Storage
          analytics = initializeAnalytics(app);
 
-        
-          // You can now use `auth`, `db`, `storage`, and `analytics` as needed in your app.
-        
-
-     //   console.log("Firebase initialized successfully.");
       //  console.log("Firestore initialized:", db);
-
-        // Export your Firebase instances if needed
-
+// Function to check if the user is logged in
+function checkUserLoginStatus() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is logged in:', user);
+      } else {
+        // No user is signed in
+        console.log('No user is logged in.');
+      }
+    });
+  }
+window.checkUserLoginStatus = checkUserLoginStatus;
     } catch (error) {
         console.error("Error initializing Firebase:", error);
     }
 }
 
-// Load Firebase SDKs when the DOM is fully loaded
-//document.addEventListener('DOMContentLoaded', loadFirebaseSDKs);
+
 document.addEventListener('DOMContentLoaded', initializeFirebase);
 
 // Export Firestore, Storage, and Auth instances for use in other modules
-export { db,getStorage, ref, uploadBytes, getDownloadURL,
+export {  db,getStorage, ref, uploadBytes, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc ,
       query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
@@ -271,7 +275,7 @@ function getViewedByField() {
 
   if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
     console.log("Admin View");
-
+    checkUserLoginStatus();
 
   } else {
     console.log("User View");
@@ -322,7 +326,7 @@ function getRandomDefaultImage(defaultImages) {
     defaultImages.splice(randomIndex, 1); // Remove the chosen image
     return image;
   }
-  
+  window.getRandomDefaultImage = getRandomDefaultImage;
   
   // Fetch HomePage Data
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
