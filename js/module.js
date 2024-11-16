@@ -83,7 +83,7 @@ function logout() {
     localStorage.removeItem('isLoggedIn');
     showToast('You have been logged out.');
     setTimeout(() => {
-        window.location.href = '/'; // Redirect to home
+        window.location.href = '../'; // Redirect to home
     }, 1000);
 }
 
@@ -94,8 +94,13 @@ function checkLogin() {
 
     // Redirect to home if user is not logged in and is in the admin area
     if ((window.location.pathname.includes('/admin/')) && !isLoggedIn) {
-        showToast('You need to log in to access this page.');
-        window.location.href = '/';
+        if((window.location.pathname.includes('/admin/index'))){
+            showToast('You need to log in to access Admin area.');
+
+        }else{
+            window.location.href = '../';
+        }
+
     }
 }
 

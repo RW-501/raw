@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with RAW Photography to book your session, inquire about events, or ask questions about our professional photography services.">
+    <meta name="keywords" content="Photography, RAW Photography, Arkansas, Events, Booking, Photo Sessions">
+    <meta name="author" content="RAW Photography">
+    <meta property="og:title" content="Event Detail – RAW Photography">
+    <meta property="og:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
+    <meta property="og:image" content="/images/main.jpg">
+    <meta property="og:url" content="https://rawphotographysite.com/event-detail">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Event Detail – RAW Photography">
+    <meta name="twitter:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
+    <meta name="twitter:image" content="/images/main.jpg">
+    <meta name="robots" content="index, follow">
+    <title>Event Detail – RAW Photography</title>
+    <link rel="icon" href="/images/fav/favicon-32x32.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navbar section -->
+    <nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation">
+        <a class="navbar-brand" href="./" title="Go to homepage of RAW Photography">RAW Photography</a>
+        <input type="checkbox" id="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span class="bar1"></span>
+            <span class="bar2"></span>
+            <span class="bar3"></span>
+        </label>
+        <ul class="nav-links" id="navbarNav">
+            <li><a href="./about">About</a></li>
+            <li><a href="./gallery">Gallery</a></li>
+            <li><a href="./events">Events</a></li>
+            <li><a href="./contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Event Detail</li>
+        </ol>
+    </nav>
+
+    <!-- Event Detail Section -->
+    <main id="main-content" class="container mt-5">
+        <div id="event-details" class="text-center">
+            <h2 id="event-title">Event Title</h2>
+            <p id="event-description">Event description...</p>
+            <p><strong>Date: </strong><span id="event-date">Event Date</span></p>
+            <p><strong>Location: </strong><span id="event-location">Event Location</span></p>
+
+            <!-- Event Images -->
+            <div id="event-gallery" class="row mt-5"></div>
+
+            <!-- Download Button -->
+            <button id="download-btn" class="btn btn-primary mt-4">Download Info</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="Main_Footer" class="bg-dark text-white py-4">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://www.facebook.com/ThatsR.A.W.Photography" class="text-white">Facebook</a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com/ms_raw3/" class="text-white">Instagram</a></li>
+        </ul>
+        <p>&copy; 2024 RAW Photography. <a href="https://shutterWorx.co" class="text-white">Created by ShutterWorx.co</a></p>
+    </footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/module.js" type="module"></script>
+
+    <script type="module">
+        import { db, doc, getDoc, collection } from '../js/module.js';
+
+        // Get event ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+
+        // Fetch event details from Firestore
+        const fetchEventDetails = async () => {
+            try {
+                const eventRef = db.collection('Events').doc(eventId);
+                const eventDoc = await eventRef.get();
+
+                if (eventDoc.exists) {
+                    const eventData = eventDoc.data();
+                    document.getElementById('event-title').innerText = eventData.title;
+                    document.getElementById('event-description').innerText = eventData.description;
+                    document.getElementById('event-date').innerText = eventData.date;
+                    document.getElementById('event-location').innerText = eventData.location;
+
+                    // Load event gallery images
+                    const galleryContainer = document.getElementById('event-gallery');
+                    eventData.images.forEach(img => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = img;
+                        imgElement.alt = "Event Image";
+                        imgElement.classList.add('col-4', 'mb-3');
+                        galleryContainer.appendChild(imgElement);
+                    });
+
+                    // Button functionality based on collection price
+                    const collectionPrice = eventData.price || 0;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.addEventListener('click', () => {
+                        if (collectionPrice === 0 || collectionPrice === "") {
+                            window.location.href = `./confirmation/?id${eventDoc.Doc().id}&ccc=${event.coverUrl}`; // Redirect to confirmation page
+                        } else {
+                            window.location.href = `./cart/?id${eventDoc.Doc().id}`; // Redirect to cart page
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching event details: ", error);
+            }
+        };
+
+        fetchEventDetails();
+    </script>
+</body>
+</html>

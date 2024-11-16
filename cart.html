@@ -330,7 +330,7 @@
                     // Save payment transaction details to Firestore
                     const user = firebase.auth().currentUser;
                     if (user) {
-                        db.collection('transactions').add({
+                        db.collection('Transactions').add({
                             userId: user.uid,
                             amount: details.purchase_units[0].amount.value,
                             items: cart,
@@ -355,7 +355,7 @@
     // Grant download access to the user
     function grantDownloadAccess(userId) {
         // Example of how you could store download access in Firestore
-        db.collection('downloads').doc(userId).set({
+        db.collection('Downloads').doc(userId).set({
             accessGranted: true,
             grantedAt: firebase.firestore.FieldValue.serverTimestamp(),
             photos: cart.map(item => item.imageUrl)

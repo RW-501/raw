@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with RAW Photography to book your session, inquire about events, or ask questions about our professional photography services.">
+    <meta name="keywords" content="Photography, RAW Photography, Arkansas, Events, Booking, Photo Sessions">
+    <meta name="author" content="RAW Photography">
+    <meta property="og:title" content="Event Detail – RAW Photography">
+    <meta property="og:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
+    <meta property="og:image" content="/images/main.jpg">
+    <meta property="og:url" content="https://rawphotographysite.com/event-detail">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Event Detail – RAW Photography">
+    <meta name="twitter:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
+    <meta name="twitter:image" content="/images/main.jpg">
+    <meta name="robots" content="index, follow">
+    <title>Event Detail – RAW Photography</title>
+    <link rel="icon" href="/images/fav/favicon-32x32.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navbar section -->
+    <nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation">
+        <a class="navbar-brand" href="./" title="Go to homepage of RAW Photography">RAW Photography</a>
+        <input type="checkbox" id="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span class="bar1"></span>
+            <span class="bar2"></span>
+            <span class="bar3"></span>
+        </label>
+        <ul class="nav-links" id="navbarNav">
+            <li><a href="./about">About</a></li>
+            <li><a href="./gallery">Gallery</a></li>
+            <li><a href="./events">Events</a></li>
+            <li><a href="./contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Event Detail</li>
+        </ol>
+    </nav>
+
+    <!-- Event Detail Section -->
+    <main id="main-content" class="container mt-5">
+        <div id="confirmation-message"></div>
+        <button id="download-button">Download Now</button>
+        <select id="file-format">
+           <option value="jpg">JPEG</option>
+           <option value="png">PNG</option>
+           <option value="pdf">PDF</option>
+        </select>
+
+    </div>
+    <button id="download-button">Download Now</button>
+    <button id="retry-button" style="display: none;">Retry Download</button>
+    <div id="error-message" style="color: red; display: none;"></div>
+</div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="Main_Footer" class="bg-dark text-white py-4">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://www.facebook.com/ThatsR.A.W.Photography" class="text-white">Facebook</a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com/ms_raw3/" class="text-white">Instagram</a></li>
+        </ul>
+        <p>&copy; 2024 RAW Photography. <a href="https://shutterWorx.co" class="text-white">Created by ShutterWorx.co</a></p>
+    </footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/module.js" type="module"></script>
+
+    <script type="module">
+        import { db, doc, getDoc, collection } from '../js/module.js';
+        window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+    const downloadId = urlParams.get('downloadId');
+    const storedEventId = localStorage.getItem('eventId');
+    const storedDownloadId = localStorage.getItem('downloadId');
+    
+    let eventInfo = null;
+    
+    // Check if the eventId and downloadId are passed in the URL
+    if (eventId) {
+        if (downloadId) {
+            // Paid download scenario
+            eventInfo = {
+                eventId: eventId,
+                downloadId: downloadId,
+                type: 'paid'
+            };
+            showConfirmationMessage(`Thank you for your purchase! You are about to download Event #${eventId}.`);
+        } else {
+            // Free download scenario
+            eventInfo = {
+                eventId: eventId,
+                type: 'free'
+            };
+            showConfirmationMessage(`You are about to download Event #${eventId} for free!`);
+        }
+        
+        // Store event and download info in localStorage for retry
+        localStorage.setItem('eventId', eventId);
+        if (downloadId) {
+            localStorage.setItem('downloadId', downloadId);
+        }
+    } else if (storedEventId) {
+        // If no eventId in URL, check localStorage
+        eventInfo = {
+            eventId: storedEventId,
+            downloadId: storedDownloadId,
+            type: storedDownloadId ? 'paid' : 'free'
+        };
+        showConfirmationMessage(`You are about to download Event #${storedEventId}.`);
+    } else {
+        showError('Invalid download request.');
+        return;
+    }
+
+    // Handle download button click
+    document.getElementById('download-button').addEventListener('click', function() {
+        handleDownload(eventInfo);
+    });
+
+    // Handle retry button click if there's an error
+    document.getElementById('retry-button').addEventListener('click', function() {
+        handleDownload(eventInfo);
+    });
+};
+
+function showConfirmationMessage(message) {
+    document.getElementById('confirmation-message').innerHTML = message;
+    document.getElementById('download-button').disabled = false;
+}
+
+function showError(message) {
+    document.getElementById('error-message').innerText = message;
+    document.getElementById('error-message').style.display = 'block';
+    document.getElementById('retry-button').style.display = 'block';
+}
+
+function handleDownload(eventInfo) {
+    const format = document.getElementById('file-format').value;
+    
+    if (eventInfo.type === 'paid' && eventInfo.downloadId) {
+        // Trigger paid download with format
+        downloadPaidFile(eventInfo.eventId, eventInfo.downloadId, format);
+    } else {
+        // Trigger free download with format
+        downloadFile(eventInfo.eventId, format);
+    }
+}
+
+function downloadFile(eventId, format) {
+    // Simulate the free download
+    console.log(`Downloading Event #${eventId} for free as ${format}.`);
+
+    // Simulate network issue (for testing retry)
+    const networkIssue = Math.random() < 0.5;
+    if (networkIssue) {
+        showError('Network issue occurred. Please try again.');
+    } else {
+        console.log(`Event #${eventId} downloaded successfully as ${format}.`);
+    }
+}
+
+function downloadPaidFile(eventId, downloadId, format) {
+    // Simulate the paid download
+    console.log(`Downloading Event #${eventId} (Paid) with Download ID: ${downloadId} as ${format}.`);
+
+    // Simulate network issue (for testing retry)
+    const networkIssue = Math.random() < 0.5;
+    if (networkIssue) {
+        showError('Network issue occurred. Please try again.');
+    } else {
+        console.log(`Event #${eventId} (Paid) downloaded successfully with Download ID: ${downloadId} as ${format}.`);
+    }
+}
+
+</script>
+</body>
+</html>
