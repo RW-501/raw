@@ -192,9 +192,13 @@
         </div>
 
         <!-- Events List -->
-        <div id="events-list" class="row mt-4" style="display: none;">
+        <div id="events-list" class="row mt-4" >
             <!-- Event cards will be dynamically populated here -->
         </div>
+
+        </div>
+
+        
     </main>
 
     <!-- Public Gallery Section -->
@@ -345,6 +349,8 @@
 
         // Function to fetch events from Firestore
         async function fetchEvents() {
+          console.log("fetchEvents");
+
     const eventsList = document.getElementById('events-list');
     const loading = document.getElementById('loading');
     const errorMessage = document.getElementById('error-message');
