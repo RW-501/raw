@@ -158,14 +158,22 @@
             <h5 class="mb-3">Manage Events</h5>
             <div class="list-group" id="eventsContainer"></div>
         </div>
-
+        <div id="eventMediaContainer">
+            <div id="eventDetails">
+                <!-- Event-level metadata will be dynamically added here -->
+            </div>
+            <div id="mediaList">
+                <!-- Media items will be dynamically listed here -->
+            </div>
+        </div>
+        
 
     </div>
 
   </main>
-  <div id="currentEventID" style="display: none;"></div>
+  <div id="currentEventID" ></div>
 
-  <!-- Footer -->
+  <!-- Footer style="display: none;" -->
 <footer class="bg-dark text-light py-3">
     <div class="container">
         <div class="row">
@@ -396,7 +404,7 @@ function showToast(message, type = "info") {
             const coverUrl = await getDownloadURL(storageRef);
 
             // Hash the access code (for demo, using btoa)
-            const hashedAccessCode = btoa(accessCode);
+           // const hashedAccessCode = btoa(accessCode);
 
             // Add event to Firestore
             await addDoc(collection(db, 'Events'), {
@@ -404,8 +412,22 @@ function showToast(message, type = "info") {
                 description,
                 eventDate,
                 coverUrl,
-                accessCode: hashedAccessCode
-            });
+                retrieveCount: 0,
+                retriever_IP: [],
+                accessHandShake: accessHandShake,
+        status: "active",
+        isPublic: true,
+        collection_price: "",
+        collection_OnSellPrice: "",
+        eventTags: [],
+        accessCode: accessCode || "",
+        location: location || "",
+        timestamp: new Date(),
+        comments: [],
+        views: 0,
+        deactived: false,
+        galleryBool: true
+                });
 
             showToast('Event uploaded successfully');
             document.getElementById('eventForm').reset();
@@ -437,50 +459,266 @@ function showToast(message, type = "info") {
     try {
         const snapshot = await getDocs(eventQuery);
 
-        snapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
     const event = doc.data();
 
-    // Check for missing or null event properties
+    // Fallbacks for missing or null event properties
     const title = event.title || 'Untitled Event';
     const description = event.description || 'No description available';
     const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
     const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
+    const retrieveCount = event.retrieveCount || 0;
+    const status = event.status || true;
+    const isPublic = event.isPublic || false;
+    const collectionPrice = event.collection_price || 'Not set';
+    const eventTags = event.eventTags || 'No tags';
+    const location = event.location || 'Location not provided';
+    const timestamp = event.timestamp ? new Date(event.timestamp.seconds * 1000).toLocaleString() : 'Timestamp not available';
+    const comments = event.comments || 'No comments';
+    const views = event.views || 0;
+    const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
 
-    // Check if the event matches the filter text
+    // Filter matching events
     if (
         title.toLowerCase().includes(filterText) ||
         description.toLowerCase().includes(filterText)
     ) {
         const eventItem = document.createElement('div');
-        eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'mb-3', 'p-3');
+        eventItem.style.border = '1px solid #ddd';
+        eventItem.style.borderRadius = '8px';
+        eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
 
-        // Using innerHTML for the main structure
+        // Collapsible content
+        const detailsId = `details-${doc.id}`;
         eventItem.innerHTML = `
-            <div class="d-flex align-items-center">
-                <img src="${coverUrl}" alt="Event Thumbnail" style="width: 50px; height: 50px; margin-right: 10px;" />
-                <div>
-                    <strong>${title}</strong><br>
-                    ${eventDate}<br>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="${coverUrl}" alt="Event Thumbnail" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 4px;" />
+                    <div>
+                        <strong>${title}</strong>
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
+                    <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${JSON.stringify(event).replace(/'/g, "\\'").replace(/"/g, '\\"')})">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
+                    <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
                 </div>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${JSON.stringify(event)})">Edit</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
-                <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+            <button class="btn btn-link mt-2 text-decoration-none" style="font-size: 0.9rem;" onclick="toggleDetails('${detailsId}')">
+                ${isPublic ? "Hide" : "Show"} Details
+            </button>
+            <div id="${detailsId}" class="collapse mt-3">
+                <p><strong>Description:</strong> ${description}</p>
+                <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">
+                    ${status ? "Yes" : "No"}
+                </span></p>
+                <p><strong>Tags:</strong> ${eventTags}</p>
+                <p><strong>Location:</strong> ${location}</p>
+                <p><strong>Collection Price:</strong> $${collectionPrice}</p>
+                <p><strong>Views:</strong> ${views}</p>
+                <p><strong>Retrieve Count:</strong> ${retrieveCount}</p>
+                <p><strong>Timestamp:</strong> ${timestamp}</p>
+                <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
+                <p><strong>Comments:</strong> ${comments}</p>
+                <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
             </div>
         `;
 
+        document.getElementById('eventsList').appendChild(eventItem);
+
+}
+});
+} catch (error) {
+console.error("Error fetching events:", error);
+}
+}
+
+
+// Function to toggle collapsible details
+function toggleDetails(detailsId) {
+    const details = document.getElementById(detailsId);
+    details.classList.toggle('collapse');
+}
+
+// Function to handle analytics view
+function viewAnalytics(eventId) {
+    alert(`Viewing analytics for event ID: ${eventId}`);
+    // Add logic to navigate to or open analytics data
+}
+
         
 
-// Append the new event item to the event list
-eventList.appendChild(eventItem);
 
+
+
+
+
+
+async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhoto) {
+    const mediaCollectionRef = collection(db, "Media");
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+
+    const mediaListContainer = document.getElementById("mediaList");
+    const eventDetailsContainer = document.getElementById("eventDetails");
+
+    // Reset containers
+    mediaListContainer.innerHTML = "";
+    eventDetailsContainer.innerHTML = "";
+
+    let imageCount = 0;
+    let coverPhoto = "";
+    const mediaItems = [];
+
+    mediaSnapshot.forEach((doc) => {
+        const data = doc.data();
+        imageCount++;
+        mediaItems.push({ id: doc.id, ...data });
+
+        // Use the first image as the cover photo
+        if (!coverPhoto) coverPhoto = data.photoUrl;
+    });
+
+    // Event-level metadata
+    eventDetailsContainer.innerHTML = `
+        <h3>${eventTitle}</h3>
+        <p>Date: ${eventDate}</p>
+        <p>Public: ${publicStatus ? "Yes" : "No"}</p>
+        <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
+        <p>Total Images: ${imageCount}</p>
+        <div class="batch-buttons">
+            <button onclick="batchSetPublic('${eventId}', true)">Set All Public</button>
+            <button onclick="batchSetPublic('${eventId}', false)">Set All Private</button>
+            <button onclick="batchUpdatePrices('${eventId}')">Update All Prices</button>
+        </div>
+    `;
+
+    // Generate media items
+    mediaItems.forEach((item) => {
+        const mediaDiv = document.createElement("div");
+        mediaDiv.classList.add("media-item");
+        mediaDiv.innerHTML = `
+            <div class="media-header">
+                <img 
+                    data-src="${item.photoUrl}" 
+                    alt="Media" 
+                    class="media-thumbnail lazy"
+                >
+                <p>Price: $${item.price}</p>
+                <p>Collection Price: $${item.collectionPrice}</p>
+                <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
+                    ${item.isPublic ? "Make Private" : "Make Public"}
+                </button>
+                <button onclick="updatePrice('${item.id}')">Update Price</button>
+                <button onclick="toggleDetails('${item.id}')">View Details</button>
+            </div>
+            <div id="details-${item.id}" class="media-details collapsed">
+                <p>File Type: ${item.fileType}</p>
+                <p>File Size: ${item.fileSize} MB</p>
+                <p>Status: ${item.status}</p>
+                <p>Views: ${item.views}</p>
+                <p>Timestamp: ${new Date(item.timestamp.seconds * 1000).toLocaleString()}</p>
+            </div>
+        `;
+        mediaListContainer.appendChild(mediaDiv);
+    });
+
+    // Initialize lazy loading
+    initializeLazyLoading();
+}
+
+// Lazy loading implementation
+function initializeLazyLoading() {
+    const lazyImages = document.querySelectorAll(".lazy");
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove("lazy");
+                observer.unobserve(img);
             }
         });
-    } catch (error) {
-        console.error("Error fetching events:", error);
-    }
+    });
+
+    lazyImages.forEach((img) => observer.observe(img));
 }
+
+// Batch set public/private
+async function batchSetPublic(eventId, isPublic) {
+    const mediaCollectionRef = collection(db, "Media");
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+
+    const batch = writeBatch(db);
+    mediaSnapshot.forEach((doc) => {
+        batch.update(doc.ref, { isPublic });
+    });
+
+    await batch.commit();
+    alert(`All media set to ${isPublic ? "Public" : "Private"}.`);
+    viewMedia(eventId); // Refresh the view
+}
+
+// Batch update prices
+async function batchUpdatePrices(eventId) {
+    const newPrice = prompt("Enter the new price for all media:");
+    if (!newPrice || isNaN(newPrice)) {
+        alert("Invalid price.");
+        return;
+    }
+
+    const mediaCollectionRef = collection(db, "Media");
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+
+    const batch = writeBatch(db);
+    mediaSnapshot.forEach((doc) => {
+        batch.update(doc.ref, { price: parseFloat(newPrice) });
+    });
+
+    await batch.commit();
+    alert("Prices updated successfully.");
+    viewMedia(eventId); // Refresh the view
+}
+
+// Function to toggle the public status
+async function togglePublicStatus(docId, newStatus) {
+    const docRef = doc(db, "Media", docId);
+    await updateDoc(docRef, { isPublic: newStatus });
+    alert(`Photo is now ${newStatus ? "Public" : "Private"}`);
+    viewMedia(eventId); // Refresh the list
+}
+
+// Function to update the price
+async function updatePrice(docId) {
+    const newPrice = prompt("Enter the new price:");
+    if (!newPrice || isNaN(newPrice)) {
+        alert("Invalid price.");
+        return;
+    }
+    const docRef = doc(db, "Media", docId);
+    await updateDoc(docRef, { price: parseFloat(newPrice) });
+    alert("Price updated successfully.");
+    viewMedia(eventId); // Refresh the list
+}
+
+// Function to toggle details view
+function toggleDetails(docId) {
+    const detailsDiv = document.getElementById(`details-${docId}`);
+    detailsDiv.classList.toggle("collapsed");
+}
+
+
+
+
+
+
+
+
 
     // Edit Event Function
     function editEvent(eventId, event) {
@@ -560,6 +798,7 @@ async function saveEvent() {
 
         window.deleteEvent = deleteEvent;
         window.saveEvent = saveEvent;
+        window.viewMedia = viewMedia;
 
 
         

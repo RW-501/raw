@@ -375,7 +375,7 @@ document.getElementById('private-form').addEventListener('submit', async functio
         const eventRef = doc.ref;
         await updateDoc(eventRef, {
           retrieveCount: (docData.retrieveCount || 0) + 1,
-          ipAddress: ipAddress,
+          retriever_IP: [ipAddress],
         });
 
         // Retrieve the accessHandShake value
