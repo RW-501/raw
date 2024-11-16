@@ -92,7 +92,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Message</th>
+                <th scope="col">Contact</th>
                 <th scope="col">Status</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -186,7 +186,7 @@ async function fetchMessages(status = "all") {
                 <td>${msgCount +=1}</td>
                 <td>${msg.name || "Unknown"}</td>
                 <td>${msg.subject || "Unknown"}</td>
-                <td>${msg.phone || msg.email}</td>
+                <td>${msg.phone || msg.email  || "Unknown"}</td>
                 <td>${msg.status || "N/A"}</td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="viewMessageDetails('${msg.id}')">
@@ -244,7 +244,7 @@ async function viewMessageDetails(messageId) {
             `;
 
             const messageDetailModal = new bootstrap.Modal(document.getElementById('messageDetailModal'));
-            messageDetailModal.show();
+           // messageDetailModal.show();
         } else {
             console.warn("No such document!");
         }
