@@ -56,7 +56,7 @@
           toast.classList.add('fade-out'); // Add fade-out effect
           setTimeout(() => {
               document.body.removeChild(toast); // Remove toast from DOM
-          }, 500); // Time to wait for fade-out animation
+          }, 50000); // Time to wait for fade-out animation
       }, duration);
   }
   
