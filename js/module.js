@@ -60,7 +60,7 @@ const firebaseConfig = {
          storage = getStorage(app); // Initialize Storage
          analytics = initializeAnalytics(app);
 
-      console.log("Firestore initialized:", db);
+    //  console.log("Firestore initialized:", db);
 
     } catch (error) {
         console.error("Error initializing Firebase:", error);
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', initializeFirebase);
 
 
 
-  console.log("Page loaded Module ?????????????");
+ // console.log("Page loaded Module ?????????????");
   
 
 
