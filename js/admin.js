@@ -186,6 +186,11 @@ function displayMessage(message) {
       message.options.forEach((option) => {
         const button = createButton(option.text, () => {
           showToast(option.correct ? "Correct! 🎉" : "Try again. 📷", option.correct ? "success" : "error");
+       
+          if(option.correct){
+
+          }
+       
         });
         messageActions.appendChild(button);
       });
@@ -218,3 +223,66 @@ async function initMessages() {
 
 // Initialize on Page Load
 initMessages();
+
+
+
+
+
+
+
+// Logout function
+function logout() {
+  localStorage.removeItem('isLoggedIn');
+  showToast('You have been logged out.');
+  setTimeout(() => {
+      window.location.href = '../'; // Redirect to home
+  }, 1000);
+}
+
+
+// Check if user is logged in and handle admin area access
+function checkLogin() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  // Redirect to home if user is not logged in and is in the admin area
+  if (window.location.pathname.includes('/admin/')) {
+      if (!isLoggedIn) {
+          if (window.location.pathname.includes('/admin/index')) {
+              showToast('You need to log in to access the Admin area.');
+          } else {
+              // Redirect to login page or main admin page
+              window.location.href = '/admin/index';
+          }
+      } else if (window.location.pathname.includes('/admin/index')) {
+          showToast('Admin Logged In');
+          document.getElementById("firebaseLogin").style.display = "block";
+          document.getElementById("dashboardContent").style.display = "none";
+      }
+  }
+}
+
+window.checkLogin = checkLogin;
+
+// Auto logout function
+let autoLogoutTimer = null;
+function setAutoLogout() {
+  const minutes = parseInt(document.getElementById('logoutTimer').value);
+  if (minutes > 0) {
+      showToast(`Auto logout set for ${minutes} minutes.`);
+      clearTimeout(autoLogoutTimer); // Clear previous timer
+      autoLogoutTimer = setTimeout(() => {
+          logout();
+      }, minutes * 60 * 1000);
+  } else {
+      showToast('Please enter a valid time.');
+  }
+}
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  checkLogin(); // Ensure login is valid on page load
+});
+
+
+
+
+window.setAutoLogout = setAutoLogout;
