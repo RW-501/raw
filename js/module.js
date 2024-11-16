@@ -93,22 +93,21 @@ function checkLogin() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     // Redirect to home if user is not logged in and is in the admin area
-    if ((window.location.pathname.includes('/admin/')) && !isLoggedIn) {
-        if((window.location.pathname.includes('/admin/index'))){
-            showToast('You need to log in to access Admin area.');
-
-        }else{
-            window.location.href = '../';
+    if (window.location.pathname.includes('/admin/')) {
+        if (!isLoggedIn) {
+            if (window.location.pathname.includes('/admin/index')) {
+                showToast('You need to log in to access the Admin area.');
+            } else {
+                // Redirect to login page or main admin page
+                window.location.href = '/admin/index';
+            }
+        } else if (window.location.pathname.includes('/admin/index')) {
+            showToast('Admin Logged In');
+            document.getElementById("firebaseLogin").style.display = "block";
+            document.getElementById("dashboardContent").style.display = "none";
         }
-
-    }else if((window.location.pathname.includes('/admin/index')) && isLoggedIn){
-        showToast('Admin Loggin');
-
-        document.getElementById("firebaseLogin").style.display = "block";
-        document.getElementById("dashboardContent").style.display = "none";
     }
 }
-
 
 window.checkLogin = checkLogin;
 
