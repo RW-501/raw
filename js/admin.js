@@ -255,8 +255,8 @@ function checkLogin() {
           }
       } else if (window.location.pathname.includes('/admin/index')) {
           showToast('Admin Logged In');
-          document.getElementById("firebaseLogin").style.display = "block";
-          document.getElementById("dashboardContent").style.display = "none";
+          document.getElementById("firebaseLogin").style.display = "none";
+          document.getElementById("dashboardContent").style.display = "block";
       }
   }
 }
