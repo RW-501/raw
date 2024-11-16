@@ -62,22 +62,6 @@ const firebaseConfig = {
 
       console.log("Firestore initialized:", db);
 
-
-// Function to check if the user is logged in
-function checkUserLoginStatus() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in
-        console.log('User is logged in:', user);
-      } else {
-        // No user is signed in
-        console.log('No user is logged in.');
-      }
-    });
-  }
-
-window.checkUserLoginStatus = checkUserLoginStatus;
-
     } catch (error) {
         console.error("Error initializing Firebase:", error);
     }
@@ -98,6 +82,22 @@ export {  db,getStorage, ref, uploadBytes, getDownloadURL,
 
   console.log("Page loaded Module ?????????????");
   
+
+
+// Function to check if the user is logged in
+function checkUserLoginStatus() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is logged in:', user);
+      } else {
+        // No user is signed in
+        console.log('No user is logged in.');
+      }
+    });
+  }
+
+window.checkUserLoginStatus = checkUserLoginStatus;
 
 
 
