@@ -184,52 +184,53 @@
 }
 
 // Function to display messages
-function displayMessages(messages) {
-    const messagesList = document.getElementById("messagesList");
-    messagesList.innerHTML = "";
-console.log("messages ?????????");
-
-    messages.forEach((message, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${message.name || "Unknown"}</td>
-            <td>${message.email || "N/A"}</td>
-            <td>${message.message?.slice(0, 50) || ""}...</td>
-            <td>
-                <span class="badge ${
-                    message.status === "unread" 
-                        ? "bg-warning" 
-                        : message.status === "read" 
-                        ? "bg-success" 
-                        : "bg-secondary"
-                }">
-                    ${message.status?.charAt(0).toUpperCase() + message.status?.slice(1)}
-                </span>
-            </td>
-            <td>
-                <button class="btn btn-info" onclick="viewMessageDetails('${message.id}')">View</button>
-                <button class="btn btn-secondary" onclick="toggleReadStatus('${message.id}', '${message.status}')">
-                    ${message.status === "read" ? "Mark as Unread" : "Mark as Read"}
-                </button>
-                <button class="btn btn-danger" onclick="archiveMessage('${message.id}')">Archive</button>
-            </td>
-        `;
-        messagesList.appendChild(row);
-    });
-}
-
-// Function to view message details
 async function viewMessageDetails(messageId) {
     try {
         const messageDoc = await getDoc(doc(db, "Contacts", messageId));
         if (messageDoc.exists()) {
             const message = messageDoc.data();
-            document.getElementById("messageDetailModalLabel").innerText = `Message from ${message.name || "Unknown"}`;
-            document.getElementById("messageDetailsContent").innerText = message.message || "No message content.";
+
+            // Prepare the message details
+            const {
+                name = "Unknown", // Fallback to "Unknown" if name is not provided
+                message: messageContent = "No message content.", // Default message if not provided
+                phone = '', // Default empty string for phone
+                messageType,
+                budget,
+                eventDate,
+                ipAddress,
+                locationData = {},
+                timestamp
+            } = message;
+
+            const {
+                city = '',
+                zip = '',
+                state = '',
+                country = ''
+            } = locationData;
+
+            // Set message title
+            document.getElementById("messageDetailModalLabel").innerText = `Message from ${name}`;
+
+            // Construct innerHTML to display all message details
+            document.getElementById("messageDetailsContent").innerHTML = `
+                <p><strong>Message:</strong> ${messageContent}</p>
+                <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+                <p><strong>Message Type:</strong> ${messageType || 'N/A'}</p>
+                ${messageType === "book" ? `
+                    <p><strong>Budget:</strong> ${budget || 'N/A'}</p>
+                    <p><strong>Event Date:</strong> ${eventDate || 'N/A'}</p>
+                ` : ''}
+                <p><strong>IP Address:</strong> ${ipAddress || 'N/A'}</p>
+                <p><strong>Location:</strong> ${city || 'N/A'}, ${state || 'N/A'}, ${zip || 'N/A'}, ${country || 'N/A'}</p>
+                <p><strong>Timestamp:</strong> ${new Date(timestamp).toLocaleString()}</p>
+            `;
+
+            // Show the modal
             const messageDetailModal = document.getElementById('messageDetailModal');
-const bootstrapModal = new bootstrap.Modal(messageDetailModal);
-bootstrapModal.show();
+            const bootstrapModal = new bootstrap.Modal(messageDetailModal);
+            bootstrapModal.show();
         } else {
             console.warn("No such document!");
         }
@@ -237,6 +238,7 @@ bootstrapModal.show();
         console.error("Error fetching message details:", error);
     }
 }
+
 
 // Export or attach functions to the global window object if needed
 window.fetchMessages = fetchMessages("all");

@@ -915,6 +915,72 @@ function closeModal() {
 
 
 
+async function loadMainGallery() {
+    const galleryContainer = document.getElementById('galleryContainer');
+    galleryContainer.innerHTML = ''; // Clear the container before adding new data
+
+    // Fetch data from MainGallery
+    const mainGalleryRef = collection(db, "MainGallery");
+    const mainGallerySnapshot = await getDocs(mainGalleryRef);
+
+    if (mainGallerySnapshot.empty) {
+        galleryContainer.innerHTML = "<p>No media in gallery.</p>";
+        return;
+    }
+
+    mainGallerySnapshot.forEach(doc => {
+        const mediaData = doc.data();
+        const mediaId = doc.id;
+        const { photoUrl, category, price, status, isPublic, watermarkedImageUrl } = mediaData;
+
+        // Create a collapsible section for each media item
+        const mediaDiv = document.createElement('div');
+        mediaDiv.classList.add('media-item');
+        mediaDiv.innerHTML = `
+            <div class="media-header">
+                <button onclick="toggleCollapse('${mediaId}')">Toggle Details</button>
+                <h4>${category}</h4>
+            </div>
+            <div id="details-${mediaId}" class="media-details collapse">
+                <img src="${photoUrl}" alt="Media Image" class="media-thumbnail">
+                <p>Price: $${price}</p>
+                <p>Status: ${status}</p>
+                <p>Public: ${isPublic ? "Yes" : "No"}</p>
+                <p><img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail"></p>
+                <div class="media-actions">
+                    <button onclick="editMedia('${mediaId}')">Edit</button>
+                    <button onclick="removeMedia('${mediaId}')">Remove</button>
+                </div>
+            </div>
+        `;
+        
+        galleryContainer.appendChild(mediaDiv);
+    });
+}
+
+// Toggle the collapse of media details
+function toggleCollapse(mediaId) {
+    const details = document.getElementById(`details-${mediaId}`);
+    details.classList.toggle('collapse');
+}
+
+// Edit Media Function
+function editMedia(mediaId) {
+    // Example function to edit media (you can implement a form to edit details)
+    alert(`Edit media with ID: ${mediaId}`);
+    // You can replace this with your edit logic, such as opening a form to edit the media data
+}
+
+// Remove Media Function
+async function removeMedia(mediaId) {
+    const confirmDelete = confirm("Are you sure you want to remove this media from the gallery?");
+    if (confirmDelete) {
+        // Remove from MainGallery collection
+        await deleteDoc(doc(db, "MainGallery", mediaId));
+        alert('Media successfully removed from the gallery!');
+        loadMainGallery(); // Refresh the gallery list
+    }
+}
 
 
 
@@ -937,9 +1003,11 @@ function closeModal() {
         window.saveEvent = saveEvent;
         window.viewMedia = viewMedia;
 
-
+window.loadMainGallery = loadMainGallery;
         
         fetchEvents(); 
+
+        loadMainGallery();
 
         const saveEventBTN = document.getElementById('saveEvent');
     if (saveEvent) {
