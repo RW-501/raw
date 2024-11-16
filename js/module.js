@@ -114,7 +114,7 @@ function logout() {
                 // Redirect to login page or main admin page
                 window.location.href = '/admin/index';
             }
-        } else if (window.location.pathname.includes('/admin/index')) {
+        } else if (window.location.pathname.includes('/admin') || window.location.pathname.includes('/admin/index') || window.location.pathname.includes('/admin/')) {
             showToast('Admin Logged In');
             document.getElementById("firebaseLogin").style.display = "none";
             document.getElementById("dashboardContent").style.display = "block";
