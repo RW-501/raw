@@ -78,8 +78,47 @@ const firebaseConfig = {
 //document.addEventListener('DOMContentLoaded', loadFirebaseSDKs);
 document.addEventListener('DOMContentLoaded', initializeFirebase);
 
+// Logout function
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    showToast('You have been logged out.');
+    setTimeout(() => {
+        window.location.href = '/'; // Redirect to home
+    }, 1000);
+}
+
+
+// Check if user is logged in and handle admin area access
+function checkLogin() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // Redirect to home if user is not logged in and is in the admin area
+    if ((window.location.pathname.includes('/admin/')) && !isLoggedIn) {
+        showToast('You need to log in to access this page.');
+        window.location.href = '/';
+    }
+}
+
+// Auto logout function
+let autoLogoutTimer = null;
+function setAutoLogout() {
+    const minutes = parseInt(document.getElementById('logoutTimer').value);
+    if (minutes > 0) {
+        showToast(`Auto logout set for ${minutes} minutes.`);
+        clearTimeout(autoLogoutTimer); // Clear previous timer
+        autoLogoutTimer = setTimeout(() => {
+            logout();
+        }, minutes * 60 * 1000);
+    } else {
+        showToast('Please enter a valid time.');
+    }
+}
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    checkLogin(); // Ensure login is valid on page load
+});
 // Export Firestore, Storage, and Auth instances for use in other modules
-export { db,getStorage, ref, uploadBytes, getDownloadURL,
+export {logout, db,getStorage, ref, uploadBytes, getDownloadURL,
      doc,arrayUnion, RecaptchaVerifier ,increment, getDoc ,
       query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
        signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
@@ -90,7 +129,6 @@ export { db,getStorage, ref, uploadBytes, getDownloadURL,
 
   //console.log("Page loaded Module ?????????????");
   
-
 
 
 

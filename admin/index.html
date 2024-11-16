@@ -182,16 +182,34 @@ const allowedPhoneNumbers = ["+9725977878", "+1987654321"];
 async function updateLoginRecord(user) {
     try {
         const loginDoc = doc(collection(db, "Logins"), user.uid);
+
+        // Fetch existing document
+        const loginSnapshot = await getDoc(loginDoc);
+        let existingLogins = loginSnapshot.exists() ? loginSnapshot.data().logins || [] : [];
+
+        // Add new login record
+        existingLogins.push({
+            email: user.email || null,
+            timestamp: new Date()
+        });
+
+        // Update the document
         await setDoc(loginDoc, {
+            logins: existingLogins,
             email: user.email || null,
             phoneNumber: user.phoneNumber || null,
             lastLogin: new Date()
         }, { merge: true });
+
+        localStorage.setItem('isLoggedIn', 'true');
+        showToast('Logged in successfully!');
         console.log("Login record updated for:", user.uid);
     } catch (error) {
         console.error("Error updating login record:", error);
+        showToast('Failed to update login record.');
     }
 }
+
 
 // Google Login function
 function googleLogin() {
