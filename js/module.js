@@ -61,6 +61,8 @@ const firebaseConfig = {
          analytics = initializeAnalytics(app);
 
       //  console.log("Firestore initialized:", db);
+
+      
 // Function to check if the user is logged in
 function checkUserLoginStatus() {
     onAuthStateChanged(auth, (user) => {
@@ -92,7 +94,7 @@ export {  db,getStorage, ref, uploadBytes, getDownloadURL,
           where, getDocs, storage, collection, auth, analytics };
 
 
-  //console.log("Page loaded Module ?????????????");
+  console.log("Page loaded Module ?????????????");
   
 
 
