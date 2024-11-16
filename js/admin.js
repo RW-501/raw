@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', viewDidLoad);
       toast.setAttribute('role', 'alert'); // Accessibility
   
       // Add styles to the toast
-      toast.style.position = 'fixed';
+      toast.style.position = 'absolute';
       toast.style.bottom = '20px';
       toast.style.right = '20px';
       toast.style.padding = '15px 20px';

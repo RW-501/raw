@@ -546,8 +546,11 @@ function toggleDetails(detailsId) {
 // Function to handle analytics view
 function viewAnalytics(eventId) {
     alert(`Viewing analytics for event ID: ${eventId}`);
-    // Add logic to navigate to or open analytics data
+    
+    // Navigate to the analytics page, passing the event ID as a URL parameter
+    window.location.href = `../admin/analytics?eventId=${eventId}`;
 }
+
 
         
 

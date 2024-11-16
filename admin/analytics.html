@@ -345,8 +345,18 @@ function displayError(message) {
 }
 
 window.onload = function () {
-    fetchAnalyticsData();
-    fetchTrendData();
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get("eventId");
+
+    if (eventId) {
+        // Fetch the analytics data for this event from Firestore
+        fetchEventAnalytics(eventId);
+    } else {
+        fetchAnalyticsData();
+        fetchTrendData();
+        }
+
+
 };
 
     </script>
