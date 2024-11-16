@@ -204,7 +204,7 @@ const editorSetup = async () => {
     awardsEditor = await ClassicEditor.create(document.querySelector('#awardsEditor'));
 };
 editorSetup();
-
+window.ClassicEditor = ClassicEditor;
 // Function to update the About Page details
 async function updateAboutPage() {
     try {
