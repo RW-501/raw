@@ -160,11 +160,16 @@
         const contactsCollectionRef = collection(db, "Contacts");
 
         // Build the query
+        console.log("status  ",status);
         let messagesQuery;
         if (status !== "all") {
             messagesQuery = query(contactsCollectionRef, where("status", "==", status));
         } else {
+
             messagesQuery = contactsCollectionRef; // Use the collection directly
+
+            console.log("messagesQuery  ",messagesQuery);
+
         }
 
         // Fetch documents

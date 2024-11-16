@@ -244,7 +244,7 @@
 
         // Function to fetch and display images based on category
         async function fetchImages(category = 'all') {
-            let galleryRef = db.collection('Gallery');
+            let galleryRef = db.collection('MainGallery ');
             if (category !== 'all') {
                 galleryRef = galleryRef.where('category', '==', category);
             }
