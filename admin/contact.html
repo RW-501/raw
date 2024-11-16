@@ -299,11 +299,15 @@ function filterMessages() {
     const status = document.getElementById('filterStatus').value;
     fetchMessages(status);
 }
-window.filterMessages = filterMessages;
+
+window.onload = function () {
+    window.filterMessages = filterMessages;
 // Ensure global scope exposure for event actions
 window.fetchMessages = fetchMessages;
 
 fetchMessages("all");
+
+ };
 
 
 </script>
