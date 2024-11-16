@@ -162,47 +162,54 @@
   signInWithEmailAndPassword,
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
-  async function fetchMessages(status = "all") {
+// Function to fetch and display messages
+async function fetchMessages(status = "all") {
     try {
-        // Reference to the collection
         const contactsCollectionRef = collection(db, "Contacts");
-
-        // Build the query
-        console.log("status  ",status);
         let messagesQuery;
+
+        console.log("Fetching messages with status:", status);
+
         if (status !== "all") {
             messagesQuery = query(contactsCollectionRef, where("status", "==", status));
         } else {
-
-            messagesQuery = contactsCollectionRef; // Use the collection directly
-
-            console.log("messagesQuery  ",messagesQuery);
-
+            messagesQuery = contactsCollectionRef;
         }
 
-        // Fetch documents
         const snapshot = await getDocs(messagesQuery);
         const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-        // Display the messages
-        viewMessageDetails(doc.id);
+        // Render messages in a table or list
+        const messageList = document.getElementById("messageList");
+        messageList.innerHTML = messages.map((msg) => `
+            <tr>
+                <td>${msg.name || "Unknown"}</td>
+                <td>${msg.phone || "N/A"}</td>
+                <td>${msg.status || "N/A"}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="viewMessageDetails('${msg.id}')">
+                        View Details
+                    </button>
+                </td>
+            </tr>
+        `).join("");
+
     } catch (error) {
         console.error("Error fetching messages:", error);
     }
 }
 
-// Function to display messages
+// Function to display a specific message's details
 async function viewMessageDetails(messageId) {
     try {
         const messageDoc = await getDoc(doc(db, "Contacts", messageId));
         if (messageDoc.exists()) {
             const message = messageDoc.data();
 
-            // Prepare the message details
             const {
-                name = "Unknown", // Fallback to "Unknown" if name is not provided
-                message: messageContent = "No message content.", // Default message if not provided
-                phone = '', // Default empty string for phone
+                name = "Unknown",
+                message: messageContent = "No message content.",
+                phone = '',
                 messageType,
                 budget,
                 eventDate,
@@ -218,10 +225,7 @@ async function viewMessageDetails(messageId) {
                 country = ''
             } = locationData;
 
-            // Set message title
             document.getElementById("messageDetailModalLabel").innerText = `Message from ${name}`;
-
-            // Construct innerHTML to display all message details
             document.getElementById("messageDetailsContent").innerHTML = `
                 <p><strong>Message:</strong> ${messageContent}</p>
                 <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
@@ -232,13 +236,11 @@ async function viewMessageDetails(messageId) {
                 ` : ''}
                 <p><strong>IP Address:</strong> ${ipAddress || 'N/A'}</p>
                 <p><strong>Location:</strong> ${city || 'N/A'}, ${state || 'N/A'}, ${zip || 'N/A'}, ${country || 'N/A'}</p>
-                <p><strong>Timestamp:</strong> ${new Date(timestamp).toLocaleString()}</p>
+                <p><strong>Timestamp:</strong> ${timestamp ? new Date(timestamp).toLocaleString() : 'N/A'}</p>
             `;
 
-            // Show the modal
-            const messageDetailModal = document.getElementById('messageDetailModal');
-            const bootstrapModal = new bootstrap.Modal(messageDetailModal);
-            bootstrapModal.show();
+            const messageDetailModal = new bootstrap.Modal(document.getElementById('messageDetailModal'));
+            messageDetailModal.show();
         } else {
             console.warn("No such document!");
         }
@@ -246,7 +248,6 @@ async function viewMessageDetails(messageId) {
         console.error("Error fetching message details:", error);
     }
 }
-
 
 
 // Mark message as read/unread
