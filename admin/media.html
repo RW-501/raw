@@ -556,6 +556,7 @@ function viewAnalytics(eventId) {
 
 
 
+let eventInfo = '';
 
 async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhoto) {
     const mediaCollectionRef = collection(db, "Media");
@@ -571,7 +572,8 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
 
     let imageCount = 0;
     let coverPhoto = "";
-    const mediaItems = [];
+     eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
+     const mediaItems = [];
 
     mediaSnapshot.forEach((doc) => {
         const data = doc.data();
@@ -660,7 +662,7 @@ async function batchSetPublic(eventId, isPublic) {
 
     await batch.commit();
     alert(`All media set to ${isPublic ? "Public" : "Private"}.`);
-    viewMedia(eventId); // Refresh the view
+    viewMedia(eventInfo); // Refresh the view
 }
 
 // Batch update prices
@@ -682,7 +684,7 @@ async function batchUpdatePrices(eventId) {
 
     await batch.commit();
     alert("Prices updated successfully.");
-    viewMedia(eventId); // Refresh the view
+    viewMedia(eventInfo); // Refresh the view
 }
 
 // Function to toggle the public status
@@ -690,7 +692,7 @@ async function togglePublicStatus(docId, newStatus) {
     const docRef = doc(db, "Media", docId);
     await updateDoc(docRef, { isPublic: newStatus });
     alert(`Photo is now ${newStatus ? "Public" : "Private"}`);
-    viewMedia(eventId); // Refresh the list
+    viewMedia(eventInfo); // Refresh the list
 }
 
 // Function to update the price
@@ -703,7 +705,7 @@ async function updatePrice(docId) {
     const docRef = doc(db, "Media", docId);
     await updateDoc(docRef, { price: parseFloat(newPrice) });
     alert("Price updated successfully.");
-    viewMedia(eventId); // Refresh the list
+    viewMedia(eventInfo); // Refresh the list
 }
 
 // Function to toggle details view
