@@ -23,29 +23,62 @@
 
 <body>
     <!-- Navbar section -->
-    <nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation">
-        <a class="navbar-brand" href="./" title="Go to homepage of RAW Photography">RAW Photography</a>
-        <input type="checkbox" id="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label">
-            <span class="bar1"></span>
-            <span class="bar2"></span>
-            <span class="bar3"></span>
-        </label>
-        <ul class="nav-links" id="navbarNav">
-            <li><a href="./about">About</a></li>
-            <li><a href="./gallery">Gallery</a></li>
-            <li><a href="./events">Events</a></li>
-            <li><a href="./contact">Contact</a></li>
-        </ul>
-    </nav>
+<nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
+  <!-- Logo/Brand Name -->
+  <a class="navbar-brand" href="./" title="Go to homepage of RAW Photography">RAW Photography</a>
+  
+  <!-- Menu toggle checkbox and label -->
+  <input type="checkbox" id="nav-toggle">
+  <label for="nav-toggle" class="nav-toggle-label">
+      <span class="bar1"></span>
+      <span class="bar2"></span>
+      <span class="bar3"></span>
+  </label>
 
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="./">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Event Detail</li>
-        </ol>
+  <!-- Navigation links -->
+  <ul class="nav-links" id="navbarNav">
+      <li><a href="./about" title="Learn more about RAW Photography">About</a></li>
+      <li><a href="./gallery" title="Explore the gallery of RAW Photography">Gallery</a></li>
+      <li><a href="./events" title="View upcoming events hosted by RAW Photography">Events</a></li>
+      <li><a href="./contact" title="Contact RAW Photography for bookings and inquiries">Contact</a></li>
+  </ul>
+</nav>         
+
+<!-- Cart Page Description -->
+<p id="cart-description" class="page-desc" style="display: none;">View your cart and complete your booking for the amazing photography services we offer!</p>
+
+<!-- Hero Section -->
+<header id="Main_Header" class="hero bg-dark text-white text-center py-5" style=" background-size: cover; background-position: center;" role="banner" aria-label="Photography Hero Section">
+<div class="container_CTA">
+<!-- Main Heading for SEO -->
+<h1 class="display-4" aria-label="RAW Photography Services">Welcome to RAW Photography</h1>
+
+<!-- Descriptive Subheading -->
+<p class="lead" aria-label="Your photos, done right!">RAW Photography - Where your Photos are Done Right, Let’s focus on your RAW Beauty and book!</p>
+
+<!-- Call-to-Action Button -->
+<a href="./contact#book" class="btn btn-primary btn-lg mt-3" role="button" aria-label="Book your session now">Book Your Session Now</a>
+
+<!-- Additional Info / Social Links -->
+<div class="mt-4">
+  <p class="mt-2" aria-label="Follow us on social media">Follow us on:
+    <a href="https://www.facebook.com/ThatsR.A.W.Photography" target="_blank" aria-label="Facebook Page">Facebook</a>,
+    <a href="https://www.instagram.com/ms_raw3/" target="_blank" aria-label="Instagram Profile">Instagram</a>
+  </p>
+</div>
+</div>
+</header>
+
+
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./">Home</a></li>
+        <li class="breadcrumb-item"><a href="./eventDetails">Event Details</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Confirmation</li>
+      </ol>
     </nav>
+    
+
 
     <!-- Event Detail Section -->
     <main id="main-content" class="container mt-5">
@@ -64,18 +97,61 @@
 </div>
     </main>
 
-    <!-- Footer -->
-    <footer id="Main_Footer" class="bg-dark text-white py-4">
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://www.facebook.com/ThatsR.A.W.Photography" class="text-white">Facebook</a></li>
-            <li class="list-inline-item"><a href="https://www.instagram.com/ms_raw3/" class="text-white">Instagram</a></li>
-        </ul>
-        <p>&copy; 2024 RAW Photography. <a href="https://shutterWorx.co" class="text-white">Created by ShutterWorx.co</a></p>
-    </footer>
+    
 
-    <script src="./js/main.js"></script>
-    <script src="./js/module.js" type="module"></script>
-
+<!-- Footer Section -->
+<footer id="Main_Footer" class="bg-dark text-white py-4">
+    <!-- Footer Social Media Links -->
+    <div id="Main_Footer_Top">
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <a href="https://www.facebook.com/ThatsR.A.W.Photography" class="text-white" aria-label="Visit our Facebook page">
+            <i class="fab fa-facebook"></i><small>Facebook</small>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.instagram.com/ms_raw3/" class="text-white" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i><small>Instagram</small>
+          </a>
+        </li>
+        <!-- Hidden Snapchat link, visible if applicable -->
+        <li style="display: none;" class="list-inline-item">
+          <a href="https://snapchat.com" class="text-white" aria-label="Follow us on Snapchat">
+            <i class="fab fa-snapchat"></i><small>Snapchat</small>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+      <!-- Call to Action -->
+      <p>
+        <a id="footer-CTA" href="./contact#book" class="text-white btn btn-primary" aria-label="Book a Session with RAW Photography">Book Your Session Now</a>
+      </p>
+  
+    <!-- Footer Content Section -->
+  
+    <div class="container text-center">
+      <small id="footer-text">Let’s focus on your RAW Beauty and book your session today!</small>
+  
+      <!-- Additional Navigation Links -->
+      <p>
+        <a href="./about" class="text-white" aria-label="Learn more about RAW Photography">About Us</a> |
+        <a href="./gallery" class="text-white" aria-label="Browse our Photography Gallery">Gallery</a> |
+        <a href="./events" class="text-white" aria-label="Check out upcoming events">Events</a> |
+        <a href="./contact" class="text-white" aria-label="Contact RAW Photography">Contact</a>
+      </p>
+  
+      <!-- Footer Copyright -->
+      <p id="Footer_CopyWrite">&copy;  <a href="./" class="text-white" aria-label="Visit RAW Photography">RAW Photography</a></p>
+      <p id="shutterWorx"><a href="https://shutterWorx.co" class="shutterWorx" aria-label="Photography Website Created By ShutterWorx.co">Created By ShutterWorx.co</a></p>
+  
+  
+    </div>
+  </footer>
+  <script src="./js/main.js" ></script>
+  <script src="./js/module.js" type="module"></script>
+  
+    
     <script type="module">
         import { db, doc, getDoc, collection } from '../js/module.js';
         window.onload = function() {

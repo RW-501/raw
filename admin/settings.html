@@ -14,21 +14,61 @@
     </style>
 </head>
 <body>
+    <!-- Navbar section -->
+<nav id="Main_Nav" class="navbar" role="navigation" aria-label="Main Navigation" itemscope itemtype="https://schema.org/WebPage">
+  <!-- Logo/Brand Name -->
+  <a class="navbar-brand" href="./" title="Go to homepage of RAW Photography">RAW Photography</a>
+  
+  <!-- Menu toggle checkbox and label -->
+  <input type="checkbox" id="nav-toggle">
+  <label for="nav-toggle" class="nav-toggle-label">
+      <span class="bar1"></span>
+      <span class="bar2"></span>
+      <span class="bar3"></span>
+  </label>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="https://shutterworx.co/">ShutterWorx Admin</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="../index">Your Site</a></li>
-            <li class="nav-item"><a class="nav-link" href="../admin/index">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="../admin/setting">Settings</a></li>
-        </ul>
-    </div>
-</nav>
+  <!-- Navigation links -->
+  <ul class="nav-links" id="navbarNav">
+      <li><a href="./about" title="Learn more about RAW Photography">About</a></li>
+      <li><a href="./gallery" title="Explore the gallery of RAW Photography">Gallery</a></li>
+      <li><a href="./events" title="View upcoming events hosted by RAW Photography">Events</a></li>
+      <li><a href="./contact" title="Contact RAW Photography for bookings and inquiries">Contact</a></li>
+  </ul>
+</nav>         
+
+<!-- Cart Page Description -->
+<p id="cart-description" class="page-desc" style="display: none;">View your cart and complete your booking for the amazing photography services we offer!</p>
+
+<!-- Hero Section -->
+<header id="Main_Header" class="hero bg-dark text-white text-center py-5" style=" background-size: cover; background-position: center;" role="banner" aria-label="Photography Hero Section">
+<div class="container_CTA">
+<!-- Main Heading for SEO -->
+<h1 class="display-4" aria-label="RAW Photography Services">Welcome to RAW Photography</h1>
+
+<!-- Descriptive Subheading -->
+<p class="lead" aria-label="Your photos, done right!">RAW Photography - Where your Photos are Done Right, Let’s focus on your RAW Beauty and book!</p>
+
+<!-- Call-to-Action Button -->
+<a href="./contact#book" class="btn btn-primary btn-lg mt-3" role="button" aria-label="Book your session now">Book Your Session Now</a>
+
+<!-- Additional Info / Social Links -->
+<div class="mt-4">
+  <p class="mt-2" aria-label="Follow us on social media">Follow us on:
+    <a href="https://www.facebook.com/ThatsR.A.W.Photography" target="_blank" aria-label="Facebook Page">Facebook</a>,
+    <a href="https://www.instagram.com/ms_raw3/" target="_blank" aria-label="Instagram Profile">Instagram</a>
+  </p>
+</div>
+</div>
+</header>
+
+
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Settings</li>
+      </ol>
+    </nav>
+    
 
 <main class="container mt-5">
     <h1>Admin Settings</h1>
