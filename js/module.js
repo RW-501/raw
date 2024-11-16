@@ -101,8 +101,16 @@ function checkLogin() {
             window.location.href = '../';
         }
 
+    }else if((window.location.pathname.includes('/admin/index')) && isLoggedIn){
+        showToast('Admin Loggin');
+
+        document.getElementById("firebaseLogin").style.display = "block";
+        document.getElementById("dashboardContent").style.display = "none";
     }
 }
+
+
+window.checkLogin = checkLogin;
 
 // Auto logout function
 let autoLogoutTimer = null;
