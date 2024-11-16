@@ -114,59 +114,65 @@
 
 
   <main id="main-content">
+
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Website Analytics Dashboard</h2>
-        <section>
-            <div id="admin-messages" class="admin-messages-container">
-                <p id="message-text" class="fade-in"></p>
-                <div id="message-actions" class="message-actions"></div>
-            </div>
-        </section>
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="card analytics-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="section-title">Page Views</h5>
-                        <p id="pageViews" class="display-4">Loading...</p>
-                        <div class="loading-spinner loading" id="loadingPageViews"></div>
+        <main id="main-content">
+            <div class="container mt-5">
+                <h2 class="text-center mb-4">Website Analytics Dashboard</h2>
+                <section>
+                    <div id="admin-messages" class="admin-messages-container">
+                        <p id="message-text" class="fade-in"></p>
+                        <div id="message-actions" class="message-actions"></div>
+                    </div>
+                </section>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card analytics-card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="section-title">Page Views</h5>
+                                <p id="pageViews" class="display-4">Loading...</p>
+                                <div class="loading-spinner loading" id="loadingPageViews"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card analytics-card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="section-title">Image Downloads</h5>
+                                <p id="imageDownloads" class="display-4">Loading...</p>
+                                <div class="loading-spinner loading" id="loadingImageDownloads"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card analytics-card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="section-title">Event Purchases</h5>
+                                <p id="eventPurchases" class="display-4">Loading...</p>
+                                <div class="loading-spinner loading" id="loadingEventPurchases"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card analytics-card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="section-title">User Engagement</h5>
+                                <p id="userEngagement" class="display-4">Loading...</p>
+                                <div class="loading-spinner loading" id="loadingUserEngagement"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- Add more event-specific or general analytics as needed -->
             </div>
-            <div class="col-md-3">
-                <div class="card analytics-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="section-title">Image Downloads</h5>
-                        <p id="imageDownloads" class="display-4">Loading...</p>
-                        <div class="loading-spinner loading" id="loadingImageDownloads"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card analytics-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="section-title">Event Purchases</h5>
-                        <p id="eventPurchases" class="display-4">Loading...</p>
-                        <div class="loading-spinner loading" id="loadingEventPurchases"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card analytics-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="section-title">User Engagement</h5>
-                        <p id="userEngagement" class="display-4">Loading...</p>
-                        <div class="loading-spinner loading" id="loadingUserEngagement"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Add more event-specific or general analytics as needed -->
+        </main>
+
+        <div class="error-message" id="errorMessage"></div>
     </div>
+
+
+
 </main>
-
-
-
-
 <!-- Footer -->
 <footer class="bg-dark text-light py-3">
   <div class="container">
