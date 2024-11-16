@@ -205,64 +205,115 @@
             auth, analytics, deleteDoc, getDownloadURL } from '../js/module.js';
 
     // Bulk Upload Photos Function
-    async function bulkUploadPhotos() {
-        const watermarkText = document.getElementById('watermarkText').value;
-        const watermarkPosition = document.getElementById('watermarkPosition').value;
-        const watermarkOpacity = document.getElementById('watermarkOpacity').value;
-        const logoOverlay = document.getElementById('logoOverlay').files[0];
-        const logoScale = document.getElementById('logoScale').value;
-        const photos = document.getElementById('photoUpload').files;
-        const photoPrice = document.getElementById('photoPrice').value;
-        const collectionPrice = document.getElementById('collectionPrice').value;
-        const isPublic = document.getElementById('photoPublic').checked;
+    async function bulkUploadPhotos(eventId) {
+    const watermarkText = sanitizeInput(document.getElementById('watermarkText').value);
+    const watermarkPosition = document.getElementById('watermarkPosition').value;
+    const watermarkOpacity = document.getElementById('watermarkOpacity').value;
+    const logoOverlay = document.getElementById('logoOverlay').files[0];
+    const logoScale = document.getElementById('logoScale').value;
+    const photos = document.getElementById('photoUpload').files;
+    const photoPrice = document.getElementById('photoPrice').value;
+    const collectionPrice = document.getElementById('collectionPrice').value;
+    const isPublic = document.getElementById('photoPublic').checked;
 
-        // Check if photos are uploaded
-        if (photos.length === 0) {
-            alert("Please select at least one photo.");
-            return;
-        }
-
-        // Process each photo
-        for (const photo of photos) {
-            const photoRef = ref(storage, `events/photos/${photo.name}`);
-            try {
-                // Upload photo to Firebase storage
-                await uploadBytes(photoRef, photo);
-                const photoUrl = await getDownloadURL(photoRef);
-
-                // Process watermarking
-                let watermarkedImageUrl = await applyWatermark(photoUrl, watermarkText, watermarkPosition, watermarkOpacity, logoOverlay, logoScale);
-
-                // Store watermarked image URL or use as needed
-                console.log('Watermarked image URL:', watermarkedImageUrl);
-
-                // Save photo details (Price, Public status)
-                await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic);
-
-            } catch (error) {
-                console.error("Error uploading photo:", error);
-                alert("An error occurred while uploading the photo.");
-            }
-        }
+    // Check if photos are uploaded
+    if (photos.length === 0) {
+        showToast("Please select at least one photo.", "error");
+        return;
     }
 
-    // Save Photo Details (Price and Public status)
-    async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic) {
-        const photoDetails = {
-            photoUrl,
-            price: photoPrice,
-            collectionPrice,
-            isPublic,
-            timestamp: new Date()
-        };
-        
+    // Validate files and provide suggestions
+    const MAX_FILE_SIZE_MB = 5; // Max file size (in MB)
+    const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"]; // Allowed file types
+    const invalidFiles = [];
+    const uploadedFiles = [];
+
+    for (const photo of photos) {
+        const fileSizeMB = photo.size / (1024 * 1024); // Convert size to MB
+        const fileType = photo.type;
+
+        // Validate file type
+        if (!VALID_FILE_TYPES.includes(fileType)) {
+            invalidFiles.push(`${photo.name} (Invalid type: ${fileType})`);
+            continue;
+        }
+
+        // Validate file size
+        if (fileSizeMB > MAX_FILE_SIZE_MB) {
+            invalidFiles.push(`${photo.name} (Too large: ${fileSizeMB.toFixed(2)} MB)`);
+            continue;
+        }
+
+        const photoRef = ref(storage, `eventPhotos/${eventId}/${cleanAndShortenFileName(photo.name)}`);
         try {
-            const docRef = await addDoc(collection(db, "Media"), photoDetails);
-            console.log("Document written with ID: ", docRef.id);
+            // Upload photo to Firebase storage
+            await uploadBytes(photoRef, photo);
+            const photoUrl = await getDownloadURL(photoRef);
+
+            // Process watermarking
+            let watermarkedImageUrl = await applyWatermark(photoUrl, watermarkText, watermarkPosition, watermarkOpacity, logoOverlay, logoScale);
+
+            // Save photo details
+            await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSizeMB, fileType);
+            uploadedFiles.push(photo.name);
+
         } catch (error) {
-            console.error("Error adding document: ", error);
+            console.error("Error uploading photo:", error);
+            showToast(`An error occurred while uploading the photo: ${photo.name}`, "error");
         }
     }
+
+    // Show upload results
+    if (invalidFiles.length > 0) {
+        showToast(`The following files could not be uploaded:\n${invalidFiles.join("\n")}`, "warning");
+    }
+
+    if (uploadedFiles.length > 0) {
+        showToast(`Successfully uploaded: ${uploadedFiles.join(", ")}`, "success");
+    }
+}
+
+// Updated savePhotoDetails to include fileType and fileSize
+async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSize, fileType) {
+    const photoDetails = {
+        photoUrl,
+        watermarkedImageUrl,
+        eventId,
+        price: photoPrice,
+        collectionPrice,
+        isPublic,
+        timestamp: new Date(),
+        fileSize: fileSize.toFixed(2), // Save as MB with 2 decimal points
+        fileType,
+        status: "active",
+        views: 0,
+        deactived: false,
+    };
+
+    try {
+        const docRef = await addDoc(collection(db, "Media"), photoDetails);
+        console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        showToast("Error saving photo details to the database.", "error");
+    }
+}
+
+/*
+// Toast function
+function showToast(message, type = "info") {
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("fade-out");
+        toast.addEventListener("transitionend", () => toast.remove());
+    }, 4000); // Show toast for 4 seconds
+}
+*/
 
     async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         // Here we should use a canvas or image processing library to apply the watermark
@@ -387,55 +438,43 @@
         const snapshot = await getDocs(eventQuery);
 
         snapshot.forEach((doc) => {
-            const event = doc.data();
+    const event = doc.data();
 
-            // Check for missing or null event properties
-            const title = event.title ? event.title : 'Untitled Event';
-            const description = event.description ? event.description : 'No description available';
-            const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
-            const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
+    // Check for missing or null event properties
+    const title = event.title || 'Untitled Event';
+    const description = event.description || 'No description available';
+    const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
+    const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
 
-            // Check if the event matches the filter text
-            if (
-                title.toLowerCase().includes(filterText) ||
-                description.toLowerCase().includes(filterText)
-            ) {
-                const eventItem = document.createElement('div');
-                eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+    // Check if the event matches the filter text
+    if (
+        title.toLowerCase().includes(filterText) ||
+        description.toLowerCase().includes(filterText)
+    ) {
+        const eventItem = document.createElement('div');
+        eventItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const eventInfo = document.createElement('div');
-                eventInfo.innerHTML = `
+        // Using innerHTML for the main structure
+        eventItem.innerHTML = `
+            <div class="d-flex align-items-center">
+                <img src="${coverUrl}" alt="Event Thumbnail" style="width: 50px; height: 50px; margin-right: 10px;" />
+                <div>
                     <strong>${title}</strong><br>
                     ${eventDate}<br>
-                    ${description}
-                `;
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${JSON.stringify(event)})">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
+                <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+            </div>
+        `;
 
-                const thumbnail = document.createElement('img');
-                thumbnail.src = coverUrl;
-                thumbnail.alt = "Event Thumbnail";
-                thumbnail.style.width = '50px';
-                thumbnail.style.height = '50px';
-                thumbnail.classList.add('mr-2');
+        
 
-                const btnGroup = document.createElement('div');
-                btnGroup.classList.add('btn-group');
+// Append the new event item to the event list
+eventList.appendChild(eventItem);
 
-                const editBtn = document.createElement('button');
-                editBtn.classList.add('btn', 'btn-warning', 'btn-sm');
-                editBtn.innerText = 'Edit';
-                editBtn.onclick = () => editEvent(doc.id, event);
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
-                deleteBtn.innerText = 'Delete';
-                deleteBtn.onclick = () => deleteEvent(doc.id);
-
-                btnGroup.appendChild(editBtn);
-                btnGroup.appendChild(deleteBtn);
-                eventItem.appendChild(thumbnail);
-                eventItem.appendChild(eventInfo);
-                eventItem.appendChild(btnGroup);
-                eventList.appendChild(eventItem);
             }
         });
     } catch (error) {
@@ -544,11 +583,7 @@ async function saveEvent() {
         sortByDropdown.addEventListener('change', fetchEvents);
     }
 
-    // Listener for the "Bulk Upload Photos" button
-    const bulkUploadButton = document.getElementById('bulkUploadPhotos');
-    if (bulkUploadButton) {
-        bulkUploadButton.addEventListener('click', bulkUploadPhotos);
-    }
+
 });
 
 
