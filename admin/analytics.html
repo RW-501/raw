@@ -316,7 +316,10 @@
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get("eventId");
-    
+            window.fetchEventAnalytics = fetchEventAnalytics;
+            window.fetchTrendData = fetchTrendData;
+            window.fetchAnalyticsData = fetchAnalyticsData;
+
             if (eventId) {
                 fetchEventAnalytics(eventId);  // Fetch data for the specific event
             } else {
