@@ -295,9 +295,12 @@ function filterMessages() {
     fetchMessages(status);
 }
 window.filterMessages = filterMessages;
-
 // Ensure global scope exposure for event actions
-window.fetchEvents = fetchEvents;
+window.fetchMessages = fetchMessages;
+
+fetchMessages();
+
+
 </script>
 
 <!-- Bootstrap JS for modal functionality -->
