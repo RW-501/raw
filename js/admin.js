@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', viewDidLoad);
   
   // Toast Notification Function
   //function showToast(message, type = 'info', duration = 3000) {
-    window.showToast = function(message, type = 'info', duration = 3000) {
+    function showToast(message, type = 'info', duration = 3000) {
   
       // Create a div for the toast
       const toast = document.createElement('div');
