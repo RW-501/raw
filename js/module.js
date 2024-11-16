@@ -60,9 +60,9 @@ const firebaseConfig = {
          storage = getStorage(app); // Initialize Storage
          analytics = initializeAnalytics(app);
 
-      //  console.log("Firestore initialized:", db);
+      console.log("Firestore initialized:", db);
 
-      
+
 // Function to check if the user is logged in
 function checkUserLoginStatus() {
     onAuthStateChanged(auth, (user) => {
@@ -75,7 +75,9 @@ function checkUserLoginStatus() {
       }
     });
   }
+
 window.checkUserLoginStatus = checkUserLoginStatus;
+
     } catch (error) {
         console.error("Error initializing Firebase:", error);
     }
