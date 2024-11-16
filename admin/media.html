@@ -103,10 +103,17 @@ button:hover {
             </div>
         </section>
     
-<!-- Add to Gallery Button -->
+<!-- Add to Gallery Button 
 <button onclick="openAddToGalleryModal()">Add to Gallery</button>
+-->
 
-Class mediaTabs ID: Add_Event Add_Media Manage_Events Manage_Gallery
+<!-- Toggle Bar -->
+<div class="mediaTabs">
+    <button class="tabButton" onclick="showTabContent('Add_Event')">Add Event</button>
+    <button class="tabButton" onclick="showTabContent('Add_Media')">Add Media</button>
+    <button class="tabButton" onclick="showTabContent('Manage_Events')">Manage Events</button>
+    <button class="tabButton" onclick="showTabContent('Manage_Gallery')">Manage Gallery</button>
+</div>
 
 
 <div id="Add_Event" class="media_tabs">
@@ -411,6 +418,7 @@ function showToast(message, type = "info") {
     }, 4000); // Show toast for 4 seconds
 }
 */
+
 
     async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         // Here we should use a canvas or image processing library to apply the watermark
@@ -994,6 +1002,9 @@ async function removeMedia(mediaId) {
     }
 }
 
+function addMedia(eventID){
+    document.getElementsByName("currentEventID").innerText = eventID;
+}
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1023,6 +1034,9 @@ window.loadMainGallery = loadMainGallery;
         loadMainGallery();
 
 window.viewAnalytics = viewAnalytics;
+window.addMedia = addMedia;
+window.toggleCollapse  = toggleCollapse;
+window.showTabContent = showTabContent;
 
 
         const saveEventBTN = document.getElementById('saveEvent');
@@ -1045,6 +1059,47 @@ window.viewAnalytics = viewAnalytics;
 
 
 });
+// Function to show content for a selected tab
+function showTabContent(tabId) {
+    // Hide all tab content
+    const allTabs = document.querySelectorAll('.tabContent');
+    allTabs.forEach((tab) => {
+        tab.style.display = 'none';
+    });
+
+    // Remove 'active' class from all buttons
+    const allButtons = document.querySelectorAll('.tabButton');
+    allButtons.forEach((button) => {
+        button.classList.remove('active');
+    });
+
+    // Show the selected tab content and activate the button
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+        const activeButton = document.querySelector(`.tabButton[onclick="showTabContent('${tabId}')"]`);
+        if (activeButton) activeButton.classList.add('active');
+
+        // Save the selected tab to local storage
+        localStorage.setItem('activeTab', tabId);
+    }
+}
+
+// Function to load the last selected tab on page load
+function loadLastTab() {
+    // Retrieve the last active tab from local storage
+    const savedTab = localStorage.getItem('activeTab');
+
+    // Show the saved tab if it exists, otherwise show the default tab
+    if (savedTab) {
+        showTabContent(savedTab);
+    } else {
+        showTabContent('Add_Event'); // Default tab
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', loadLastTab);
 
 
 </script>
