@@ -312,7 +312,7 @@
         const accessCode = document.getElementById('accessCode').value;
 
         // Client-side validation
-        if (!title || !description || !eventDate || !cover || !accessCode) {
+        if (!title || !description || !eventDate || !cover) {
             alert("Please fill in all fields.");
             return;
         }
@@ -349,7 +349,6 @@
         }
     }
 
-    window.uploadEvent = uploadEvent;
 
     // Fetch and display events with sorting and filtering
     async function fetchEvents() {
@@ -428,7 +427,6 @@
     }
 }
 
-window.fetchEvents = fetchEvents;
     // Edit Event Function
     function editEvent(eventId, event) {
         document.getElementById('eventTitle').value = event.title;
@@ -437,7 +435,6 @@ window.fetchEvents = fetchEvents;
         document.getElementById('accessCode').value = event.accessCode;
     }
 
-    window.editEvent = editEvent;
 
     // Delete Event Function
     async function deleteEvent(eventId) {
@@ -452,10 +449,20 @@ window.fetchEvents = fetchEvents;
         }
     }
 
-    window.deleteEvent = deleteEvent;
 
 
     document.addEventListener('DOMContentLoaded', () => {
+
+        fetchEvents(); 
+        
+        window.applyWatermark = applyWatermark;
+        window.editEvent = editEvent;
+
+        window.uploadEvent = uploadEvent;
+
+        window.fetchEvents = fetchEvents;
+
+        window.deleteEvent = deleteEvent;
     // Listener for the "Upload Event" button
     const uploadEventButton = document.getElementById('uploadEvent');
     if (uploadEventButton) {
