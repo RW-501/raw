@@ -676,83 +676,95 @@ gap: 1rem;
 
                 <input hidden type="file" id="photoUpload" class="form-control" multiple accept="image/*">
             </div>
-
-                <div class="mt-3">
-                    <label for="watermarkText" class="form-label">Watermark Text</label>
-                    <input type="text" class="form-control" id="watermarkText" placeholder="Enter watermark text">
+<div id="watermarkTabs" class="controls">
+            <div class="watermarkTabs" id="watermarkTextDiv">
+                <label for="watermarkText" class="form-label">Watermark Text</label>
+                <input type="text" class="form-control" id="watermarkText" placeholder="Enter watermark text">
+            </div>
+            
+            <div class="watermarkTabs" id="fontColorDiv">
+                <label for="fontColor">Choose Text Color:</label>
+                <input type="color" id="fontColor" name="fontColor" value="#000000">
+            </div>
+           
+            
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Tab
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#" onclick="showTab('fontFamilyDiv')">Font Family</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('watermarkPositionDiv')">Watermark Position</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('textGapDiv')">Text Gap</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('fontSizeDiv')">Font Size</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('watermarkOpacityDiv')">Watermark Opacity</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('logoOverlayDiv')">Logo Overlay</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showTab('logoScaleDiv')">Logo Scale</a></li>
+                </ul>
+            </div>
+            <div class="watermarkTabs" id="fontFamilyDiv">
+                <label for="fontFamily">Font Family:</label>
+                <select id="fontFamily">
+                    <option value="Arial">Arial</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Trebuchet MS">Trebuchet MS</option>
+                    <option value="Lucida Console">Lucida Console</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Impact">Impact</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Palatino Linotype">Palatino Linotype</option>
+                    <option value="Garamond">Garamond</option>
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Arial Black">Arial Black</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Futura">Futura</option>
+                    <option value="Geneva">Geneva</option>
+                    <option value="Consolas">Consolas</option>
+                    <option value="Lucida Sans">Lucida Sans</option>
+                    <option value="Microsoft Sans Serif">Microsoft Sans Serif</option>
+                </select>
+            </div>
+            
+            <div class="watermarkTabs" id="watermarkPositionDiv">
+                <label for="watermarkPosition" class="form-label">Watermark Position</label>
+                <select id="watermarkPosition">
+                    <option value="center">Center</option>
+                    <option value="diagonal">Diagonal</option>
+                    <option value="horizontal">Horizontal</option>
+                </select>
+            </div>
+            
+            <div class="watermarkTabs" id="textGapDiv">
+                <label for="textGap">Text Gap:</label>
+                <input type="range" id="textGap" min="10" max="200" step="10" value="50">
+            </div>
+            
+            <div class="watermarkTabs" id="fontSizeDiv">
+                <label for="fontSize">Font Size:</label>
+                <input type="number" id="fontSize" value="200" min="10" max="500">
+            </div>
+            
+            <div class="watermarkTabs" id="watermarkOpacityDiv">
+                <label for="watermarkOpacity" class="form-label">Watermark Opacity</label>
+                <input type="range" class="form-control" id="watermarkOpacity" min="0" max="1" step="0.1" value="0.5">
+            </div>
+            
+            <div class="watermarkTabs" id="logoOverlayDiv">
+                <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
+                <div class="center">
+                    <img id="logoOverlayPreview" src="" alt="Logo Preview" />
                 </div>
-
-                <div class="mt-3">
-                    <label for="fontFamily">Font Family:</label>
-                    <select id="fontFamily">
-                        <option value="Arial">Arial</option>
-                        <option value="Courier New">Courier New</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                        <option value="Verdana">Verdana</option>
-                        <option value="Trebuchet MS">Trebuchet MS</option>
-                        <option value="Lucida Console">Lucida Console</option>
-                        <option value="Tahoma">Tahoma</option>
-                        <option value="Impact">Impact</option>
-                        <option value="Comic Sans MS">Comic Sans MS</option>
-                        <option value="Palatino Linotype">Palatino Linotype</option>
-                        <option value="Garamond">Garamond</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <option value="Arial Black">Arial Black</option>
-                        <option value="Courier">Courier</option>
-                        <option value="Futura">Futura</option>
-                        <option value="Geneva">Geneva</option>
-                        <option value="Consolas">Consolas</option>
-                        <option value="Lucida Sans">Lucida Sans</option>
-                        <option value="Microsoft Sans Serif">Microsoft Sans Serif</option>
-                    </select>
-                    
-                </div>
-
-
-
-
-                <div class="mt-3">
-                    <label for="watermarkPosition" class="form-label">Watermark Position</label>
-                    <select id="watermarkPosition">
-                        <option value="center">Center</option>
-                        <option value="diagonal">Diagonal</option>
-                        <option value="horizontal">Horizontal</option>
-                    </select>
-                </div>
-                <div class="mt-3">
-                    <label for="textGap">Text Gap:</label>
-                    <input type="range" id="textGap" min="10" max="200" step="10" value="50">
-                </div>
-
-
-
-                <div class="mt-3">
-                    <label for="fontSize">Font Size:</label>
-                    <input type="number" id="fontSize" value="200" min="10" max="500">
-                </div>
-
-
-
-
-                <div class="mt-3">
-                    <label for="watermarkOpacity" class="form-label">Watermark Opacity</label>
-                    <input type="range" class="form-control" id="watermarkOpacity" min="0" max="1" step="0.1" value="0.5">
-                </div>
-                <div class="mt-3">
-                    <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
-                    
-                    <div class="center">
-                        <img id="logoOverlayPreview" src="" alt="Logo Preview" />
-                    </div>
-                    
-                    <input hidden type="file" class="form-control" id="logoOverlay" accept="image/*">
-                </div>
-                 <div class="mt-3">
-                    <label for="logoScale" class="form-label">Logo Scale (Resize)</label>
-                    <input type="range" class="form-control" id="logoScale" min="0.1" max="1" step="0.1" value="0.5">
-                </div>
+                <input hidden type="file" class="form-control" id="logoOverlay" accept="image/*">
+            </div>
+            
+            <div class="watermarkTabs" id="logoScaleDiv">
+                <label for="logoScale" class="form-label">Logo Scale (Resize)</label>
+                <input type="range" class="form-control" id="logoScale" min="0.1" max="1" step="0.1" value="0.5">
+            </div>
+        </div>
                 <div class="mt-3">
                     <label for="photoPrice" class="form-label">Photo Price</label>
                     <input type="number" class="form-control" id="photoPrice" placeholder="Set price for this photo (optional)">
@@ -984,7 +996,6 @@ async function handleFileUpload(event) {
     }
 }
 
-
 // Existing listeners
 document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
 
@@ -998,12 +1009,14 @@ document.getElementById('logoScale').addEventListener('input', () => updatePrevi
 document.getElementById('fontSize').addEventListener('input', () => updatePreview());
 document.getElementById('fontFamily').addEventListener('change', () => updatePreview());
 document.getElementById('textGap').addEventListener('input', () => updatePreview());
-
+document.getElementById('fontColor').addEventListener('input', () => updatePreview());
 
 
 
 
 let currentPreviewImage = null;
+
+
 
 async function updatePreview(imageUrl) {
     if (!imageUrl) {
@@ -1023,6 +1036,7 @@ async function updatePreview(imageUrl) {
     const fontSize = parseInt(document.getElementById('fontSize').value, 10);
     const fontFamily = document.getElementById('fontFamily').value;
     const gap = parseInt(document.getElementById('textGap').value, 10);
+    const fontColor = document.getElementById('fontColor').value;  // Get the selected color
 
     const previewCanvas = document.getElementById('watermarkPreview');
     const previewCtx = previewCanvas.getContext('2d');
@@ -1038,7 +1052,7 @@ async function updatePreview(imageUrl) {
         previewCtx.drawImage(img, 0, 0);
 
         try {
-            const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale, fontSize, fontFamily, gap);
+            const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale, fontSize, fontFamily, gap, fontColor);
             const watermarkedImg = new Image();
             watermarkedImg.src = watermarkedImage;
 
@@ -1056,7 +1070,7 @@ async function updatePreview(imageUrl) {
     };
 }
 
-async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fontSize, fontFamily, gap) {
+async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fontSize, fontFamily, gap, fontColor) {
     const img = new Image();
     img.src = imageUrl;
 
@@ -1073,10 +1087,10 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fo
 
     ctx.drawImage(img, 0, 0);
 
-    // Apply text watermark
+    // Apply text watermark with selected color
     if (text) {
         ctx.font = `${fontSize}px ${fontFamily}`;
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fillStyle = `rgba(${hexToRgb(fontColor).r}, ${hexToRgb(fontColor).g}, ${hexToRgb(fontColor).b}, ${opacity})`;
 
         if (position === "center") {
             ctx.textAlign = "center";
@@ -1117,68 +1131,21 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fo
     return canvas.toDataURL();
 }
 
-  // Upload Event Function
-  async function uploadEvent() {
-        const title = document.getElementById('eventTitle').value;
-        const description = document.getElementById('eventDescription').value;
-        const eventDate = document.getElementById('eventDate').value;
-        const cover = document.getElementById('eventCover').files[0];
-        const accessCode = document.getElementById('accessCode').value;
-
-        // Client-side validation
-        if (!title || !description || !eventDate || !cover) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        if (cover.size > 5000000) {
-            alert("File size is too large. Please upload a file less than 5MB.");
-            return;
-        }
-
-        const storageRef = ref(storage, `events/${title}/cover.jpg`);
-        try {
-            // Upload cover image to Firebase storage
-            await uploadBytes(storageRef, cover);
-            const coverUrl = await getDownloadURL(storageRef);
-
-            // Hash the access code (for demo, using btoa)
-           // const hashedAccessCode = btoa(accessCode);
-
-            // Add event to Firestore
-            await addDoc(collection(db, 'Events'), {
-                title,
-                description,
-                eventDate,
-                coverUrl,
-                retrieveCount: 0,
-                retriever_IP: [],
-                accessHandShake: accessHandShake,
-        status: "active",
-        isPublic: true,
-        collection_price: "",
-        collection_OnSellPrice: "",
-        eventTags: [],
-        accessCode: accessCode || "",
-        location: location || "",
-        timestamp: new Date(),
-        comments: [],
-        views: 0,
-        deactived: false,
-        galleryBool: true
-                });
-
-            showToast('Event uploaded successfully');
-            document.getElementById('eventForm').reset();
-            fetchEvents(); // Refresh event list
-        } catch (error) {
-            console.error("Error uploading event:", error);
-            alert("An error occurred while uploading the event.");
-        }
+// Helper function to convert hex color to RGB for fillStyle
+function hexToRgb(hex) {
+    // Ensure hex starts with # and is 7 characters long
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) {
+        hex = hex.split('').map(function (hexChar) {
+            return hexChar + hexChar;
+        }).join('');
     }
-
-    
-    // Fetch and display events with sorting and filtering
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return { r, g, b };
+}
+   // Fetch and display events with sorting and filtering
     async function fetchEvents() {
     const filterText = document.getElementById('eventFilter').value.toLowerCase();
     const sortBy = document.getElementById('sortBy').value;
@@ -1995,6 +1962,22 @@ document.getElementById('logoOverlayPreview').addEventListener('click', function
     document.getElementById('logoOverlay').click();
 
 });
+function showTab(tabId) {
+    // Hide all watermark tab content
+    var allTabs = document.querySelectorAll('.watermarkTabs');
+    allTabs.forEach(function(tab) {
+        tab.style.display = 'none';
+    });
+
+    // Show the selected tab
+    var selectedTab = document.getElementById(tabId);
+    selectedTab.style.display = 'block';
+}
+
+// Initially show the first tab or set the default tab to be visible
+window.onload = function() {
+    showTab('fontFamilyDiv');  // You can change this to any default tab
+};
 
 
 });
