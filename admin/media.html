@@ -367,13 +367,16 @@
             auth, analytics, deleteDoc, getDownloadURL } from '../js/module.js';
 
     // Bulk Upload Photos Function
-    async function bulkUploadPhotos(eventId) {
+    async function bulkUploadPhotos() {
+
+     const eventId = document.getElementById('currentEventID').innerText;
+
     const photos = document.getElementById('photoUpload').files;
     const photoPrice = document.getElementById('photoPrice').value;
     const collectionPrice = document.getElementById('collectionPrice').value;
     const isPublic = document.getElementById('photoPublic').checked;
 
-    console.log("event    ",eventId);
+    console.log("photos    ",photos);
     if (photos.length === 0) {
         showToast("Please select at least one photo.", "error");
         return;
@@ -521,6 +524,7 @@ document.getElementById('textGap').addEventListener('input', () => updatePreview
 document.getElementById('fontColor').addEventListener('input', () => updatePreview());
 
 
+document.getElementById('bulkUploadPhotos').addEventListener('click',bulkUploadPhotos());
 
 
 let currentPreviewImage = null;
