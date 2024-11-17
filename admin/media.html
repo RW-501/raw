@@ -127,7 +127,7 @@
                         <input type="text" class="form-control" id="accessCode" placeholder="Optional">
                     </div> 
                     <div class="controls">
-                    <button id="uploadEvent" type="button" class="btn btn-primary" >Upload Event</button>
+                    <button id="uploadEventBTN" type="button" class="btn btn-primary" >Upload Event</button>
                     <button id="saveEvent" type="button" class="btn btn-primary" >Save Event</button>
                     <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
                 </div>
@@ -1006,7 +1006,7 @@ async function saveEvent() {
         showToast('Event saved successfully!', "success");
 
         // Optional: Re-enable the upload button if needed
-        document.getElementById('uploadEvent').disabled = false;
+        document.getElementById('uploadEventBTN').disabled = false;
 
         // Optional: Refresh events list or close modal
         fetchEvents();
@@ -1424,7 +1424,7 @@ const bulkUploadPhotosBTN = document.getElementById('bulkUploadPhotos');
     }
 
     // Listener for the "Upload Event" button
-    const uploadEventButton = document.getElementById('uploadEvent');
+    const uploadEventButton = document.getElementById('uploadEventBTN');
     if (uploadEventButton) {
         uploadEventButton.addEventListener('click', uploadEvent);
     }
@@ -1446,14 +1446,14 @@ function showTabContent(tabId) {
         document.getElementById('Add_Event_Label').innerText = "Update Event";
         document.getElementById('saveEvent').style.display = "block";
         document.getElementById('eventCoverArea').style.display = "none";
-        document.getElementById('uploadEvent').style.display = "none";
+        document.getElementById('uploadEventBTN').style.display = "none";
         document.getElementById("addMedia").style.display = 'block';
        // showTabContent('editEvent');
         tabId = "Add_Event";
     }else{       
         document.getElementById('saveEvent').style.display = "none";
         document.getElementById('eventCoverArea').style.display = "block";
-        document.getElementById('uploadEvent').style.display = "block";
+        document.getElementById('uploadEventBTN').style.display = "block";
         document.getElementById('Add_Event_Label').innerText = "Add New Event";
         document.getElementById("addMedia").style.display = 'none';
 
