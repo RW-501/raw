@@ -953,31 +953,26 @@ document.getElementById('logoScale').addEventListener('input', updatePreview);
 
 
 let currentPreviewImage;
-
 async function updatePreview(imageUrl) {
+    if (!imageUrl) {
+        imageUrl = currentPreviewImage; // Fallback to the current preview image
+    }
+
     const text = document.getElementById('watermarkText').value;
     const position = document.getElementById('watermarkPosition').value;
     const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
     const logoFile = document.getElementById('logoOverlay').files[0];
     const scale = parseFloat(document.getElementById('logoScale').value);
-    console.log("image    ",imageUrl);
+
     const previewCanvas = document.getElementById('watermarkPreview');
     const previewCtx = previewCanvas.getContext('2d');
-    if (!imageUrl) {
-        imageUrl = currentPreviewImage; // Use fallback if imageUrl is not provided
-    } else {
-       // currentPreviewImage = imageUrl; // Update current preview image
-    }
 
-    if (!imageUrl) {
-        console.error('Invalid image URL'); // Log an error if still undefined
-        return;
-    }
-    console.log("image   XX ",currentPreviewImage);
+    console.log("Image URL:", imageUrl);
 
     const img = new Image();
-    img.src = currentPreviewImage;
-    img.onload = async function() {
+    img.src = imageUrl;
+
+    img.onload = async function () {
         // Set canvas size to match image size
         previewCanvas.width = img.width;
         previewCanvas.height = img.height;
@@ -985,23 +980,34 @@ async function updatePreview(imageUrl) {
         previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear previous preview
         previewCtx.drawImage(img, 0, 0);
 
-        // Apply watermark with live updates
-        const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale);
-        const watermarkedImg = new Image();
-        watermarkedImg.src = watermarkedImage;
-        watermarkedImg.onload = function() {
-            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear the canvas
-            previewCtx.drawImage(watermarkedImg, 0, 0); // Draw the watermarked image
-        };
+        // Apply watermark and update preview
+        try {
+            const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale);
+            const watermarkedImg = new Image();
+            watermarkedImg.src = watermarkedImage;
+
+            watermarkedImg.onload = function () {
+                previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear the canvas
+                previewCtx.drawImage(watermarkedImg, 0, 0); // Draw the watermarked image
+            };
+        } catch (err) {
+            console.error("Error applying watermark:", err);
+        }
+    };
+
+    img.onerror = function () {
+        console.error("Error loading image:", imageUrl);
     };
 }
+
 
 async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
     const img = new Image();
     img.src = imageUrl;
 
-    await new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
         img.onload = resolve;
+        img.onerror = reject;
     });
 
     const canvas = document.createElement('canvas');
@@ -1014,7 +1020,7 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
 
     // Apply text watermark
     if (text) {
-        ctx.font = "30px Arial";
+        ctx.font = "200px Arial";
         ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
         if (position === "center") {
             ctx.textAlign = "center";
@@ -1029,12 +1035,14 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         }
     }
 
-    // Apply logo watermark (if any)
+    // Apply logo watermark
     if (logo) {
         const logoImg = new Image();
         logoImg.src = URL.createObjectURL(logo);
-        await new Promise((resolve) => {
+
+        await new Promise((resolve, reject) => {
             logoImg.onload = resolve;
+            logoImg.onerror = reject;
         });
 
         const logoWidth = logoImg.width * scale;
