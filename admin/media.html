@@ -986,8 +986,8 @@ function closeModal() {
     galleryContainer.innerHTML = ''; // Clear previous content
 
     try {
-        const mainGalleryRef = collection(db, "MainGallery",  where("status", "==", 'active'));
-        const mainGallerySnapshot = await getDocs(mainGalleryRef);
+        const mainGalleryRef = collection(db, "MainGallery");
+        const mainGallerySnapshot = await getDocs(mainGalleryRef,  where("status", "==", 'active'));
 
         if (mainGallerySnapshot.empty) {
             galleryContainer.innerHTML = "<p>No media in gallery.</p>";
