@@ -1230,7 +1230,7 @@ function showTabContent(tabId) {
 function loadLastTab() {
     // Retrieve the last active tab from local storage
     const savedTab = localStorage.getItem('activeTab');
-
+console.log("kkkkkkkkkkkkkkkkkk");
     // Show the saved tab if it exists, otherwise show the default tab
     if (savedTab) {
         showTabContent(savedTab);
@@ -1240,7 +1240,8 @@ function loadLastTab() {
 }
 
 // Run on page load
-document.addEventListener('DOMContentLoaded', loadLastTab);
+loadLastTab();
+
 });
 
 </script>
