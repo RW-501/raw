@@ -587,8 +587,8 @@ button:hover {
 
 <!-- Toggle Bar -->
 <div class="mediaTabs">
-    <button class="tabButton" onclick="showTabContent('Add_Event')">Add Event</button>
-    <button class="tabButton" onclick="showTabContent('Add_Media')">Add Media</button>
+ <!--    <button class="tabButton" onclick="showTabContent('Add_Event')">Add Event</button>
+    <button class="tabButton" onclick="showTabContent('Add_Media')">Add Media</button> -->
     <button class="tabButton" onclick="showTabContent('Manage_Events')">Manage Events</button>
     <button class="tabButton" onclick="showTabContent('Manage_Gallery')">Manage Gallery</button>
 </div>
@@ -1122,9 +1122,13 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         eventItem.style.border = '1px solid #ddd';
         eventItem.style.borderRadius = '8px';
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+console.log("doc.id    ",doc.id);
+
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
+        const mediaListId = `mediaList-${doc.id}`;
+        const eventDetails = `eventDetails-${doc.id}`;
         eventItem.innerHTML = `
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
@@ -1156,6 +1160,12 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
         <p><strong>Comments:</strong> ${comments}</p>
         <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
+    </div>
+
+    <div id='${eventDetails}' class="d-flex justify-content-between ">
+    </div>
+
+    <div id='${mediaListId}' class="d-flex justify-content-between ">
     </div>
 `;
 
@@ -1198,9 +1208,11 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     const mediaCollectionRef = collection(db, "Media");
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
+    const mediaListContainer = document.getElementById("mediaList",eventId);
+    const eventDetailsContainer = document.getElementById("eventDetails",eventId);
 
-    const mediaListContainer = document.getElementById("mediaList");
-    const eventDetailsContainer = document.getElementById("eventDetails");
+    //const mediaListContainer = document.getElementById("mediaList");
+    //const eventDetailsContainer = document.getElementById("eventDetails");
 
     // Reset containers
     mediaListContainer.innerHTML = "";
