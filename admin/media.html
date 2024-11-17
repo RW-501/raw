@@ -1406,7 +1406,13 @@ window.savePhotoDetails = savePhotoDetails;
 window.saveWatermarkInputs = saveWatermarkInputs;
 window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
-document.getElementById('bulkUploadPhotos').addEventListener('click', bulkUploadPhotosFunc());
+
+
+
+const bulkUploadPhotosBTN = document.getElementById('bulkUploadPhotos');
+    if (bulkUploadPhotosBTN) {
+        bulkUploadPhotosBTN.addEventListener('click', bulkUploadPhotosFunc);
+    }
 
         const saveEventBTN = document.getElementById('saveEvent');
     if (saveEventBTN) {
