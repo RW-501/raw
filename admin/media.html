@@ -981,7 +981,7 @@ function closeModal() {
 /**
  * Load media items from MainGallery collection and render them into the gallery container.
  */
- async function loadMainGallery() {
+ async function loadMainGallery() { 
     const galleryContainer = document.getElementById('galleryContainer');
     galleryContainer.innerHTML = ''; // Clear previous content
 
@@ -997,7 +997,7 @@ function closeModal() {
         mainGallerySnapshot.forEach(doc => {
             const mediaData = doc.data();
             const mediaId = doc.id;
-            const { photoUrl, category, price, status, isPublic, watermarkedImageUrl } = mediaData;
+            const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn } = mediaData;
 
             // Create media item card
             const mediaDiv = document.createElement('div');
@@ -1017,7 +1017,7 @@ function closeModal() {
                         <div class="appearOn">
                             <h3>Update AppearOn Settings</h3>
                             <div id="checkboxes-${mediaId}" class="checkbox-group">
-                                ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'])}
+                                ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOn)}
                             </div>
                             <button onclick="handleUpdate('${mediaId}')">Update AppearOn</button>
                         </div>
@@ -1035,18 +1035,22 @@ function closeModal() {
 }
 
 /**
- * Render checkboxes for the appearOn settings.
+ * Render checkboxes for the appearOn settings and set their checked state based on the provided appearOn data.
  * @param {Array<string>} options - Array of checkbox labels/values.
- * @returns {string} - HTML string for the checkbox inputs.
+ * @param {Object} appearOn - An object indicating which pages the media should appear on (true or false for each page).
+ * @returns {string} - HTML string for the checkbox inputs, with checked checkboxes where applicable.
  */
- function renderCheckboxes(options) {
+function renderCheckboxes(options, appearOn) {
     return options
-        .map(option => `
-            <div>
-                <input type="checkbox" id="${option}" value="${option}">
-                <label for="${option}">${option}</label>
-            </div>
-        `)
+        .map(option => {
+            const checked = appearOn[option] ? 'checked' : '';  // Check if the option is true in appearOn
+            return `
+                <div>
+                    <input type="checkbox" id="${option}" value="${option}" ${checked}>
+                    <label for="${option}">${option}</label>
+                </div>
+            `;
+        })
         .join('');
 }
 
