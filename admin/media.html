@@ -376,12 +376,15 @@
     const collectionPrice = document.getElementById('collectionPrice').value;
     const isPublic = document.getElementById('photoPublic').checked;
 
-   // console.log("photos    ",photos);
+    console.log("eventId    ",eventId);
     if (photos.length === 0) {
         showToast("Please select at least one photo.", "error");
         return;
     }
-
+    if (!eventId) {
+        showToast("Add an Event", "error");
+        return;
+    }
     // Validation constants
     const MAX_FILE_SIZE_MB = 5;
     const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"];
