@@ -51,7 +51,10 @@ button:hover {
     width: 200px;
 
 }
+.align-items-center {
+    width: 100%;
 
+}
 
 #eventDetails {
     width: 200px;
@@ -882,6 +885,9 @@ console.log("event: ",event);
         document.getElementById('accessCode').value = event.accessCode;
         document.getElementById('uploadEvent').disabled;
         document.getElementById('currentEventID').innerText = eventId;
+
+        showTabContent('Add_Event');
+
     }
 
 // Save Event Function
@@ -1137,6 +1143,8 @@ async function removeMedia(mediaId) {
 
 function addMedia(eventID){
     document.getElementsByName("currentEventID").innerText = eventID;
+
+    showTabContent('Add_Media');
 }
 
 
