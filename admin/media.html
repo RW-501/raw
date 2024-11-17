@@ -372,6 +372,42 @@
             where, getDocs, storage, collection, 
             auth, analytics, deleteDoc, getDownloadURL } from '../js/module.js';
 
+
+
+
+
+
+
+
+            function compressBase64Image(base64String, maxWidth = 800, maxHeight = 800) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.src = base64String;
+
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            // Set canvas dimensions proportional to the max dimensions
+            const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+
+            // Draw the image on the canvas
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas back to Base64 (reduce quality if needed)
+            resolve(canvas.toDataURL("image/jpeg", 0.8)); // 80% quality
+        };
+    });
+}
+
+
+
+
+
+
+
     // Bulk Upload Photos Function
     async function bulkUploadPhotosFunc() {
 
@@ -381,6 +417,8 @@
     const photoPrice = document.getElementById('photoPrice').value;
     const collectionPrice = document.getElementById('collectionPrice').value;
     const isPublic = document.getElementById('photoPublic').checked;
+    const watermarkedImage = await fileToDataURL(photo); // Convert to Base64
+            const compressedImage = await compressBase64Image(watermarkedImage); // Compress the image
 
     console.log("eventId    ",eventId);
     if (photos.length === 0) {
@@ -412,6 +450,9 @@
     for (const photo of photos) {
         const fileSizeMB = photo.size / (1024 * 1024);
         const fileType = photo.type;
+
+        const watermarkedImage = await fileToDataURL(photo); // Convert to Base64
+            const compressedImage = await compressBase64Image(watermarkedImage); // Compress the image
 
         if (!VALID_FILE_TYPES.includes(fileType)) {
             invalidFiles.push(`${photo.name} (Invalid type: ${fileType})`);
@@ -445,7 +486,7 @@
             );
 
             // Save details
-            await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSizeMB, fileType);
+            await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, compressedImage, fileSizeMB, fileType);
             uploadedFiles.push(photo.name);
 
         } catch (error) {
