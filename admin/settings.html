@@ -372,11 +372,19 @@ document.getElementById('logoutTimer').value = savedMinutes;
             showToast('Please fill out all fields.');
         }
     }
+    window.updateApiKeys = updateApiKeys;
 
     async function viewLoginHistory(user) {
     try {
-        const loginDoc = doc(collection(db, "Logins"), user.uid);
 
+        let loginDoc;
+if(user){
+     loginDoc = doc(collection(db, "Logins"), user.uid);
+
+}else{
+     loginDoc = doc(collection(db, "Logins"));
+
+}
         // Fetch the login history
         const loginSnapshot = await getDoc(loginDoc);
         if (loginSnapshot.exists()) {
@@ -426,6 +434,7 @@ document.getElementById('logoutTimer').value = savedMinutes;
         showToast("Failed to retrieve login history.");
     }
 }
+window.viewLoginHistory = viewLoginHistory;
 
 </script>
 </body>

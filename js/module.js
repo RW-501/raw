@@ -99,7 +99,8 @@ function logout() {
         window.location.href = '../'; // Redirect to home
     }, 1000);
   }
-  
+  window.logout = logout;
+
   
   // Check if user is logged in and handle admin area access
   function checkLogin() {
@@ -140,6 +141,8 @@ function initializeAutoLogout() {
     }
 }
 
+window.initializeAutoLogout = initializeAutoLogout;
+
 // Example logout function
 function logout() {
     // Clear auto logout timer
@@ -151,7 +154,6 @@ function logout() {
     window.location.href = '/';
 }
 
-window.logout = logout;
 
   // Initialization
   document.addEventListener('DOMContentLoaded', () => {
@@ -173,8 +175,6 @@ window.logout = logout;
   
   
   
-  window.setAutoLogout = setAutoLogout;
-
 
 
   // Export Firestore, Storage, and Auth instances for use in other modules
