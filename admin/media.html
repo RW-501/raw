@@ -439,7 +439,9 @@ button:hover {
     border-color: #555; /* Darker border for images inside divs */
     border-radius: 10px; /* Slightly more rounded corners */
 }
-
+.d-flex img {
+    margin: none;
+}
     /* Buttons */
     #main-content button {
       color: white;
@@ -898,8 +900,20 @@ async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic,
     }
 }
 
+async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imageUrl = e.target.result;
+            updatePreview(imageUrl); // Initial preview when file is selected
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
 document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
+
 document.getElementById('watermarkText').addEventListener('input', updatePreview);
 document.getElementById('watermarkPosition').addEventListener('change', updatePreview);
 document.getElementById('watermarkOpacity').addEventListener('input', updatePreview);
@@ -914,18 +928,6 @@ document.getElementById('logoScale').addEventListener('input', updatePreview);
 
 
 
-
-async function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imageUrl = e.target.result;
-            updatePreview(imageUrl); // Initial preview when file is selected
-        };
-        reader.readAsDataURL(file);
-    }
-}
 
 async function updatePreview(imageUrl) {
     const text = document.getElementById('watermarkText').value;
@@ -1836,13 +1838,17 @@ document.getElementById('eventCoverPreview').addEventListener('click', function(
 
 });
 
+
+
+
+
 // Add an event listener to the image preview that triggers when the image is clicked
 document.getElementById('photoUploadBTN').addEventListener('click', function() {
-    handleFileUpload();
+    document.getElementById('photoUpload').click();
 
 });
 document.getElementById('watermarkPreview').addEventListener('click', function() {
-    handleFileUpload();
+    document.getElementById('photoUpload').click();
 
 });
 
