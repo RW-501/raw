@@ -402,17 +402,20 @@ function getViewedByField() {
   }
   
  
-  function createFilm() { 
+  async function createFilm() { 
     const header = document.getElementById('Main_Header');
     header.style.position = "relative";
     header.style.overflow = "hidden";
+    let filmImages = await getHeaderImages("appearOnHeader");
 
-    const filmImages = [
+    if(!filmImages){
+    filmImages = [
         'https://rw-501.github.io/raw/images/main.jpg',
         'https://rw-501.github.io/raw/images/main.png',
         'https://rw-501.github.io/raw/images/main.jpg',
         'https://rw-501.github.io/raw/images/main.png'
     ];
+}
     let currentImageIndex = 0;
 
     // Create overlay to hold the film strip and sprocket holes
@@ -484,6 +487,25 @@ function applyFilmStripEffect() {
 }
 
 
+async function getHeaderImages(appearOn) {
+    try {
+        // Reference the 'MainGallery' collection and create a query for appearOnHeader = true
+        const mainGalleryRef = collection(db, 'MainGallery');
+        const headerImagesQuery = query(mainGalleryRef, where(appearOn, 'array-contains', true));
+
+        // Execute the query and retrieve documents
+        const querySnapshot = await getDocs(headerImagesQuery);
+
+        // Extract photo URLs from documents
+        const images = querySnapshot.docs.map(doc => doc.data().photoUrl);
+
+        return images;
+    } catch (error) {
+        console.error('Error fetching header images:', error);
+        return [];
+    }
+}
+
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
@@ -493,7 +515,6 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
-    
   // Load the film effect on window load
   window.addEventListener('load', applyFilmStripEffect);
   }
@@ -547,8 +568,12 @@ function getRandomDefaultImage(defaultImages) {
         const querySnapshot = await getDocs(collection(db, Collection));
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
+        let defaultImages = await getHeaderImages(Collection);
+
+        
+    if(!defaultImages){
         // Define default images
-        const defaultImages = [
+         defaultImages = [
             "https://shutterworx.co/images/default_1.gif",
             "https://shutterworx.co/images/default_2.gif",
             "https://shutterworx.co/images/default_3.gif",
@@ -558,6 +583,7 @@ function getRandomDefaultImage(defaultImages) {
             "https://shutterworx.co/images/placeholder3.gif",
             "https://shutterworx.co/images/placeholder4.gif"
         ];
+    }
 
         // Helper function to get a random image from the defaultImages array
         const getRandomDefaultImage = () => {

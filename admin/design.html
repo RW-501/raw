@@ -259,8 +259,7 @@ async function uploadGalleryImages() {
             listItem.innerHTML = `
                 <img src="${imageUrl}" alt="Gallery Image" style="width: 100px; height: 100px;">
                 <input type="text" class="form-control mt-2" placeholder="Enter image description">
-                <button type="button" class="btn btn-warning btn-sm mt-2" onclick="markAsFeatured('${imageUrl}')">Mark as Featured</button>
-                <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeImage('${imageUrl}')">Remove Image</button>
+               <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeImage('${imageUrl}')">Remove Image</button>
             `;
             fragment.appendChild(listItem);
         }
@@ -274,17 +273,36 @@ async function uploadGalleryImages() {
 }
 window.uploadGalleryImages = uploadGalleryImages;
 
-// Function to mark an image as featured
-async function markAsFeatured(imageUrl) {
-    try {
-        await db.collection('gallery').doc('featured').set({ imageUrl }, { merge: true });
-        showToast('Image marked as featured');
-    } catch (error) {
-        console.error('Error marking image as featured:', error);
-        showToast('Error marking image. Please try again.');
-    }
+
+
+
+
+
+// Function to get selected checkbox values
+function getSelectedCheckboxValues() {
+    const checkboxes = document.querySelectorAll('#image-checkboxes input[type="checkbox"]');
+    const selectedValues = [];
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedValues.push(checkbox.value);
+        }
+    });
+
+    return selectedValues;
 }
-window.markAsFeatured = markAsFeatured;
+
+// Event Listener for Update Button
+document.getElementById('update-button').addEventListener('click', () => {
+    const selectedPages = getSelectedCheckboxValues();
+
+    // Replace 'your-image-id' with the specific ID of the document you want to update
+    const imageId = 'your-image-id'; 
+    updateAppearOn(imageId, selectedPages);
+});
+
+
+window.updateAppearOn = updateAppearOn;
 
 // Function to remove an image from the gallery
 async function removeImage(imageUrl) {
