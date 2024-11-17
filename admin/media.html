@@ -927,6 +927,8 @@ async function handleFileUpload(event) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const imageUrl = e.target.result; // Base64 string
+
+            console.log(imageUrl)
             currentPreviewImage = imageUrl;
             updatePreview(imageUrl); // Ensure a valid string is passed here
         };
@@ -958,7 +960,7 @@ async function updatePreview(imageUrl) {
     const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
     const logoFile = document.getElementById('logoOverlay').files[0];
     const scale = parseFloat(document.getElementById('logoScale').value);
-
+    console.log(imageUrl);
     const previewCanvas = document.getElementById('watermarkPreview');
     const previewCtx = previewCanvas.getContext('2d');
     if (!imageUrl) {
