@@ -69,7 +69,7 @@
   // showToast('This is a warning message!', 'warning');
   
   
-  window.showToast = showToast;
+  //window.showToast = showToast;
 // Auto move to next input (if applicable) on Enter key press
 function viewDidLoad() {
   const form = document.querySelector('form'); // Select the form or parent container
