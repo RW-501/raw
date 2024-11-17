@@ -121,8 +121,8 @@ function logout() {    // Clear auto logout timer
             }
         } else if (window.location.pathname.includes('/admin') || window.location.pathname.includes('/admin/index') || window.location.pathname.includes('/admin/')) {
             showToast('Admin Logged In');
-            const firebaseLogin = document.getElementById("firebaseLogin");
-            const dashboardContent = document.getElementById("dashboardContent");
+            let firebaseLogin = document.getElementById("firebaseLogin");
+            let dashboardContent = document.getElementById("dashboardContent");
         
             if(firebaseLogin){
                 firebaseLogin = firebaseLogin.style.display = "none";

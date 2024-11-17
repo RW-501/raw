@@ -492,6 +492,10 @@ button:hover {
       box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
     }
   
+    .controls {
+        display: flex;
+        justify-content: center;
+    }
     
     
   </style>
@@ -1540,16 +1544,15 @@ function closeModal() {
                         <div class="appearOn">
                             <h3>Appear On</h3>
                                     
-                            <div class="controls">
                             <div id="checkboxes-${mediaId}" class="checkbox-group">
                                 ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
                             </div>
-                          
+                                                           <div class="controls">
                             <button onclick="handleUpdate('${mediaId}')">Update</button>
-                        </div>
-
                         <button onclick="removeMedia('${mediaId}')">Remove</button>
-                    </div>
+                   </div>
+                  
+                        </div>
                 </div>
             `;
 
