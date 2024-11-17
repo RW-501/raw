@@ -46,16 +46,18 @@
             console.log("?????????/");
       toast.className = `toast toast-${type}`; // Add classes for styling
       toast.innerText = message; // Set the message text
-  
+
+    //  const main = document.getElementById("main-content");
+
       // Append the toast to the body
-      document.main.appendChild(toast);
+      document.body.appendChild(toast);
   
       // Set a timer to remove the toast after the specified duration
       setTimeout(() => {
         toast.style.opacity = '0'; // Start fade-out
           toast.classList.add('fade-out'); // Add fade-out effect
           setTimeout(() => {
-            document.main.removeChild(toast); // Remove toast from DOM
+            document.body.removeChild(toast); // Remove toast from DOM
           }, 50000); // Time to wait for fade-out animation
       }, duration);
   }
