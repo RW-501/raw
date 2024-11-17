@@ -921,18 +921,19 @@ async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic,
     }
 }
 
-async function handleFileUpload(event) {
+async function handleFileUpload(event) { 
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const imageUrl = e.target.result;
+            const imageUrl = e.target.result; // Base64 string
             currentPreviewImage = imageUrl;
-            updatePreview(imageUrl); // Initial preview when file is selected
+            updatePreview(imageUrl); // Ensure a valid string is passed here
         };
         reader.readAsDataURL(file);
     }
 }
+
 
 document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
 
@@ -952,91 +953,33 @@ document.getElementById('logoScale').addEventListener('input', updatePreview);
 let currentPreviewImage;
 
 async function updatePreview(imageUrl) {
-    const text = document.getElementById('watermarkText').value;
-    const position = document.getElementById('watermarkPosition').value;
-    const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
-    const logoFile = document.getElementById('logoOverlay').files[0];
-    const scale = parseFloat(document.getElementById('logoScale').value);
-
-    const previewCanvas = document.getElementById('watermarkPreview');
-    const previewCtx = previewCanvas.getContext('2d');
-
-    if(imageUrl == null){
-        imageUrl = currentPreviewImage;
+    if (!imageUrl) {
+        imageUrl = currentPreviewImage; // Use fallback if imageUrl is not provided
+    } else {
+        currentPreviewImage = imageUrl; // Update current preview image
     }
+
+    if (!imageUrl) {
+        console.error('Invalid image URL'); // Log an error if still undefined
+        return;
+    }
+    
     const img = new Image();
     img.src = imageUrl;
-
     img.onload = async function() {
-        // Set canvas size to match image size
-        previewCanvas.width = img.width;
-        previewCanvas.height = img.height;
-
-        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear previous preview
-        previewCtx.drawImage(img, 0, 0);
-
-        // Apply watermark with live updates
-        const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale);
-        const watermarkedImg = new Image();
-        watermarkedImg.src = watermarkedImage;
-        watermarkedImg.onload = function() {
-            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear the canvas
-            previewCtx.drawImage(watermarkedImg, 0, 0); // Draw the watermarked image
-        };
+        // Proceed with image drawing logic
     };
 }
 
-async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
-    const img = new Image();
-    img.src = imageUrl;
 
-    await new Promise((resolve) => {
-        img.onload = resolve;
-    });
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
 
-    canvas.width = img.width;
-    canvas.height = img.height;
 
-    ctx.drawImage(img, 0, 0);
 
-    // Apply text watermark
-    if (text) {
-        ctx.font = "30px Arial";
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-        if (position === "center") {
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(text, img.width / 2, img.height / 2);
-        } else if (position === "diagonal") {
-            ctx.save();
-            ctx.translate(img.width / 2, img.height / 2);
-            ctx.rotate(Math.PI / 4); // 45 degrees
-            ctx.fillText(text, 0, 0);
-            ctx.restore();
-        }
-    }
 
-    // Apply logo watermark (if any)
-    if (logo) {
-        const logoImg = new Image();
-        logoImg.src = URL.createObjectURL(logo);
-        await new Promise((resolve) => {
-            logoImg.onload = resolve;
-        });
 
-        const logoWidth = logoImg.width * scale;
-        const logoHeight = logoImg.height * scale;
-        const x = img.width - logoWidth - 10;
-        const y = img.height - logoHeight - 10;
 
-        ctx.drawImage(logoImg, x, y, logoWidth, logoHeight);
-    }
 
-    return canvas.toDataURL();
-}
   // Upload Event Function
   async function uploadEvent() {
         const title = document.getElementById('eventTitle').value;
