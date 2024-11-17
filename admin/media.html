@@ -997,7 +997,19 @@ function closeModal() {
         mainGallerySnapshot.forEach(doc => {
             const mediaData = doc.data();
             const mediaId = doc.id;
-            const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn } = mediaData;
+            const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
+
+            // Ensure appearOn has default values if it's missing
+            const defaultAppearOn = {
+                HomePage: false,
+                AboutPage: false,
+                EventPage: false,
+                ContactPage: false,
+                MainGallery: false
+            };
+
+            // Merge appearOn with default values
+            const appearOnData = { ...defaultAppearOn, ...appearOn };
 
             // Create media item card
             const mediaDiv = document.createElement('div');
@@ -1017,7 +1029,7 @@ function closeModal() {
                         <div class="appearOn">
                             <h3>Update AppearOn Settings</h3>
                             <div id="checkboxes-${mediaId}" class="checkbox-group">
-                                ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOn)}
+                                ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
                             </div>
                             <button onclick="handleUpdate('${mediaId}')">Update AppearOn</button>
                         </div>
