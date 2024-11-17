@@ -417,9 +417,7 @@
     const photoPrice = document.getElementById('photoPrice').value;
     const collectionPrice = document.getElementById('collectionPrice').value;
     const isPublic = document.getElementById('photoPublic').checked;
-    const watermarkedImage = await fileToDataURL(photo); // Convert to Base64
-            const compressedImage = await compressBase64Image(watermarkedImage); // Compress the image
-
+   
     console.log("eventId    ",eventId);
     if (photos.length === 0) {
         showToast("Please select at least one photo.", "error");
