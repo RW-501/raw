@@ -1196,6 +1196,8 @@ async function removeMedia(mediaId) {
 
 function addMediaToEvent(){
     const eventID = document.getElementById("currentEventID");
+    
+    document.getElementById("addMedia").style.display = 'block';
     addMedia(eventID);
 }
 
@@ -1275,16 +1277,18 @@ window.batchSetPublic   = batchSetPublic  ;
 function showTabContent(tabId) {
 
 
-    if(tabId == UPDATE_Event){
+    if(tabId == editEvent){
         document.getElementById('Add_Event_Label').innerText = "Update Event";
         document.getElementById('saveEvent').style.display = "block";
         document.getElementById('uploadEvent').style.display = "none";
-        showTabContent('editEvent');
+        document.getElementById("addMedia").style.display = 'block';
+       // showTabContent('editEvent');
         tabId = "Add_Event";
     }else{       
         document.getElementById('saveEvent').style.display = "none";
          document.getElementById('uploadEvent').style.display = "block";
         document.getElementById('Add_Event_Label').innerText = "Add New Event";
+        document.getElementById("addMedia").style.display = 'none';
 
     }
     // Hide all tab content
