@@ -367,7 +367,7 @@
             auth, analytics, deleteDoc, getDownloadURL } from '../js/module.js';
 
     // Bulk Upload Photos Function
-    async function bulkUploadPhotos() {
+    async function bulkUploadPhotosFunc() {
 
      const eventId = document.getElementById('currentEventID').innerText;
 
@@ -500,7 +500,7 @@ async function handleFileUpload(event) {
         reader.onload = function(e) {
             const imageUrl = e.target.result; // Base64 string
 
-            console.log(imageUrl)
+            //console.log(imageUrl)
             currentPreviewImage = imageUrl;
             updatePreview(); // Ensure a valid string is passed here
         };
@@ -1399,14 +1399,14 @@ window.handleUpdate  = handleUpdate ;
 
 window.batchSetPublic   = batchSetPublic  ;
 window.addMediaToEvent = addMediaToEvent;
-window.bulkUploadPhotos = bulkUploadPhotos;
+window.bulkUploadPhotosFunc = bulkUploadPhotosFunc;
 window.fileToDataURL = fileToDataURL;
 window.savePhotoDetails = savePhotoDetails;
  
 window.saveWatermarkInputs = saveWatermarkInputs;
 window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
-document.getElementById('bulkUploadPhotos').addEventListener('click', bulkUploadPhotos());
+document.getElementById('bulkUploadPhotos').addEventListener('click', bulkUploadPhotosFunc());
 
         const saveEventBTN = document.getElementById('saveEvent');
     if (saveEventBTN) {
