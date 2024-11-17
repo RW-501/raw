@@ -707,7 +707,6 @@ function generateAccessHandshake() {
            // const hashedAccessCode = btoa(accessCode);
 // Example usage
 const handshakeCode = generateAccessHandshake();
-console.log(handshakeCode); // Outputs something like "a1B2C"
 
             // Add event to Firestore
             await addDoc(collection(db, 'Events'), {
@@ -718,7 +717,7 @@ console.log(handshakeCode); // Outputs something like "a1B2C"
                 shortURL: "",
                 retrieveCount: 0,
                 retriever_IP: [],
-                accessHandShake: accessHandShake,
+                accessHandShake: handshakeCode,
         status: "active",
         isPublic: true,
         collection_price: "",
