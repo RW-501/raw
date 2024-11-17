@@ -11,9 +11,9 @@
       toast.setAttribute('role', 'alert'); // Accessibility
   
       // Add styles to the toast
-      toast.style.position = 'absolute';
-      toast.style.bottom = '20px';
-      toast.style.right = '20px';
+      toast.style.position = 'fixed';
+      toast.style.bottom = '2%';
+      toast.style.right = '2%';
       toast.style.padding = '15px 20px';
       toast.style.margin = '10px';
       toast.style.borderRadius = '5px';
@@ -48,14 +48,14 @@
       toast.innerText = message; // Set the message text
   
       // Append the toast to the body
-      document.body.appendChild(toast);
+      window.body.appendChild(toast);
   
       // Set a timer to remove the toast after the specified duration
       setTimeout(() => {
         toast.style.opacity = '0'; // Start fade-out
           toast.classList.add('fade-out'); // Add fade-out effect
           setTimeout(() => {
-              document.body.removeChild(toast); // Remove toast from DOM
+            window.body.removeChild(toast); // Remove toast from DOM
           }, 50000); // Time to wait for fade-out animation
       }, duration);
   }

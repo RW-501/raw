@@ -121,8 +121,15 @@ function logout() {    // Clear auto logout timer
             }
         } else if (window.location.pathname.includes('/admin') || window.location.pathname.includes('/admin/index') || window.location.pathname.includes('/admin/')) {
             showToast('Admin Logged In');
-            document.getElementById("firebaseLogin").style.display = "none";
-            document.getElementById("dashboardContent").style.display = "block";
+            const firebaseLogin = document.getElementById("firebaseLogin");
+            const dashboardContent = document.getElementById("dashboardContent");
+        
+            if(firebaseLogin){
+                firebaseLogin = firebaseLogin.style.display = "none";
+                dashboardContent = dashboardContent.style.display = "block";
+
+            }
+        
         }
     }
   }
