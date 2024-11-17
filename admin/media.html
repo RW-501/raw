@@ -645,40 +645,39 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         // Collapsible content
         const detailsId = `details-${doc.id}`;
         eventItem.innerHTML = `
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <img src="${coverUrl}" alt="Event Thumbnail" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 4px;" />
-                    <div>
-                        <strong>${title}</strong>
-                        <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
-                    <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${JSON.stringify(event)})">Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
-                    <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
-                </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <img src="${coverUrl}" alt="Event Thumbnail" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 4px;" />
+            <div>
+                <strong>${title}</strong>
+                <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
             </div>
-            <button class="btn btn-link mt-2 text-decoration-none" style="font-size: 0.9rem;" onclick="toggleDetails('${detailsId}')">
-                ${isPublic ? "Hide" : "Show"} Details
-            </button>
-            <div id="${detailsId}" class="collapse mt-3">
-                <p><strong>Description:</strong> ${description}</p>
-                <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">
-                    ${status ? "Yes" : "No"}
-                </span></p>
-                <p><strong>Tags:</strong> ${eventTags}</p>
-                <p><strong>Location:</strong> ${location}</p>
-                <p><strong>Collection Price:</strong> $${collectionPrice}</p>
-                <p><strong>Views:</strong> ${views}</p>
-                <p><strong>Retrieve Count:</strong> ${retrieveCount}</p>
-                <p><strong>Timestamp:</strong> ${timestamp}</p>
-                <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
-                <p><strong>Comments:</strong> ${comments}</p>
-                <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
-            </div>
-        `;
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
+            <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
+            <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+        </div>
+    </div>
+    <button class="btn btn-link mt-2 text-decoration-none" style="font-size: 0.9rem;" onclick="toggleDetails('${detailsId}')">
+        ${isPublic ? 'Hide' : 'Show'} Details
+    </button>
+    <div id="${detailsId}" class="collapse mt-3">
+        <p><strong>Description:</strong> ${description}</p>
+        <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
+        <p><strong>Tags:</strong> ${eventTags}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Collection Price:</strong> $${collectionPrice}</p>
+        <p><strong>Views:</strong> ${views}</p>
+        <p><strong>Retrieve Count:</strong> ${retrieveCount}</p>
+        <p><strong>Timestamp:</strong> ${timestamp}</p>
+        <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
+        <p><strong>Comments:</strong> ${comments}</p>
+        <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
+    </div>
+`;
+
 
         eventList.appendChild(eventItem);
 
