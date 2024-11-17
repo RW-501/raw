@@ -932,17 +932,67 @@ async function saveEvent() {
 }
 
     // Delete Event Function
-    async function deleteEvent(eventId) {
-        if (confirm('Are you sure you want to delete this event?')) {
-            try {
-                await deleteDoc(doc(db, 'Events', eventId));
+// Delete Event Function 
+async function deleteEvent(eventId) {
+    if (confirm('Are you sure you want to delete this event?')) {
+        try {
+            // Fetch the event document
+            const eventRef = doc(db, 'Events', eventId);
+            const eventSnap = await getDoc(eventRef);
+
+            if (eventSnap.exists()) {
+                const eventData = eventSnap.data();
+
+                // Delete images from Firebase Storage
+                const storage = getStorage();
+                const watermarkedImageRef = ref(storage, eventData.watermarkedImageUrl);
+                const photoRef = ref(storage, eventData.photoUrl);
+
+                // Delete watermarked image
+                if (eventData.watermarkedImageUrl) {
+                    await deleteObject(watermarkedImageRef).catch(err => 
+                        console.error("Error deleting watermarked image:", err)
+                    );
+                }
+
+                // Delete original photo
+                if (eventData.photoUrl) {
+                    await deleteObject(photoRef).catch(err => 
+                        console.error("Error deleting photo:", err)
+                    );
+                }
+
+                // Delete associated media from Media collection
+                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+                const mediaSnapshot = await getDocs(mediaQuery);
+                mediaSnapshot.forEach(async (mediaDoc) => {
+                    await deleteDoc(doc(db, 'Media', mediaDoc.id)).catch(err => 
+                        console.error("Error deleting media document:", err)
+                    );
+                });
+
+                // Delete associated media from MainGallery collection
+                const galleryQuery = query(collection(db, 'MainGallery'), where('eventId', '==', eventId));
+                const gallerySnapshot = await getDocs(galleryQuery);
+                gallerySnapshot.forEach(async (galleryDoc) => {
+                    await deleteDoc(doc(db, 'MainGallery', galleryDoc.id)).catch(err => 
+                        console.error("Error deleting gallery document:", err)
+                    );
+                });
+
+                // Delete the event itself
+                await deleteDoc(eventRef);
                 showToast('Event deleted successfully');
                 fetchEvents(); // Refresh event list
-            } catch (error) {
-                console.error("Error deleting event:", error);
+            } else {
+                console.error("Event not found for deletion");
             }
+        } catch (error) {
+            console.error("Error deleting event:", error);
         }
     }
+}
+
     
 
     async function addMediaToGallery(category) {
@@ -1243,7 +1293,7 @@ function showTabContent(tabId) {
 function loadLastTab() {
     // Retrieve the last active tab from local storage
     const savedTab = localStorage.getItem('activeTab');
-console.log("kkkkkkkkkkkkkkkkkk");
+console.log("savedTab");
     // Show the saved tab if it exists, otherwise show the default tab
     if (savedTab) {
         showTabContent(savedTab);
