@@ -171,6 +171,8 @@ button:hover {
                     </div> 
                     <button id="uploadEvent" type="button" class="btn btn-primary" >Upload Event</button>
                     <button id="saveEvent" type="button" class="btn btn-primary" >Save Event</button>
+                    <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
+
                 </form>
             </div>
         </div>
@@ -1190,6 +1192,11 @@ async function removeMedia(mediaId) {
         alert('Media successfully removed from the gallery!');
         loadMainGallery(); // Refresh the gallery list
     }
+}
+
+function addMediaToEvent(){
+    const eventID = document.getElementById("currentEventID");
+    addMedia(eventID);
 }
 
 function addMedia(eventID){
