@@ -65,6 +65,202 @@ button:hover {
 
 
 </style>
+
+
+
+
+
+
+<style>
+    /* Global Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    #main-content {
+      margin: 20px auto;
+      max-width: 1200px;
+      padding: 20px;
+      background: #212121;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+  
+    h2.text-center {
+      color: #009cfa;
+      text-transform: uppercase;
+      font-size: 24px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+  
+    /* Admin Messages Section */
+    .admin-messages-container {
+      background: #252542;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+  
+    .msg_help {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #b0b0b0;
+    }
+  
+    .msg_help span {
+      font-size: 20px;
+      margin-right: 10px;
+      color: #009cfa;
+    }
+  
+    .msg_help a {
+      color: #009cfa;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+  
+    .msg_help a:hover {
+      color: #007bb5;
+      text-decoration: underline;
+    }
+  
+    #message-actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  
+    /* Toggle Bar */
+    .mediaTabs {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+  
+    .tabButton {
+      background-color: #009cfa;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    .tabButton:hover {
+      background-color: #007bb5;
+      transform: scale(1.05);
+    }
+  
+    .tabButton:active {
+      transform: scale(0.95);
+    }
+  
+    /* Buttons */
+    button {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    button.primary {
+      background-color: #009cfa;
+      color: #ffffff;
+    }
+  
+    button.primary:hover {
+      background-color: #007bb5;
+      transform: scale(1.05);
+    }
+  
+    button.primary:active {
+      transform: scale(0.95);
+    }
+  
+    /* Input and Textarea Styling */
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 8px;
+      color: #e0e0e0;
+      font-size: 14px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+  
+    input:focus,
+    textarea:focus {
+      outline: none;
+      background-color: #444;
+      border-color: #009cfa;
+    }
+  
+    /* Tooltip */
+    .tool-icon {
+      display: inline-block;
+      background: #333;
+      color: #b0b0b0;
+      font-size: 16px;
+      padding: 8px 10px;
+      border-radius: 50%;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  
+    .tool-icon:hover {
+      background-color: #009cfa;
+      color: #ffffff;
+    }
+  
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #main-content {
+        padding: 15px;
+      }
+  
+      .tabButton {
+        font-size: 14px;
+        padding: 10px 15px;
+      }
+  
+      .msg_help {
+        flex-direction: column;
+        text-align: center;
+      }
+  
+      .msg_help a {
+        margin-top: 10px;
+      }
+    }
+  </style>
+  
+
+
+
 </head>
 <body>
 
