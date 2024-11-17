@@ -1205,8 +1205,8 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     const mediaCollectionRef = collection(db, "Media");
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
-    const mediaListContainer = document.getElementById(`mediaList${eventId}`);
-    const eventDetailsContainer = document.getElementById(`eventDetails${eventId}`);
+    const mediaListContainer = document.getElementById(`mediaList-${eventId}`);
+    const eventDetailsContainer = document.getElementById(`eventDetails-${eventId}`);
 
     //const mediaListContainer = document.getElementById("mediaList");
     //const eventDetailsContainer = document.getElementById("eventDetails");
