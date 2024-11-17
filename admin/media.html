@@ -998,6 +998,8 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
                 <p>Collection Price: $${item.collectionPrice}</p>
                         
                 <div class="batch-buttons btn-group controls">
+                      <button onclick=" updateAppearOn('${item.id}', 'MainGallery')">Add to Gallery</button>
+
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
                 </button>
@@ -1205,7 +1207,7 @@ async function deleteEvent(eventId) {
                 });
 
                 // Delete associated media from MainGallery collection
-                const galleryQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+                const galleryQuery = query(collection(db, 'MainGallery'), where('eventId', '==', eventId));
                 const gallerySnapshot = await getDocs(galleryQuery);
                 gallerySnapshot.forEach(async (galleryDoc) => {
                     await deleteDoc(doc(db, 'MainGallery', galleryDoc.id)).catch(err => 
