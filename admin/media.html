@@ -278,6 +278,164 @@ button:hover {
 
     background-color: #3a3a3a;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+#main-content input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      background-color: #181818;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: auto;
+    }
+  
+    /* Checkbox checked state */
+    #main-content input[type="checkbox"]:checked {
+      background-color: #009cfa;
+      border-color: #009cfa;
+    }
+  
+    /* Inner checkmark styling when checked */
+    #main-content input[type="checkbox"]:checked::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 10px;
+      height: 18px;
+      border: solid #fff;
+      border-width: 0 4px 4px 0;
+      transition: all 0.2s ease;
+    }
+  
+    /* Hover effect */
+    #main-content input[type="checkbox"]:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    /* Focus effect */
+    #main-content input[type="checkbox"]:focus {
+      outline: none;
+      border-color: #009cfa;
+      box-shadow: 0 0 10px rgba(0, 156, 250, 0.7);
+    }
+  
+    #main-content input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #555;
+      outline: none;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+  
+    #main-content input[type="range"]:hover {
+      background-color: #444;
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    #main-content input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #009cfa;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    #main-content input[type="range"]:hover::-webkit-slider-thumb {
+      background: #007bb5;
+    }
+  
+    #main-content input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #009cfa;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    /* Buttons */
+    #main-content button {
+      background-color: #009cfa;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    #main-content button:hover {
+      background-color: #007bb5;
+      transform: scale(1.05);
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    #main-content button:active {
+      transform: scale(0.95);
+    }
+  
+
+  
+    .card-body label {
+      color: #b0b0b0;
+      font-size: 14px;
+    }
+  
+    .card-body input {
+      background-color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      color: #e0e0e0;
+      margin-bottom: 10px;
+    }
+  
+    .card-body input:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .card-body input:hover,
+    .card-body select:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    .card-body input:hover {
+      border-color: #009cfa;
+      box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
+    }
+  
+    
+    
   </style>
   
 
