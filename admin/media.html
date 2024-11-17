@@ -966,17 +966,17 @@ async function updatePreview(imageUrl) {
     if (!imageUrl) {
         imageUrl = currentPreviewImage; // Use fallback if imageUrl is not provided
     } else {
-        currentPreviewImage = imageUrl; // Update current preview image
+       // currentPreviewImage = imageUrl; // Update current preview image
     }
 
     if (!imageUrl) {
         console.error('Invalid image URL'); // Log an error if still undefined
         return;
     }
-    console.log("image   XX ",imageUrl);
+    console.log("image   XX ",currentPreviewImage);
 
     const img = new Image();
-    img.src = imageUrl;
+    img.src = currentPreviewImage;
     img.onload = async function() {
         // Set canvas size to match image size
         previewCanvas.width = img.width;
@@ -986,7 +986,7 @@ async function updatePreview(imageUrl) {
         previewCtx.drawImage(img, 0, 0);
 
         // Apply watermark with live updates
-        const watermarkedImage = await applyWatermark(imageUrl, text, position, opacity, logoFile, scale);
+        const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale);
         const watermarkedImg = new Image();
         watermarkedImg.src = watermarkedImage;
         watermarkedImg.onload = function() {
