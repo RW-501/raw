@@ -91,14 +91,18 @@ function checkUserLoginStatus() {
 
 window.checkUserLoginStatus = checkUserLoginStatus;
 
+
 // Logout function
-function logout() {
+function logout() {    // Clear auto logout timer
+    clearTimeout(autoLogoutTimer);
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('autoLogoutTime');
     showToast('You have been logged out.');
-    setTimeout(() => {
-        window.location.href = '../'; // Redirect to home
-    }, 1000);
-  }
+    // Redirect to login or home page
+    window.location.href = '../';
+}
+
+
   window.logout = logout;
 
   
@@ -143,16 +147,6 @@ function initializeAutoLogout() {
 
 window.initializeAutoLogout = initializeAutoLogout;
 
-// Example logout function
-function logout() {
-    // Clear auto logout timer
-    clearTimeout(autoLogoutTimer);
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('autoLogoutTime');
-    showToast('You have been logged out.');
-    // Redirect to login or home page
-    window.location.href = '/';
-}
 
 
   // Initialization
