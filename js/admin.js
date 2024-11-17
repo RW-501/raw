@@ -48,14 +48,14 @@
       toast.innerText = message; // Set the message text
   
       // Append the toast to the body
-      window.body.appendChild(toast);
+      document.main.appendChild(toast);
   
       // Set a timer to remove the toast after the specified duration
       setTimeout(() => {
         toast.style.opacity = '0'; // Start fade-out
           toast.classList.add('fade-out'); // Add fade-out effect
           setTimeout(() => {
-            window.body.removeChild(toast); // Remove toast from DOM
+            document.main.removeChild(toast); // Remove toast from DOM
           }, 50000); // Time to wait for fade-out animation
       }, duration);
   }
