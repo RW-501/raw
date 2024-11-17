@@ -499,7 +499,9 @@
     }
 
     if (uploadedFiles.length > 0) {
-        showToast(`Successfully uploaded: ${uploadedFiles.join(", ")}`, "success");
+        showTabContent('Manage_Events');
+       // showToast(`Successfully uploaded: ${uploadedFiles.join(", ")}`, "success");
+        showToast(`Successfully uploaded: ${uploadedFiles.length}`, "success");
     }
 }
 
