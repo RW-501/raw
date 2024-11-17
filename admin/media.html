@@ -1406,6 +1406,7 @@ window.savePhotoDetails = savePhotoDetails;
 window.saveWatermarkInputs = saveWatermarkInputs;
 window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
+loadWatermarkInputs();
 
 
 
@@ -1439,7 +1440,6 @@ function showTabContent(tabId) {
 
     
     if(tabId == "editEvent"){
-        loadWatermarkInputs();
         document.getElementById('Add_Event_Label').innerText = "Update Event";
         document.getElementById('saveEvent').style.display = "block";
         document.getElementById('eventCoverArea').style.display = "none";
