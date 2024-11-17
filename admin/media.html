@@ -930,7 +930,7 @@ async function handleFileUpload(event) {
 
             console.log(imageUrl)
             currentPreviewImage = imageUrl;
-            updatePreview(imageUrl); // Ensure a valid string is passed here
+            updatePreview(); // Ensure a valid string is passed here
         };
         reader.readAsDataURL(file);
     }
@@ -939,11 +939,11 @@ async function handleFileUpload(event) {
 
 document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
 
-document.getElementById('watermarkText').addEventListener('input', updatePreview);
-document.getElementById('watermarkPosition').addEventListener('change', updatePreview);
-document.getElementById('watermarkOpacity').addEventListener('input', updatePreview);
-document.getElementById('logoOverlay').addEventListener('change', updatePreview);
-document.getElementById('logoScale').addEventListener('input', updatePreview);
+document.getElementById('watermarkText').addEventListener('input', () => updatePreview());
+document.getElementById('watermarkPosition').addEventListener('change', () => updatePreview());
+document.getElementById('watermarkOpacity').addEventListener('input', () => updatePreview());
+document.getElementById('logoOverlay').addEventListener('change', () => updatePreview());
+document.getElementById('logoScale').addEventListener('input', () => updatePreview());
 
 
 
@@ -951,11 +951,15 @@ document.getElementById('logoScale').addEventListener('input', updatePreview);
 
 
 
-
-let currentPreviewImage;
+let currentPreviewImage = null;
 async function updatePreview(imageUrl) {
     if (!imageUrl) {
-        imageUrl = currentPreviewImage; // Fallback to the current preview image
+        imageUrl = currentPreviewImage; // Fallback to currentPreviewImage
+    }
+
+    if (!imageUrl) {
+        console.error("No image URL provided or uploaded.");
+        return;
     }
 
     const text = document.getElementById('watermarkText').value;
