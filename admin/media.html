@@ -638,7 +638,7 @@ gap: 1rem;
                         <label for="eventDate" class="form-label">Event Date</label>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" id="eventCoverArea">
                         <label for="eventCover" class="form-label">Cover Photo</label>
                                         <!-- Cover Photo Area -->
                                         <div class="center">
@@ -1794,17 +1794,19 @@ window.addMediaToEvent = addMediaToEvent;
 // Function to show content for a selected tab
 function showTabContent(tabId) {
 
-
+    
     if(tabId == "editEvent"){
         document.getElementById('Add_Event_Label').innerText = "Update Event";
         document.getElementById('saveEvent').style.display = "block";
+        document.getElementById('eventCoverArea').style.display = "none";
         document.getElementById('uploadEvent').style.display = "none";
         document.getElementById("addMedia").style.display = 'block';
        // showTabContent('editEvent');
         tabId = "Add_Event";
     }else{       
         document.getElementById('saveEvent').style.display = "none";
-         document.getElementById('uploadEvent').style.display = "block";
+        document.getElementById('eventCoverArea').style.display = "block";
+        document.getElementById('uploadEvent').style.display = "block";
         document.getElementById('Add_Event_Label').innerText = "Add New Event";
         document.getElementById("addMedia").style.display = 'none';
 
