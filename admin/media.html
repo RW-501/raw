@@ -1128,6 +1128,10 @@ function addMedia(eventID){
 
 
     document.addEventListener('DOMContentLoaded', () => {
+       
+        fetchEvents(); 
+
+loadMainGallery();
 
         
         window.addMediaToGallery = addMediaToGallery;
@@ -1141,10 +1145,10 @@ function addMedia(eventID){
         window.uploadEvent = uploadEvent;
 
         window.fetchEvents = fetchEvents;
+        window.viewMedia = viewMedia;
 
         window.deleteEvent = deleteEvent;
         window.saveEvent = saveEvent;
-        window.viewMedia = viewMedia;
         window.toggleDetails  = toggleDetails ;
 
 window.loadMainGallery = loadMainGallery;
@@ -1161,11 +1165,7 @@ window.updatePreview = updatePreview;
 
 window.renderCheckboxes = renderCheckboxes;
 
-        
-fetchEvents(); 
-
-loadMainGallery();
-
+ 
 
         const saveEventBTN = document.getElementById('saveEvent');
     if (saveEvent) {
