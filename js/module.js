@@ -124,20 +124,35 @@ function logout() {
   
   window.checkLogin = checkLogin;
   
-  // Auto logout function
   let autoLogoutTimer = null;
-  function setAutoLogout() {
-    const minutes = parseInt(document.getElementById('logoutTimer').value);
-    if (minutes > 0) {
-        showToast(`Auto logout set for ${minutes} minutes.`);
-        clearTimeout(autoLogoutTimer); // Clear previous timer
+
+// Initialize auto logout on page load
+function initializeAutoLogout() {
+    const savedMinutes = localStorage.getItem('autoLogoutTime');
+    if (savedMinutes && !isNaN(savedMinutes)) {
+        // Set the timer using the saved setting
         autoLogoutTimer = setTimeout(() => {
             logout();
-        }, minutes * 60 * 1000);
+        }, parseInt(savedMinutes) * 60 * 1000);
+        showToast(`Auto logout initialized for ${savedMinutes} minutes.`);
     } else {
-        showToast('Please enter a valid time.');
+        showToast('Auto logout is disabled.');
     }
-  }
+}
+
+// Example logout function
+function logout() {
+    // Clear auto logout timer
+    clearTimeout(autoLogoutTimer);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('autoLogoutTime');
+    showToast('You have been logged out.');
+    // Redirect to login or home page
+    window.location.href = '/';
+}
+
+window.logout = logout;
+
   // Initialization
   document.addEventListener('DOMContentLoaded', () => {
     checkLogin(); // Ensure login is valid on page load
@@ -146,7 +161,7 @@ function logout() {
   if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
     console.log("Admin View");
     checkUserLoginStatus();
-
+    initializeAutoLogout();
   } else {
     console.log("User View");
     attachTrackingListeners();
