@@ -169,12 +169,12 @@ button:hover {
                         <label for="accessCode" class="form-label">Access Code (if private)</label>
                         <input type="text" class="form-control" id="accessCode" placeholder="Optional">
                     </div> 
-                    <div class="mb-3">
+                    <div class="controls">
                     <button id="uploadEvent" type="button" class="btn btn-primary" >Upload Event</button>
                     <button id="saveEvent" type="button" class="btn btn-primary" >Save Event</button>
                     <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
                 </div>
-                
+
                 </form>
             </div>
         </div>
@@ -270,15 +270,13 @@ button:hover {
                 <!-- Media Gallery Section -->
 
     <div id="Manage_Gallery" class="media_tabs">
-        <div class="card mb-4 shadow-lg">
-<div id="mainGallerySection" class="card-body">
+<div id="mainGallerySection" class="card mb-4 shadow-lg">
     <h5 class="mb-3">Manage Gallery</h5>
 
     <div id="galleryContainer"></div>
 </div>
 
-    
-</div>
+
 
  </div>
 
@@ -660,7 +658,7 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
             </div>
         </div>
-        <div class="btn-group">
+        <div class="batch-buttons btn-group controls">
             <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
             <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
@@ -745,14 +743,16 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
         if (!coverPhoto) coverPhoto = data.photoUrl;
     });
 
-    // Event-level metadata
+    // View Media Button
     eventDetailsContainer.innerHTML = `
         <h3>${eventTitle}</h3>
         <p>Date: ${eventDate}</p>
-        <p>Public: ${publicStatus ? "Yes" : "No"}</p>
+        <p>Public: <span class="badge ${publicStatus ? 'bg-success' : 'bg-danger'}">${publicStatus ? "Yes" : "No"}</span></p>
+
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
         <p>Total Images: ${imageCount}</p>
-        <div class="batch-buttons">
+        <div class="batch-buttons btn-group controls">
+
             <button onclick="batchSetPublic('${eventId}', true)">Set All Public</button>
             <button onclick="batchSetPublic('${eventId}', false)">Set All Private</button>
             <button onclick="batchUpdatePrices('${eventId}')">Update All Prices</button>
@@ -772,11 +772,15 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
                 >
                 <p>Price: $${item.price}</p>
                 <p>Collection Price: $${item.collectionPrice}</p>
+                        
+                <div class="batch-buttons btn-group controls">
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
                 </button>
                 <button onclick="updatePrice('${item.id}')">Update Price</button>
                 <button onclick="toggleDetails('${item.id}')">View Details</button>
+            </div>
+
             </div>
             <div id="details-${item.id}" class="media-details collapse">
                 <p>File Type: ${item.fileType}</p>
@@ -1087,7 +1091,7 @@ function closeModal() {
 
             // Create media item card
             const mediaDiv = document.createElement('div');
-            mediaDiv.classList.add('media-item');
+            mediaDiv.classList.add('media-item card-body');
             mediaDiv.innerHTML = `
                 <div class="media-header">
                     <button onclick="toggleCollapse('${mediaId}')">Toggle Details</button>
@@ -1101,12 +1105,16 @@ function closeModal() {
                     <p><img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail"></p>
                     <div class="media-actions">
                         <div class="appearOn">
-                            <h3>Update AppearOn Settings</h3>
+                            <h3>Appear On</h3>
+                                    
+                            <div class="controls">
                             <div id="checkboxes-${mediaId}" class="checkbox-group">
                                 ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
                             </div>
-                            <button onclick="handleUpdate('${mediaId}')">Update AppearOn</button>
+                          
+                            <button onclick="handleUpdate('${mediaId}')">Update</button>
                         </div>
+
                         <button onclick="removeMedia('${mediaId}')">Remove</button>
                     </div>
                 </div>
