@@ -305,11 +305,26 @@ window.updateAccountInfo = updateAccountInfo;
 
 
 
-    function clearSessionAndCookies() {
-        sessionStorage.clear();
-        document.cookie.split(';').forEach(c => document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;');
+function clearSessionAndCookies() {
+    // Clear local storage
+    localStorage.clear();
+
+    // Clear session storage
+    sessionStorage.clear();
+
+    // Clear cookies
+    document.cookie.split(';').forEach(c => {
+        const cookieName = c.trim().split('=')[0];
+        document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+    });
+
+    // Show toast notification (ensure `showToast` is defined elsewhere in your code)
+    if (typeof showToast === 'function') {
         showToast('Session storage and cookies cleared.');
+    } else {
+        console.log('Session storage and cookies cleared.');
     }
+}
 
     window.clearSessionAndCookies = clearSessionAndCookies;
 
@@ -422,6 +437,7 @@ if(user){
     }
 }
 window.viewLoginHistory = viewLoginHistory;
+ viewLoginHistory();
 
 </script>
 </body>

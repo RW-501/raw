@@ -146,9 +146,11 @@ function initializeAutoLogout() {
         autoLogoutTimer = setTimeout(() => {
             logout();
         }, parseInt(savedMinutes) * 60 * 1000);
+
+
         showToast(`Auto logout initialized for ${savedMinutes} minutes.`);
     } else {
-        showToast('Auto logout is disabled.');
+       // showToast('Auto logout is disabled.');
     }
 }
 
@@ -370,6 +372,132 @@ function getViewedByField() {
 
 
 
+  function applyBackgroundEffect() {
+    const header = document.getElementById('Main_Header');
+    
+    // Set initial background as image with shadow/fade
+    header.style.transition = "background 1s ease-in-out";  // Add smooth transition
+    header.style.backgroundImage = "url('https://rw-501.github.io/raw/images/main.jpg')";
+    header.style.backgroundSize = "cover";
+    header.style.backgroundPosition = "center";
+    header.style.position = "relative";
+    
+    // Create overlay div for shadow/fade effect
+    const overlay = document.createElement('div');
+    overlay.style.position = "absolute";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.right = "0";
+    overlay.style.bottom = "0";
+    overlay.style.background = "rgba(0, 0, 0, 0.5)"; // Black fade effect
+    overlay.style.transition = "background 1s ease-in-out"; // Smooth fade effect
+    overlay.style.zIndex = "1"; // Place overlay on top of the background
+    header.appendChild(overlay);
+    
+    // Optionally add a gradient instead of an image after 5 seconds for example (can be toggled as needed)
+    setTimeout(() => {
+      header.style.backgroundImage = "linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://rw-501.github.io/raw/images/main.jpg')";
+      overlay.style.background = "rgba(0, 0, 0, 0.3)"; // Lighter fade effect for gradient
+    }, 5000);  // Change background after 5 seconds, you can adjust this as needed
+  }
+  
+ 
+  function createFilm() { 
+    const header = document.getElementById('Main_Header');
+    header.style.position = "relative";
+    header.style.overflow = "hidden";
+
+    const filmImages = [
+        'https://rw-501.github.io/raw/images/main.jpg',
+        'https://rw-501.github.io/raw/images/main.png',
+        'https://rw-501.github.io/raw/images/main.jpg',
+        'https://rw-501.github.io/raw/images/main.png'
+    ];
+    let currentImageIndex = 0;
+
+    // Create overlay to hold the film strip and sprocket holes
+    const overlay = document.createElement('div');
+    overlay.className = 'film-strip-overlay';
+
+    // Loop through each film image to create a film overlay for each
+    filmImages.forEach((src) => {
+        // Create the main film strip container for each image
+        const filmStrip = document.createElement('div');
+        filmStrip.className = 'film-strip';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'film-image';
+        filmStrip.appendChild(img);
+
+        // Create a film overlay for each image in the film strip
+        const filmOverlay = document.createElement('div');
+        filmOverlay.className = 'film-overlay';
+
+        // Create sprocket holes for top and bottom for each film strip
+        const topSprockets = createSprockets();
+        const bottomSprockets = createSprockets();
+
+        // Add the sprockets and the film strip to the film overlay
+        filmOverlay.appendChild(topSprockets);
+        filmOverlay.appendChild(filmStrip);
+        filmOverlay.appendChild(bottomSprockets);
+
+        // Append the film overlay to the main overlay
+        overlay.appendChild(filmOverlay);
+    });
+
+    // Append the overlay to the header
+    header.appendChild(overlay);
+
+    // Function to create sprockets with holes for each film strip
+    function createSprockets() {
+        const sprockets = document.createElement('div');
+        sprockets.className = 'sprocket-holes';
+        for (let i = 0; i < 6; i++) {
+            const hole = document.createElement('div');
+            hole.className = 'sprocket-hole';
+            sprockets.appendChild(hole);
+        }
+        return sprockets;
+    }
+
+    // Animate the film strip and sprockets movement
+    setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % filmImages.length;
+// container_CTA opc
+
+        // Find the current film overlay and animate it
+        const filmOverlays = document.querySelectorAll('.film-overlay');
+        filmOverlays.forEach((overlay) => {
+            overlay.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        });
+    }, 5000);
+}
+
+function applyFilmStripEffect() {
+    let useFilmStripEffect = true;
+
+    if (useFilmStripEffect) {
+        createFilm();
+    }
+}
+
+
+
+if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+   // console.log("Admin View");
+  
+  
+  } else {
+   
+  // Run the function when the page loads
+  window.addEventListener('load', applyBackgroundEffect);
+    
+  // Load the film effect on window load
+  window.addEventListener('load', applyFilmStripEffect);
+  }
+  
 
 
 
