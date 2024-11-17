@@ -1081,7 +1081,6 @@ async function updatePrice(docId) {
     // Edit Event Function
     function editEvent(eventId, event) {
     //    let Event = JSON.stringify(event);
-console.log("event: ",event);
 
         document.getElementById('eventTitle').value = event.title;
         document.getElementById('eventDescription').value = event.description;
@@ -1287,7 +1286,7 @@ function closeModal() {
 
             // Create media item card
             const mediaDiv = document.createElement('div');
-            mediaDiv.classList.add('media-item card-body');
+            mediaDiv.classList.add('media-item', 'card-body');
             mediaDiv.innerHTML = `
                 <div class="media-header">
                     <button onclick="toggleCollapse('${mediaId}')">Toggle Details</button>
