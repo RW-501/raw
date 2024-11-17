@@ -1205,7 +1205,7 @@ async function deleteEvent(eventId) {
                 });
 
                 // Delete associated media from MainGallery collection
-                const galleryQuery = query(collection(db, 'MainGallery'), where('eventId', '==', eventId));
+                const galleryQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
                 const gallerySnapshot = await getDocs(galleryQuery);
                 gallerySnapshot.forEach(async (galleryDoc) => {
                     await deleteDoc(doc(db, 'MainGallery', galleryDoc.id)).catch(err => 
