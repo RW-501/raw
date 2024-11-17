@@ -111,6 +111,12 @@
                         <textarea class="form-control" id="eventDescription" rows="4"></textarea>
                     </div>
                     <div class="mb-3">
+                        <label for="location" class="form-label">Event Location</label>
+                        <input type="text" class="form-control" id="location" >
+                    </div>
+
+
+                    <div class="mb-3">
                         <label for="eventDate" class="form-label">Event Date</label>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
@@ -684,6 +690,7 @@ function generateAccessHandshake() {
         const eventDate = document.getElementById('eventDate').value;
         const cover = document.getElementById('eventCover').files[0];
         const accessCode = document.getElementById('accessCode').value;
+        const location = document.getElementById('location').value;
 
         // Client-side validation
         if (!title || !description || !eventDate || !cover) {
