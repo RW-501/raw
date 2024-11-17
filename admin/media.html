@@ -365,39 +365,43 @@
 
     // Bulk Upload Photos Function
     async function bulkUploadPhotos(eventId) {
-    const watermarkText = sanitizeInput(document.getElementById('watermarkText').value);
-    const watermarkPosition = document.getElementById('watermarkPosition').value;
-    const watermarkOpacity = document.getElementById('watermarkOpacity').value;
-    const logoOverlay = document.getElementById('logoOverlay').files[0];
-    const logoScale = document.getElementById('logoScale').value;
     const photos = document.getElementById('photoUpload').files;
     const photoPrice = document.getElementById('photoPrice').value;
     const collectionPrice = document.getElementById('collectionPrice').value;
     const isPublic = document.getElementById('photoPublic').checked;
 
-    // Check if photos are uploaded
     if (photos.length === 0) {
         showToast("Please select at least one photo.", "error");
         return;
     }
 
-    // Validate files and provide suggestions
-    const MAX_FILE_SIZE_MB = 5; // Max file size (in MB)
-    const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"]; // Allowed file types
+    // Validation constants
+    const MAX_FILE_SIZE_MB = 5;
+    const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"];
     const invalidFiles = [];
     const uploadedFiles = [];
 
+    const watermarkConfig = {
+        text: document.getElementById('watermarkText').value,
+        position: document.getElementById('watermarkPosition').value,
+        opacity: parseFloat(document.getElementById('watermarkOpacity').value),
+        logoFile: document.getElementById('logoOverlay').files[0],
+        scale: parseFloat(document.getElementById('logoScale').value),
+        fontSize: parseInt(document.getElementById('fontSize').value, 10),
+        fontFamily: document.getElementById('fontFamily').value,
+        gap: parseInt(document.getElementById('textGap').value, 10),
+        fontColor: document.getElementById('fontColor').value,
+    };
+
     for (const photo of photos) {
-        const fileSizeMB = photo.size / (1024 * 1024); // Convert size to MB
+        const fileSizeMB = photo.size / (1024 * 1024);
         const fileType = photo.type;
 
-        // Validate file type
         if (!VALID_FILE_TYPES.includes(fileType)) {
             invalidFiles.push(`${photo.name} (Invalid type: ${fileType})`);
             continue;
         }
 
-        // Validate file size
         if (fileSizeMB > MAX_FILE_SIZE_MB) {
             invalidFiles.push(`${photo.name} (Too large: ${fileSizeMB.toFixed(2)} MB)`);
             continue;
@@ -405,26 +409,38 @@
 
         const photoRef = ref(storage, `eventPhotos/${eventId}/${cleanAndShortenFileName(photo.name)}`);
         try {
-            // Upload photo to Firebase storage
+            // Upload original photo
             await uploadBytes(photoRef, photo);
             const photoUrl = await getDownloadURL(photoRef);
 
-            // Process watermarking
-            let watermarkedImageUrl = await applyWatermark(photoUrl, watermarkText, watermarkPosition, watermarkOpacity, logoOverlay, logoScale);
+            // Apply watermark
+            const photoDataUrl = await fileToDataURL(photo); // Convert file to base64
+            const watermarkedImageUrl = await applyWatermark(
+                photoDataUrl,
+                watermarkConfig.text,
+                watermarkConfig.position,
+                watermarkConfig.opacity,
+                watermarkConfig.logoFile,
+                watermarkConfig.scale,
+                watermarkConfig.fontSize,
+                watermarkConfig.fontFamily,
+                watermarkConfig.gap,
+                watermarkConfig.fontColor
+            );
 
-            // Save photo details
+            // Save details
             await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSizeMB, fileType);
             uploadedFiles.push(photo.name);
 
         } catch (error) {
-            console.error("Error uploading photo:", error);
-            showToast(`An error occurred while uploading the photo: ${photo.name}`, "error");
+            console.error("Error processing photo:", error);
+            showToast(`Failed to upload ${photo.name}`, "error");
         }
     }
 
-    // Show upload results
+    // Notify user of results
     if (invalidFiles.length > 0) {
-        showToast(`The following files could not be uploaded:\n${invalidFiles.join("\n")}`, "warning");
+        showToast(`These files couldn't be uploaded:\n${invalidFiles.join("\n")}`, "warning");
     }
 
     if (uploadedFiles.length > 0) {
@@ -432,7 +448,17 @@
     }
 }
 
-// Updated savePhotoDetails to include fileType and fileSize
+// Helper to convert file to data URL (base64 string)
+function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(file);
+    });
+}
+
+// Updated savePhotoDetails function
 async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSize, fileType) {
     const photoDetails = {
         photoUrl,
@@ -442,21 +468,22 @@ async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic,
         collectionPrice,
         isPublic,
         timestamp: new Date(),
-        fileSize: fileSize.toFixed(2), // Save as MB with 2 decimal points
+        fileSize: fileSize.toFixed(2),
         fileType,
         status: "active",
         views: 0,
-        deactived: false,
+        deactivated: false,
     };
 
     try {
         const docRef = await addDoc(collection(db, "Media"), photoDetails);
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Photo details saved with ID:", docRef.id);
     } catch (error) {
-        console.error("Error adding document: ", error);
+        console.error("Error saving photo details:", error);
         showToast("Error saving photo details to the database.", "error");
     }
 }
+
 
 async function handleFileUpload(event) { 
     const file = event.target.files[0];
