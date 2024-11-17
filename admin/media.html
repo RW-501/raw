@@ -998,7 +998,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
                 <p>Collection Price: $${item.collectionPrice}</p>
                         
                 <div class="batch-buttons btn-group controls">
-                      <button onclick=" updateAppearOn('${item.id}', 'MainGallery')">Add to Gallery</button>
+                      <button onclick=" addToMainGallery('${item.id}')">Add to Gallery</button>
 
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
@@ -1398,6 +1398,37 @@ function toggleCollapse(mediaId) {
 }
 
 
+
+// Function to add a document ID to MainGallery
+async function addToMainGallery(imageId) {
+    try {
+        // Create a reference to the 'MainGallery' collection and set the document with the given ID
+        const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
+
+        // Data to store in the document
+        const mainGalleryData = {
+            imageId, // Store the image ID
+            timestamp: new Date(), // Optional: Add a timestamp
+            status: "active", // Optional: Add a status
+        };
+
+        // Add the data to Firestore
+        await setDoc(imageDocRef, mainGalleryData);
+
+        console.log(`Image with ID ${imageId} added to MainGallery.`);
+        showToast('Image successfully added to MainGallery!', 'success');
+    } catch (error) {
+        console.error("Error adding image to MainGallery:", error);
+        showToast('Failed to add image to MainGallery.', 'error');
+    }
+}
+
+
+
+
+
+
+
 /**
  * Update the appearOn field for a specific media item in Firestore.
  * @param {string} imageId - The ID of the media document.
@@ -1555,7 +1586,7 @@ window.addMediaToEvent = addMediaToEvent;
 window.bulkUploadPhotosFunc = bulkUploadPhotosFunc;
 window.fileToDataURL = fileToDataURL;
 window.savePhotoDetails = savePhotoDetails;
- 
+ window.addToMainGallery  = addToMainGallery ;
 window.saveWatermarkInputs = saveWatermarkInputs;
 window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
