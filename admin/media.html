@@ -1410,6 +1410,7 @@ async function updatePrice(docId) {
 
 // Save Event Function
 async function saveEvent() {
+    console.log("eventCoverArea??????");
     const eventId = document.getElementById('currentEventID').innerText.trim();
     if (!eventId) {
         console.error("No current event ID found.");
