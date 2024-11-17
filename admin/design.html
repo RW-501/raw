@@ -208,7 +208,6 @@ const editorSetup = async () => {
     specialtiesEditor = await ClassicEditor.create(document.querySelector('#specialtiesEditor'));
     awardsEditor = await ClassicEditor.create(document.querySelector('#awardsEditor'));
 };
-editorSetup();
 
 // Function to update the About Page details
 async function updateAboutPage() {
@@ -337,6 +336,10 @@ window.onload = function () {
     window.updateEventDetails = updateEventDetails;
     window.uploadGalleryImages  = uploadGalleryImages ;
     window.updateAboutPage  = updateAboutPage ;
+    window.editorSetup  = editorSetup ;
+
+    editorSetup();
+
 
  };
 
