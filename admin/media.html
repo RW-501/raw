@@ -378,10 +378,68 @@ button:hover {
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-  
+    #main-content select {
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  padding: 5px 15px;
+  background-color: #181818;
+  color: #fff;
+  border: 2px solid #555;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#main-content select:focus {
+  outline: none;
+  border-color: #009cfa;
+  box-shadow: 0 0 10px rgba(0, 156, 250, 0.7);
+}
+
+#main-content select:hover {
+  border-color: #009cfa;
+}
+
+#main-content select option {
+  background-color: #181818;
+  color: #fff;
+}
+
+
+#main-content img {
+    border: 3px solid #ddd; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    width: 100%; /* Ensure images are responsive */
+    max-width: 100%; /* Prevent images from overflowing */
+    transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
+    box-sizing: border-box; /* Includes padding/border in width/height calculations */
+}
+
+/* Hover effect */
+#main-content img:hover {
+    border-color: #009cfa; /* Change border color on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 4px 8px rgba(0, 156, 250, 0.3); /* Subtle shadow effect */
+}
+
+/* Focus effect */
+#main-content img:focus {
+    outline: none;
+    border-color: #009cfa; /* Change border color when focused */
+    box-shadow: 0 0 10px rgba(0, 156, 250, 0.7); /* More prominent shadow when focused */
+}
+
+/* Add a border and effect for images inside containers */
+#main-content div img {
+    border-color: #555; /* Darker border for images inside divs */
+    border-radius: 10px; /* Slightly more rounded corners */
+}
+
     /* Buttons */
     #main-content button {
-      background-color: #009cfa;
       color: white;
       border: none;
       padding: 12px;
