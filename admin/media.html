@@ -641,7 +641,7 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
-                    <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${event})">Edit</button>
+                    <button class="btn btn-warning btn-sm" onclick="editEvent('${doc.id}', ${JSON.stringify(event)})">Edit</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
                     <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
                 </div>
@@ -860,8 +860,8 @@ async function updatePrice(docId) {
 
     // Edit Event Function
     function editEvent(eventId, event) {
-        let Event = JSON.stringify(event);
-console.log("event: ",Event);
+    //    let Event = JSON.stringify(event);
+console.log("event: ",event);
 
         document.getElementById('eventTitle').value = event.title;
         document.getElementById('eventDescription').value = event.description;
