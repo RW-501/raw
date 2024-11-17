@@ -147,7 +147,7 @@ button:hover {
         <!-- Event Upload Form -->
         <div class="card mb-4 shadow-lg">
             <div class="card-body">
-                <h5 class="card-title">Upload New Event</h5>
+                <h5 id="Add_Event_Label" class="card-title">Add New Event</h5>
                 <form id="eventForm">
                     <div class="mb-3">
                         <label for="eventTitle" class="form-label">Event Title</label>
@@ -886,7 +886,8 @@ console.log("event: ",event);
         document.getElementById('uploadEvent').disabled;
         document.getElementById('currentEventID').innerText = eventId;
 
-        showTabContent('Add_Event');
+        document.getElementById('Add_Event_Label').innerText = "Update Event";
+        showTabContent('editEvent');
 
     }
 
@@ -1265,6 +1266,20 @@ window.batchSetPublic   = batchSetPublic  ;
 
 // Function to show content for a selected tab
 function showTabContent(tabId) {
+
+
+    if(tabId == UPDATE_Event){
+        document.getElementById('Add_Event_Label').innerText = "Update Event";
+        document.getElementById('saveEvent').style.display = "block";
+        document.getElementById('uploadEvent').style.display = "none";
+        showTabContent('editEvent');
+        tabId = "Add_Event";
+    }else{       
+        document.getElementById('saveEvent').style.display = "none";
+         document.getElementById('uploadEvent').style.display = "block";
+        document.getElementById('Add_Event_Label').innerText = "Add New Event";
+
+    }
     // Hide all tab content
     const allTabs = document.querySelectorAll('.media_tabs');
     allTabs.forEach((tab) => {
