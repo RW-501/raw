@@ -524,7 +524,6 @@ document.getElementById('textGap').addEventListener('input', () => updatePreview
 document.getElementById('fontColor').addEventListener('input', () => updatePreview());
 
 
-document.getElementById('bulkUploadPhotos').addEventListener('click',bulkUploadPhotos());
 
 
 let currentPreviewImage = null;
@@ -1407,6 +1406,7 @@ window.savePhotoDetails = savePhotoDetails;
 window.saveWatermarkInputs = saveWatermarkInputs;
 window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
+document.getElementById('bulkUploadPhotos').addEventListener('click', bulkUploadPhotos());
 
         const saveEventBTN = document.getElementById('saveEvent');
     if (saveEventBTN) {
