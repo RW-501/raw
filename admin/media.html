@@ -723,12 +723,8 @@ button:hover {
             <div class="list-group" id="eventsContainer"></div>
         </div>
         <div id="eventMediaContainer">
-            <div id="eventDetails">
-                <!-- Event-level metadata will be dynamically added here -->
-            </div>
-            <div id="mediaList">
-                <!-- Media items will be dynamically listed here -->
-            </div>
+         
+            
         </div>
         
     </div>
@@ -1072,7 +1068,7 @@ async function applyWatermark(imageUrl, text, position, opacity, logo, scale) {
         }
     }
 
-
+    
     // Fetch and display events with sorting and filtering
     async function fetchEvents() {
     const filterText = document.getElementById('eventFilter').value.toLowerCase();
@@ -1171,6 +1167,7 @@ console.log("doc.id    ",doc.id);
 
 
         eventList.appendChild(eventItem);
+        console.log("eventDetails.id    ",eventDetails);
 
 }
 });
@@ -1208,8 +1205,8 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     const mediaCollectionRef = collection(db, "Media");
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
-    const mediaListContainer = document.getElementById("mediaList",eventId);
-    const eventDetailsContainer = document.getElementById("eventDetails",eventId);
+    const mediaListContainer = document.getElementById(`mediaList${eventId}`);
+    const eventDetailsContainer = document.getElementById(`eventDetails${eventId}`);
 
     //const mediaListContainer = document.getElementById("mediaList");
     //const eventDetailsContainer = document.getElementById("eventDetails");
@@ -1230,7 +1227,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
         // Use the first image as the cover photo
         if (!coverPhoto) coverPhoto = data.photoUrl;
     });
-
+    
     // View Media Button
     eventDetailsContainer.innerHTML = `
         <h3>${eventTitle}</h3>
