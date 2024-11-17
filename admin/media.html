@@ -927,6 +927,7 @@ async function handleFileUpload(event) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const imageUrl = e.target.result;
+            currentPreviewImage = imageUrl;
             updatePreview(imageUrl); // Initial preview when file is selected
         };
         reader.readAsDataURL(file);
@@ -948,7 +949,7 @@ document.getElementById('logoScale').addEventListener('input', updatePreview);
 
 
 
-
+let currentPreviewImage;
 
 async function updatePreview(imageUrl) {
     const text = document.getElementById('watermarkText').value;
@@ -960,6 +961,9 @@ async function updatePreview(imageUrl) {
     const previewCanvas = document.getElementById('watermarkPreview');
     const previewCtx = previewCanvas.getContext('2d');
 
+    if(imageUrl == null){
+        imageUrl = currentPreviewImage;
+    }
     const img = new Image();
     img.src = imageUrl;
 
