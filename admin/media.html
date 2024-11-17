@@ -1136,10 +1136,6 @@ function addMedia(eventID){
         window.toggleDetails  = toggleDetails ;
 
 window.loadMainGallery = loadMainGallery;
-        
-        fetchEvents(); 
-
-        loadMainGallery();
 
 window.viewAnalytics = viewAnalytics;
 window.addMedia = addMedia;
@@ -1153,6 +1149,10 @@ window.updatePreview = updatePreview;
 
 window.renderCheckboxes = renderCheckboxes;
 
+        
+fetchEvents(); 
+
+loadMainGallery();
 
 
         const saveEventBTN = document.getElementById('saveEvent');
