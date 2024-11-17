@@ -3,7 +3,7 @@
 
   // Toast Notification Function
   //function showToast(message, type = 'info', duration = 3000) {
-    function showToast(message, type = 'info', duration = 3000) {
+    window.showToast = function(message, type = 'info', duration = 3000) {
   
       // Create a div for the toast
       const toast = document.createElement('div');
@@ -12,8 +12,8 @@
   
       // Add styles to the toast
       toast.style.position = 'fixed';
-      toast.style.bottom = '2%';
-      toast.style.right = '2%';
+      toast.style.bottom = '20px';
+      toast.style.right = '20px';
       toast.style.padding = '15px 20px';
       toast.style.margin = '10px';
       toast.style.borderRadius = '5px';
