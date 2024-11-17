@@ -960,7 +960,7 @@ async function updatePreview(imageUrl) {
     const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
     const logoFile = document.getElementById('logoOverlay').files[0];
     const scale = parseFloat(document.getElementById('logoScale').value);
-    console.log(imageUrl);
+    console.log("image    ",imageUrl);
     const previewCanvas = document.getElementById('watermarkPreview');
     const previewCtx = previewCanvas.getContext('2d');
     if (!imageUrl) {
@@ -973,7 +973,8 @@ async function updatePreview(imageUrl) {
         console.error('Invalid image URL'); // Log an error if still undefined
         return;
     }
-    
+    console.log("image   XX ",imageUrl);
+
     const img = new Image();
     img.src = imageUrl;
     img.onload = async function() {
@@ -985,7 +986,7 @@ async function updatePreview(imageUrl) {
         previewCtx.drawImage(img, 0, 0);
 
         // Apply watermark with live updates
-        const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale);
+        const watermarkedImage = await applyWatermark(imageUrl, text, position, opacity, logoFile, scale);
         const watermarkedImg = new Image();
         watermarkedImg.src = watermarkedImage;
         watermarkedImg.onload = function() {
