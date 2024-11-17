@@ -1289,16 +1289,41 @@ function closeModal() {
     const galleryContainer = document.getElementById('galleryContainer');
     galleryContainer.innerHTML = ''; // Clear previous content
 
-    try {
+
+        try {
+        // Step 1: Fetch all documents from the MainGallery collection
         const mainGalleryRef = collection(db, "MainGallery");
-        const mainGallerySnapshot = await getDocs(mainGalleryRef,  where("status", "==", 'active'));
+        const mainGallerySnapshot = await getDocs(mainGalleryRef);
 
         if (mainGallerySnapshot.empty) {
-            galleryContainer.innerHTML = "<p>No media in gallery.</p>";
+            console.log("No documents found in MainGallery.");
+            showToast('No documents found in MainGallery.', 'info');
             return;
         }
 
+        // Step 2: Create an array of imageIds from MainGallery
+        const mainGalleryIds = [];
         mainGallerySnapshot.forEach(doc => {
+            mainGalleryIds.push(doc.id); // Save the doc ID from MainGallery
+        });
+
+        // Step 3: Fetch all documents from the Media collection
+        const mediaRef = collection(db, "Media");
+        const mediaSnapshot = await getDocs(mediaRef);
+
+        if (mediaSnapshot.empty) {
+            console.log("No documents found in Media.");
+            showToast('No documents found in Media.', 'info');
+            return;
+        }
+
+        // Step 4: Match the document IDs between MainGallery and Media
+        const matchingIds = [];
+        mediaSnapshot.forEach(doc => {
+            if (mainGalleryIds.includes(doc.id)) {
+                matchingIds.push(doc.id); // Match IDs and add to the result array
+
+                
             const mediaData = doc.data();
             const mediaId = doc.id;
             const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
@@ -1346,12 +1371,35 @@ function closeModal() {
             `;
 
             galleryContainer.appendChild(mediaDiv);
+    
+            }
         });
-    } catch (error) {
+
+        // Step 5: Log or process the matching document IDs
+        if (matchingIds.length > 0) {
+            console.log("Matching document IDs:", matchingIds);
+            showToast('Matching IDs found.', 'success');
+            return matchingIds;
+        } else {
+            console.log("No matching document IDs found.");
+            showToast('No matching document IDs found.', 'info');
+            return [];
+        }
+
+    
+} catch (error) {
         console.error('Error loading gallery:', error);
         galleryContainer.innerHTML = "<p>Error loading gallery. Please try again later.</p>";
     }
-}
+
+    }
+
+/*
+  
+
+    */
+
+
 
 /**
  * Render checkboxes for the appearOn settings and set their checked state based on the provided appearOn data.
