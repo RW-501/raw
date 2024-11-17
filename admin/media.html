@@ -661,6 +661,18 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
+function generateAccessHandshake() {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let accessHandshake = "";
+
+    for (let i = 0; i < 5; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        accessHandshake += characters[randomIndex];
+    }
+
+    return accessHandshake;
+}
+
 
 
 
@@ -693,6 +705,9 @@ function hexToRgb(hex) {
 
             // Hash the access code (for demo, using btoa)
            // const hashedAccessCode = btoa(accessCode);
+// Example usage
+const handshakeCode = generateAccessHandshake();
+console.log(handshakeCode); // Outputs something like "a1B2C"
 
             // Add event to Firestore
             await addDoc(collection(db, 'Events'), {
@@ -1486,7 +1501,7 @@ window.clearWatermarkInputs = clearWatermarkInputs;
 window.loadWatermarkInputs = loadWatermarkInputs;
 loadWatermarkInputs();
 
-
+window.generateAccessHandshake = generateAccessHandshake;
 
 const bulkUploadPhotosBTN = document.getElementById('bulkUploadPhotos');
     if (bulkUploadPhotosBTN) {
