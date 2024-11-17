@@ -512,6 +512,18 @@ button:hover {
       border-color: #009cfa;
       box-shadow: 0 0 5px rgba(0, 156, 250, 0.7);
     }
+
+.event_details_cover {
+display: grid;
+gap: 1rem;
+
+}
+.event_photos_list {
+    display: grid;
+
+}
+
+
   </style>
   
 
@@ -1158,10 +1170,10 @@ console.log("doc.id    ",doc.id);
         <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
     </div>
 
-    <div id='${eventDetails}' class="d-flex justify-content-between ">
+    <div id='${eventDetails}' class="event_details_cover ">
     </div>
 
-    <div id='${mediaListId}' class="d-flex justify-content-between ">
+    <div id='${mediaListId}' class="event_photos_list">
     </div>
 `;
 
