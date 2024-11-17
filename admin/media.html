@@ -152,7 +152,24 @@
 
                 <input hidden type="file" id="photoUpload" class="form-control" multiple accept="image/*">
             </div>
-<div id="watermarkTabs" class="controls">
+<div id="watermarkTabs" class="grid">
+
+           
+            
+            <div class="dropdown">    <label for="tabSelector" class="form-label">Select Tab</label>
+                <select class="form-select" id="tabSelector" onchange="showTab(this.value)">
+                    <option value="watermarkTextDiv">Watermark Text</option>
+                    <option value="fontColorDiv">Choose Text Color</option>
+                    <option value="fontFamilyDiv">Font Family</option>
+                    <option value="watermarkPositionDiv">Watermark Position</option>
+                    <option value="textGapDiv">Text Gap</option>
+                    <option value="fontSizeDiv">Font Size</option>
+                    <option value="watermarkOpacityDiv">Watermark Opacity</option>
+                    <option value="logoOverlayDiv">Logo Overlay</option>
+                    <option value="logoScaleDiv">Logo Scale</option>
+                </select>
+            </div>
+
             <div class="watermarkTabs" id="watermarkTextDiv">
                 <label for="watermarkText" class="form-label">Watermark Text</label>
                 <input type="text" class="form-control" id="watermarkText" placeholder="Enter watermark text">
@@ -161,22 +178,6 @@
             <div class="watermarkTabs" id="fontColorDiv">
                 <label for="fontColor">Choose Text Color:</label>
                 <input type="color" id="fontColor" name="fontColor" value="#000000">
-            </div>
-           
-            
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Select Tab
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#" onclick="showTab('fontFamilyDiv')">Font Family</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('watermarkPositionDiv')">Watermark Position</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('textGapDiv')">Text Gap</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('fontSizeDiv')">Font Size</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('watermarkOpacityDiv')">Watermark Opacity</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('logoOverlayDiv')">Logo Overlay</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="showTab('logoScaleDiv')">Logo Scale</a></li>
-                </ul>
             </div>
             <div class="watermarkTabs" id="fontFamilyDiv">
                 <label for="fontFamily">Font Family:</label>
@@ -215,12 +216,12 @@
             
             <div class="watermarkTabs" id="textGapDiv">
                 <label for="textGap">Text Gap:</label>
-                <input type="range" id="textGap" min="10" max="200" step="10" value="50">
+                <input type="range" id="textGap" min="10" max="200" step="5" value="50">
             </div>
             
             <div class="watermarkTabs" id="fontSizeDiv">
                 <label for="fontSize">Font Size:</label>
-                <input type="number" id="fontSize" value="200" min="10" max="500">
+                <input type="number" id="fontSize" step="10" value="200" min="10" max="500">
             </div>
             
             <div class="watermarkTabs" id="watermarkOpacityDiv">
@@ -1439,22 +1440,26 @@ document.getElementById('logoOverlayPreview').addEventListener('click', function
 
 });
 function showTab(tabId) {
-    // Hide all watermark tab content
-    var allTabs = document.querySelectorAll('.watermarkTabs');
-    allTabs.forEach(function(tab) {
-        tab.style.display = 'none';
-    });
+        // Hide all watermark tab content
+        var allTabs = document.querySelectorAll('.watermarkTabs');
+        allTabs.forEach(function(tab) {
+            tab.style.display = 'none';
+        });
 
-    // Show the selected tab
-    var selectedTab = document.getElementById(tabId);
-    selectedTab.style.display = 'block';
-}
+        // Show the selected tab
+        var selectedTab = document.getElementById(tabId);
+        if (selectedTab) {
+            selectedTab.style.display = 'block';
+        }
+    }
 
-// Initially show the first tab or set the default tab to be visible
-window.onload = function() {
-    showTab('fontFamilyDiv');  // You can change this to any default tab
-};
+    // Initially show the first tab or set the default tab to be visible
+    window.onload = function() {
+        document.getElementById('tabSelector').value = 'fontFamilyDiv'; // Set default option
+        showTab('watermarkTextDiv'); // Show default tab
+    };
 
+window.showTab = showTab;
 
 });
 
