@@ -601,6 +601,10 @@ button:hover {
                     </div>
                     <div class="mb-3">
                         <label for="eventCover" class="form-label">Cover Photo</label>
+                                        <!-- Cover Photo Area -->
+                <div class="mt-4">
+                    <img id="eventCoverPreview" src="" alt="Image Preview" />
+                </div>
                         <input type="file" class="form-control" id="eventCover" accept="image/*" required>
                     </div>
                     <div class="mb-3">
@@ -623,6 +627,11 @@ button:hover {
         <div class="card mb-4 shadow-lg">
             <div class="card-body">
                 <h5 class="card-title">Upload Photos for Events</h5>
+                                <!-- Preview Area -->
+                                <div class="mt-4">
+                                    <h5>Preview:</h5>
+                                    <canvas id="watermarkPreview" style="max-width: 100%; height: auto;"></canvas>
+                                </div>
                 <input type="file" id="photoUpload" class="form-control" multiple accept="image/*">
                 <div class="mt-3">
                     <label for="watermarkText" class="form-label">Watermark Text</label>
@@ -661,11 +670,7 @@ button:hover {
                 </div>
                 <button id="bulkUploadPhotos" type="button" class="btn btn-primary mt-3">Upload Photos with Watermark</button>
     
-                <!-- Preview Area -->
-                <div class="mt-4">
-                    <h5>Preview:</h5>
-                    <canvas id="watermarkPreview" style="max-width: 100%; height: auto;"></canvas>
-                </div>
+
             </div>
         </div>
     </div>
@@ -1776,6 +1781,37 @@ console.log("savedTab");
 
 // Run on page load
 loadLastTab();
+
+// Add an event listener to the file input to handle the file selection
+document.getElementById('eventCover').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Get the selected file
+
+    if (file) {
+        const reader = new FileReader();
+
+        // When the file is loaded, update the image preview
+        reader.onload = function(e) {
+            const coverPreview = document.getElementById('eventCoverPreview');
+            coverPreview.src = e.target.result; // Set the preview image source to the data URL of the file
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+// Add an event listener to the image preview that triggers when the image is clicked
+document.getElementById('eventCoverPreview').addEventListener('click', function() {
+    alert("Image preview clicked!");
+});
+
+// Add an event listener to the file input to handle the click event (optional for input element)
+document.getElementById('eventCover').addEventListener('click', function() {
+    alert("File input clicked!");
+});
+
+
+
+
 
 });
 
