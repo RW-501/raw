@@ -890,5 +890,8 @@ a:hover {
       display: block;
   }
   
-  
-  
+  #main-content input[type="color"] {
+  height: 50px;
+  margin: 0;
+  padding: 1% 20%;
+}
