@@ -502,8 +502,9 @@ button:hover {
     #watermarkPreview {
         margin: auto;
         display: block;
-        border-color: #555; /* Darker border for images inside divs */
-    border-radius: 10px; /* Slightly more rounded corners */
+        border: solid #8298b0;
+        border-radius: 10px;
+            border-radius: 10px; /* Slightly more rounded corners */
 }
     #watermarkPreview:hover {
       border-color: #009cfa;
@@ -1836,12 +1837,12 @@ document.getElementById('eventCoverPreview').addEventListener('click', function(
 });
 
 // Add an event listener to the image preview that triggers when the image is clicked
-document.getElementById('photoUploadBTN').addEventListener('click', function(event) {
-    handleFileUpload(event);
+document.getElementById('photoUploadBTN').addEventListener('click', function() {
+    handleFileUpload();
 
 });
-document.getElementById('watermarkPreview').addEventListener('click', function(event) {
-    handleFileUpload(event);
+document.getElementById('watermarkPreview').addEventListener('click', function() {
+    handleFileUpload();
 
 });
 
