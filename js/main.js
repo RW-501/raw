@@ -424,6 +424,19 @@ document.addEventListener("DOMContentLoaded", () => {
                       // Unobserve the loaded image
                       observer.unobserve(img);
                   }
+                  if (img.complete && img.naturalWidth > 0) {
+                    console.log('Image already loaded:', img.src);
+                    img.classList.add('imgLoaded');
+                } else {
+                    img.onload = () => {
+                        console.log('Image loaded via onload:', img.src);
+                        img.classList.add('imgLoaded');
+                    };
+                }
+
+
+                
+                
               }
           });
       },
@@ -463,7 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  
+
   // Adjust container size dynamically
   const setContainerSize = () => {
       const imageContainers = mainGrid.querySelectorAll('.image-container');
