@@ -379,8 +379,8 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 document.addEventListener("DOMContentLoaded", () => {
   // Select the main container and grid for lazy loading and layout adjustment
-  const mainDiv = document.querySelector('main'); // Adjust selector if necessary
-  const mainGrid = document.querySelector('.pinterest-grid');
+  const mainDiv = document.querySelector('.mainContainer'); // Adjust selector if necessary
+  const mainGrid = document.querySelector('#gallery-images');
   if (!mainDiv || !mainGrid) return; // Exit if required elements don't exist
 
   // Select all images within the main container
