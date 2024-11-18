@@ -734,7 +734,8 @@ section {
 
 
 /* Wrapper Container for Pinterest-like Layout */
-.mainContainer {
+
+#gallery-images {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
@@ -744,7 +745,7 @@ section {
 }
 
 /* Gallery Container */
-#gallery-images {
+.mainContainer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gallery-gap);
@@ -752,7 +753,14 @@ section {
   
   gap: 1.5rem;
   flex-flow: wrap;
-  justify-content: space-evenly;
+  justify-content: space-evenly; 
+  
+  
+  width: 100%;
+  display: contents;
+
+
+
 }
 
 
