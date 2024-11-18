@@ -477,7 +477,7 @@ function getViewedByField() {
         // Find the current film overlay and animate it
         const filmOverlays = document.querySelectorAll('.film-overlay');
         filmOverlays.forEach((overlay) => {
-            overlay.style.transform = `translateX(-${currentImageIndex * 50}%)`;
+            overlay.style.transform = `translateX(-${currentImageIndex * 150}%)`;
         });
     }, 5000);
 }
