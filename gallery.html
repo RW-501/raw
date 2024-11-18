@@ -255,10 +255,13 @@
 
         // Step 2: Fetch documents from Media where imageId matches doc IDs
         const mediaRef = collection(db, 'Media'); 
-const mediaQuery = query(mediaRef, where(documentId(), 'in', imageIds)); // Use documentId()
+const mediaQuery = query(mediaRef, where("imageId", "in", imageIds)); // Assuming "imageId" is the field in Media that matches the imageId
 
 const mediaSnapshot = await getDocs(mediaQuery);
-const mediaData = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+const mediaData = mediaSnapshot.docs.map(doc => ({
+    id: doc.id, // Get the document ID
+    ...doc.data() // Get the data from the document
+}));
 
 console.log("Matching media data:", mediaData);
 
