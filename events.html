@@ -174,7 +174,7 @@
     <div id="text-area" ></div></section>
 
     <div class="container mt-5">
-        <h1 class="text-center">Upcoming Events</h1>
+        <h1 class="text-center">Events</h1>
 
         <!-- Search Bar -->
         <div class="row mb-4">
@@ -315,11 +315,13 @@
     eventsList.innerHTML = '';
     loading.style.display = 'block'; // Show loading spinner
     errorMessage.style.display = 'none'; // Hide error message
+    
+    const eventsCollection = collection(db, 'Events');
+const activeEventsQuery = query(eventsCollection, where('status', '==', 'active')); // Filter by status = 'active'
 
     try {
 
-        const eventsCollection = collection(db, 'Events');
-const querySnapshot = query(eventsCollection, where('status', '==', 'active')); // Filter by status = 'active'
+      const querySnapshot = await getDocs(activeEventsQuery);
 
         loading.style.display = 'none'; // Hide loading spinner
         eventsList.style.display = 'block'; // Show event list
