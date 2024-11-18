@@ -258,12 +258,13 @@ const mediaRef = collection(db, 'Media');
 const mediaSnapshot = await getDocs(mediaRef);
 
 // Step 3: Filter Media documents where document ID matches imageId from MainGallery
-const matchingMediaData = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
+const mediaPromises = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
     id: doc.id, // Get the document ID
     ...doc.data() // Get the data from the document
 }));
+     
 
-console.log("Matching media data:", matchingMediaData);
+console.log("Matching media data:", mediaPromises);
 
         let queryRef;
 
@@ -292,11 +293,6 @@ console.log("Matching media data:", matchingMediaData);
 
        
         
-        // Fetch corresponding Media documents
-        const mediaPromises = imageIds.map(imageId => {
-            const mediaDocRef = doc(db, 'Media', imageId);
-            return getDoc(mediaDocRef);
-        });
 
         const mediaDocs = await Promise.all(mediaPromises);
 

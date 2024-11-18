@@ -337,15 +337,7 @@
     </div>
 
 
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-              <div class="modal-body">
-                  <img id="modalImage" src="" class="img-fluid" alt="Modal Image">
-              </div>
-          </div>
-      </div>
-  </div>
+
   
 
 
@@ -492,6 +484,7 @@ querySnapshot.forEach(async (doc) => {
 function goToDetails(eventId) {
     window.location.href = `eventDetails?id=${eventId}`;
 }
+window.goToDetails = goToDetails;
 
 async function fetchMediaImages(eventId) {
     const mediaRef = collection(db, 'Media');
@@ -501,12 +494,6 @@ async function fetchMediaImages(eventId) {
     return mediaSnapshot.docs.map(doc => doc.data());
 }
 
-function viewImage(imageUrl) {
-    // Function to handle viewing a larger version of the image (e.g., open in modal)
-    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-    document.getElementById('modalImage').src = imageUrl;
-    modal.show();
-}
 
 
 // Search Events based on title
@@ -523,8 +510,8 @@ function searchEvents() {
             });
         }
 
-       
-// Execute the function on DOMContentLoaded
+       window.searchEvents = searchEvents;
+// Execute  the function on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
