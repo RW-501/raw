@@ -617,7 +617,7 @@ function getRandomDefaultImage(defaultImages) {
         const querySnapshot = await getDocs(collection(db, "Media"));
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
-       // let defaultImages = await getHeaderImages(Collection);
+        let defaultImages = await getHeaderImages();
 
         
     if(!defaultImages){
