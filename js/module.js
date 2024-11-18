@@ -509,15 +509,16 @@ async function getHeaderImages(appearOn) {
         console.log("appearOn:", appearOn);
 
         // Reference the 'MainGallery' collection
-      //  const mainGalleryRef = collection(db, 'Media');
+        const mainGalleryRef = collection(db, 'Media');
 
         // Create a query for documents where 'appearOn' contains the specified value
       //  const headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
+        const headerImagesQuery = query(mainGalleryRef);
 
         // Execute the query and retrieve the snapshot of matching documents
-       // const querySnapshot = await getDocs(headerImagesQuery);
+       const querySnapshot = await getDocs(headerImagesQuery);
         // const querySnapshot = await getDocs(collection(db, "Media"));
-        const querySnapshot = collection(db, 'Media');
+      //  const querySnapshot = collection(db, 'Media');
 
         // Map over the documents to extract the 'photoUrl' field
         const images = querySnapshot.docs.map(doc => {
