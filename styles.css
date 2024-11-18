@@ -576,14 +576,14 @@ background-color: rgba(59, 59, 59, 0.577);
   }
   
   /* Fade In Animation for Text */
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
+  @keyframes fade-out {
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
     }
   }
   
@@ -810,7 +810,7 @@ overflow:hidden;
 
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
-  animation: fadeInImage 5s ease-in-out;
+  animation: fadeInImage 10s ease-in-out;
 
 
 }
@@ -866,6 +866,8 @@ overflow:hidden;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
 .popup-image {
@@ -874,7 +876,7 @@ overflow:hidden;
   object-fit: contain;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 2s ease;
 }
 
 .close-button {
@@ -912,12 +914,4 @@ overflow:hidden;
   background-color: #0056b3;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-  }
-  to {
-      opacity: 1;
-  }
-}
+
