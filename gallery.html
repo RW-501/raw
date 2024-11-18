@@ -241,29 +241,29 @@
   let  lastVisible;
     async function fetchImages(category = 'all') {
     try {
-      // Step 1: Get image IDs from MainGallery
-        const galleryRef = collection(db, 'MainGallery');
-        const gallerySnapshot = await getDocs(galleryRef);
+// Step 1: Get image IDs from MainGallery
+const galleryRef = collection(db, 'MainGallery');
+const gallerySnapshot = await getDocs(galleryRef);
 
-        const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
-        if (imageIds.length === 0) {
-            console.log("No image IDs found in MainGallery.");
-            return;
-        }
+const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
+if (imageIds.length === 0) {
+    console.log("No image IDs found in MainGallery.");
+    return;
+}
 
-        console.log("Image IDs from MainGallery:", imageIds);
+console.log("Image IDs from MainGallery:", imageIds);
 
-        // Step 2: Fetch documents from Media where imageId matches doc IDs
-        const mediaRef = collection(db, 'Media'); 
-const mediaQuery = query(mediaRef, where("imageId", "in", imageIds)); // Assuming "imageId" is the field in Media that matches the imageId
+// Step 2: Fetch all documents from Media collection
+const mediaRef = collection(db, 'Media');
+const mediaSnapshot = await getDocs(mediaRef);
 
-const mediaSnapshot = await getDocs(mediaQuery);
-const mediaData = mediaSnapshot.docs.map(doc => ({
+// Step 3: Filter Media documents where document ID matches imageId from MainGallery
+const matchingMediaData = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
     id: doc.id, // Get the document ID
     ...doc.data() // Get the data from the document
 }));
 
-console.log("Matching media data:", mediaData);
+console.log("Matching media data:", matchingMediaData);
 
         let queryRef;
 
