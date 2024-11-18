@@ -322,17 +322,17 @@
 }
   // Fetch Gallery and Site Info from HomePage collection
     const mainTextArea = document.getElementById("text-area");
-/*
+
 db.collection('MainGallery').get().then(snapshot => {
   snapshot.forEach(doc => {
     const data = doc.data();
 
   });
-  mainTextArea.innerHTML = data.mainTextArea;
+  //mainTextArea.innerHTML = data.mainTextArea;
 
 
 });
-*/
+
         // Initialize gallery on page load
         window.onload = function() {
           window.fetchImages = fetchImages;
