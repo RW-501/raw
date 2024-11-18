@@ -127,12 +127,44 @@
 
 .btn-outline-primary {
     transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: blue;
+    padding: 1rem;
+    width: fit-content;
+    color: white;
+    overflow: hidden;
+    border-radius: 2rem;
 }
-
 .btn-outline-primary:hover {
     background-color: #007bff;
     color: #fff;
 }
+
+.eventTop {
+    display: flex;
+    gap: 2rem;
+    margin: auto;
+    width: 90%;
+    padding: 2%;
+}
+
+.rounded {
+    border-radius: 3%;
+    overflow: overlay;
+}
+
+
+.coverArea {
+  margin: auto;
+  display: block;
+}
+
+.eventDetails {
+
+  display: grid;
+    line-height: .5rem;
+}
+
+
 
         /* Responsive styles for smaller screens */
         @media (max-width: 768px) {
@@ -384,12 +416,12 @@ querySnapshot.forEach(async (doc) => {
     const eventCard = `
         <div class="col-md-4 mb-4">
             <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden">
-                <div class="d-flex">
+                <div class="d-flex eventTop">
                     <!-- Cover Image with onClick functionality -->
                     <div class="flex-shrink-0 coverArea">
                         <img 
                             src="${event.coverUrl}" 
-                            class="card-img-top img-fluid" 
+                            class="card-img-top img-fluid " 
                             alt="${event.title}" 
                             onclick="goToDetails('${doc.id}')"
                             style="cursor: pointer;">
@@ -403,9 +435,9 @@ querySnapshot.forEach(async (doc) => {
                                 <img 
                                     src="${image.watermarkedImageUrl}" 
                                     alt="Media Image" 
-                                    class="media-thumbnail rounded" 
+                                    class="media-thumbnail rounded lazy-image" 
                                     style="width: 70px; height: 70px; object-fit: cover; cursor: pointer;" 
-                                    onclick="viewImage('${image.watermarkedImageUrl}')">
+                                    >
                             `).join('')}
                         </div>
                     </div>
@@ -416,7 +448,7 @@ querySnapshot.forEach(async (doc) => {
                 </div>
 
                 <!-- Event Details -->
-                <div class="card-body">
+                <div class="card-body eventDetails">
                     <h5 class="card-title text-dark fw-bold" onclick="goToDetails('${doc.id}')" style="cursor: pointer;">
                         ${event.title}
                     </h5>
