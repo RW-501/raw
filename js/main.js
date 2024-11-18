@@ -504,7 +504,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.startIntersectionObserver = startIntersectionObserver;
 
-startIntersectionObserver();
 
 });
 

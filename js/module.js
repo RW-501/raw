@@ -667,6 +667,8 @@ function getRandomDefaultImage(defaultImages) {
         // Call the styleGalleryImages function to adjust the layout
         const galleryContainer = document.getElementById('gallery-images');
         styleGalleryImages(galleryContainer);
+        
+        startIntersectionObserver();
 
     } catch (error) {
         console.error("Error fetching gallery and site info: ", error);
