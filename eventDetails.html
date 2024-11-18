@@ -162,9 +162,16 @@
         // Fetch event details from Firestore
         const fetchEventDetails = async () => {
             try {
-                const eventRef = db.collection('Events').doc(eventId);
-                const eventDoc = await eventRef.get();
+ // Reference to the specific event document
+ const eventRef = doc(db, 'Events', eventId);  // Using the modular API for Firestore v9
+        const eventDoc = await getDoc(eventRef);  // Using getDoc to fetch the document
 
+        if (eventDoc.exists()) {
+            const eventData = eventDoc.data();  // Access the data from the document
+            console.log("Event Data:", eventData);  // Do something with the event data (e.g., render it)
+        } else {
+            console.log("No event found with the given ID.");
+        }
                 if (eventDoc.exists) {
                     const eventData = eventDoc.data();
                     document.getElementById('event-title').innerText = eventData.title;
