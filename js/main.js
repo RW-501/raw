@@ -377,38 +377,43 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 }
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Select the main container and grid for lazy loading and layout adjustment
+  const mainDiv = document.querySelector('main'); // Adjust selector if necessary
+  const mainGrid = document.querySelector('.pinterest-grid');
+  if (!mainDiv || !mainGrid) return; // Exit if required elements don't exist
 
-document.addEventListener("DOMContentLoaded", () => { 
-  // Select the main container where lazy loading should apply
-  const mainDiv = document.querySelector('main'); // Adjust selector as needed
-  if (!mainDiv) return; // Exit if the main div doesn't exist
-
-  // Select images only within the main container
+  // Select all images within the main container
   const images = mainDiv.querySelectorAll('.lazy-image');
 
-  // Set up a containing div for each image
-  images.forEach(img => {
-      const container = document.createElement('div'); // Create a wrapper div
-      container.classList.add('image-container'); // Add a class for styling
+  // Create containers for images and apply lazy loading
+  images.forEach((img, index) => {
+      // Create a wrapper container
+      const container = document.createElement('div');
+      container.classList.add('image-container'); // Add class for styling
 
-      // Set size for the container (adjust as needed)
-      container.style.width = '300px'; // Example width
-      container.style.height = '200px'; // Example height
-      container.style.overflow = 'hidden'; // Prevent overflow
-      container.style.position = 'relative'; // Position context for children
-      container.style.borderRadius = '8px'; // Optional: rounded corners
+      // Set basic container styles
+      container.style.overflow = 'hidden';
+      container.style.position = 'relative';
+      container.style.borderRadius = '8px'; // Optional rounded corners
 
-      // Insert the container in the DOM and move the image inside it
+      // Insert the container and move the image inside it
       img.parentElement.insertBefore(container, img);
       container.appendChild(img);
 
-      // Optional: Set placeholder size for the image
+      // Assign index for animation timing
+      img.dataset.index = index;
+
+      // Set placeholder image styling
       img.style.width = '100%';
       img.style.height = '100%';
-      img.style.objectFit = 'cover'; // Ensure the image covers the container
+      img.style.objectFit = 'cover';
+
+      // Observe images for lazy loading
+      observer.observe(img);
   });
 
-  // Intersection Observer to handle lazy loading
+  // Intersection Observer for Lazy Loading
   const observer = new IntersectionObserver(
       (entries, observer) => {
           entries.forEach(entry => {
@@ -420,53 +425,71 @@ document.addEventListener("DOMContentLoaded", () => {
                   if (src) {
                       img.src = src;
 
-                      // Handle loading error with fallback
+                      // Handle loading errors with fallback
                       img.onerror = () => {
                           img.src = 'https://rw-501.github.io/raw/images/main.jpg';
                           img.classList.add('error');
                       };
 
-                      // Add cascading animation
-                      setTimeout(() => {
-                          img.classList.add('imgLoaded');
-                      }, 100 * img.dataset.index);
-
-                      // Unobserve the loaded image
-                      observer.unobserve(img);
+                      // Reveal the image with animation
+                      img.onload = () => {
+                          img.style.opacity = '1';
+                          img.style.filter = 'none';
+                          img.style.transform = 'scale(1) rotate(0deg)';
+                      };
 
                       // Preload nearby images for smoother scrolling
                       preloadImages(images, parseInt(img.dataset.index));
+
+                      // Unobserve the loaded image
+                      observer.unobserve(img);
                   }
               }
           });
       },
       {
-          root: null, // Observing within the full viewport
-          threshold: 0.4 // Load when 40% of the image is visible
+          root: null, // Observe within the viewport
+          threshold: 0.4 // Trigger loading when 40% visible
       }
   );
 
-  // Assign index for cascading animation and observe each image
-  images.forEach((img, index) => {
-      img.dataset.index = index; // For animation timing
-      observer.observe(img);
-  });
-
   // Preload function for adjacent images
   const preloadImages = (images, currentIndex) => {
-      const bufferCount = 2; // Number of images to preload ahead
+      const bufferCount = 2; // Number of images to preload
       for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
           const preloadImg = new Image();
           preloadImg.src = images[i].getAttribute('data-src');
       }
   };
+
+  // Function to dynamically set container size based on image aspect ratio
+  const setContainerSize = () => {
+      const imageContainers = mainGrid.querySelectorAll('.image-container');
+      imageContainers.forEach(container => {
+          const img = container.querySelector('.lazy-image');
+          img.onload = () => {
+              container.style.gridRowEnd = `span ${Math.ceil(img.naturalHeight / 10)}`;
+          };
+
+          // Trigger loading the image if not already done
+          const src = img.getAttribute('data-src');
+          if (src && !img.src) {
+              img.src = src;
+              img.onload = () => {
+                  img.style.opacity = '1'; // Reveal the image
+                  img.style.filter = 'none'; // Remove blur
+                  img.style.transform = 'scale(1) rotate(0deg)';
+              };
+          }
+      });
+  };
+
+  // Listen for window resize to adjust grid layout
+  window.addEventListener('resize', setContainerSize);
+
+  // Initial setup for grid layout
+  setContainerSize();
 });
-
-
-
-
-
-
 
 
 
