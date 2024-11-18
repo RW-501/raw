@@ -153,60 +153,74 @@
   
     
     <script type="module">
-        import { db, doc, getDoc, collection } from '../js/module.js';
 
-        // Get event ID from URL
+        import { collection, query, where, getDocs, doc, getDoc } from '../js/module.js';
+// Function to fetch media images for the event
+async function fetchMediaImages(eventId) {
+    const mediaRef = collection(db, 'Media');
+    const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+
+    return mediaSnapshot.docs.map(doc => doc.data());
+}
+
+// Function to fetch event details
+async function fetchEventDetails() {
+    try {
         const urlParams = new URLSearchParams(window.location.search);
-        const eventId = urlParams.get('id');
+        const eventId = urlParams.get('id'); // Get the event ID from the URL query parameters
+
+        if (!eventId) {
+            console.error("Event ID not found in the URL.");
+            return;
+        }
 
         // Fetch event details from Firestore
-        const fetchEventDetails = async () => {
-            try {
- // Reference to the specific event document
- const eventRef = doc(db, 'Events', eventId);  // Using the modular API for Firestore v9
-        const eventDoc = await getDoc(eventRef);  // Using getDoc to fetch the document
+        const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
+        const eventDoc = await getDoc(eventRef);  // Fetch the document using getDoc
 
         if (eventDoc.exists()) {
             const eventData = eventDoc.data();  // Access the data from the document
-            console.log("Event Data:", eventData);  // Do something with the event data (e.g., render it)
+            console.log("Event Data:", eventData);
+
+            // Update the event details on the page
+            document.getElementById('event-title').innerText = eventData.title;
+            document.getElementById('event-description').innerText = eventData.description;
+            document.getElementById('event-date').innerText = eventData.date;
+            document.getElementById('event-location').innerText = eventData.location;
+
+            // Fetch media images related to this event
+            const imageData = await fetchMediaImages(eventId);  // Await the images fetch
+            const galleryContainer = document.getElementById('event-gallery');
+            imageData.forEach(img => {
+                const imgElement = document.createElement('img');
+                imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
+                imgElement.alt = "Event Image";
+                imgElement.classList.add('col-4', 'mb-3');
+                galleryContainer.appendChild(imgElement);
+            });
+
+            // Button functionality based on collection price
+            const collectionPrice = eventData.price || 0;
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', () => {
+                if (collectionPrice === 0 || collectionPrice === "") {
+                    window.location.href = `./confirmation/?id=${eventDoc.id}&ccc=${eventData.coverUrl}`; // Correct URL
+                } else {
+                    window.location.href = `./cart/?id=${eventDoc.id}`; // Correct URL
+                }
+            });
         } else {
             console.log("No event found with the given ID.");
         }
-                if (eventDoc.exists) {
-                    const eventData = eventDoc.data();
-                    document.getElementById('event-title').innerText = eventData.title;
-                    document.getElementById('event-description').innerText = eventData.description;
-                    document.getElementById('event-date').innerText = eventData.date;
-                    document.getElementById('event-location').innerText = eventData.location;
+    } catch (error) {
+        console.error("Error fetching event details: ", error);
+    }
+}
 
-                    // Load event gallery images
-                    const galleryContainer = document.getElementById('event-gallery');
-                    eventData.images.forEach(img => {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = img;
-                        imgElement.alt = "Event Image";
-                        imgElement.classList.add('col-4', 'mb-3');
-                        galleryContainer.appendChild(imgElement);
-                    });
-
-                    // Button functionality based on collection price
-                    const collectionPrice = eventData.price || 0;
-                    const downloadBtn = document.getElementById('download-btn');
-                    downloadBtn.addEventListener('click', () => {
-                        if (collectionPrice === 0 || collectionPrice === "") {
-                            window.location.href = `./confirmation/?id${eventDoc.Doc().id}&ccc=${event.coverUrl}`; // Redirect to confirmation page
-                        } else {
-                            window.location.href = `./cart/?id${eventDoc.Doc().id}`; // Redirect to cart page
-                        }
-                    });
-                }
-            } catch (error) {
-                console.error("Error fetching event details: ", error);
-            }
-        };
-// Initialize gallery on page load
+// Initialize the event details on page load
 window.onload = function() {
-  fetchEventDetails(); // Call the function on page load
+    fetchEventDetails(); // Call the function to fetch and display event details
 };
 
 </script>
