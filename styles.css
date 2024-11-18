@@ -961,14 +961,14 @@ display: none;
 }
 
 /* Image After Loading */
-.lazy-image.loaded {
+.lazy-image.imgLoaded {
   opacity: 1;
   filter: blur(0);
   transform: scale(1) rotate(0);
 }
 
 /* Placeholder Gradient for Unloaded Images */
-.lazy-image:not(.loaded) {
+.lazy-image:not(.imgLoaded) {
   background: var(--placeholder-gradient);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
@@ -984,7 +984,7 @@ display: none;
 }
 
 /* Cascading Entry Animation */
-.lazy-image.loaded {
+.lazy-image.imgLoaded {
   animation: fadeIn 1s ease-in-out;
 }
 
@@ -1040,7 +1040,7 @@ display: none;
   transition: opacity 0.5s ease-in-out;
 }
 
-.lazy-image.loaded {
+.lazy-image.imgLoaded {
   opacity: 1;
 }
 

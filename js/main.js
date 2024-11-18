@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                       // Add cascading animation
                       setTimeout(() => {
-                          img.classList.add('loaded');
+                          img.classList.add('imgLoaded');
                       }, 100 * img.dataset.index);
 
                       // Unobserve the loaded image
