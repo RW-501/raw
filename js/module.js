@@ -490,6 +490,48 @@ function applyFilmStripEffect() {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function getHeaderImages(appearOn) {
+    try {
+        console.log("appearOn:", appearOn);
+
+        // Reference the 'MainGallery' collection
+        const mainGalleryRef = collection(db, 'MainGallery');
+
+        // Create a query for documents where 'appearOn' contains the specified value
+        const headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
+
+        // Execute the query and retrieve the snapshot of matching documents
+        const querySnapshot = await getDocs(headerImagesQuery);
+
+        // Map over the documents to extract the 'photoUrl' field
+        const images = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return data.photoUrl; // Ensure 'photoUrl' is a valid field in the document
+        });
+
+        return images; // Return the list of photo URLs
+    } catch (error) {
+        console.error("Error fetching header images:", error);
+        return [];
+    }
+}
+
+window.getHeaderImages = getHeaderImages;
+
 window.displayHeaderImages = async function() {
 
 //async function displayHeaderImages() {
@@ -565,7 +607,7 @@ function getRandomDefaultImage(defaultImages) {
   window.getRandomDefaultImage = getRandomDefaultImage;
 
 
-  
+
   
   // Fetch HomePage Data
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
