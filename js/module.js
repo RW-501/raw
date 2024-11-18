@@ -546,14 +546,14 @@ window.displayHeaderImages = async function() {
     });
 }
 window.displayHeaderImages = displayHeaderImages;
-displayHeaderImages();
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
   
   
   } else {
-   
+    displayHeaderImages();
+
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
   // Load the film effect on window load
