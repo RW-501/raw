@@ -502,7 +502,7 @@ async function displayHeaderImages() {
         imageContainer.appendChild(img);
     });
 }
-
+window.displayHeaderImages = displayHeaderImages;
 //displayHeaderImages();
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
