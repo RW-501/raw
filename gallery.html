@@ -244,7 +244,7 @@
 
         // Function to fetch and display images based on category
         async function fetchImages(category = 'all') {
-            let galleryRef = db.collection('MainGallery ');
+            let galleryRef = db.collection('MainGallery');
             if (category !== 'all') {
                 galleryRef = galleryRef.where('category', '==', category);
             }
@@ -326,8 +326,8 @@
         
     // Fetch Gallery and Site Info from HomePage collection
     const mainTextArea = document.getElementById("text-area");
-
-db.collection('GalleryPage').get().then(snapshot => {
+/*
+db.collection('MainGallery').get().then(snapshot => {
   snapshot.forEach(doc => {
     const data = doc.data();
 
@@ -336,7 +336,7 @@ db.collection('GalleryPage').get().then(snapshot => {
 
 
 });
-
+*/
         // Initialize gallery on page load
         window.onload = function() {
           window.fetchImages = fetchImages;
