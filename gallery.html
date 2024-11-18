@@ -241,20 +241,39 @@
   let  lastVisible;
     async function fetchImages(category = 'all') {
     try {
+      // Step 1: Get image IDs from MainGallery
         const galleryRef = collection(db, 'MainGallery');
+        const gallerySnapshot = await getDocs(galleryRef);
+
+        const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
+        if (imageIds.length === 0) {
+            console.log("No image IDs found in MainGallery.");
+            return;
+        }
+
+        console.log("Image IDs from MainGallery:", imageIds);
+
+        // Step 2: Fetch documents from Media where imageId matches doc IDs
+        const mediaRef = collection(db, 'Media');
+        const mediaQuery = query(mediaRef, where('__name__', 'in', imageIds.slice(0, 10))); // Firestore supports a max of 10 IDs per `in` clause
+
+        const mediaSnapshot = await getDocs(mediaQuery);
+        const mediaData = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        console.log("Matching media data:", mediaData);
         let queryRef;
 
         // Build query based on category
         if (category !== 'all') {
             queryRef = query(
-                galleryRef,
+              mediaRef,
                 where('category', '==', category),
                 orderBy('timestamp'),
                 startAfter(lastVisible || 0)
             );
         } else {
             queryRef = query(
-                galleryRef,
+              mediaRef,
                 orderBy('timestamp'),
                 startAfter(lastVisible || 0)
             );
@@ -267,9 +286,8 @@
             return;
         }
 
-        // Collect all image IDs
-        const imageIds = snapshot.docs.map(doc => doc.data().imageId);
-
+       
+        
         // Fetch corresponding Media documents
         const mediaPromises = imageIds.map(imageId => {
             const mediaDocRef = doc(db, 'Media', imageId);
@@ -280,12 +298,11 @@
 
         // Filter out non-existent Media documents
         const validMediaDocs = mediaDocs.filter(mediaDoc => mediaDoc.exists());
-        const mediaData = validMediaDocs.map(mediaDoc => mediaDoc.data());
 
         // Display fetched images
         const gallery = document.getElementById('gallery');
         mediaData.forEach(data => {
-            const { photoUrl, title, description } = data;
+            const { watermarkedImageUrl, title, description, isPublic, eventId } = data;
 
             const col = document.createElement('div');
             col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
@@ -296,12 +313,12 @@
             img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
             img.setAttribute('data-bs-toggle', 'modal');
             img.setAttribute('data-bs-target', '#imageModal');
-            img.setAttribute('data-image', photoUrl);
+            img.setAttribute('data-image', watermarkedImageUrl);
             img.setAttribute('data-description', description);
 
             img.onclick = function () {
                 const modalImage = document.getElementById('modal-image');
-                modalImage.src = photoUrl;
+                modalImage.src = watermarkedImageUrl;
             };
 
             const caption = document.createElement('div');
