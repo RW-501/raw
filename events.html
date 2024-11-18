@@ -90,7 +90,10 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
         /* Adjust the text for better clarity */
         .card-body {
             padding: 1.5rem;
@@ -102,6 +105,34 @@
             object-fit: contain;
             margin-bottom: 10px;
         }
+
+        .card-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+}
+
+.card img {
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+}
+
+.card .badge {
+    font-size: 0.75rem;
+    padding: 0.5em 0.75em;
+    border-radius: 1em;
+}
+
+.btn-outline-primary {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
 
         /* Responsive styles for smaller screens */
         @media (max-width: 768px) {
@@ -332,20 +363,43 @@ const activeEventsQuery = query(eventsCollection, where('status', '==', 'active'
             querySnapshot.forEach((doc) => {
                 const event = doc.data();
                 const eventCard = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="${event.coverUrl}" class="card-img-top" alt="${event.title}" 
-                                data-bs-toggle="modal" data-bs-target="#imageModal" 
-                                data-bs-image="${event.coverPhotoUrl}" data-bs-title="${event.title}" 
-                                data-bs-description="${event.description}">
-                            <div class="card-body">
-                                <h5 class="card-title">${event.title}</h5>
-                                <p class="card-text">${event.eventDate}</p>
-                                <a href="eventDetails.html?id=${doc.id}" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden">
+            <div class="position-relative">
+                <img 
+                    src="${event.coverUrl}" 
+                    class="card-img-top img-fluid" 
+                    alt="${event.title}" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#imageModal" 
+                    data-bs-image="${event.coverPhotoUrl}" 
+                    data-bs-title="${event.title}" 
+                    data-bs-description="${event.description}" 
+                    data-bs-collection_price="${event.collection_price}" 
+                    data-bs-deactived="${event.deactived}" 
+                    data-bs-status="${event.status}" 
+                    data-bs-shortURL="${event.shortURL}" 
+                    data-bs-timestamp="${event.timestamp}" 
+                    data-bs-eventDate="${event.eventDate}" 
+                    data-bs-eventTags="${event.eventTags}" 
+                    data-bs-location="${event.location}">
+                <div class="badge position-absolute top-0 start-0 m-3 bg-primary text-white">
+                    ${event.status}
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-dark fw-bold">${event.title}</h5>
+                <p class="card-text text-muted mb-3">
+                    <i class="bi bi-calendar-event me-2"></i>${formatDate(event.eventDate)}
+                </p>
+                <p class="card-text small text-secondary">
+                    <i class="bi bi-geo-alt me-2"></i>${event.location}
+                </p>
+                <a href="eventDetails?id=${doc.id}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
+            </div>
+        </div>
+    </div>
+`;
                 //eventsList.appendChild(eventCard);
 
                 eventsList.innerHTML += eventCard;
