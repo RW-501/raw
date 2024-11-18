@@ -652,10 +652,10 @@ function getRandomDefaultImage(defaultImages) {
             const imageUrl = data.imageUrl || getRandomDefaultImage();
             const thumbnailUrl = data.watermarkedImageUrl || getRandomDefaultImage();
 
-            // Create and append image element with dynamic image URL
+            // Create and append image element with dynamic image URL   loading="lazy"
             const imageElement = `
                 <div class="image-container">
-                        <img src="${thumbnailUrl}" class="  lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
+                        <img src="${thumbnailUrl}" class="lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}">
                 </div>`;
             
             // Add the image element to the gallery container
