@@ -254,7 +254,13 @@ window.hideLoadingSpinner = function() {
 
   // Call the function when the page loads
   window.addEventListener('load', showLoadingSpinner);
-  
+
+
+  // Scroll to the top of the page when the window is loaded
+window.onload = function() {
+  window.scrollTo(0, 0);
+};
+
 
 function setUpdateFooterContent(){
 // Function to update the active class on the navigation links
@@ -265,6 +271,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
       
       // Pass the page name to the updateFooterContent function based on the path
       const pageName = getPageNameFromPath(window.location.pathname);
+      console.log("pageName   ,pageName");
+
       updateFooterContent(pageName);
     }
   });
