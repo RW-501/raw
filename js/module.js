@@ -521,7 +521,7 @@ async function getHeaderImages(appearOn) {
         // Map over the documents to extract the 'photoUrl' field
         const images = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            return data.watermarkedImageUrl; // Ensure 'photoUrl' is a valid field in the document
+            return data.photoUrl; // Ensure 'photoUrl' is a valid field in the document
         });
 
         return images; // Return the list of photo URLs
