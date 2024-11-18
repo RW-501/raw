@@ -487,27 +487,23 @@ function applyFilmStripEffect() {
 }
 
 
-async function getHeaderImages(appearOn) {
-    try {
-        console.log("appearOn   ",appearOn);
+async function displayHeaderImages() {
+    const page = "HomePage"; // Example of the appearOn value
+    const images = await getHeaderImages(page);
+    console.log("Header Images:", images);
 
-        // Reference the 'MainGallery' collection and create a query for appearOnHeader = true
-        const mainGalleryRef = collection(db, 'MainGallery');
-        const headerImagesQuery = query(mainGalleryRef, where("appearOn", 'array-contains', appearOn));
-
-        // Execute the query and retrieve documents
-        const querySnapshot = await getDocs(headerImagesQuery);
-
-        // Extract photo URLs from documents
-        const images = querySnapshot.docs.map(doc => doc.data().photoUrl);
-
-        return images;
-    } catch (error) {
-        console.error('Error fetching header images:', error);
-        return [];
-    }
+    // Logic to display these images on the page
+    const imageContainer = document.getElementById("header-images");
+    images.forEach(url => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Header Image"; // SEO-friendly alt text
+        img.classList.add("header-image");
+        imageContainer.appendChild(img);
+    });
 }
 
+//displayHeaderImages();
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
