@@ -303,6 +303,17 @@
             <button class="btn btn-primary" onclick="fetchEvents()">Retry</button>
         </div>
     </div>
+
+    
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-body">
+                  <img id="modalImage" src="" class="img-fluid" alt="Modal Image">
+              </div>
+          </div>
+      </div>
+  </div>
   
 
 
@@ -328,11 +339,18 @@
 
 
         // Format date to a specific format (including time)
-        function formatDate(date) {
-            return new Intl.DateTimeFormat('en-US', {
-                weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
-            }).format(date);
-        }
+        function formatDate(dateString) { 
+    // Convert the input string to a Date object
+    const date = new Date(dateString);
+    
+    // Format the date
+    return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long', // Full month name
+        day: 'numeric'
+    }).format(date);
+}
+
 
         // Function to fetch events from Firestore
         async function fetchEvents() {
@@ -360,46 +378,62 @@ const activeEventsQuery = query(eventsCollection, where('status', '==', 'active'
         if (querySnapshot.empty) {
             eventsList.innerHTML = '<p class="text-center">No upcoming events at the moment.</p>';
         } else {
-            querySnapshot.forEach((doc) => {
-                const event = doc.data();
-                const eventCard = `
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden">
-            <div class="position-relative">
-                <img 
-                    src="${event.coverUrl}" 
-                    class="card-img-top img-fluid" 
-                    alt="${event.title}" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#imageModal" 
-                    data-bs-image="${event.coverPhotoUrl}" 
-                    data-bs-title="${event.title}" 
-                    data-bs-description="${event.description}" 
-                    data-bs-collection_price="${event.collection_price}" 
-                    data-bs-deactived="${event.deactived}" 
-                    data-bs-status="${event.status}" 
-                    data-bs-shortURL="${event.shortURL}" 
-                    data-bs-timestamp="${event.timestamp}" 
-                    data-bs-eventDate="${event.eventDate}" 
-                    data-bs-eventTags="${event.eventTags}" 
-                    data-bs-location="${event.location}">
-                <div class="badge position-absolute top-0 start-0 m-3 bg-primary text-white">
-                    ${event.status}
+          querySnapshot.forEach(async (doc) => {
+    const event = doc.data();
+    const mediaImages = await fetchMediaImages(doc.id); // Fetch images from Media collection
+
+    const eventCard = `
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden">
+                <div class="d-flex">
+                    <!-- Cover Image with onClick functionality -->
+                    <div class="flex-shrink-0">
+                        <img 
+                            src="${event.coverUrl}" 
+                            class="card-img-top img-fluid" 
+                            alt="${event.title}" 
+                            onclick="goToDetails('${doc.id}')"
+                            style="cursor: pointer;">
+                        <div class="badge position-absolute top-0 start-0 m-3 bg-primary text-white">
+                            ${event.status}
+                        </div>
+                    </div>
+                    
+                    <!-- Media Images Area -->
+                    <div class="flex-grow-1 p-3">
+                        <div class="media-gallery d-flex flex-wrap gap-2">
+                            ${mediaImages.map(image => `
+                                <img 
+                                    src="${image.url}" 
+                                    alt="Media Image" 
+                                    class="media-thumbnail rounded" 
+                                    style="width: 70px; height: 70px; object-fit: cover; cursor: pointer;" 
+                                    onclick="viewImage('${image.url}')">
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Details -->
+                <div class="card-body">
+                    <h5 class="card-title text-dark fw-bold" onclick="goToDetails('${doc.id}')" style="cursor: pointer;">
+                        ${event.title}
+                    </h5>
+                    <p class="card-text text-muted mb-3">
+                        <i class="bi bi-calendar-event me-2"></i>${formatDate(event.eventDate)}
+                    </p>
+                    <p class="card-text small text-secondary">
+                        <i class="bi bi-geo-alt me-2"></i>${event.location}
+                    </p>
+                    <a href="eventDetails?id=${doc.id}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
                 </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title text-dark fw-bold">${event.title}</h5>
-                <p class="card-text text-muted mb-3">
-                    <i class="bi bi-calendar-event me-2"></i>${formatDate(event.eventDate)}
-                </p>
-                <p class="card-text small text-secondary">
-                    <i class="bi bi-geo-alt me-2"></i>${event.location}
-                </p>
-                <a href="eventDetails?id=${doc.id}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
-            </div>
         </div>
-    </div>
-`;
+    `;
+
+ //   document.querySelector('#eventsContainer').insertAdjacentHTML('beforeend', eventCard);
+
+
                 //eventsList.appendChild(eventCard);
 
                 eventsList.innerHTML += eventCard;
@@ -443,7 +477,83 @@ const mainTextArea = document.getElementById("text-area");
 
 
 
-  
+querySnapshot.forEach(async (doc) => {
+    const event = doc.data();
+    const mediaImages = await fetchMediaImages(doc.id); // Fetch images from Media collection
+
+    const eventCard = `
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden">
+                <div class="d-flex">
+                    <!-- Cover Image with onClick functionality -->
+                    <div class="flex-shrink-0">
+                        <img 
+                            src="${event.coverUrl}" 
+                            class="card-img-top img-fluid" 
+                            alt="${event.title}" 
+                            onclick="goToDetails('${doc.id}')"
+                            style="cursor: pointer;">
+                        <div class="badge position-absolute top-0 start-0 m-3 bg-primary text-white">
+                            ${event.status}
+                        </div>
+                    </div>
+                    
+                    <!-- Media Images Area -->
+                    <div class="flex-grow-1 p-3">
+                        <div class="media-gallery d-flex flex-wrap gap-2">
+                            ${mediaImages.map(image => `
+                                <img 
+                                    src="${image.url}" 
+                                    alt="Media Image" 
+                                    class="media-thumbnail rounded" 
+                                    style="width: 70px; height: 70px; object-fit: cover; cursor: pointer;" 
+                                    onclick="viewImage('${image.url}')">
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Details -->
+                <div class="card-body">
+                    <h5 class="card-title text-dark fw-bold" onclick="goToDetails('${doc.id}')" style="cursor: pointer;">
+                        ${event.title}
+                    </h5>
+                    <p class="card-text text-muted mb-3">
+                        <i class="bi bi-calendar-event me-2"></i>${formatDate(event.eventDate)}
+                    </p>
+                    <p class="card-text small text-secondary">
+                        <i class="bi bi-geo-alt me-2"></i>${event.location}
+                    </p>
+                    <a href="eventDetails?id=${doc.id}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.querySelector('#eventsContainer').insertAdjacentHTML('beforeend', eventCard);
+});
+
+// Helper Functions
+
+function goToDetails(eventId) {
+    window.location.href = `eventDetails?id=${eventId}`;
+}
+
+async function fetchMediaImages(eventId) {
+    const mediaRef = collection(db, 'Media');
+    const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+
+    return mediaSnapshot.docs.map(doc => doc.data());
+}
+
+function viewImage(imageUrl) {
+    // Function to handle viewing a larger version of the image (e.g., open in modal)
+    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    document.getElementById('modalImage').src = imageUrl;
+    modal.show();
+}
+
 
 
 
