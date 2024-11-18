@@ -449,13 +449,13 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
           root: null, // Observe within the viewport
-          threshold: 0.7 // Trigger loading when 40% visible
+          threshold: 0.8 // Trigger loading when 40% visible
       }
   );
 
   // Preload function for adjacent images
   const preloadImages = (images, currentIndex) => {
-      const bufferCount = 2; // Number of images to preload
+      const bufferCount = 1; // Number of images to preload
       for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
           const preloadImg = new Image();
           preloadImg.src = images[i].getAttribute('data-src');

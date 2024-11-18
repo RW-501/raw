@@ -794,6 +794,8 @@ overflow:hidden;
 
 background-color: transparent;
 background: none;
+animation: fadeInImage 10s ease-in-out;
+
 }
 
 
@@ -802,7 +804,7 @@ background: none;
   background-color: #6a1b9a;
   background-size: 200% 100%;
 
-  animation: fadeInImage 10s ease-in-out;
+  animation: shimmer 1.5s infinite;
 
 }
 
