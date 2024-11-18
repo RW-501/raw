@@ -772,7 +772,8 @@ section {
   cursor: pointer;
 overflow:hidden; 
 margin: auto;
-
+background-color: transparent;
+background: none;
 }
 
 /* Hover Effect */
@@ -790,6 +791,9 @@ z-index: 500;
   object-fit: cover;
   border-radius: 1rem;
 overflow:hidden; 
+
+background-color: transparent;
+background: none;
 }
 
 
