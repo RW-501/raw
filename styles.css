@@ -809,50 +809,8 @@ section {
   }
 }
 
-/* Modal Styling */
-.modal-content {
-  background: rgba(0, 0, 0, 0.8);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.9);
-  animation: modalFadeIn 0.3s forwards;
-}
 
-@keyframes modalFadeIn {
-  to {
-      opacity: 1;
-      transform: scale(1);
-  }
-}
 
-#modal-image {
-  max-height: 90vh;
-  margin: auto;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: transform 0.4s ease-in-out;
-}
-
-#modal-image:hover {
-  transform: scale(1.05);
-}
-
-/* Accessible Focus Styling */
-.image-container:focus {
-  outline: 2px solid #007BFF;
-  outline-offset: 4px;
-}
-.lazy-image {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.lazy-image.imgLoaded {
-  opacity: 1;
-}
 
 .lazy-image.error {
   filter: grayscale(100%);
