@@ -788,32 +788,19 @@ section {
 
 
 
-/* Image After Loading */
-.lazy-image.imgLoaded {
-  opacity: 1;
-  filter: blur(0);
-  transform: scale(1) rotate(0);
-}
 
 /* Placeholder Gradient for Unloaded Images */
 .lazy-image:not(.imgLoaded) {
-  background: var(--placeholder-gradient);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  background-color: #6a1b9a;
 }
 
-@keyframes shimmer {
-  0% {
-      background-position: 200% 0;
-  }
-  100% {
-      background-position: -200% 0;
-  }
-}
 
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
   animation: fadeIn 1s ease-in-out;
+  animation: shimmer 1.5s infinite;
+  background-size: 200% 100%;
+
 }
 
 @keyframes fadeIn {
@@ -824,12 +811,20 @@ section {
   to {
       transform: translateY(0);
       opacity: 1;
-      filter: none;
-      transform: none;
+      filter: blur(0);
+      transform: scale(1) rotate(0);
   }
 }
 
 
+@keyframes shimmer {
+  0% {
+      background-position: 200% 0;
+  }
+  100% {
+      background-position: -200% 0;
+  }
+}
 
 
 .lazy-image.error {
