@@ -655,11 +655,7 @@ function getRandomDefaultImage(defaultImages) {
             // Create and append image element with dynamic image URL
             const imageElement = `
                 <div class="col gallery-item">
-                    <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                        data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
-                        data-bs-description="${sanitizeInput(data.description || 'No description available')}">
-                        <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
-                    </a>
+                        <img src="${thumbnailUrl}" class=" gallery-thumbnail lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
                 </div>`;
             
             // Add the image element to the gallery container
