@@ -734,7 +734,7 @@ section {
 
 
 /* Wrapper Container for Pinterest-like Layout */
-.pinterest-grid {
+.container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust size */
   gap: 20px; /* Space between items */
