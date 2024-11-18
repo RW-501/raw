@@ -489,7 +489,7 @@ console.log("src   ",src);
   window.addEventListener('resize', setContainerSize);
 
   // Initial setup for grid layout
-  setContainerSize();
+ // setContainerSize();
 });
 
 
