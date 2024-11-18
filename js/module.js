@@ -563,6 +563,9 @@ function getRandomDefaultImage(defaultImages) {
     return image;
   }
   window.getRandomDefaultImage = getRandomDefaultImage;
+
+
+  
   
   // Fetch HomePage Data
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
@@ -631,3 +634,4 @@ function getRandomDefaultImage(defaultImages) {
     }
 };
   
+window.fetchGalleryAndSiteInfo = fetchGalleryAndSiteInfo;
