@@ -491,7 +491,7 @@ async function getHeaderImages(appearOn) {
     try {
         // Reference the 'MainGallery' collection and create a query for appearOnHeader = true
         const mainGalleryRef = collection(db, 'MainGallery');
-        const headerImagesQuery = query(mainGalleryRef, where(appearOn, 'array-contains', true));
+        const headerImagesQuery = query(mainGalleryRef, where("appearOn", 'array-contains', appearOn));
 
         // Execute the query and retrieve documents
         const querySnapshot = await getDocs(headerImagesQuery);
