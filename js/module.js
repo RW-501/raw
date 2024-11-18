@@ -410,7 +410,7 @@ function getViewedByField() {
     const header = document.getElementById('Main_Header');
     header.style.position = "relative";
     header.style.overflow = "hidden";
-    let filmImages = await getHeaderImages("appearOnHeader");
+    let filmImages = await getHeaderImages();
 
     if(!filmImages){
     filmImages = [
@@ -509,18 +509,19 @@ async function getHeaderImages(appearOn) {
         console.log("appearOn:", appearOn);
 
         // Reference the 'MainGallery' collection
-        const mainGalleryRef = collection(db, 'MainGallery');
+      //  const mainGalleryRef = collection(db, 'Media');
 
         // Create a query for documents where 'appearOn' contains the specified value
-        const headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
+      //  const headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
 
         // Execute the query and retrieve the snapshot of matching documents
-        const querySnapshot = await getDocs(headerImagesQuery);
+       // const querySnapshot = await getDocs(headerImagesQuery);
+        const querySnapshot = await getDocs(collection(db, "Media"));
 
         // Map over the documents to extract the 'photoUrl' field
         const images = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            return data.photoUrl; // Ensure 'photoUrl' is a valid field in the document
+            return data.watermarkedImageUrl; // Ensure 'photoUrl' is a valid field in the document
         });
 
         return images; // Return the list of photo URLs
@@ -616,7 +617,7 @@ function getRandomDefaultImage(defaultImages) {
         const querySnapshot = await getDocs(collection(db, "Media"));
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
-        let defaultImages = await getHeaderImages(Collection);
+       // let defaultImages = await getHeaderImages(Collection);
 
         
     if(!defaultImages){
