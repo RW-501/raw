@@ -381,7 +381,7 @@ function getViewedByField() {
     
     // Set initial background as image with shadow/fade
     header.style.transition = "background 1s ease-in-out";  // Add smooth transition
-    header.style.backgroundImage = "url('https://rw-501.github.io/raw/images/main.jpg')";
+    //header.style.backgroundImage = "url('https://rw-501.github.io/raw/images/main.jpg')";
     header.style.backgroundSize = "cover";
     header.style.backgroundPosition = "center";
     header.style.position = "relative";
@@ -477,7 +477,7 @@ function getViewedByField() {
         // Find the current film overlay and animate it
         const filmOverlays = document.querySelectorAll('.film-overlay');
         filmOverlays.forEach((overlay) => {
-            overlay.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+            overlay.style.transform = `translateX(-${currentImageIndex * 50}%)`;
         });
     }, 5000);
 }
