@@ -376,6 +376,19 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   // Select the main grid for lazy loading
   const mainGrid = document.querySelector('#gallery-images');
@@ -435,6 +448,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   // Adjust container size dynamically
   const setContainerSize = () => {
       const imageContainers = mainGrid.querySelectorAll('.image-container');
