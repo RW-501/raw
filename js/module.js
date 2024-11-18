@@ -677,3 +677,133 @@ function getRandomDefaultImage(defaultImages) {
 };
   
 window.fetchGalleryAndSiteInfo = fetchGalleryAndSiteInfo;
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Select the main grid for lazy loading
+  
+    function startIntersectionObserver(){
+    const mainGrid = document.querySelector('#gallery-images');
+    if (!mainGrid) return; // Exit if the grid doesn't exist
+  
+    const images = mainGrid.querySelectorAll('.lazy-image');
+   console.log('Image already loaded:',images.length);
+   
+    // Observer for Lazy Loading.
+    const observer = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.getAttribute('data-src');
+  
+                    if (src) {
+                        img.src = src; // Set the source
+  
+                        // Handle image load success
+                        img.onload = () => {
+                            img.classList.add('imgLoaded'); // Add animation class
+                        };
+  
+                        // Handle image load error
+                        img.onerror = () => {
+                            img.src = 'https://rw-501.github.io/raw/images/main.jpg';
+                            img.classList.add('error'); // Add error class for fallback styling
+                        };
+  
+                        // Preload adjacent images
+                        preloadImages(images, parseInt(img.dataset.index));
+  
+                        // Unobserve the loaded image
+                        observer.unobserve(img);
+                    }
+                    if (img.complete && img.naturalWidth > 0) {
+                      console.log('Image already loaded:', img.src);
+                      img.classList.add('imgLoaded');
+                  } else {
+                      img.onload = () => {
+                          console.log('Image loaded via onload:', img.src);
+                          img.classList.add('imgLoaded');
+                      };
+                  }
+  
+  
+  
+                  
+                }
+            });
+        },
+        {
+            root: null, // Observe within viewport
+            threshold: 0.5 // Trigger when 50% visible
+        }
+    );
+  
+    // Add observer to each image
+    images.forEach((img, index) => {
+        img.dataset.index = index; // Assign index for preloading
+        observer.observe(img); // Start observing
+    });
+  
+    // Preload function for adjacent images
+    const preloadImages = (images, currentIndex) => {
+        const bufferCount = 2; // Number of images to preload
+        for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
+            const preloadImg = new Image();
+            preloadImg.src = images[i].getAttribute('data-src');
+        }
+    };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    // Adjust container size dynamically
+    const setContainerSize = () => {
+        const imageContainers = mainGrid.querySelectorAll('.image-container');
+  
+        imageContainers.forEach(container => {
+            const img = container.querySelector('.lazy-image');
+            if (img.complete && img.naturalHeight > 0) {
+                const aspectRatio = img.naturalHeight / img.naturalWidth;
+                container.style.gridRowEnd = `span ${Math.ceil(aspectRatio * 10)}`;
+            }
+        });
+    };
+  
+    // Adjust grid layout on window resize
+    window.addEventListener('resize', setContainerSize);
+  
+    // Initialize grid layout
+    setContainerSize();
+  
+  
+  }
+  
+  window.startIntersectionObserver = startIntersectionObserver;
+  
+  
+  });
+  
+  
+  
+  
+  
+  
+  
+  
+  
