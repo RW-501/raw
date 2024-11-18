@@ -230,7 +230,7 @@
     setDoc,     signInWithPopup,
     GoogleAuthProvider,startAfter ,
     FacebookAuthProvider,
-    OAuthProvider,arrayUnion ,limit ,
+    OAuthProvider,arrayUnion ,
     signOut, addDoc , increment ,
     onAuthStateChanged,orderBy ,
     createUserWithEmailAndPassword,
@@ -251,15 +251,13 @@
                 galleryRef,
                 where('category', '==', category),
                 orderBy('timestamp'),
-                startAfter(lastVisible || 0),
-                limit(LIMIT)
+                startAfter(lastVisible || 0)
             );
         } else {
             queryRef = query(
                 galleryRef,
                 orderBy('timestamp'),
-                startAfter(lastVisible || 0),
-                limit(LIMIT)
+                startAfter(lastVisible || 0)
             );
         }
 

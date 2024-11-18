@@ -28,7 +28,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
 
 // Storage import
-import { getDownloadURL,uploadBytes,limit, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
+import { getDownloadURL,uploadBytes, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
 
 // Analytics import
 import { initializeAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js';
@@ -182,7 +182,7 @@ window.initializeAutoLogout = initializeAutoLogout;
 
   // Export Firestore, Storage, and Auth instances for use in other modules
 export {  db,getStorage, ref, uploadBytes, getDownloadURL,
-    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc   ,limit ,
+    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc   ,
      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
       signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
