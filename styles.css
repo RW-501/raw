@@ -736,10 +736,11 @@ section {
 /* Wrapper Container for Pinterest-like Layout */
 .mainContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust size */
-  gap: 20px; /* Space between items */
-  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  justify-content: space-evenly;
   align-items: start;
+
 }
 
 /* Gallery Container */
@@ -777,32 +778,31 @@ section {
   width: 100%;
   height: auto; /* Maintain aspect ratio */
   object-fit: cover;
-  opacity: 0;
-  filter: blur(20px);
-  transform: scale(0.9) rotate(-2deg);
-  transition: 
-      opacity 1s ease-out, 
-      transform 1s cubic-bezier(0.25, 1, 0.5, 1), 
-      filter 0.8s ease-out;
+  opacity: 1;
+
 }
 
 
 
 
-/* 
-}
-
-
-.lazy-image.imgLoaded 
-
-
-Placeholder Gradient for Unloaded Images */
+/* Placeholder Gradient for Unloaded Images */
 .lazy-image:not(.imgLoaded) {
   background-color: #6a1b9a;
-
-  animation: fadeIn 1s ease-in-out;
   animation: shimmer 1.5s infinite;
   background-size: 200% 100%;
+
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1) rotate(0);
+}
+
+
+
+/* Cascading Entry Animation */
+.lazy-image.imgLoaded {
+  animation: fadeIn 1s ease-in-out;
+
 
 }
 
@@ -810,6 +810,12 @@ Placeholder Gradient for Unloaded Images */
   from {
       opacity: 0;
       transform: translateY(20px);
+      filter: blur(20px);
+      transform: scale(0.9) rotate(-2deg);
+      transition: 
+          opacity 1s ease-out, 
+          transform 1s cubic-bezier(0.25, 1, 0.5, 1), 
+          filter 0.8s ease-out;
   }
   to {
       transform: translateY(0);
