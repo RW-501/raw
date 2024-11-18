@@ -376,26 +376,63 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Select the main div where lazy loading should apply
+  const mainDiv = document.querySelector('main'); // Update with the actual class or ID of your main div
+  if (!mainDiv) return; // Exit if the main div doesn't exist
 
+  // Select images only within the main div
+  const images = mainDiv.querySelectorAll('.lazy-image');
 
+  const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              const img = entry.target;
 
+              // Load the image
+              const src = img.getAttribute('data-src');
+              if (src) {
+                  img.src = src;
 
+                  // Graceful fallback in case image fails to load
+                  img.onerror = () => {
+                      img.src = 'https://rw-501.github.io/raw/images/main.jpg';
+                      img.classList.add('error');
+                  };
 
+                  // Add cascading animation
+                  setTimeout(() => {
+                      img.classList.add('loaded');
+                  }, 100 * img.dataset.index);
 
+                  // Unobserve once loaded
+                  observer.unobserve(img);
 
+                  // Preload next images for smoother experience
+                  preloadImages(images, parseInt(img.dataset.index));
+              }
+          }
+      });
+  }, {
+      root: null, // Full viewport
+      threshold: 0.2 // Start loading when 20% of the image is visible
+  });
 
+  // Assign index for cascading animation and observe each image
+  images.forEach((img, index) => {
+      img.dataset.index = index; // For animation timing
+      observer.observe(img);
+  });
 
-
-
-
-
-
-
-
-
-
-
-
+  // Preload adjacent images
+  const preloadImages = (images, currentIndex) => {
+      const bufferCount = 2; // Preload next 2 images
+      for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
+          const preloadImg = new Image();
+          preloadImg.src = images[i].getAttribute('data-src');
+      }
+  };
+});
 
 
 

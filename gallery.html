@@ -296,7 +296,7 @@
             const img = document.createElement('img');
             img.src = photoUrl;
             img.alt = title; // SEO-friendly alt text
-            img.classList.add('img-fluid', 'gallery-image', 'lazyload');
+            img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
             img.setAttribute('data-bs-toggle', 'modal');
             img.setAttribute('data-bs-target', '#imageModal');
             img.setAttribute('data-image', photoUrl);

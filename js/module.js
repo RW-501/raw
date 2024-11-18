@@ -659,7 +659,7 @@ function getRandomDefaultImage(defaultImages) {
                         data-bs-image="${imageUrl}" 
                         data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
                         data-bs-description="${sanitizeInput(data.description || 'No description available')}">
-                        <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
+                        <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
                     </a>
                 </div>`;
             
