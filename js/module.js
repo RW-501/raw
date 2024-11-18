@@ -501,14 +501,14 @@ function applyFilmStripEffect() {
 async function getHeaderImages(appearOn) {
     try {
         console.log("appearOn:", appearOn);
-
+       const showBool = false;
         // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'Media');
         
         let headerImagesQuery;
 
         // Build the query depending on the 'appearOn' parameter
-        if (appearOn) {
+        if (appearOn && showBool == true ) {
             if (Array.isArray(appearOn)) {
                 headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains-any", appearOn));
             } else {
