@@ -174,63 +174,64 @@
     }
 
     // Function to fetch event details
-    async function fetchEventDetails() {
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const eventId = urlParams.get('id'); // Get the event ID from the URL query parameters
+  
+async function fetchEventDetails() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id'); // Get the event ID from the URL query parameters
 
-            if (!eventId) {
-                console.error("Event ID not found in the URL.");
-                return;
-            }
-
-            // Fetch event details from Firestore
-            const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
-            const eventDoc = await getDoc(eventRef);  // Fetch the document using getDoc
-
-            if (eventDoc.exists()) {
-                const eventData = eventDoc.data();  // Access the data from the document
-                console.log("Event Data:", eventData);
-
-                // Update the event details on the page
-                document.getElementById('event-title').innerText = eventData.title;
-                document.getElementById('event-description').innerText = eventData.description;
-                document.getElementById('event-date').innerText = eventData.date;
-                document.getElementById('event-location').innerText = eventData.location;
-
-                // Fetch media images related to this event
-                const imageData = await fetchMediaImages(eventId);  // Await the images fetch
-                const galleryContainer = document.getElementById('event-gallery');
-                imageData.forEach(img => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
-                    imgElement.alt = "Event Image";
-                    imgElement.classList.add('col-4', 'mb-3');
-                    galleryContainer.appendChild(imgElement);
-                });
-
-                // Button functionality based on collection price
-                const collectionPrice = eventData.price || 0;
-                const downloadBtn = document.getElementById('download-btn');
-                downloadBtn.addEventListener('click', () => {
-                    if (collectionPrice === 0 || collectionPrice === "") {
-                        window.location.href = `./confirmation/?id=${eventDoc.id}&ccc=${eventData.coverUrl}`; // Correct URL
-                    } else {
-                        window.location.href = `./cart/?id=${eventDoc.id}`; // Correct URL
-                    }
-                });
-            } else {
-                console.log("No event found with the given ID.");
-            }
-        } catch (error) {
-            console.error("Error fetching event details: ", error);
+        if (!eventId) {
+            console.error("Event ID not found in the URL.");
+            return;
         }
-    }
 
-    // Initialize the event details on page load
-    window.onload = function() {
-        fetchEventDetails(); // Call the function to fetch and display event details
-    };
+        // Fetch event details from Firestore using the modular SDK
+        const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
+        const eventDoc = await getDoc(eventRef);  // Fetch the document using getDoc
+
+        if (eventDoc.exists()) {
+            const eventData = eventDoc.data();  // Access the data from the document
+            console.log("Event Data:", eventData);
+
+            // Update the event details on the page
+            document.getElementById('event-title').innerText = eventData.title;
+            document.getElementById('event-description').innerText = eventData.description;
+            document.getElementById('event-date').innerText = eventData.date;
+            document.getElementById('event-location').innerText = eventData.location;
+
+            // Fetch media images related to this event
+            const imageData = await fetchMediaImages(eventId);  // Await the images fetch
+            const galleryContainer = document.getElementById('event-gallery');
+            imageData.forEach(img => {
+                const imgElement = document.createElement('img');
+                imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
+                imgElement.alt = "Event Image";
+                imgElement.classList.add('col-4', 'mb-3');
+                galleryContainer.appendChild(imgElement);
+            });
+
+            // Button functionality based on collection price
+            const collectionPrice = eventData.price || 0;
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', () => {
+                if (collectionPrice === 0 || collectionPrice === "") {
+                    window.location.href = `./confirmation/?id=${eventDoc.id}&ccc=${eventData.coverUrl}`; // Correct URL
+                } else {
+                    window.location.href = `./cart/?id=${eventDoc.id}`; // Correct URL
+                }
+            });
+        } else {
+            console.log("No event found with the given ID.");
+        }
+    } catch (error) {
+        console.error("Error fetching event details: ", error);
+    }
+}
+
+// Initialize the event details on page load
+window.onload = function() {
+    fetchEventDetails(); // Call the function to fetch and display event details
+};
 </script>
 </body>
 </html>
