@@ -803,7 +803,7 @@ animation: fadeInImage 3s ease-in;
 .lazy-image:not(.imgLoaded) {
   background-color: #6a1b9a;
   background-size: 200% 100%;
-  animation: fadeInImage 3s ease-in-out;
+  animation: fadeInImage 3s ease-in;
 
 
 }
@@ -819,7 +819,7 @@ animation: fadeInImage 3s ease-in;
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
 
-  animation: fadeInImage 5s ease-in-out;
+  animation: fadeInImage 5s ease-in;
 
 }
 
