@@ -770,9 +770,8 @@ section {
   overflow: hidden;
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;
   cursor: pointer;
-  border-radius: 1rem;
 overflow:hidden; 
-
+margin: auto;
 
 }
 
@@ -792,7 +791,10 @@ z-index: 500;
 
 }
 
-
+.lazy-image img {
+  border-radius: 1rem;
+overflow:hidden; 
+}
 
 
 /* Placeholder Gradient for Unloaded Images */
@@ -808,7 +810,7 @@ z-index: 500;
 
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
-  animation: fadeInImage 2s ease-in-out;
+  animation: fadeInImage 5s ease-in-out;
 
 
 }
