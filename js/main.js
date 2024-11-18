@@ -376,38 +376,39 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Select or create the main container
-  let mainDiv = document.querySelector('main');
-  if (!mainDiv) {
-      mainDiv = document.createElement('main');
-      document.body.appendChild(mainDiv); // Append main to the body if it doesn't exist
-  }
 
-  // Programmatically create and append image containers
-  const imageSources = [
-      'https://example.com/image1.jpg',
-      'https://example.com/image2.jpg',
-      'https://example.com/image3.jpg',
-      'https://example.com/image4.jpg'
-  ];
 
-  imageSources.forEach((src, index) => {
-      const containerDiv = document.createElement('div'); // Wrapper div for styling
-      containerDiv.className = 'image-container'; // Add your preferred class
+document.addEventListener("DOMContentLoaded", () => { 
+  // Select the main container where lazy loading should apply
+  const mainDiv = document.querySelector('main'); // Adjust selector as needed
+  if (!mainDiv) return; // Exit if the main div doesn't exist
 
-      const img = document.createElement('img');
-      img.className = 'lazy-image'; // Add lazy-image class for lazy loading
-      img.setAttribute('data-src', src); // Set data-src for lazy loading
-      img.alt = `Image ${index + 1}`; // Add an alt attribute
-
-      containerDiv.appendChild(img);
-      mainDiv.appendChild(containerDiv); // Append the container to the main div
-  });
-
-  // Lazy loading logic for images within the main container
+  // Select images only within the main container
   const images = mainDiv.querySelectorAll('.lazy-image');
 
+  // Set up a containing div for each image
+  images.forEach(img => {
+      const container = document.createElement('div'); // Create a wrapper div
+      container.classList.add('image-container'); // Add a class for styling
+
+      // Set size for the container (adjust as needed)
+      container.style.width = '300px'; // Example width
+      container.style.height = '200px'; // Example height
+      container.style.overflow = 'hidden'; // Prevent overflow
+      container.style.position = 'relative'; // Position context for children
+      container.style.borderRadius = '8px'; // Optional: rounded corners
+
+      // Insert the container in the DOM and move the image inside it
+      img.parentElement.insertBefore(container, img);
+      container.appendChild(img);
+
+      // Optional: Set placeholder size for the image
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover'; // Ensure the image covers the container
+  });
+
+  // Intersection Observer to handle lazy loading
   const observer = new IntersectionObserver(
       (entries, observer) => {
           entries.forEach(entry => {
@@ -460,8 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 });
-
-
 
 
 
