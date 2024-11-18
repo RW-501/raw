@@ -804,8 +804,10 @@ section {
       transform: translateY(20px);
   }
   to {
-      opacity: 1;
       transform: translateY(0);
+      opacity: 1;
+      filter: none;
+      transform: none;
   }
 }
 
