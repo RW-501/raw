@@ -5,7 +5,7 @@ import {
     getFirestore, 
     doc, 
     getDoc, 
-    query, 
+    query, startAfter ,
     updateDoc,orderBy, 
     setDoc,           
     addDoc, deleteDoc ,
@@ -184,7 +184,7 @@ window.initializeAutoLogout = initializeAutoLogout;
 export {  db,getStorage, ref, uploadBytes, getDownloadURL,
     doc,arrayUnion, RecaptchaVerifier ,increment, getDoc , 
      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
-      signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,
+      signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
         createUserWithEmailAndPassword, signInWithEmailAndPassword,
          where, getDocs, storage, collection, auth, analytics };
