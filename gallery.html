@@ -238,6 +238,8 @@
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
     
+
+  let  lastVisible;
     async function fetchImages(category = 'all') {
     try {
         const galleryRef = collection(db, 'MainGallery');
