@@ -7,7 +7,7 @@ import {
     getDoc, 
     query, startAfter ,
     updateDoc,orderBy, 
-    setDoc,           
+    setDoc,        limit ,   
     addDoc, deleteDoc ,
     getDocs, increment,
     where, arrayUnion,
@@ -182,7 +182,7 @@ window.initializeAutoLogout = initializeAutoLogout;
 
   // Export Firestore, Storage, and Auth instances for use in other modules
 export {  db,getStorage, ref, uploadBytes, getDownloadURL,
-    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc , 
+    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc , limit ,
      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
       signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
