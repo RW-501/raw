@@ -395,8 +395,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!mainGrid) return; // Exit if the grid doesn't exist
 
   const images = mainGrid.querySelectorAll('.lazy-image');
-
-  // Observer for Lazy Loading
+ console.log('Image already loaded:',images.length);
+ 
+  // Observer for Lazy Loading.
   const observer = new IntersectionObserver(
       (entries, observer) => {
           entries.forEach(entry => {
@@ -435,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                
+
                 
               }
           });
