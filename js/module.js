@@ -656,7 +656,6 @@ function getRandomDefaultImage(defaultImages) {
             const imageElement = `
                 <div class="col gallery-item">
                     <a href="#" class="d-block gallery-link" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                        data-bs-image="${imageUrl}" 
                         data-bs-title="${sanitizeInput(data.title || 'Untitled')}" 
                         data-bs-description="${sanitizeInput(data.description || 'No description available')}">
                         <img src="${thumbnailUrl}" class="img-fluid gallery-thumbnail lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
