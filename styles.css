@@ -789,14 +789,17 @@ section {
 
 
 
-/* Placeholder Gradient for Unloaded Images */
-.lazy-image:not(.imgLoaded) {
-  background-color: #6a1b9a;
+/* 
 }
 
 
-/* Cascading Entry Animation */
-.lazy-image.imgLoaded {
+.lazy-image.imgLoaded 
+
+
+Placeholder Gradient for Unloaded Images */
+.lazy-image:not(.imgLoaded) {
+  background-color: #6a1b9a;
+
   animation: fadeIn 1s ease-in-out;
   animation: shimmer 1.5s infinite;
   background-size: 200% 100%;
