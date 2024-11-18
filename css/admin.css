@@ -416,23 +416,7 @@ a:hover {
   
   
       /* Global Styling */
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-    
-      #main-content {
-        margin: 20px auto;
-        max-width: 1200px;
-        padding: 20px;
-        background: #212121;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      }
+
   
       h2.text-center {
         color: #009cfa;
@@ -453,12 +437,13 @@ a:hover {
       }
     
       .card-body {
-      background: #252542;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
+        background: #252542;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px auto;
+        width: 90%;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
   .card {
       margin-bottom: 20px;
       background-color: #3a3a3a;
