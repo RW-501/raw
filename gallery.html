@@ -237,79 +237,73 @@
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
     
+    let lastVisible;
 
-  let  lastVisible;
-    async function fetchImages(category = 'all') {
+async function fetchImages(category = 'all') {
     try {
-// Step 1: Get image IDs from MainGallery
-const galleryRef = collection(db, 'MainGallery');
-const gallerySnapshot = await getDocs(galleryRef);
+        // Step 1: Get image IDs from MainGallery
+        const galleryRef = collection(db, 'MainGallery');
+        const gallerySnapshot = await getDocs(galleryRef);
 
-const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
-if (imageIds.length === 0) {
-    console.log("No image IDs found in MainGallery.");
-    return;
-}
+        const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
+        if (imageIds.length === 0) {
+            console.log("No image IDs found in MainGallery.");
+            return;
+        }
 
-console.log("Image IDs from MainGallery:", imageIds);
+        console.log("Image IDs from MainGallery:", imageIds);
 
-// Step 2: Fetch all documents from Media collection
-const mediaRef = collection(db, 'Media');
-const mediaSnapshot = await getDocs(mediaRef);
+        // Step 2: Fetch all documents from Media collection
+        const mediaRef = collection(db, 'Media');
+        const mediaSnapshot = await getDocs(mediaRef);
 
-// Step 3: Filter Media documents where document ID matches imageId from MainGallery
-const mediaPromises = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
-    id: doc.id, // Get the document ID
-    ...doc.data() // Get the data from the document
-}));
-     
+        // Step 3: Filter Media documents where document ID matches imageId from MainGallery
+        const mediaDocs = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
+            id: doc.id,
+            ...doc.data()  // Get the data from the document
+        }));
 
-console.log("Matching media data:", mediaPromises);
+        console.log("Matching media data:", mediaDocs);
 
         let queryRef;
 
         // Build query based on category
         if (category !== 'all') {
             queryRef = query(
-              mediaRef,
+                mediaRef,
                 where('category', '==', category),
                 orderBy('timestamp'),
                 startAfter(lastVisible || 0)
             );
         } else {
             queryRef = query(
-              mediaRef,
+                mediaRef,
                 orderBy('timestamp'),
                 startAfter(lastVisible || 0)
             );
         }
 
-        // Fetch documents from MainGallery
+        // Fetch documents based on query
         const snapshot = await getDocs(queryRef);
         if (snapshot.empty) {
             document.getElementById('loading').innerHTML = 'No more images to load.';
             return;
         }
 
-       
-        
-
-        const mediaDocs = await Promise.all(mediaPromises);
-
-        // Filter out non-existent Media documents
-        const validMediaDocs = mediaDocs.filter(mediaDoc => mediaDoc.exists());
+        // Step 4: Filter out non-existent Media documents
+        const validMediaDocs = mediaDocs.filter(mediaDoc => mediaDoc.id && mediaDoc.watermarkedImageUrl);
 
         // Display fetched images
         const gallery = document.getElementById('gallery');
-        mediaData.forEach(data => {
-            const { watermarkedImageUrl, title, description, isPublic, eventId } = data;
+        validMediaDocs.forEach(data => {
+            const { watermarkedImageUrl, title, description } = data;
 
             const col = document.createElement('div');
             col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
 
             const img = document.createElement('img');
-            img.src = photoUrl;
-            img.alt = title; // SEO-friendly alt text
+            img.src = watermarkedImageUrl;  // Corrected variable name
+            img.alt = title;  // SEO-friendly alt text
             img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
             img.setAttribute('data-bs-toggle', 'modal');
             img.setAttribute('data-bs-target', '#imageModal');
@@ -337,25 +331,11 @@ console.log("Matching media data:", mediaPromises);
     }
 }
 
-/*
-  // Fetch Gallery and Site Info from HomePage collection
-    const mainTextArea = document.getElementById("text-area");
+// Initialize gallery on page load
+window.onload = function() {
+    fetchImages(); // Call the function on page load
+};
 
-db.collection('MainGallery').get().then(snapshot => {
-  snapshot.forEach(doc => {
-    const data = doc.data();
-
-  });
-  //mainTextArea.innerHTML = data.mainTextArea;
-
-
-});
-*/
-        // Initialize gallery on page load
-        window.onload = function() {
-          window.fetchImages = fetchImages;
-            fetchImages();
-        };
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
