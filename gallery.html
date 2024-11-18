@@ -244,85 +244,69 @@
 
         // Function to fetch and display images based on category
         async function fetchImages(category = 'all') {
-            let galleryRef = db.collection('MainGallery');
-            if (category !== 'all') {
-                galleryRef = galleryRef.where('category', '==', category);
-            }
+    const galleryRef = collection(db, 'MainGallery');
+    let queryRef;
 
-            let query = galleryRef.orderBy('timestamp').limit(LIMIT);
-            if (lastVisible) {
-                query = query.startAfter(lastVisible); // Start after the last document fetched
-            }
+    if (category !== 'all') {
+        queryRef = query(
+            galleryRef,
+            where('category', '==', category),
+            orderBy('timestamp'),
+            startAfter(lastVisible),
+            limit(LIMIT)
+        );
+    } else {
+        queryRef = query(
+            galleryRef,
+            orderBy('timestamp'),
+            startAfter(lastVisible),
+            limit(LIMIT)
+        );
+    }
 
-            const snapshot = await query.get();
-            if (snapshot.empty) {
-              //  document.getElementById('loading').innerHTML = 'No more images to load.';
-                return;
-            }
+    const snapshot = await getDocs(queryRef);
 
-            const gallery = document.getElementById('gallery');
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const imageUrl = data.imageUrl;
-                const title = data.title;
-                const description = data.description;
+    if (snapshot.empty) {
+        document.getElementById('loading').innerHTML = 'No more images to load.';
+        return;
+    }
 
-                const col = document.createElement('div');
-                col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
+    const gallery = document.getElementById('gallery');
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const imageUrl = data.imageUrl;
+        const title = data.title;
+        const description = data.description;
 
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                img.alt = title; // SEO-friendly alt text
-                img.classList.add('img-fluid', 'gallery-image', 'lazyload');
-                img.setAttribute('data-bs-toggle', 'modal');
-                img.setAttribute('data-bs-target', '#imageModal');
-                img.setAttribute('data-image', imageUrl);
-                img.setAttribute('data-description', description);
+        const col = document.createElement('div');
+        col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
 
-                img.onclick = function() {
-                    const modalImage = document.getElementById('modal-image');
-                    modalImage.src = imageUrl;
-                };
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = title; // SEO-friendly alt text
+        img.classList.add('img-fluid', 'gallery-image', 'lazyload');
+        img.setAttribute('data-bs-toggle', 'modal');
+        img.setAttribute('data-bs-target', '#imageModal');
+        img.setAttribute('data-image', imageUrl);
+        img.setAttribute('data-description', description);
 
-                const caption = document.createElement('div');
-                caption.classList.add('caption');
-                caption.textContent = description;
+        img.onclick = function () {
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = imageUrl;
+        };
 
-                col.appendChild(img);
-                col.appendChild(caption);
-                gallery.appendChild(col);
-            });
+        const caption = document.createElement('div');
+        caption.classList.add('caption');
+        caption.textContent = description;
 
-            // Update the last visible document for pagination
-            lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        col.appendChild(img);
+        col.appendChild(caption);
+        gallery.appendChild(col);
+    });
 
-            // Enable infinite scrolling
-            window.addEventListener('scroll', checkScroll);
-        }
-
-        // Function to filter images by category
-        function filterCategory(category) {
-            currentCategory = category;
-            lastVisible = null; // Reset pagination
-            document.getElementById('gallery').innerHTML = ''; // Clear gallery
-            fetchImages(category);
-        }
-
-        // Check if the user has scrolled to the bottom of the page
-        function checkScroll() {
-            const scrollPosition = document.documentElement.scrollTop + window.innerHeight;
-            const bottomPosition = document.documentElement.scrollHeight;
-
-            if (scrollPosition === bottomPosition) {
-                // Load more images when the user reaches the bottom
-                document.getElementById('loading').style.display = 'block';
-                fetchImages(currentCategory).then(() => {
-                    document.getElementById('loading').style.display = 'none';
-                });
-            }
-        }
-
-
+    // Update the last visible document for pagination
+    lastVisible = snapshot.docs[snapshot.docs.length - 1];
+}
         
     // Fetch Gallery and Site Info from HomePage collection
     const mainTextArea = document.getElementById("text-area");
