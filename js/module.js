@@ -501,28 +501,41 @@ function applyFilmStripEffect() {
 async function getHeaderImages(appearOn) {
     try {
         console.log("appearOn:", appearOn);
+
         // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'Media');
-
+        
         let headerImagesQuery;
-        if(appearOn){
 
-        // Create a query to filter images by the 'appearOn' field (if necessary)
-         headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
-    }else{
+        // Build the query depending on the 'appearOn' parameter
+        if (appearOn) {
+            if (Array.isArray(appearOn)) {
+                headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains-any", appearOn));
+            } else {
+                // If 'appearOn' is not an array, you can either throw an error or handle it
+                console.error("'appearOn' should be an array.");
+                return [];
+            }
+        } else {
+            // Query for public images if 'appearOn' is not provided
+            headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", "true"));
+        }
 
-        headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", "true"));
-
-
-    }
         // Execute the query and retrieve the snapshot of matching documents
         const querySnapshot = await getDocs(headerImagesQuery);
+        console.log(`Found ${querySnapshot.size} images.`); // Log the number of images found
 
-        // Map over the documents to extract the 'watermarkedImageUrl' field
+        // Map over the documents to extract the 'watermarkedImageUrl' field, ensuring it exists
         const images = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            return data.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is a valid field
-        });
+            // Check if 'watermarkedImageUrl' exists before accessing it
+            if (data.watermarkedImageUrl) {
+                return data.watermarkedImageUrl;
+            } else {
+                console.warn("Missing 'watermarkedImageUrl' in document:", doc.id);
+                return null; // Handle missing image URLs if necessary
+            }
+        }).filter(image => image !== null); // Remove any null values from the result
 
         return images; // Return the list of image URLs
     } catch (error) {
@@ -530,7 +543,6 @@ async function getHeaderImages(appearOn) {
         return [];
     }
 }
-
 
 window.getHeaderImages = getHeaderImages;
 
