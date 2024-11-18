@@ -197,8 +197,11 @@
                 console.error("Error fetching event details: ", error);
             }
         };
+// Initialize gallery on page load
+window.onload = function() {
+  fetchEventDetails(); // Call the function on page load
+};
 
-        fetchEventDetails();
-    </script>
+</script>
 </body>
 </html>
