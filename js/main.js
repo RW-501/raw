@@ -376,69 +376,36 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Select the main container and grid for lazy loading and layout adjustment
-  const mainDiv = document.querySelector('.mainContainer'); // Adjust selector if necessary
+  // Select the main grid for lazy loading
   const mainGrid = document.querySelector('#gallery-images');
-  if (!mainDiv || !mainGrid) return; // Exit if required elements don't exist
+  if (!mainGrid) return; // Exit if the grid doesn't exist
 
-  // Select all images within the main container
   const images = mainGrid.querySelectorAll('.lazy-image');
 
-  // Create containers for images and apply lazy loading
-  images.forEach((img, index) => {
-      // Create a wrapper container
-      const container = document.createElement('div');
-      container.classList.add('image-container'); // Add class for styling
-
-      // Set basic container styles
-      container.style.overflow = 'hidden';
-      container.style.position = 'relative';
-      container.style.borderRadius = '8px'; // Optional rounded corners
-
-      // Insert the container and move the image inside it
-      img.parentElement.insertBefore(container, img);
-      container.appendChild(img);
-
-      // Assign index for animation timing
-      img.dataset.index = index;
-
-      // Set placeholder image styling
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-
-      // Observe images for lazy loading
-      observer.observe(img);
-  });
-
-  // Intersection Observer for Lazy Loading
+  // Observer for Lazy Loading
   const observer = new IntersectionObserver(
       (entries, observer) => {
           entries.forEach(entry => {
               if (entry.isIntersecting) {
                   const img = entry.target;
-
-                  // Load the image
                   const src = img.getAttribute('data-src');
-                  if (src) {
-                      img.src = src;
 
-                      // Handle loading errors with fallback
+                  if (src) {
+                      img.src = src; // Set the source
+
+                      // Handle image load success
+                      img.onload = () => {
+                          img.classList.add('imgLoaded'); // Add animation class
+                      };
+
+                      // Handle image load error
                       img.onerror = () => {
                           img.src = 'https://rw-501.github.io/raw/images/main.jpg';
-                          img.classList.add('error');
+                          img.classList.add('error'); // Add error class for fallback styling
                       };
 
-                      // Reveal the image with animation
-                      img.onload = () => {
-                        img.classList.add('imgLoaded');
-console.log("src   ",src);
-
-                      };
-
-                      // Preload nearby images for smoother scrolling
+                      // Preload adjacent images
                       preloadImages(images, parseInt(img.dataset.index));
 
                       // Unobserve the loaded image
@@ -448,50 +415,45 @@ console.log("src   ",src);
           });
       },
       {
-          root: null, // Observe within the viewport
-          threshold: 0.9 // Trigger loading when 40% visible
+          root: null, // Observe within viewport
+          threshold: 0.5 // Trigger when 50% visible
       }
   );
 
+  // Add observer to each image
+  images.forEach((img, index) => {
+      img.dataset.index = index; // Assign index for preloading
+      observer.observe(img); // Start observing
+  });
+
   // Preload function for adjacent images
   const preloadImages = (images, currentIndex) => {
-      const bufferCount = 1; // Number of images to preload
+      const bufferCount = 2; // Number of images to preload
       for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
           const preloadImg = new Image();
           preloadImg.src = images[i].getAttribute('data-src');
       }
   };
 
-  // Function to dynamically set container size based on image aspect ratio
+  // Adjust container size dynamically
   const setContainerSize = () => {
       const imageContainers = mainGrid.querySelectorAll('.image-container');
+
       imageContainers.forEach(container => {
           const img = container.querySelector('.lazy-image');
-          img.onload = () => {
-              container.style.gridRowEnd = `span ${Math.ceil(img.naturalHeight / 10)}`;
-          };
-
-          // Trigger loading the image if not already done
-          const src = img.getAttribute('data-src');
-          if (src && !img.src) {
-              img.src = src;
-              img.onload = () => {
-                  img.style.opacity = '1'; // Reveal the image
-                  img.style.filter = 'none'; // Remove blur
-                  img.style.display = 'none'; // Remove blur
-                  img.style.transform = 'scale(1) rotate(0deg)';
-              };
+          if (img.complete && img.naturalHeight > 0) {
+              const aspectRatio = img.naturalHeight / img.naturalWidth;
+              container.style.gridRowEnd = `span ${Math.ceil(aspectRatio * 10)}`;
           }
       });
   };
 
-  // Listen for window resize to adjust grid layout
+  // Adjust grid layout on window resize
   window.addEventListener('resize', setContainerSize);
 
-  // Initial setup for grid layout
- // setContainerSize();
+  // Initialize grid layout
+  setContainerSize();
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
   // Add click listener to lazy-image elements
