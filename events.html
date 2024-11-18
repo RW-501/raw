@@ -304,7 +304,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -437,46 +437,8 @@ const activeEventsQuery = query(eventsCollection, where('status', '==', 'active'
                 //eventsList.appendChild(eventCard);
 
                 eventsList.innerHTML += eventCard;
-            });
-        }
-    } catch (error) {
-        console.error("Error fetching events: ", error);
-        loading.style.display = 'none';
-        errorMessage.style.display = 'block';
-        errorMessage.textContent = 'Failed to fetch events. Please try again later.';
-    }
-}
 
-        // Search Events based on title
-        function searchEvents() {
-            const searchQuery = document.getElementById('event-search').value.toLowerCase();
-            const eventCards = document.querySelectorAll('.card');
-            eventCards.forEach(card => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                if (title.includes(searchQuery)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-       
-// Execute the function on DOMContentLoaded
-document.addEventListener("DOMContentLoaded", () => {
-    // Fetch Gallery and Site Info from HomePage collection
-    const galleryImagesContainer = document.getElementById("gallery-images");
-const mainTextArea = document.getElementById("text-area");
-
-  if (mainTextArea && galleryImagesContainer) {
-    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "EventsPage");
-  } else {
-    console.error("Required elements are missing in the DOM.");
-  }
-});
-
-
-
+                
 querySnapshot.forEach(async (doc) => {
     const event = doc.data();
     const mediaImages = await fetchMediaImages(doc.id); // Fetch images from Media collection
@@ -533,6 +495,18 @@ querySnapshot.forEach(async (doc) => {
     document.querySelector('#eventsContainer').insertAdjacentHTML('beforeend', eventCard);
 });
 
+            });
+        }
+    } catch (error) {
+        console.error("Error fetching events: ", error);
+        loading.style.display = 'none';
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Failed to fetch events. Please try again later.';
+    }
+}
+
+        
+
 // Helper Functions
 
 function goToDetails(eventId) {
@@ -554,6 +528,34 @@ function viewImage(imageUrl) {
     modal.show();
 }
 
+
+// Search Events based on title
+function searchEvents() {
+            const searchQuery = document.getElementById('event-search').value.toLowerCase();
+            const eventCards = document.querySelectorAll('.card');
+            eventCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchQuery)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+       
+// Execute the function on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+const mainTextArea = document.getElementById("text-area");
+
+  if (mainTextArea && galleryImagesContainer) {
+    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "EventsPage");
+  } else {
+    console.error("Required elements are missing in the DOM.");
+  }
+});
 
 
 
