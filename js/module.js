@@ -649,7 +649,7 @@ function getRandomDefaultImage(defaultImages) {
 
             // Use default images if no imageUrl or thumbnailUrl is provided
             const imageUrl = data.imageUrl || getRandomDefaultImage();
-            const thumbnailUrl = data.thumbnailUrl || getRandomDefaultImage();
+            const thumbnailUrl = data.watermarkedImageUrl || getRandomDefaultImage();
 
             // Create and append image element with dynamic image URL
             const imageElement = `
