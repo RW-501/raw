@@ -490,8 +490,9 @@ function applyFilmStripEffect() {
     }
 }
 
+window.displayHeaderImages = async function() {
 
-async function displayHeaderImages() {
+//async function displayHeaderImages() {
     const page = "HomePage"; // Example of the appearOn value
     const images = await getHeaderImages(page);
     console.log("Header Images:", images);
