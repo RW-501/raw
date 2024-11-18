@@ -435,8 +435,8 @@ const activeEventsQuery = query(eventsCollection, where('status', '==', 'active'
 
 
                 //eventsList.appendChild(eventCard);
-
                 eventsList.innerHTML += eventCard;
+
 
                 
 querySnapshot.forEach(async (doc) => {
@@ -492,7 +492,15 @@ querySnapshot.forEach(async (doc) => {
         </div>
     `;
 
-    document.querySelector('#eventsContainer').insertAdjacentHTML('beforeend', eventCard);
+
+    
+//eventsList.appendChild(eventCard);
+//eventsList.innerHTML += eventCard;
+
+
+    eventsList.insertAdjacentHTML('beforeend', eventCard);
+
+  //  document.querySelector('#eventsContainer').insertAdjacentHTML('beforeend', eventCard);
 });
 
             });
