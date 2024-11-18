@@ -331,6 +331,21 @@ async function fetchImages(category = 'all') {
     }
 }
 
+
+// Execute the function on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+    // Fetch Gallery and Site Info from HomePage collection
+    const galleryImagesContainer = document.getElementById("gallery-images");
+const mainTextArea = document.getElementById("text-area");
+
+  if (mainTextArea && galleryImagesContainer) {
+    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "GalleryPage");
+  } else {
+    console.error("Required elements are missing in the DOM.");
+  }
+});
+
+
 // Initialize gallery on page load
 window.onload = function() {
     fetchImages(); // Call the function on page load
