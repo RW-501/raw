@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!mainDiv || !mainGrid) return; // Exit if required elements don't exist
 
   // Select all images within the main container
-  const images = mainDiv.querySelectorAll('.lazy-image');
+  const images = mainGrid.querySelectorAll('.lazy-image');
 
   // Create containers for images and apply lazy loading
   images.forEach((img, index) => {
@@ -434,6 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       // Reveal the image with animation
                       img.onload = () => {
                         img.classList.add('imgLoaded');
+console.log("src   ",src);
 
                       };
 
@@ -477,6 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
               img.onload = () => {
                   img.style.opacity = '1'; // Reveal the image
                   img.style.filter = 'none'; // Remove blur
+                  img.style.display = 'none'; // Remove blur
                   img.style.transform = 'scale(1) rotate(0deg)';
               };
           }
