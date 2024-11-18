@@ -391,6 +391,8 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 document.addEventListener("DOMContentLoaded", () => {
   // Select the main grid for lazy loading
+
+  function startIntersectionObserver(){
   const mainGrid = document.querySelector('#gallery-images');
   if (!mainGrid) return; // Exit if the grid doesn't exist
 
@@ -496,7 +498,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize grid layout
   setContainerSize();
+
+
+}
+
+window.startIntersectionObserver = startIntersectionObserver;
+
+startIntersectionObserver();
+
 });
+
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // Add click listener to lazy-image elements
