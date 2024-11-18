@@ -613,7 +613,7 @@ function getRandomDefaultImage(defaultImages) {
   window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
     try {
         // Get collection reference
-        const querySnapshot = await getDocs(collection(db, Collection));
+        const querySnapshot = await getDocs(collection(db, "Media"));
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
         let defaultImages = await getHeaderImages(Collection);
