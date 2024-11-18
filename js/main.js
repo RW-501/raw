@@ -436,6 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Add functionality to the "More Videos" button
       const moreVideosButton = overlay.querySelector(".more-videos-button");
       moreVideosButton.addEventListener("click", () => {
+        window.location.href = "/events"
           alert("Redirect to videos or perform another action here.");
       });
   };
