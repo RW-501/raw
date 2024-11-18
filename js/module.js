@@ -654,7 +654,7 @@ function getRandomDefaultImage(defaultImages) {
 
             // Create and append image element with dynamic image URL
             const imageElement = `
-                <div class="col image-container">
+                <div class="image-container">
                         <img src="${thumbnailUrl}" class="  lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}" loading="lazy">
                 </div>`;
             
