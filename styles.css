@@ -794,6 +794,7 @@ opacity: 0;
 background-color: transparent;
 background: none;
 animation: shimmer 1.5s infinite;
+animation: fadeInImage 5s ease-in-out;
 
 }
 
