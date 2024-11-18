@@ -317,8 +317,9 @@
     errorMessage.style.display = 'none'; // Hide error message
 
     try {
+
         const eventsCollection = collection(db, 'Events');
-        const querySnapshot = await getDocs(eventsCollection);
+const querySnapshot = query(eventsCollection, where('status', '==', 'active')); // Filter by status = 'active'
 
         loading.style.display = 'none'; // Hide loading spinner
         eventsList.style.display = 'block'; // Show event list
