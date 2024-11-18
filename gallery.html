@@ -254,13 +254,14 @@
         console.log("Image IDs from MainGallery:", imageIds);
 
         // Step 2: Fetch documents from Media where imageId matches doc IDs
-        const mediaRef = collection(db, 'Media');
-        const mediaQuery = query(mediaRef, where('__name__', 'in', imageIds.slice(0, 10))); // Firestore supports a max of 10 IDs per `in` clause
+        const mediaRef = collection(db, 'Media'); 
+const mediaQuery = query(mediaRef, where(documentId(), 'in', imageIds)); // Use documentId()
 
-        const mediaSnapshot = await getDocs(mediaQuery);
-        const mediaData = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+const mediaSnapshot = await getDocs(mediaQuery);
+const mediaData = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        console.log("Matching media data:", mediaData);
+console.log("Matching media data:", mediaData);
+
         let queryRef;
 
         // Build query based on category
