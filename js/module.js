@@ -195,7 +195,11 @@ let viewStartTime;
 let locationData;
 let ipAddress;
 
-window.userLocationService = (function () {
+
+
+window.userLocationService = function() {
+
+//window.userLocationService = (function () {
     const ipAPI = 'https://api.ipify.org?format=json';
     const locationAPI = 'https://ipapi.co';
 
@@ -257,7 +261,7 @@ window.userLocationService = (function () {
     return {
         getUserIPAndLocation
     };
-})();
+}();
 
 // Function to set the last internal page
 function setInternalPageSource() {
