@@ -518,7 +518,7 @@ async function getHeaderImages(appearOn) {
             }
         } else {
             // Query for public images if 'appearOn' is not provided
-            headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", "true"));
+            headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", true));
         }
 
         // Execute the query and retrieve the snapshot of matching documents
