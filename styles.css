@@ -763,6 +763,9 @@ section {
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;
   cursor: pointer;
   border-radius: 1rem;
+overflow:hidden; 
+
+
 }
 
 /* Hover Effect */
@@ -778,7 +781,6 @@ section {
   width: 100%;
   height: auto; /* Maintain aspect ratio */
   object-fit: cover;
-  opacity: 1;
 
 }
 
@@ -791,22 +793,19 @@ section {
   animation: shimmer 1.5s infinite;
   background-size: 200% 100%;
 
-  transform: translateY(0);
-  opacity: 1;
-  filter: blur(0);
-  transform: scale(1) rotate(0);
+
 }
 
 
 
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeInImage 2s ease-in-out;
 
 
 }
 
-@keyframes fadeIn {
+@keyframes fadeInImage {
   from {
       opacity: 0;
       transform: translateY(20px);
