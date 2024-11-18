@@ -516,7 +516,8 @@ async function getHeaderImages(appearOn) {
 
         // Execute the query and retrieve the snapshot of matching documents
        // const querySnapshot = await getDocs(headerImagesQuery);
-        const querySnapshot = await getDocs(collection(db, "Media"));
+        // const querySnapshot = await getDocs(collection(db, "Media"));
+        const querySnapshot = collection(db, 'Media');
 
         // Map over the documents to extract the 'photoUrl' field
         const images = querySnapshot.docs.map(doc => {
@@ -551,7 +552,7 @@ window.displayHeaderImages = async function() {
     });
 }
 window.displayHeaderImages = displayHeaderImages;
-//displayHeaderImages();
+displayHeaderImages();
 
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
