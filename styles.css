@@ -873,7 +873,8 @@ display: none;
 }
 
 
-  
+  #bbbb {
+
 #main-content img {
   border: 3px solid #ddd; /* Light gray border */
   border-radius: 8px; /* Rounded corners */
@@ -908,7 +909,7 @@ display: none;
   margin: 0 !important;
 }
 
-
+}
 
 :root {
   --gallery-gap: 20px;
@@ -920,7 +921,7 @@ display: none;
 }
 
 /* Gallery Container */
-.gallery-container {
+.gallery-images {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gallery-gap);
