@@ -377,46 +377,73 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Select the main div where lazy loading should apply
-  const mainDiv = document.querySelector('main'); // Update with the actual class or ID of your main div
-  if (!mainDiv) return; // Exit if the main div doesn't exist
+  // Select or create the main container
+  let mainDiv = document.querySelector('main');
+  if (!mainDiv) {
+      mainDiv = document.createElement('main');
+      document.body.appendChild(mainDiv); // Append main to the body if it doesn't exist
+  }
 
-  // Select images only within the main div
+  // Programmatically create and append image containers
+  const imageSources = [
+      'https://example.com/image1.jpg',
+      'https://example.com/image2.jpg',
+      'https://example.com/image3.jpg',
+      'https://example.com/image4.jpg'
+  ];
+
+  imageSources.forEach((src, index) => {
+      const containerDiv = document.createElement('div'); // Wrapper div for styling
+      containerDiv.className = 'image-container'; // Add your preferred class
+
+      const img = document.createElement('img');
+      img.className = 'lazy-image'; // Add lazy-image class for lazy loading
+      img.setAttribute('data-src', src); // Set data-src for lazy loading
+      img.alt = `Image ${index + 1}`; // Add an alt attribute
+
+      containerDiv.appendChild(img);
+      mainDiv.appendChild(containerDiv); // Append the container to the main div
+  });
+
+  // Lazy loading logic for images within the main container
   const images = mainDiv.querySelectorAll('.lazy-image');
 
-  const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              const img = entry.target;
+  const observer = new IntersectionObserver(
+      (entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  const img = entry.target;
 
-              // Load the image
-              const src = img.getAttribute('data-src');
-              if (src) {
-                  img.src = src;
+                  // Load the image
+                  const src = img.getAttribute('data-src');
+                  if (src) {
+                      img.src = src;
 
-                  // Graceful fallback in case image fails to load
-                  img.onerror = () => {
-                      img.src = 'https://rw-501.github.io/raw/images/main.jpg';
-                      img.classList.add('error');
-                  };
+                      // Handle loading error with fallback
+                      img.onerror = () => {
+                          img.src = 'https://rw-501.github.io/raw/images/main.jpg';
+                          img.classList.add('error');
+                      };
 
-                  // Add cascading animation
-                  setTimeout(() => {
-                      img.classList.add('loaded');
-                  }, 100 * img.dataset.index);
+                      // Add cascading animation
+                      setTimeout(() => {
+                          img.classList.add('loaded');
+                      }, 100 * img.dataset.index);
 
-                  // Unobserve once loaded
-                  observer.unobserve(img);
+                      // Unobserve the loaded image
+                      observer.unobserve(img);
 
-                  // Preload next images for smoother experience
-                  preloadImages(images, parseInt(img.dataset.index));
+                      // Preload nearby images for smoother scrolling
+                      preloadImages(images, parseInt(img.dataset.index));
+                  }
               }
-          }
-      });
-  }, {
-      root: null, // Full viewport
-      threshold: 0.2 // Start loading when 20% of the image is visible
-  });
+          });
+      },
+      {
+          root: null, // Observing within the full viewport
+          threshold: 0.4 // Load when 40% of the image is visible
+      }
+  );
 
   // Assign index for cascading animation and observe each image
   images.forEach((img, index) => {
@@ -424,18 +451,15 @@ document.addEventListener("DOMContentLoaded", () => {
       observer.observe(img);
   });
 
-  // Preload adjacent images
+  // Preload function for adjacent images
   const preloadImages = (images, currentIndex) => {
-      const bufferCount = 2; // Preload next 2 images
+      const bufferCount = 2; // Number of images to preload ahead
       for (let i = currentIndex + 1; i <= currentIndex + bufferCount && i < images.length; i++) {
           const preloadImg = new Image();
           preloadImg.src = images[i].getAttribute('data-src');
       }
   };
 });
-
-
-
 
 
 

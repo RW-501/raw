@@ -1035,3 +1035,15 @@ display: none;
   outline: 2px solid #007BFF;
   outline-offset: 4px;
 }
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+.lazy-image.error {
+  filter: grayscale(100%);
+}
