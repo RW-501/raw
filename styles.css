@@ -788,10 +788,6 @@ z-index: 500;
   width: 100%;
   height: auto; /* Maintain aspect ratio */
   object-fit: cover;
-
-}
-
-.lazy-image img {
   border-radius: 1rem;
 overflow:hidden; 
 }
@@ -800,9 +796,9 @@ overflow:hidden;
 /* Placeholder Gradient for Unloaded Images */
 .lazy-image:not(.imgLoaded) {
   background-color: #6a1b9a;
-  animation: shimmer 1.5s infinite;
   background-size: 200% 100%;
 
+  animation: fadeInImage 10s ease-in-out;
 
 }
 
@@ -810,8 +806,8 @@ overflow:hidden;
 
 /* Cascading Entry Animation */
 .lazy-image.imgLoaded {
-  animation: fadeInImage 10s ease-in-out;
 
+  animation: shimmer 1.5s infinite;
 
 }
 
