@@ -449,7 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
           root: null, // Observe within the viewport
-          threshold: 0.4 // Trigger loading when 40% visible
+          threshold: 0.7 // Trigger loading when 40% visible
       }
   );
 
