@@ -802,10 +802,15 @@ animation: shimmer 1.5s infinite;
   background-color: #6a1b9a;
   background-size: 200% 100%;
 
-  animation: fadeInImage 10s ease-in-out;
 
 }
+/*
 
+  animation: fadeInImage 10s ease-in-out;
+
+
+
+*/
 
 
 /* Cascading Entry Animation */

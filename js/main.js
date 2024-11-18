@@ -433,9 +433,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                       // Reveal the image with animation
                       img.onload = () => {
-                          img.style.opacity = '1';
-                          img.style.filter = 'none';
-                          img.style.transform = 'scale(1) rotate(0deg)';
+                        img.classList.add('imgLoaded');
+
                       };
 
                       // Preload nearby images for smoother scrolling
@@ -449,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
           root: null, // Observe within the viewport
-          threshold: 0.8 // Trigger loading when 40% visible
+          threshold: 0.9 // Trigger loading when 40% visible
       }
   );
 
