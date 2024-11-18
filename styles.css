@@ -226,7 +226,10 @@ body {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     line-height: 1.5;
     animation: fadeIn 2.5s ease-out;
-  }
+    width: 90%;
+    margin: auto;
+    margin-bottom: 2rem;
+}
   
   #Main_Header .btn-primary {
     background-color: var(--primary-color);
@@ -923,3 +926,7 @@ animation: fadeInImage 3s ease-in;
 }
 
 
+.mt-2 a {
+  color: white;
+  font-weight: 300;
+}
