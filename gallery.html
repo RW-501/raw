@@ -339,6 +339,7 @@ db.collection('GalleryPage').get().then(snapshot => {
 
         // Initialize gallery on page load
         window.onload = function() {
+          window.fetchImages = fetchImages;
             fetchImages();
         };
     </script>
