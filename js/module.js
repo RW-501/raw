@@ -489,6 +489,8 @@ function applyFilmStripEffect() {
 
 async function getHeaderImages(appearOn) {
     try {
+        console.log("appearOn   ",appearOn);
+
         // Reference the 'MainGallery' collection and create a query for appearOnHeader = true
         const mainGalleryRef = collection(db, 'MainGallery');
         const headerImagesQuery = query(mainGalleryRef, where("appearOn", 'array-contains', appearOn));
