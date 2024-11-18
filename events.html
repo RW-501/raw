@@ -465,11 +465,11 @@ querySnapshot.forEach(async (doc) => {
                         <div class="media-gallery d-flex flex-wrap gap-2">
                             ${mediaImages.map(image => `
                                 <img 
-                                    src="${image.url}" 
+                                    src="${image.watermarkedImageUrl}" 
                                     alt="Media Image" 
                                     class="media-thumbnail rounded" 
                                     style="width: 70px; height: 70px; object-fit: cover; cursor: pointer;" 
-                                    onclick="viewImage('${image.url}')">
+                                    onclick="viewImage('${image.watermarkedImageUrl}')">
                             `).join('')}
                         </div>
                     </div>
