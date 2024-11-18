@@ -20,7 +20,7 @@ import {
     signInWithPopup, 
     GoogleAuthProvider, 
     FacebookAuthProvider, 
-    OAuthProvider, signInAnonymously ,limit ,
+    OAuthProvider, signInAnonymously  ,
     signOut, RecaptchaVerifier,
     onAuthStateChanged, 
     createUserWithEmailAndPassword, 
@@ -28,7 +28,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
 
 // Storage import
-import { getDownloadURL,uploadBytes, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
+import { getDownloadURL,uploadBytes,limit, ref, getStorage } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js';
 
 // Analytics import
 import { initializeAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js';
