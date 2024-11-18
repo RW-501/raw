@@ -497,34 +497,40 @@ function applyFilmStripEffect() {
 
 
 
+// Function to get header images
 async function getHeaderImages(appearOn) {
     try {
         console.log("appearOn:", appearOn);
-
-        // Reference the 'MainGallery' collection
+        // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'Media');
 
-        // Create a query for documents where 'appearOn' contains the specified value
-      //  const headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
-        const headerImagesQuery = query(mainGalleryRef);
+        let headerImagesQuery;
+        if(appearOn){
 
+        // Create a query to filter images by the 'appearOn' field (if necessary)
+         headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains", appearOn));
+    }else{
+
+        headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", "true"));
+
+
+    }
         // Execute the query and retrieve the snapshot of matching documents
-       const querySnapshot = await getDocs(headerImagesQuery);
-        // const querySnapshot = await getDocs(collection(db, "Media"));
-      //  const querySnapshot = collection(db, 'Media');
+        const querySnapshot = await getDocs(headerImagesQuery);
 
-        // Map over the documents to extract the 'photoUrl' field
+        // Map over the documents to extract the 'watermarkedImageUrl' field
         const images = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            return data.watermarkedImageUrl; // Ensure 'photoUrl' is a valid field in the document
+            return data.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is a valid field
         });
 
-        return images; // Return the list of photo URLs
+        return images; // Return the list of image URLs
     } catch (error) {
         console.error("Error fetching header images:", error);
         return [];
     }
 }
+
 
 window.getHeaderImages = getHeaderImages;
 
