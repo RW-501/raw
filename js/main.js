@@ -396,7 +396,19 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 
 
-
+      // Format date to a specific format (including time)
+      function formatDate(dateString) { 
+        // Convert the input string to a Date object
+        const date = new Date(dateString);
+        
+        // Format the date
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long', // Full month name
+            day: 'numeric'
+        }).format(date);
+    }
+    
 
 
 document.addEventListener("DOMContentLoaded", () => {
