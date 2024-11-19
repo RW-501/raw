@@ -87,13 +87,19 @@
     <main id="main-content" class="container mt-5">
         <div id="confirmation-message"></div>
         <button id="download-button">Download Now</button>
+
+        <div id="fileTypeContainer" >
         <select id="file-format">
            <option value="jpg">JPEG</option>
            <option value="png">PNG</option>
            <option value="pdf">PDF</option>
         </select>
+      </div>
 
-    </div>
+                    <!-- Event Images -->
+                    <div id="event-gallery-downloadable" class="row mt-5"></div>
+
+    <div id="bottomArea">
     <button id="download-button">Download Now</button>
     <button id="retry-button" style="display: none;">Retry Download</button>
     <div id="error-message" style="color: red; display: none;"></div>
@@ -203,15 +209,16 @@
             const eventData = eventDoc.data();  // Access the data from the document
             console.log("Event Data:", eventData);
 
-        
+        let PhotoCount = 0;
             // Fetch media images related to this event
             const imageData = await fetchMediaImages(eventId);  // Await the images fetch
-            const galleryContainer = document.getElementById('event-gallery');
+            const galleryContainer = document.getElementById('event-gallery-downloadable');
             imageData.forEach(img => {
+              PhotoCount += 1;
                 const imgElement = document.createElement('img');
-                imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
-                imgElement.alt = "Event Image";
-                imgElement.classList.add("rounded", "lazy-image");
+                imgElement.src = img.photoUrl; // Ensure 'watermarkedImageUrl' is the correct field
+                imgElement.alt = `${eventData.title}_${PhotoCount}`;
+                imgElement.classList.add("downloadable");
                 galleryContainer.appendChild(imgElement);
             });
 
@@ -290,7 +297,8 @@ function showError(message) {
 
 function handleDownload(eventInfo) {
     const format = document.getElementById('file-format').value;
-    
+  
+
     if (eventInfo.type === 'paid' && eventInfo.downloadId) {
         // Trigger paid download with format
         downloadPaidFile(eventInfo.eventId, eventInfo.downloadId, format);
@@ -304,12 +312,23 @@ function downloadFile(eventId, format) {
     // Simulate the free download
     console.log(`Downloading Event #${eventId} for free as ${format}.`);
 
+    let PhotoCountDownload = 0;
+            // Fetch media images related to this event
+            const imageData =  fetchMediaImages(eventId);  // Await the images fetch
+            imageData.forEach(img => {
+              PhotoCountDownload += 1;
+            
+                imgElement.src = img.photoUrl; // Ensure 'watermarkedImageUrl' is the correct field
+                imgElement.alt = `${eventData.title}_${PhotoCount}`;
+      
+            });
+
     // Simulate network issue (for testing retry)
     const networkIssue = Math.random() < 0.5;
     if (networkIssue) {
         showError('Network issue occurred. Please try again.');
     } else {
-        console.log(`Event #${eventId} downloaded successfully as ${format}.`);
+        showToast(`Event #${eventId} downloaded successfully as ${format}.`);
     }
 }
 
@@ -322,7 +341,7 @@ function downloadPaidFile(eventId, downloadId, format) {
     if (networkIssue) {
         showError('Network issue occurred. Please try again.');
     } else {
-        console.log(`Event #${eventId} (Paid) downloaded successfully with Download ID: ${downloadId} as ${format}.`);
+      showToast(`Event #${eventId} (Paid) downloaded successfully with Download ID: ${downloadId} as ${format}.`);
     }
 }
 
