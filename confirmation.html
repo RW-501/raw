@@ -156,7 +156,7 @@
            
                <!-- Event Images -->
                <div id="event-gallery-downloadable" class="media-gallery d-flex flex-wrap gap-2"></div>
-               <div id="" class="mb-3 py-5">Bulk download or tap on a picture to download</div>
+               <div id="downloadMSG" class="mb-3 py-5">Bulk download or tap on a picture to download</div>
 
                
                <select id="file-format">
@@ -490,6 +490,23 @@ function sanitizeTitle(title) {
     return title.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_');
 }
 
+function showDownloadMessage(eventId, index, format) {
+    const fileName = `Event_${eventId}_${index + 1}.${format}`;
+    const message = `Success! Your file "${fileName}" has been downloaded.`;
+    
+    const downloadMSG = document.getElementById("downloadMSG");
+    downloadMSG.textContent = message; // Set the message content
+    downloadMSG.style.display = "block"; // Make the message visible
+
+    // Optional: Automatically hide the message after a few seconds
+    setTimeout(() => {
+        downloadMSG.style.display = "none";
+    }, 5000); // Hide after 5 seconds
+}
+
+// Example usage
+showDownloadMessage(12345, 0, "pdf");
+
 // Include JSZip for zipping files
 const JSZip = window.JSZip;
 const jsPDF = window.jspdf.jsPDF; // If using jsPDF for PDF creation
@@ -526,6 +543,7 @@ async function downloadFile(eventId, format) {
 
                 photoCountDownload++;
             });
+            showDownloadMessage(eventId, index, format);
 
             showToast(`Downloaded ${photoCountDownload} files for Event #${eventId} as ${format}.`);
         }
@@ -565,6 +583,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             document.body.appendChild(pdfLink);
             pdfLink.click();
             document.body.removeChild(pdfLink);
+            showDownloadMessage(eventId, index, format);
 
             showToast(`PDF file for Event #${eventId} downloaded successfully.`);
         } else if (format === 'zip') {
@@ -590,8 +609,10 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             document.body.appendChild(zipLink);
             zipLink.click();
             document.body.removeChild(zipLink);
+            showDownloadMessage(eventId, index, format);
 
             showToast(`ZIP file for Event #${eventId} downloaded successfully.`);
+
         }
     } catch (error) {
         console.error("Error during ZIP or PDF generation:", error);
