@@ -574,7 +574,7 @@ window.getHeaderImages = getHeaderImages;
             }
     
             // Clear previous images to avoid duplication
-         //   imageContainer.innerHTML = "";
+            imageContainer.innerHTML = "";
     
             // Loop through the images and add them to the DOM
             images.forEach((url) => {
@@ -607,7 +607,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
             console.log("Running?  ");
 
             // Run the functions after a 3-second delay
-            displayHeaderImages();
+          //  displayHeaderImages();
             applyBackgroundEffect();
             applyFilmStripEffect();
         }, 3000); // 3 seconds = 3000 milliseconds
