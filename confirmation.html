@@ -717,23 +717,25 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to set up downloadable images
 function setupDownloadableImages() {
     const images = document.querySelectorAll('.downloadable'); // Select all images with class 'downloadable'
-console.log("setupDownloadableImages");
-if(!images){
-  console.log("no images????????????????????/");
+    console.log("setupDownloadableImages");
 
-  setTimeout(() => {
-    console.log("Initializing setupDownloadableImages...");
-    setupDownloadableImages();
-}, 10000); // 10,000 milliseconds = 10 seconds
+    if (images.length === 0) { // Check if there are no images
+        console.log("No downloadable images found. Retrying...");
 
-}else{
-  console.log("images!!!!!!!!!!!!!!!!!");
+        setTimeout(() => {
+            console.log("Initializing setupDownloadableImages again...");
+            setupDownloadableImages(); // Retry after 10 seconds
+        }, 10000); // 10,000 milliseconds = 10 seconds
+    } else {
+        console.log("Found downloadable images!");
 
-    images.forEach(image => {
-        image.addEventListener('click', handleImageDownload);
-    });
-  }
+        // Add click event listeners to each image
+        images.forEach(image => {
+            image.addEventListener('click', handleImageDownload);
+        });
+    }
 }
+
 
 // Function that handles the download logic
 async function handleImageDownload(event) {
