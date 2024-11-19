@@ -445,13 +445,9 @@ function getViewedByField() {
         filmOverlay.className = 'film-overlay';
 
         // Create sprocket holes for top and bottom for each film strip
-        const topSprockets = createSprockets();
-        const bottomSprockets = createSprockets();
-
-        // Add the sprockets and the film strip to the film overlay
-        filmOverlay.appendChild(topSprockets);
+ 
         filmOverlay.appendChild(filmStrip);
-        filmOverlay.appendChild(bottomSprockets);
+     
 
         // Append the film overlay to the main overlay
         overlay.appendChild(filmOverlay);
@@ -460,17 +456,6 @@ function getViewedByField() {
     // Append the overlay to the header
     header.appendChild(overlay);
 
-    // Function to create sprockets with holes for each film strip
-    function createSprockets() {
-        const sprockets = document.createElement('div');
-        sprockets.className = 'sprocket-holes';
-        for (let i = 0; i < 6; i++) {
-            const hole = document.createElement('div');
-            hole.className = 'sprocket-hole';
-            sprockets.appendChild(hole);
-        }
-        return sprockets;
-    }
 
     // Animate the film strip and sprockets movement
     setInterval(() => {
