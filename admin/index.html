@@ -68,7 +68,7 @@
 <div id="firebaseLogin" class="container-fluid">
     <h1 class="mb-4">Login to Access Dashboard</h1>
     <button onclick="googleLogin()" class="btn btn-primary">Login with Google</button>
-    <button onclick="phoneLogin()" class="btn btn-secondary">Login with Phone</button>
+    <button onclick="openPhoneModal()" class="btn btn-secondary">Login with Phone</button>
     <button onclick="emailLogin()" class="btn btn-info">Login with Email</button>
 </div>
 
@@ -295,7 +295,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="phoneLoginModalLabel">Phone Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closePhoneModal()"></button>
             </div>
             <div class="modal-body">
                 <!-- reCAPTCHA Container -->
@@ -324,7 +324,7 @@
                 <div id="loading" class="mt-3" style="display: none;">Please wait...</div>
             </div>
             <div class="modal-footer">
-                <button id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Cancel</button>
+                <button id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closePhoneModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -458,7 +458,6 @@ const recaptchaContainer = document.getElementById("recaptcha-container");
 
 // Phone login function
 function phoneLogin() {
-    openModal();
 
     const phoneNumber = document.getElementById("phoneNumber").value.trim();
     const phoneNumberError = document.getElementById("phoneNumberError");
@@ -566,7 +565,7 @@ function showDashboard() {
 
 // Close the modal
 
-function openModal() {
+function openPhoneModal() {
     const modal = document.getElementById("phoneLoginModal");
     modal.style.display = "block";
     modal.setAttribute("aria-hidden", "fasle");
@@ -575,7 +574,7 @@ function openModal() {
 
 
 
-function closeModal() {
+function closePhoneModal() {
     const modal = document.getElementById("phoneLoginModal");
     modal.style.display = "none";
     modal.setAttribute("aria-hidden", "true");
