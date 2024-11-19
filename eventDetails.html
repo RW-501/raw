@@ -7,10 +7,12 @@
     <meta name="description" content="Get in touch with RAW Photography to book your session, inquire about events, or ask questions about our professional photography services.">
     <meta name="keywords" content="Photography, RAW Photography, Arkansas, Events, Booking, Photo Sessions">
     <meta name="author" content="RAW Photography">
-    <meta property="og:title" content="Event Detail – RAW Photography">
-    <meta property="og:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
-    <meta property="og:image" content="/images/main.jpg">
-    <meta property="og:url" content="https://rawphotographysite.com/event-detail">
+<!-- Add these in your eventDetails page's <head> -->
+  <meta property="og:title" content="${eventData.title}" />
+  <meta property="og:description" content="${eventData.description}" />
+  <meta property="og:image" content="${eventData.imageUrl}" />
+  <meta property="og:url" content="https://rawphotographysite.com/eventDetails?id=${eventData.id}" />
+  
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Event Detail – RAW Photography">
     <meta name="twitter:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
@@ -61,6 +63,91 @@
     overflow: hidden;
     overflow-y: auto;
     margin: 1rem;
+}
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.share-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    color: white;
+    flex: 1 1 auto;
+    justify-content: center;
+}
+
+.share-buttons button i {
+    font-size: 18px;
+}
+
+.facebook-btn {
+    background-color: #3b5998;
+}
+
+.facebook-btn:hover {
+    background-color: #2d4373;
+}
+
+.twitter-btn {
+    background-color: #1da1f2;
+}
+
+.twitter-btn:hover {
+    background-color: #0d95e8;
+}
+
+.snapchat-btn {
+    background-color: #fffc00;
+    color: black;
+}
+
+.snapchat-btn:hover {
+    background-color: #e6e600;
+}
+
+.copy-btn {
+    background-color: #4caf50;
+}
+
+.copy-btn:hover {
+    background-color: #388e3c;
+}
+
+.url-btn {
+    background-color: #ff5722;
+}
+
+.url-btn:hover {
+    background-color: #e64a19;
+}
+
+.btn-text {
+    display: inline;
+}
+
+@media screen and (max-width: 600px) {
+    .btn-text {
+        display: none;
+    }
+
+    .share-buttons button {
+        flex: 0 0 auto;
+        padding: 10px;
+    }
+
+    .share-buttons button i {
+        font-size: 22px;
+    }
 }
 
 
@@ -135,6 +222,30 @@
             <p><i class="bi bi-calendar-event me-2"></i><strong>Date: </strong><span id="event-date">Event Date</span></p>
             <p><i class="bi bi-geo-alt me-2"></i><strong>Location: </strong><span id="event-location">Event Location</span></p>
 
+            <div id="event-share-container" class="event-share-container">
+      
+              <!--share-buttons -->
+
+              <div class="share-buttons">
+                <button onclick="shareOnFacebook()" class="facebook-btn">
+                    <i class="fab fa-facebook"></i> <span class="btn-text">Share on Facebook</span>
+                </button>
+                <button onclick="shareOnTwitter()" class="twitter-btn">
+                    <i class="fab fa-twitter"></i> <span class="btn-text">Share on Twitter</span>
+                </button>
+                <button onclick="shareOnSnapchat()" class="snapchat-btn">
+                    <i class="fab fa-snapchat"></i> <span class="btn-text">Share on Snapchat</span>
+                </button>
+                <button onclick="copyLink()" class="copy-btn">
+                    <i class="fas fa-link"></i> <span class="btn-text">Copy Link</span>
+                </button>
+                <button onclick="openUrl()" class="url-btn">
+                    <i class="fas fa-share"></i> <span class="btn-text">Open Event Link</span>
+                </button>
+            </div>
+            
+    <p id="copy-notification" style="display: none;">Link copied to clipboard!</p>
+</div>
             <!-- Event Images -->
             <div id="event-gallery" class="row mt-5"></div>
 
@@ -255,6 +366,62 @@ async function fetchEventDetails() {
                 imgElement.classList.add("rounded", "lazy-image");
                 galleryContainer.appendChild(imgElement);
             });
+
+            document.addEventListener("DOMContentLoaded", () => {
+    const metaTitle = document.querySelector('meta[property="og:title"]');
+    const metaDescription = document.querySelector('meta[property="og:description"]');
+    const metaImage = document.querySelector('meta[property="og:image"]');
+    const metaURL = document.querySelector('meta[property="og:url"]');
+
+    if (metaTitle) metaTitle.content = eventData.title;
+    if (metaDescription) metaDescription.content = eventData.description;
+    if (metaImage) metaImage.content = eventData.imageUrl; // Ensure a valid image URL is provided
+    if (metaURL) metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventData.id}`;
+});
+
+            function shareOnFacebook() {
+    const eventId = eventData.id;
+    const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+    const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
+    window.open(facebookShareURL, '_blank');
+}
+
+
+function shareOnTwitter() {
+    const eventId = eventData.id;
+    const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+    const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
+    const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
+    window.open(twitterShareURL, '_blank');
+}
+
+
+function shareOnSnapchat() {
+    const eventId = eventData.id;
+    const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+    const snapchatShareURL = `https://www.snapchat.com/share?url=${encodeURIComponent(shareURL)}&text=Check+out+this+event!`;
+    window.open(snapchatShareURL, '_blank');
+}
+
+function copyLink() {
+    const eventId = eventData.id;
+    const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+    navigator.clipboard.writeText(shareURL).then(() => {
+        showToast('Link copied to clipboard!');
+    });
+}
+
+function openUrl() {
+    const eventId = eventData.id;
+    const eventURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+    window.open(eventURL, '_blank');
+}
+
+window.shareOnFacebook = shareOnFacebook;
+window.shareOnTwitter = shareOnTwitter;
+window.shareOnSnapchat = shareOnSnapchat;
+window.copyLink = copyLink;
+window.openUrl = openUrl;
 
             // Button functionality based on collection price
             const collectionPrice = eventData.collection_price || 0;
