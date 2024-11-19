@@ -411,8 +411,14 @@ async function fetchEventDetails() {
         console.error("Error fetching event details: ", error);
     }
 }
+// Initialize the event details on page load
+window.onload = function() {
 
-function shareOnFacebook() {
+    console.log("window.onload");
+
+    fetchEventDetails(); // Call the function to fetch and display event details
+
+    function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
     window.open(facebookShareURL, '_blank');
@@ -447,12 +453,6 @@ function openUrl() {
 
 
 
-// Initialize the event details on page load
-window.onload = function() {
-
-    console.log("window.onload");
-
-    fetchEventDetails(); // Call the function to fetch and display event details
 
     window.shareOnFacebook = shareOnFacebook ;
 window.shareOnTwitter = shareOnTwitter;
