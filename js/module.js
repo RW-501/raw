@@ -558,7 +558,7 @@ window.displayHeaderImages = async function() {
     const imageContainer = document.getElementById("header-images");
     images.forEach(url => {
         const img = document.createElement("img");
-        img.src = url.watermarkedImageUrl;
+        img.src = url;
         img.alt = "Header Image"; // SEO-friendly alt text
         img.classList.add("header-image");
         imageContainer.appendChild(img);
