@@ -717,7 +717,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to set up downloadable images
 function setupDownloadableImages() {
     const images = document.querySelectorAll('.downloadable'); // Select all images with class 'downloadable'
-
+console.log("setupDownloadableImages");
     images.forEach(image => {
         image.addEventListener('click', handleImageDownload);
     });
