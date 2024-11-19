@@ -567,14 +567,14 @@ window.getHeaderImages = getHeaderImages;
             }
     
             // Get the image container
-            const imageContainer = document.getElementById("Main_Header");
+            const imageContainer = document.getElementById("header-images");
             if (!imageContainer) {
                 console.error("Image container not found");
                 return;
             }
     
             // Clear previous images to avoid duplication
-            //imageContainer.innerHTML = "";
+         //   imageContainer.innerHTML = "";
     
             // Loop through the images and add them to the DOM
             images.forEach((url) => {
