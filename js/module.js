@@ -518,8 +518,9 @@ async function getHeaderImages(appearOn) {
             }
         } else {
             // Query for public images if 'appearOn' is not provided
-            headerImagesQuery = query(mainGalleryRef, where("isPublic", "array-contains", true));
+            headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
         }
+        console.log(`headerImagesQuery ${headerImagesQuery} .`); // Log the number of images found
 
         // Execute the query and retrieve the snapshot of matching documents
         const querySnapshot = await getDocs(headerImagesQuery);
