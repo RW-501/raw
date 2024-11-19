@@ -575,6 +575,7 @@ window.openEmailModal = openEmailModal;
 
 const recaptchaContainer = document.getElementById("recaptcha-container");
 
+let confirmationResult; // Declare globally
 
 // Phone login function
 function phoneLogin() {
@@ -636,27 +637,68 @@ function verifyCode() {
         return;
     }
 
+    if (!confirmationResult) {
+        alert("No confirmation result available. Please restart the login process.");
+        return;
+    }
+
     showLoading(true);
 
     confirmationResult
         .confirm(verificationCode)
         .then((result) => {
             const user = result.user;
+            console.log("User verified:", user);
+
             if (allowedPhoneNumbers.includes(user.phoneNumber)) {
                 updateLoginRecord(user); // Update login record
                 showDashboard();
-                closeModal();
+                closePhoneModal();
             } else {
                 alert("Access denied: Phone number not authorized.");
                 auth.signOut();
-                showLoading(false);
             }
+            showLoading(false);
         })
         .catch((error) => {
+            console.error("Verification failed:", error);
             handleError("Verification failed", error);
             showLoading(false);
         });
 }
+
+
+
+signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    .then((result) => {
+        confirmationResult = result; // Set the confirmation result
+        console.log("Confirmation result received:", confirmationResult);
+
+        // Show the verification code input field
+        document.getElementById("verificationCodeGroup").style.display = "block";
+        document.getElementById("sendVerificationCode").style.display = "none";
+        showLoading(false);
+    })
+    .catch((error) => {
+        console.error("Error during phone login:", error);
+        handleError("Error during phone login", error);
+        showLoading(false);
+    });
+
+
+    function resetPhoneModal() {
+    document.getElementById("phoneNumber").value = "";
+    document.getElementById("verificationCode").value = "";
+    document.getElementById("verificationCodeGroup").style.display = "none";
+    document.getElementById("sendVerificationCode").style.display = "block";
+}
+
+window.resetPhoneModal = resetPhoneModal;
+
+
+
+
+
 
 // Show or hide loading state
 function showLoading(isLoading) {
