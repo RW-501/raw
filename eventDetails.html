@@ -332,7 +332,59 @@
     }
 
     // Function to fetch event details
-  
+    function setMetaTags(eventData, eventId) {
+    // Function to set meta tags if they are not already set
+    function trySetMetaTags() {
+        const metaTitle = document.querySelector('meta[property="og:title"]');
+        const metaDescription = document.querySelector('meta[property="og:description"]');
+        const metaImage = document.querySelector('meta[property="og:image"]');
+        const metaURL = document.querySelector('meta[property="og:url"]');
+
+        // Check if meta tags are already present and set them
+        let allSet = true;
+
+        if (metaTitle && !metaTitle.content) {
+            metaTitle.content = eventData.title;
+        } else if (!metaTitle) {
+            allSet = false;
+        }
+
+        if (metaDescription && !metaDescription.content) {
+            metaDescription.content = eventData.description;
+        } else if (!metaDescription) {
+            allSet = false;
+        }
+
+        if (metaImage && !metaImage.content) {
+            metaImage.content = eventData.coverUrl;
+        } else if (!metaImage) {
+            allSet = false;
+        }
+
+        if (metaURL && !metaURL.content) {
+            metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+        } else if (!metaURL) {
+            allSet = false;
+        }
+
+        return allSet; // Return true if all tags are set, false if any tag is missing
+    }
+
+    // First try to set the meta tags
+    if (!trySetMetaTags()) {
+        // If not all meta tags were set, try again after 4 seconds
+        setTimeout(() => {
+            if (!trySetMetaTags()) {
+                console.error("Meta tags still not set after 4 seconds.");
+            } else {
+                console.log("Meta tags successfully set after retry.");
+            }
+        }, 4000);
+    } else {
+        console.log("Meta tags successfully set.");
+    }
+}
+
 async function fetchEventDetails() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -368,16 +420,17 @@ async function fetchEventDetails() {
                 galleryContainer.appendChild(imgElement);
             });
        //     document.addEventListener("DOMContentLoaded", () => {
+       
+       
+       
+       const eventData2 = {
+    title: eventData.title,
+    description: eventData.description,
+    coverUrl: eventData.coverUrl
+};
 
-    const metaTitle = document.querySelector('meta[property="og:title"]');
-    const metaDescription = document.querySelector('meta[property="og:description"]');
-    const metaImage = document.querySelector('meta[property="og:image"]');
-    const metaURL = document.querySelector('meta[property="og:url"]');
-
-    if (metaTitle) metaTitle.content = eventData.title;
-    if (metaDescription) metaDescription.content = eventData.description;
-    if (metaImage) metaImage.content = eventData.coverUrl; // Ensure a valid image URL is provided
-    if (metaURL) metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
+console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
+setMetaTags(eventData2, eventId);
 
 
         
