@@ -384,6 +384,34 @@ async function fetchEventDetails() {
 
 });
 
+
+            // Button functionality based on collection price
+            const collectionPrice = eventData.collection_price || 0;
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', () => {
+                if (collectionPrice === 0 || collectionPrice === "") {
+                    window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.downloadId}`; // Correct URL
+                } else {
+                    window.location.href = `https://rawphotographysite.com/cart?id=${eventId}`; // Correct URL
+                }
+
+        
+
+            });
+/*
+            console.log("eventId   ",eventId);
+            console.log("eventData.accessHandShake   ",eventData.accessHandShake);
+            console.log("collectionPrice   ",collectionPrice);
+
+            */
+        } else {
+            console.log("No event found with the given ID.");
+        }
+    } catch (error) {
+        console.error("Error fetching event details: ", error);
+    }
+}
+
 function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
@@ -418,49 +446,17 @@ function openUrl() {
 }
 
 
-// Attach submit event listener to the contact form
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOMContentLoaded event triggered");
-
-
-  window.shareOnFacebook = shareOnFacebook ;
-window.shareOnTwitter = shareOnTwitter;
-window.shareOnSnapchat = shareOnSnapchat;
-window.copyLink = copyLink;
-window.openUrl = openUrl;
-});
-
-
-            // Button functionality based on collection price
-            const collectionPrice = eventData.collection_price || 0;
-            const downloadBtn = document.getElementById('download-btn');
-            downloadBtn.addEventListener('click', () => {
-                if (collectionPrice === 0 || collectionPrice === "") {
-                    window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.downloadId}`; // Correct URL
-                } else {
-                    window.location.href = `https://rawphotographysite.com/cart?id=${eventId}`; // Correct URL
-                }
-
-        
-
-            });
-/*
-            console.log("eventId   ",eventId);
-            console.log("eventData.accessHandShake   ",eventData.accessHandShake);
-            console.log("collectionPrice   ",collectionPrice);
-
-            */
-        } else {
-            console.log("No event found with the given ID.");
-        }
-    } catch (error) {
-        console.error("Error fetching event details: ", error);
-    }
-}
 
 // Initialize the event details on page load
 window.onload = function() {
     fetchEventDetails(); // Call the function to fetch and display event details
+
+    window.shareOnFacebook = shareOnFacebook ;
+window.shareOnTwitter = shareOnTwitter;
+window.shareOnSnapchat = shareOnSnapchat;
+window.copyLink = copyLink;
+window.openUrl = openUrl;
+
 };
 </script>
 </body>
