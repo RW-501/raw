@@ -461,13 +461,8 @@ function handleDownload(eventInfo) {
     const format = document.getElementById('file-format').value;
   
 
-    if (eventInfo.type === 'paid' && eventInfo.downloadId) {
-        // Trigger paid download with format
-        downloadPaidFile(eventInfo.eventId, eventInfo.downloadId, format);
-    } else {
-        // Trigger free download with format
-        downloadFile(eventInfo.eventId, format);
-    }
+    downloadFile(eventInfo.eventId, format);
+
 }
 // Include JSZip for zipping files
 const JSZip = window.JSZip;
