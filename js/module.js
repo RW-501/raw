@@ -555,8 +555,8 @@ window.displayHeaderImages = async function() {
     //console.log("Header Images:", images);
 
     // Logic to display these images on the page
-  //  const imageContainer = document.getElementById("header-images");
-    const imageContainer = document.getElementById("Main_Header");
+    const imageContainer = document.getElementById("header-images");
+   // const imageContainer = document.getElementById("Main_Header");
     images.forEach(url => {
         const img = document.createElement("img");
         img.src = url;
