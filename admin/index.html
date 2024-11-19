@@ -330,6 +330,43 @@
     </div>
 </div>
 
+<!-- Email Login Modal -->
+<div id="emailLoginModal" class="modal fade" tabindex="-1" aria-labelledby="emailLoginModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailLoginModalLabel">Email Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeEmailModal()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Email Input -->
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Enter your email:</label>
+                    <input type="email" id="email" class="form-control" placeholder="example@example.com" required>
+                    <small id="emailError" class="text-danger" style="display: none;">Please enter a valid email address.</small>
+                </div>
+
+                <!-- Password Input -->
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Enter your password:</label>
+                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                    <small id="passwordError" class="text-danger" style="display: none;">Please enter your password.</small>
+                </div>
+
+                <!-- Login Button -->
+                <button id="emailLoginButton" class="btn btn-primary w-100" onclick="emailLogin()">Login</button>
+
+                <!-- Loading State -->
+                <div id="emailLoading" class="mt-3" style="display: none;">Please wait...</div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeEmailModalButton" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeEmailModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Footer -->
 <footer class="bg-dark text-light py-3">
@@ -427,28 +464,86 @@ function googleLogin() {
         .catch((error) => console.error("Google login error:", error));
 }
 window.googleLogin = googleLogin;
-window.phoneLogin = phoneLogin;
 
-// Email Login function
+// Email Login Function
 function emailLogin() {
-    const email = prompt("Enter your email:");
-    const password = prompt("Enter your password:");
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
 
+    // Validate Email and Password
+    let isValid = true;
+    if (!validateEmail(email)) {
+        emailError.style.display = "block";
+        isValid = false;
+    } else {
+        emailError.style.display = "none";
+    }
+
+    if (!password) {
+        passwordError.style.display = "block";
+        isValid = false;
+    } else {
+        passwordError.style.display = "none";
+    }
+
+    if (!isValid) return;
+
+    showEmailLoading(true);
+
+    // Firebase Email Login
     signInWithEmailAndPassword(auth, email, password)
         .then((result) => {
             const user = result.user;
-            const userEmail = user.email;
-            if (allowedEmails.includes(userEmail)) {
+            if (allowedEmails.includes(user.email)) {
                 updateLoginRecord(user); // Update login record
                 showDashboard();
+                closeEmailModal();
             } else {
                 alert("Access denied: Email not authorized.");
                 auth.signOut();
+                showEmailLoading(false);
             }
         })
-        .catch((error) => console.error("Email login error:", error));
+        .catch((error) => {
+            console.error("Email login error:", error);
+            alert("Login failed: " + error.message);
+            showEmailLoading(false);
+        });
 }
+
+// Validate Email
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Show Email Loading
+function showEmailLoading(isLoading) {
+    const emailLoading = document.getElementById("emailLoading");
+    const emailLoginButton = document.getElementById("emailLoginButton");
+
+    if (isLoading) {
+        emailLoading.style.display = "inline-block";
+        emailLoginButton.disabled = true;
+    } else {
+        emailLoading.style.display = "none";
+        emailLoginButton.disabled = false;
+    }
+}
+
+// Close Email Modal
+function closeEmailModal() {
+    const emailModal = document.getElementById("emailLoginModal");
+    emailModal.style.display = "none";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+}
+
 window.emailLogin = emailLogin;
+window.closeEmailModal = closeEmailModal;
+window.closeEmailModal = closeEmailModal;
 
 // Phone Login function
 
