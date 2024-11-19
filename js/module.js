@@ -414,7 +414,7 @@ function getViewedByField() {
 
     console.log("filmImages Images:", filmImages);
 
-
+/*
     if(!filmImages){
     filmImages = [
         'https://rw-501.github.io/raw/images/main.jpg',
@@ -423,6 +423,7 @@ function getViewedByField() {
         'https://rw-501.github.io/raw/images/main.png'
     ];
 }
+    */
     let currentImageIndex = 0;
 
     // Create overlay to hold the film strip and sprocket holes
