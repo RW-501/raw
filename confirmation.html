@@ -540,19 +540,21 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
         const zip = new JSZip();
 
         if (format === 'pdf') {
-            // Create a single PDF file
             const pdf = new jsPDF();
 
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
-                const imageUrl = img.photoUrl; // Ensure imageUrl is defined here
+                const imageUrl = img.photoUrl;
 
                 console.log(`Downloading photo: ${imageUrl}`);
 
-                // Pass imageUrl to fetchImageAsBase64
                 const imgData = await fetchImageAsBase64(imageUrl);
 
-                pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
+                // Dynamically calculate dimensions
+                const imgWidth = 190;
+                const imgHeight = 140; // Adjust based on original aspect ratio
+                pdf.addImage(imgData, 'JPEG', 10, 10, imgWidth, imgHeight);
+
                 if (i < imageData.length - 1) pdf.addPage();
             }
 
@@ -566,10 +568,9 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
 
             showToast(`PDF file for Event #${eventId} downloaded successfully.`);
         } else if (format === 'zip') {
-            // Add each image to the ZIP file
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
-                const photoUrl = img.photoUrl; // Ensure photoUrl is defined here
+                const photoUrl = img.photoUrl;
 
                 console.log(`Downloading photo: ${photoUrl}`);
 
@@ -594,13 +595,13 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
         }
     } catch (error) {
         console.error("Error during ZIP or PDF generation:", error);
-        showError("An error occurred while generating the file. Please try again.");
+        showError(`An error occurred while generating the file. Please try again.`);
     }
 }
 
 async function fetchImageAsBase64(url) {
-  const response = await fetch(url, { mode: 'cors' });
-  const blob = await response.blob();
+    const response = await fetch(url, { mode: 'cors' });
+    const blob = await response.blob();
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
@@ -609,13 +610,7 @@ async function fetchImageAsBase64(url) {
     });
 }
 
-/*
-// Example usage
-downloadFile(123, 'zip');
-downloadFile(123, 'pdf');
-downloadFile(123, 'jpg');
-downloadFile(123, 'png');
-*/
+
 
 // Send Contact Data Function
 async function sendContact() {
