@@ -552,25 +552,49 @@ async function getHeaderImages(appearOn) {
 window.getHeaderImages = getHeaderImages;
 
 //window.displayHeaderImages = async function() {
+    async function displayHeaderImages() {
+        const page = "HomePage"; // Example of the appearOn value
+        try {
+            const images = await getHeaderImages(page); // Fetch header images
+            console.log("Header Images:Main", images);
+    
+            // Verify images is an array
+            if (!Array.isArray(images) || images.length === 0) {
+                console.warn("No header images found for", page);
+                return;
+            }
+    
+            // Get the image container
+            const imageContainer = document.getElementById("header-images");
+            if (!imageContainer) {
+                console.error("Image container not found");
+                return;
+            }
+    
+            // Clear previous images to avoid duplication
+            imageContainer.innerHTML = "";
+    
+            // Loop through the images and add them to the DOM
+            images.forEach((url) => {
+                const img = document.createElement("img");
+                img.src = url;
+                img.alt = "Header Image"; // SEO-friendly alt text
+                img.classList.add("header-image"); // Add a class for styling
+                imageContainer.appendChild(img);
+            });
+    
+            console.log(`Successfully displayed ${images.length} images.`);
+        } catch (error) {
+            console.error("Error displaying header images:", error);
+        }
+    }
+    window.displayHeaderImages = displayHeaderImages;
 
-async function displayHeaderImages() {
-    const page = "HomePage"; // Example of the appearOn value
-    const images = await getHeaderImages(page);
-    console.log("Header Images:Main   ", images);
+    
 
-    // Logic to display these images on the page
-    const imageContainer = document.getElementById("header-images");
-   // const imageContainer = document.getElementById("Main_Header");
-    images.forEach(url => {
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = "Header Image"; // SEO-friendly alt text
-        img.classList.add("header-image");
-        imageContainer.appendChild(img);
-    });
-}
-window.displayHeaderImages = displayHeaderImages;
 
+
+    
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
   
