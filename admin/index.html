@@ -100,6 +100,69 @@
 </section>
 
 <section>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #qrCanvas {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+<input type="text" id="qrInput" placeholder="Enter text or URL" />
+<button id="generateBtn">Generate QR Code</button>
+<canvas id="qrCanvas"></canvas>
+<script>
+    // Function to generate QR code
+    function generateQRCode(text, canvas) {
+        const size = 200; // Size of QR code
+        const cellSize = 4; // Size of each square (adjust for density)
+        const canvasSize = size * cellSize;
+
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+        // Generate QR code matrix using a simple algorithm
+        // This example uses a basic binary pattern for demonstration purposes
+        // Replace with a real QR code generation logic for actual use
+        for (let y = 0; y < size; y++) {
+            for (let x = 0; x < size; x++) {
+                // Simple pattern for demonstration (replace with real QR data)
+                const isBlack = Math.random() > 0.5; // Example pattern (random dots)
+                ctx.fillStyle = isBlack ? '#000000' : '#ffffff';
+                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            }
+        }
+    }
+
+    // Add event listener to the button
+    const generateBtn = document.getElementById('generateBtn');
+    const qrInput = document.getElementById('qrInput');
+    const qrCanvas = document.getElementById('qrCanvas');
+
+    generateBtn.addEventListener('click', () => {
+        const inputValue = qrInput.value.trim();
+        if (!inputValue) {
+            alert('Please enter text or a URL to generate a QR Code.');
+            return;
+        }
+        generateQRCode(inputValue, qrCanvas);
+    });
+</script>
+
+    </section>
+
+
+
+
+<section>
     <!-- Notifications & Statistics Summary -->
     <div class="row">
         <div class="col-md-8">

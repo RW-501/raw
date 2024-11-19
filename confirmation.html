@@ -499,17 +499,17 @@ async function downloadFile(eventId, format) {
             // Handle individual downloads for jpg/png
             let photoCountDownload = 0;
             console.log(`imageData.: ${imageData}`);
-            console.log(`imageData.title: ${imageData.title}`);
+            console.log(`eventId: ${eventId}`);
 
             imageData.forEach((img, index) => {
-                const fileName = `Event_${sanitizeTitle(imageData.title)}_${index + 1}.${format}`;
+                const fileName = `Event_${eventId}_${index + 1}.${format}`;
                 const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
                 console.log(`Downloading photo: ${photoUrl}`);
 
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
                 link.href = photoUrl;
-                link.download = sanitizeTitle(fileName);
+                link.download = eventId;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -542,12 +542,12 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
                 if (i < imageData.length - 1) pdf.addPage();
             }
-            console.log(`Downloading photo: ${imageData.title}`);
 
+            
             const pdfBlob = pdf.output('blob');
             const pdfLink = document.createElement('a');
             pdfLink.href = URL.createObjectURL(pdfBlob);
-            pdfLink.download = `Event_${sanitizeTitle(imageData.title)}.pdf`;
+            pdfLink.download = `Event_${eventId}.pdf`;
             document.body.appendChild(pdfLink);
             pdfLink.click();
             document.body.removeChild(pdfLink);
@@ -559,13 +559,13 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 const img = imageData[i];
                 const response = await fetch(imageData.photoUrl, { mode: 'no-cors' });
                 const blob = await response.blob();
-                zip.file(`Event_${sanitizeTitle(imageData.title)}_${i + 1}.jpg`, blob);
+                zip.file(`Event_${eventId}_${i + 1}.jpg`, blob);
             }
 
             const zipBlob = await zip.generateAsync({ type: 'blob' });
             const zipLink = document.createElement('a');
             zipLink.href = URL.createObjectURL(zipBlob);
-            zipLink.download = `Event_${sanitizeTitle(imageData.title)}.zip`;
+            zipLink.download = `Event_${eventId}.zip`;
             document.body.appendChild(zipLink);
             zipLink.click();
             document.body.removeChild(zipLink);
