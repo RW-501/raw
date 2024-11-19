@@ -726,8 +726,9 @@ function setupDownloadableImages() {
 }
 
 // Call the function to set up the event listeners
-setupDownloadableImages();
-
+window.onload = function() {
+  setupDownloadableImages();
+};
 
 </script>
 </body>
