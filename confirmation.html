@@ -457,7 +457,7 @@ function addFollowUpMessage() {
         console.warn("No ID found in the URL.");
     }
 
-    setupDownloadableImages();
+
 });
 
  
@@ -692,6 +692,7 @@ async function sendContact() {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded event triggered");
 
+  setupDownloadableImages();
   // Attach the contact form submission handler
   document.getElementById("main-contact-btn").addEventListener("click", function (event) {
     event.preventDefault();
