@@ -746,18 +746,17 @@ async function handleImageDownload(event) {
     console.log("Image Download Triggered", { event, imageUrl });
 
     try {
-        // Check if the image is accessible directly
+        // Attempt to fetch the image
         const response = await fetch(imageUrl, { mode: 'cors' });
+
         if (!response.ok) {
             throw new Error(`Failed to fetch image: ${response.statusText}`);
         }
 
-        // Convert the response to a Blob
+        // Convert the response to a Blob (binary large object)
         const blob = await response.blob();
+        console.log("Blob received", blob);
 
-        console.log("blob  ",blob);
-
-        
         // Create a hidden link element
         const link = document.createElement('a');
         const objectUrl = URL.createObjectURL(blob); // Create a local object URL for the Blob
@@ -774,12 +773,10 @@ async function handleImageDownload(event) {
 
         console.log("Image downloaded successfully:", fileName);
     } catch (error) {
-        // Provide meaningful feedback if the download fails
         console.error("Image download failed:", error);
         alert("Sorry, we couldn't download the image. Please try again later.");
     }
 }
-
 
 
 </script>
