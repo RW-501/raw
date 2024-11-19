@@ -242,7 +242,7 @@ async function fetchEventDetails() {
             const downloadBtn = document.getElementById('download-btn');
             downloadBtn.addEventListener('click', () => {
                 if (collectionPrice === 0 || collectionPrice === "") {
-                    window.location.href = `./confirmation/?id=${eventDoc.id}&ccc=${eventData.coverUrl}`; // Correct URL
+                    window.location.href = `./confirmation/?id=${eventDoc.id}&ccc=${eventData.accessHandShake}`; // Correct URL
                 } else {
                     window.location.href = `./cart/?id=${eventDoc.id}`; // Correct URL
                 }
