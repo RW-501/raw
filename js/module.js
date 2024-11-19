@@ -556,7 +556,7 @@ window.displayHeaderImages = async function() {
 //async function displayHeaderImages() {
     const page = "HomePage"; // Example of the appearOn value
     const images = await getHeaderImages(page);
-    //console.log("Header Images:", images);
+    console.log("Header Images:Main   ", images);
 
     // Logic to display these images on the page
     const imageContainer = document.getElementById("header-images");
