@@ -705,7 +705,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Function to handle image download
+function setupDownloadableImages() {
+    const images = document.querySelectorAll('.downloadable');
 
+    images.forEach(image => {
+        image.addEventListener('click', () => {
+            const imageUrl = image.src; // Get the src of the clicked image
+            const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); // Extract filename
+
+            // Create a hidden link to initiate the download
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = fileName; // Set the file name for download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    });
+}
+
+// Call the function to set up the event listeners
+setupDownloadableImages();
 
 
 </script>
