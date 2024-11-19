@@ -567,7 +567,7 @@ window.getHeaderImages = getHeaderImages;
             }
     
             // Get the image container
-            const imageContainer = document.getElementById("header-images");
+            const imageContainer = document.getElementById("Main_Header");
             if (!imageContainer) {
                 console.error("Image container not found");
                 return;
