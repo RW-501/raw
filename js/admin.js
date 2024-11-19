@@ -297,18 +297,13 @@ window.cleanAndShortenFileName = function(fileName, maxLength = 20) {
 }
 
 
+function formatDate(timestamp) {
+  if (timestamp?.toDate) {
+      return timestamp.toDate().toLocaleString(); // Firestore Timestamp
+  }
+  return new Date(timestamp).toLocaleString(); // Plain date
+}
 
-
-      // Format date to a specific format (including time)
-      function formatDate(dateString) { 
-        // Convert the input string to a Date object
-        const date = new Date(dateString);
-        
-        // Format the date
-        return new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'long', // Full month name
-            day: 'numeric'
-        }).format(date);
-    }
+window.formatDate = formatDate;
+   
     

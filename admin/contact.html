@@ -183,17 +183,24 @@ async function fetchMessages(status = "all") {
         }
 
         const snapshot = await getDocs(messagesQuery);
-        const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        let messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+        // Sort messages by timestamp in descending order (newest first)
+        messages = messages.sort((a, b) => {
+            const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp);
+            const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp);
+            return dateB - dateA; // Newest first
+        });
 
         // Render messages in a table or list
-        let msgCount = 0
+        let msgCount = 0;
         const messageList = document.getElementById("messageList");
         messageList.innerHTML = messages.map((msg) => `
             <tr>
-                <td>${msgCount +=1}</td>
+                <td>${msgCount += 1}</td>
                 <td>${msg.name || "Unknown"}</td>
                 <td>${msg.subject || "Unknown"}</td>
-                <td>${msg.phone || msg.email  || "Unknown"}</td>
+                <td>${msg.phone || msg.email || "Unknown"}</td>
                 <td>${formatDate(msg.timestamp) || "Unknown"}</td>
                 <td>${msg.status || "N/A"}</td>
                 <td>
