@@ -470,7 +470,7 @@ function getViewedByField() {
         filmOverlays.forEach((overlay) => {
             overlay.style.transform = `translate(-${currentImageIndex * 100})`; // Center on X and Y
          //  overlay.style.transform = `translate(-${currentImageIndex * 150}%, -50%)`; // Center on X and Y
-            overlay.style.top = '50%'; // Vertically center relative to the container
+            overlay.style.top = '0'; // Vertically center relative to the container
             overlay.style.left = '50%'; // Horizontally center relative to the container
             overlay.style.position = 'absolute'; // Ensure positioning works as expected
             overlay.style.transition = 'transform 0.5s ease'; // Smooth transition (optional)
