@@ -435,10 +435,13 @@ function addFollowUpMessage() {
     fetchEventDetails(); // Call the function to fetch and display event details
 
 
-// Call this function when needed (e.g., after the page has loaded or when a new set of images is available)
-    setupDownloadableImages(); // Only set up the downloadable images when the page is loaded
+    
+console.log("window.onload");
+  window.setupDownloadableImages = setupDownloadableImages;
+  setupDownloadableImages();
 
 };
+
 
 
 
@@ -776,13 +779,6 @@ async function handleImageDownload(event) {
 }
 
 
-// Initialize the event details on page load
-window.onload = function() {
-console.log("window.onload");
-  setupDownloadableImages();
-  window.setupDownloadableImages = setupDownloadableImages;
-  
-};
 
 </script>
 </body>
