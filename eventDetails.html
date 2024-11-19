@@ -266,6 +266,12 @@ async function fetchEventDetails() {
                     window.location.href = `./cart/?id=${eventDoc.id}`; // Correct URL
                 }
             });
+            console.log("window.location.href   ",window.location.href);
+            console.log("eventId   ",eventId);
+            console.log("eventData.accessHandShake   ",eventData.accessHandShake);
+            console.log("eventDoc.id   ",eventDoc.id);
+
+
         } else {
             console.log("No event found with the given ID.");
         }
