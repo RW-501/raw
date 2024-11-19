@@ -127,7 +127,8 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="./">Home</a></li>
-        <li class="breadcrumb-item"><a href="./eventDetails">Event Details</a></li>
+        <li class="breadcrumb-item"><a href="./events">Events</a></li>
+        <li class="breadcrumb-item"><a id="lastBreadcrumb_a" href="./eventDetails">Event Details</a></li>
         <li class="breadcrumb-item active" aria-current="page">Confirmation</li>
       </ol>
     </nav>
@@ -379,8 +380,23 @@ window.fetchEventDetails = fetchEventDetails;
 
 
 
+    document.addEventListener("DOMContentLoaded", () => {
+    // Get the ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id"); // Assuming the ID is passed as a query parameter 'id'
 
+    // Select the last breadcrumb anchor
+    const lastBreadcrumb = document.getElementById("lastBreadcrumb_a");
 
+    if (id) {
+        // Append the ID to the href
+        lastBreadcrumb.href = `https://rawphotographysite.com/eventDetails?id=${id}`;
+    } else {
+        console.warn("No ID found in the URL.");
+    }
+});
+
+ 
 
 
 function showConfirmationMessage(message) {
