@@ -558,7 +558,7 @@ window.displayHeaderImages = async function() {
     const imageContainer = document.getElementById("header-images");
     images.forEach(url => {
         const img = document.createElement("img");
-        img.src = url;
+        img.src = url.watermarkedImageUrl;
         img.alt = "Header Image"; // SEO-friendly alt text
         img.classList.add("header-image");
         imageContainer.appendChild(img);
@@ -571,6 +571,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   
   
   } else {
+    displayHeaderImages();
 
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
@@ -631,7 +632,6 @@ function getRandomDefaultImage(defaultImages) {
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
         let defaultImages = await getHeaderImages();
-        displayHeaderImages();
 
         
     if(!defaultImages){
