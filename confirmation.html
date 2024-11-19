@@ -549,7 +549,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             // Add each image to the ZIP file
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
-                const response = await fetch(img.photoUrl);
+                const response = await fetch(img.photoUrl, { mode: 'no-cors' });
                 const blob = await response.blob();
                 zip.file(`Event_${eventId}_${i + 1}.jpg`, blob);
             }
@@ -571,8 +571,8 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
 }
 
 async function fetchImageAsBase64(url) {
-    const response = await fetch(url);
-    const blob = await response.blob();
+  const response = await fetch(url, { mode: 'no-cors' });
+  const blob = await response.blob();
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
