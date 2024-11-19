@@ -333,6 +333,7 @@ background-color: rgba(59, 59, 59, 0.577);
     align-items: flex-start;
     width: max-content;
     top: 0;
+    height: 500px;
 
     margin: auto;
     justify-content: center;
