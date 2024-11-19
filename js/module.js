@@ -22,7 +22,7 @@ import {
     FacebookAuthProvider, 
     OAuthProvider, signInAnonymously  ,
     signOut, RecaptchaVerifier,
-    onAuthStateChanged,
+    onAuthStateChanged, signInWithPhoneNumber,
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword 
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
@@ -182,7 +182,7 @@ window.initializeAutoLogout = initializeAutoLogout;
 
   // Export Firestore, Storage, and Auth instances for use in other modules
 export {  db,getStorage, ref, uploadBytes, getDownloadURL,
-    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc   ,
+    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc   ,signInWithPhoneNumber,
      query, updateDoc, setDoc, addDoc,signInAnonymously , orderBy,
       signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
