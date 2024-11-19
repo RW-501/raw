@@ -486,7 +486,7 @@ async function downloadFile(eventId, format) {
         console.log(`Initiating free download for Event #${eventId} as ${format}.`);
 
         // Fetch media images related to this event
-        const imageData = await fetchMediaImages(eventId); // Ensure this function returns an array of image objects
+        const imageData = await fetchMediaImages(eventId);
         if (!imageData || imageData.length === 0) {
             showError("No media available for download.");
             return;
@@ -498,18 +498,15 @@ async function downloadFile(eventId, format) {
         } else {
             // Handle individual downloads for jpg/png
             let photoCountDownload = 0;
-            console.log(`imageData.: ${imageData}`);
-            console.log(`eventId: ${eventId}`);
-
             imageData.forEach((img, index) => {
                 const fileName = `Event_${eventId}_${index + 1}.${format}`;
-                const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
+                const photoUrl = img.photoUrl;
                 console.log(`Downloading photo: ${photoUrl}`);
 
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
                 link.href = photoUrl;
-                link.download = eventId;
+                link.download = fileName;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -543,7 +540,6 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 if (i < imageData.length - 1) pdf.addPage();
             }
 
-            
             const pdfBlob = pdf.output('blob');
             const pdfLink = document.createElement('a');
             pdfLink.href = URL.createObjectURL(pdfBlob);
@@ -557,7 +553,14 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             // Add each image to the ZIP file
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
-                const response = await fetch(imageData.photoUrl, { mode: 'no-cors' });
+                const photoUrl = img.photoUrl;
+                console.log(`Downloading photo: ${photoUrl}`);
+
+                const response = await fetch(photoUrl, { mode: 'cors' });  // Use 'cors' instead of 'no-cors'
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch image ${photoUrl}`);
+                }
+
                 const blob = await response.blob();
                 zip.file(`Event_${eventId}_${i + 1}.jpg`, blob);
             }
@@ -579,7 +582,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
 }
 
 async function fetchImageAsBase64(url) {
-  const response = await fetch(url, { mode: 'no-cors' });
+  const response = await fetch(url, { mode: 'cors' });  // Use 'cors' instead of 'no-cors'
   const blob = await response.blob();
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -588,6 +591,7 @@ async function fetchImageAsBase64(url) {
         reader.readAsDataURL(blob);
     });
 }
+
 /*
 // Example usage
 downloadFile(123, 'zip');
