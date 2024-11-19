@@ -574,7 +574,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   } else {
     window.onload = function() {
 
-    displayHeaderImages();
+    //displayHeaderImages();
 
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
