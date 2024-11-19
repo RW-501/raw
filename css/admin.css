@@ -429,7 +429,7 @@ a:hover {
     
       /* Admin Messages Section */
       .admin-messages-container {
-        background: #252542;
+
         padding: 15px;
         border-radius: 8px;
         margin-bottom: 20px;
@@ -602,11 +602,7 @@ a:hover {
       }
   
   
-      #message-text {
-  
-      background-color: #3a3a3a;
-  }
-  
+      
   
   
   
