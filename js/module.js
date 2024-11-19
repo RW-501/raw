@@ -434,6 +434,7 @@ function getViewedByField() {
         // Create the main film strip container for each image
         const filmStrip = document.createElement('div');
         filmStrip.className = 'film-strip';
+        console.log("filmImages Images:src    ", src);
 
         const img = document.createElement('img');
         img.src = src;
@@ -578,6 +579,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
     window.onload = function() {
 
     //displayHeaderImages();
+    window.addEventListener('load', displayHeaderImages);
 
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
