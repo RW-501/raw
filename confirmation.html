@@ -472,6 +472,8 @@ function handleDownload(eventInfo) {
 
 }
 function sanitizeTitle(title) {
+
+    // Remove special characters and replace spaces with underscores
     return title.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_');
 }
 
@@ -496,6 +498,8 @@ async function downloadFile(eventId, format) {
         } else {
             // Handle individual downloads for jpg/png
             let photoCountDownload = 0;
+            console.log(`imageData.: ${imageData}`);
+            console.log(`imageData.title: ${imageData.title}`);
 
             imageData.forEach((img, index) => {
                 const fileName = `Event_${sanitizeTitle(imageData.title)}_${index + 1}.${format}`;
