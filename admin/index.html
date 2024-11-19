@@ -289,13 +289,13 @@
 
 </main>
 
-<!-- Phone Login Modal (Admin UI) -->
-<div id="phoneLoginModal" class="modal fade" tabindex="-1" aria-labelledby="phoneLoginModalLabel" inert style="display: block;">
+<!-- Phone Login Modal -->
+<div id="phoneLoginModal" class="modal fade" tabindex="-1" aria-labelledby="phoneLoginModalLabel" aria-hidden="false" style="display: block;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="phoneLoginModalLabel">Phone Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
             </div>
             <div class="modal-body">
                 <!-- reCAPTCHA Container -->
@@ -329,6 +329,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Footer -->
 <footer class="bg-dark text-light py-3">
@@ -463,28 +464,34 @@ function closeModal() {
     const modal = document.getElementById("phoneLoginModal");
     modal.style.display = "none";
 }
-
 // Phone login function
 function phoneLogin() {
     const phoneNumber = document.getElementById("phoneNumber").value.trim();
     const phoneNumberError = document.getElementById("phoneNumberError");
-    
+
     // Validate phone number format
     if (!validatePhoneNumber(phoneNumber)) {
+        phoneNumberError.textContent = "Invalid phone number format. Use +1xxxxxxxxxx.";
         phoneNumberError.style.display = "block";
         return;
     }
     phoneNumberError.style.display = "none";
 
     showLoading(true);
-    
+
     // Create reCAPTCHA verifier
-    const appVerifier = new RecaptchaVerifier("recaptcha-container", {
-        size: "invisible",
-        callback: (response) => { /* reCAPTCHA solved - allow signInWithPhoneNumber. */ },
-        expiredCallback: () => alert("reCAPTCHA expired, please try again.")
-    }, auth);
-    
+    const appVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+            size: "invisible",
+            callback: () => {
+                console.log("reCAPTCHA solved.");
+            },
+            expiredCallback: () => alert("reCAPTCHA expired. Please try again."),
+        },
+        auth
+    );
+
     appVerifier.render().then(() => {
         // Start phone number sign-in
         signInWithPhoneNumber(auth, phoneNumber, appVerifier)
@@ -495,23 +502,31 @@ function phoneLogin() {
                 showLoading(false);
             })
             .catch((error) => {
-                console.error("Phone login error:", error);
-                alert("Error during phone login: " + error.message);
+                handleError("Error during phone login", error);
                 showLoading(false);
             });
     });
 }
-// Phone number validation using regex for proper format (e.g., +1xxxxxxxxxx)
+
+// Validate phone number using regex for proper format (e.g., +1xxxxxxxxxx)
 function validatePhoneNumber(phoneNumber) {
-    const phoneRegex = /^\+\d{1,3}\d{1,14}$/; // Simple regex for phone number validation
+    const phoneRegex = /^\+\d{1,3}\d{4,14}$/; // Allows +, country code, and up to 14 digits
     return phoneRegex.test(phoneNumber);
 }
+
 // Verify the code
 function verifyCode() {
     const verificationCode = document.getElementById("verificationCode").value.trim();
 
+    if (!verificationCode) {
+        alert("Please enter the verification code.");
+        return;
+    }
+
     showLoading(true);
-    confirmationResult.confirm(verificationCode)
+
+    confirmationResult
+        .confirm(verificationCode)
         .then((result) => {
             const user = result.user;
             if (allowedPhoneNumbers.includes(user.phoneNumber)) {
@@ -525,49 +540,45 @@ function verifyCode() {
             }
         })
         .catch((error) => {
-            console.error("Error verifying code:", error);
-            alert("Verification failed: " + error.message);
+            handleError("Verification failed", error);
             showLoading(false);
         });
 }
 
-
-
-// Show loading state
-// Show loading state
+// Show or hide loading state
 function showLoading(isLoading) {
     const loadingElement = document.getElementById("loading");
     const sendVerificationCodeBtn = document.getElementById("sendVerificationCode");
     const verifyCodeBtn = document.getElementById("verifyCode");
 
-    if (isLoading) {
-        loadingElement.style.display = "inline-block";
-        sendVerificationCodeBtn.disabled = true;
-        verifyCodeBtn.disabled = true;
-    } else {
-        loadingElement.style.display = "none";
-        sendVerificationCodeBtn.disabled = false;
-        verifyCodeBtn.disabled = false;
-    }
+    loadingElement.style.display = isLoading ? "inline-block" : "none";
+    sendVerificationCodeBtn.disabled = isLoading;
+    verifyCodeBtn.disabled = isLoading;
 }
-// Initialize the modal on page load
-document.addEventListener('DOMContentLoaded', () => {
-    openModal(); // Auto-open the modal (remove this if you want a button to trigger it)
+
+// Handle errors centrally
+function handleError(context, error) {
+    console.error(`${context}:`, error);
+    alert(`${context}: ${error.message}`);
+}
+
+// Initialize modal behavior on page load
+document.addEventListener("DOMContentLoaded", () => {
+    openModal(); // Automatically open the modal (can be removed if not needed)
 });
 
-window.phoneLogin = phoneLogin;
-// When opening the modal, set focus on the modal or a specific element inside it
-document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "false");
-document.getElementById("phoneLoginModalLabel").focus();  // Set focus to a specific input in the modal
-
-// When closing the modal, set focus back to a relevant element outside the modal
-document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "true");
-document.getElementById("closeModalButton").focus();  // Focus on the button that triggered the modal
-
-// Show the dashboard content
+// Show dashboard content
 function showDashboard() {
     document.getElementById("firebaseLogin").style.display = "none";
     document.getElementById("dashboardContent").style.display = "block";
+}
+
+// Close the modal
+function closeModal() {
+    const modal = document.getElementById("phoneLoginModal");
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.getElementById("closeModalButton").focus();
 }
 
 
