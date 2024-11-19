@@ -380,7 +380,6 @@ async function fetchEventDetails() {
 });
 
             function shareOnFacebook() {
-    const eventId = eventData.id;
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
     window.open(facebookShareURL, '_blank');
@@ -388,7 +387,6 @@ async function fetchEventDetails() {
 
 
 function shareOnTwitter() {
-    const eventId = eventData.id;
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
     const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
@@ -397,14 +395,12 @@ function shareOnTwitter() {
 
 
 function shareOnSnapchat() {
-    const eventId = eventData.id;
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const snapchatShareURL = `https://www.snapchat.com/share?url=${encodeURIComponent(shareURL)}&text=Check+out+this+event!`;
     window.open(snapchatShareURL, '_blank');
 }
 
 function copyLink() {
-    const eventId = eventData.id;
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     navigator.clipboard.writeText(shareURL).then(() => {
         showToast('Link copied to clipboard!');
@@ -412,7 +408,6 @@ function copyLink() {
 }
 
 function openUrl() {
-    const eventId = eventData.id;
     const eventURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     window.open(eventURL, '_blank');
 }
