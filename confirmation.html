@@ -720,20 +720,46 @@ function setupDownloadableImages() {
 }
 
 // Function that handles the download logic
-function handleImageDownload(event) {
-    const image = event.target; // The image that was clicked
-    const imageUrl = image.src; // Get the src of the clicked image
-    const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); // Extract the file name
-    console.log("event  ",event);
-    console.log("imageUrl  ",imageUrl);
+async function handleImageDownload(event) {
+    const image = event.target; // The image element that triggered the event
+    const imageUrl = image.src; // Get the image source URL
+    const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || 'downloaded-image'; // Extract or default file name
 
-    // Create a hidden link to initiate the download
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = fileName; // Set the file name for download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link); // Remove the link element after the download is triggered
+    console.log("Image Download Triggered", { event, imageUrl });
+
+    try {
+        // Check if the image is accessible directly
+        const response = await fetch(imageUrl, { mode: 'cors' });
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image: ${response.statusText}`);
+        }
+
+        // Convert the response to a Blob
+        const blob = await response.blob();
+
+        console.log("blob  ",blob);
+
+        
+        // Create a hidden link element
+        const link = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob); // Create a local object URL for the Blob
+        link.href = objectUrl;
+        link.download = fileName; // Set the desired file name
+
+        // Append link to body, trigger download, then clean up
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Release the Blob URL to free up memory
+        URL.revokeObjectURL(objectUrl);
+
+        console.log("Image downloaded successfully:", fileName);
+    } catch (error) {
+        // Provide meaningful feedback if the download fails
+        console.error("Image download failed:", error);
+        alert("Sorry, we couldn't download the image. Please try again later.");
+    }
 }
 
 
