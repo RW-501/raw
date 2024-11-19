@@ -332,7 +332,7 @@ let eventData2 = [];
     }
 
     // Function to fetch event details
-    function setMetaTags(eventData, eventId) {
+    function setMetaTags( eventId) {
     // Function to set meta tags if they are not already set
     function trySetMetaTags() {
         const metaTitle = document.querySelector('meta[property="og:title"]');
@@ -475,9 +475,9 @@ window.onload = async function () {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
     console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
-setMetaTags(eventData2, eventId);
+    setMetaTags( eventId);
 
-    window.open(facebookShareURL, '_blank');
+window.open(twitterShareURL, '_blank');
 
 }
 
@@ -486,8 +486,8 @@ function shareOnTwitter() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
     const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
-    console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
-setMetaTags(eventData2, eventId);
+    console.log(",  eventId   ",eventId);
+setMetaTags( eventId);
 
     window.open(twitterShareURL, '_blank');
 }
@@ -497,9 +497,9 @@ function shareOnSnapchat() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const snapchatShareURL = `https://www.snapchat.com/share?url=${encodeURIComponent(shareURL)}&text=Check+out+this+event!`;
     console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
-setMetaTags(eventData2, eventId);
+    setMetaTags( eventId);
 
-    window.open(snapchatShareURL, '_blank');
+window.open(twitterShareURL, '_blank');
 }
 
 function copyLink() {
