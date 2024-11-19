@@ -233,7 +233,7 @@ async function fetchEventDetails() {
                 const imgElement = document.createElement('img');
                 imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
                 imgElement.alt = "Event Image";
-                imgElement.classList.add('col-4', 'mb-3');
+                imgElement.classList.add("rounded", "lazy-image");
                 galleryContainer.appendChild(imgElement);
             });
 
