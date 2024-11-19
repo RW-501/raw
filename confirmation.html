@@ -556,7 +556,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 const photoUrl = img.photoUrl;
                 console.log(`Downloading photo: ${photoUrl}`);
 
-                const response = await fetch(photoUrl, { mode: 'cors' });  // Use 'cors' instead of 'no-cors'
+                const response = await fetch(photoUrl, { mode: 'no-cors' });  // Use 'cors' instead of 'no-cors'
                 if (!response.ok) {
                     throw new Error(`Failed to fetch image ${photoUrl}`);
                 }
@@ -582,7 +582,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
 }
 
 async function fetchImageAsBase64(url) {
-  const response = await fetch(url, { mode: 'cors' });  // Use 'cors' instead of 'no-cors'
+  const response = await fetch(url, { mode: 'no-cors' });  // Use 'cors' instead of 'no-cors'
   const blob = await response.blob();
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
