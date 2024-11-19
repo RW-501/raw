@@ -412,6 +412,9 @@ function getViewedByField() {
     header.style.overflow = "hidden";
     let filmImages = await getHeaderImages();
 
+    console.log("filmImages Images:", filmImages);
+
+
     if(!filmImages){
     filmImages = [
         'https://rw-501.github.io/raw/images/main.jpg',
