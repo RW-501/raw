@@ -359,7 +359,9 @@ a:hover {
   text-decoration: underline;
 }
 
-
+.table-striped {
+  overflow: auto;
+}
     /* Modal styles */
     .modal {
       position: fixed;
