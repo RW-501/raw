@@ -577,14 +577,14 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   
   } else {
    // window.onload = function() {
-        console.log("Running?  ");
-    //displayHeaderImages();
-    window.addEventListener('load', displayHeaderImages);
+        setTimeout(() => {
+            console.log("Running?  ");
 
-  // Run the function when the page loads
-  window.addEventListener('load', applyBackgroundEffect);
-  // Load the film effect on window load
-  window.addEventListener('load', applyFilmStripEffect);
+            // Run the functions after a 3-second delay
+            displayHeaderImages();
+            applyBackgroundEffect();
+            applyFilmStripEffect();
+        }, 3000); // 3 seconds = 3000 milliseconds
    // }
   }
   
