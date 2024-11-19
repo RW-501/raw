@@ -148,6 +148,10 @@
            <option value="png">PNG</option>
            <option value="pdf">PDF</option>
         </select>
+
+             <!-- Event Images -->
+             <div id="event-gallery-downloadable" class="row mt-5"></div>
+
       </div>
 
 
@@ -181,9 +185,7 @@
   </section>
 </div>
 
-                    <!-- Event Images -->
-                    <div id="event-gallery-downloadable" class="row mt-5"></div>
-
+               
     <div id="bottomArea">
     <button id="download-button">Download Now</button>
     <button id="retry-button" style="display: none;">Retry Download</button>
@@ -572,7 +574,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// Initialize the event details on page load
+window.onload = function() {
+    fetchEventDetails(); // Call the function to fetch and display event details
+};
 
 
 </script>
