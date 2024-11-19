@@ -379,7 +379,12 @@ async function fetchEventDetails() {
     if (metaURL) metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
 
 
-            function shareOnFacebook() {
+        
+
+
+});
+
+function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
     window.open(facebookShareURL, '_blank');
@@ -413,13 +418,18 @@ function openUrl() {
 }
 
 
+// Attach submit event listener to the contact form
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded event triggered");
 
-window.shareOnFacebook = shareOnFacebook;
+
+  window.shareOnFacebook = shareOnFacebook ;
 window.shareOnTwitter = shareOnTwitter;
 window.shareOnSnapchat = shareOnSnapchat;
 window.copyLink = copyLink;
 window.openUrl = openUrl;
 });
+
 
             // Button functionality based on collection price
             const collectionPrice = eventData.collection_price || 0;
