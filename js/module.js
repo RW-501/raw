@@ -551,9 +551,9 @@ async function getHeaderImages(appearOn) {
 
 window.getHeaderImages = getHeaderImages;
 
-window.displayHeaderImages = async function() {
+//window.displayHeaderImages = async function() {
 
-//async function displayHeaderImages() {
+async function displayHeaderImages() {
     const page = "HomePage"; // Example of the appearOn value
     const images = await getHeaderImages(page);
     console.log("Header Images:Main   ", images);
@@ -576,8 +576,8 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   
   
   } else {
-    window.onload = function() {
-
+   // window.onload = function() {
+        console.log("Running?  ");
     //displayHeaderImages();
     window.addEventListener('load', displayHeaderImages);
 
@@ -585,7 +585,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   window.addEventListener('load', applyBackgroundEffect);
   // Load the film effect on window load
   window.addEventListener('load', applyFilmStripEffect);
-    }
+   // }
   }
   
 
