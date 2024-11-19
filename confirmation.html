@@ -338,7 +338,7 @@
             downloadId: storedDownloadId,
             type: storedDownloadId ? 'paid' : 'free'
         };
-        showConfirmationMessage(`You are about to download Event #${storedEventId}.`);
+        showConfirmationMessage(`You are about to download Event ${eventData.title}.`);
     } else {
         showError('Invalid download request.');
         return;
