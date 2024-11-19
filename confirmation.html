@@ -298,7 +298,7 @@
     const storedEventId = localStorage.getItem('eventId');
     const storedDownloadId = localStorage.getItem('downloadId');
     
-    console.log("urlParams:", urlParams);
+    //console.log("urlParams:", urlParams);
 
     if (!eventId) {
             console.error("Event ID not found in the URL.");
@@ -494,7 +494,9 @@ async function downloadFile(eventId, format) {
             imageData.forEach((img, index) => {
                 const fileName = `Event_${eventId}_${index + 1}.${format}`;
                 const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
+                console.log(`Downloading photo: ${photoUrl}`);
 
+/*
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
                 link.href = photoUrl;
@@ -502,7 +504,7 @@ async function downloadFile(eventId, format) {
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-
+*/
                 photoCountDownload++;
             });
 
