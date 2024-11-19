@@ -498,7 +498,6 @@ async function downloadFile(eventId, format) {
                 const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
                 console.log(`Downloading photo: ${photoUrl}`);
 
-/*
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
                 link.href = photoUrl;
@@ -506,7 +505,7 @@ async function downloadFile(eventId, format) {
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-*/
+
                 photoCountDownload++;
             });
 
@@ -535,7 +534,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
                 if (i < imageData.length - 1) pdf.addPage();
             }
-/*
+
             const pdfBlob = pdf.output('blob');
             const pdfLink = document.createElement('a');
             pdfLink.href = URL.createObjectURL(pdfBlob);
@@ -543,7 +542,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             document.body.appendChild(pdfLink);
             pdfLink.click();
             document.body.removeChild(pdfLink);
-*/
+
             showToast(`PDF file for Event #${eventId} downloaded successfully.`);
         } else if (format === 'zip') {
             // Add each image to the ZIP file
