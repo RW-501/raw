@@ -470,10 +470,15 @@ function getViewedByField() {
         filmOverlays.forEach((overlay) => {
             overlay.style.transform = `translate(-${currentImageIndex * 100})`; // Center on X and Y
          //  overlay.style.transform = `translate(-${currentImageIndex * 150}%, -50%)`; // Center on X and Y
-            overlay.style.top = '0'; // Vertically center relative to the container
-            overlay.style.left = '50%'; // Horizontally center relative to the container
-            overlay.style.position = 'absolute'; // Ensure positioning works as expected
-            overlay.style.transition = 'transform 0.5s ease'; // Smooth transition (optional)
+         overlay.style.position = "absolute";
+         overlay.style.top = "0";
+         overlay.style.left = "0";
+         overlay.style.right = "0";
+         overlay.style.bottom = "0";
+         overlay.style.background = "rgba(0, 0, 0, 0.5)"; // Black fade effect
+         overlay.style.transition = "background 1s ease-in-out"; // Smooth fade effect
+         overlay.style.zIndex = "1"; // Place overlay on top of the background
+       //     overlay.style.transition = 'transform 0.5s ease'; // Smooth transition (optional)
         });
     }, 5000);
 }
