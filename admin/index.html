@@ -685,7 +685,7 @@ function openPhoneModal() {
 function closePhoneModal() {
     const phoneModal = new bootstrap.Modal(document.getElementById("phoneLoginModal"));
     phoneModal.hide();  // Properly hides the modal and removes the backdrop
-    modal.setAttribute("aria-hidden", "true");
+    phoneModal.setAttribute("aria-hidden", "true");
     document.getElementById("closeModalButton").focus();
 }
 
