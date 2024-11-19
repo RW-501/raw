@@ -574,7 +574,7 @@ window.getHeaderImages = getHeaderImages;
             }
     
             // Clear previous images to avoid duplication
-            imageContainer.innerHTML = "";
+            //imageContainer.innerHTML = "";
     
             // Loop through the images and add them to the DOM
             images.forEach((url) => {
