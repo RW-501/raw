@@ -69,7 +69,7 @@
     <h1 class="mb-4">Login to Access Dashboard</h1>
     <button onclick="googleLogin()" class="btn btn-primary">Login with Google</button>
     <button onclick="openPhoneModal()" class="btn btn-secondary">Login with Phone</button>
-    <button onclick="emailLogin()" class="btn btn-info">Login with Email</button>
+    <button onclick="openEmailModal()" class="btn btn-info">Login with Email</button>
 </div>
 
 <!-- Dashboard Section (hidden by default) -->
@@ -540,10 +540,17 @@ function closeEmailModal() {
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
 }
+function openEmailModal() {
+    const emailModal = new bootstrap.Modal(document.getElementById("emailLoginModal"), {
+        backdrop: "static", // Prevent closing the modal by clicking outside
+        keyboard: false     // Disable closing with the Esc key
+    });
+    emailModal.show();
+}
 
 window.emailLogin = emailLogin;
 window.closeEmailModal = closeEmailModal;
-window.closeEmailModal = closeEmailModal;
+window.openEmailModal = openEmailModal;
 
 // Phone Login function
 
