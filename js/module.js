@@ -594,7 +594,7 @@ window.getHeaderImages = getHeaderImages;
 
 
 
-    
+
 if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
    // console.log("Admin View");
   
@@ -758,13 +758,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         img.onload = () => {
                             img.classList.add('imgLoaded'); // Add animation class
                         };
-  
+  /*
                         // Handle image load error
                         img.onerror = () => {
                             img.src = 'https://rw-501.github.io/raw/images/main.jpg';
                             img.classList.add('error'); // Add error class for fallback styling
                         };
   
+                        */
                         // Preload adjacent images
                         preloadImages(images, parseInt(img.dataset.index));
   
