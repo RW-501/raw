@@ -58,19 +58,24 @@
 
 }
 
-#event-gallery {
+#event-gallery-downloadable {
   
     display: flex;
     gap: 1rem;
     width: 100%;
-    max-height: 1000px;
+    max-height: 500px;
     flex-wrap: wrap;
     overflow: hidden;
     overflow-y: auto;
     margin: 1rem;
 }
 
-
+style {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    cursor: pointer;
+}
 
     </style>
   </head>
@@ -151,7 +156,7 @@
         </select>
 
              <!-- Event Images -->
-             <div id="event-gallery-downloadable" class="row mt-5"></div>
+             <div id="event-gallery-downloadable" class="media-gallery d-flex flex-wrap gap-2"></div>
 
       </div>
 
