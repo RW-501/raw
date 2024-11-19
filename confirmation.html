@@ -316,22 +316,54 @@
 
     // Check if the eventId and downloadId are passed in the URL
     if (eventId) {
-        if (downloadId) {
-            // Paid download scenario
-            eventInfo = {
-                eventId: eventId,
-                downloadId: downloadId,
-                type: 'paid'
-            };
-            showConfirmationMessage(`Thank you for your purchase! You are about to download the Event ${eventData.title}.`);
-        } else {
-            // Free download scenario
-            eventInfo = {
-                eventId: eventId,
-                type: 'free'
-            };
-            showConfirmationMessage(`You can download ${eventData.title} for free!`);
-        }
+      if (downloadId) {
+    // Paid download scenario
+    eventInfo = {
+        eventId: eventId,
+        downloadId: downloadId,
+        type: 'paid'
+    };
+    showConfirmationMessage(
+        `Thank you for your purchase! You are about to download the event **${eventData.title}**.`
+    );
+    addFollowUpMessage();
+} else {
+    // Free download scenario
+    eventInfo = {
+        eventId: eventId,
+        type: 'free'
+    };
+    showConfirmationMessage(
+        `You can download **${eventData.title}** for free!`
+    );
+    addFollowUpMessage();
+}
+
+// Function to show follow-up message with links
+function addFollowUpMessage() {
+    const followUpMessage = `
+        <div>
+            <p>Thank you for downloading! Stay connected and explore more:</p>
+            <ul>
+                <li><a href="https://www.instagram.com/ms_raw3/" target="_blank">Follow us on Instagram</a></li>
+                <li><a href="https://www.facebook.com/ThatsR.A.W.Photography" target="_blank">Like us on Facebook</a></li>
+                <li><a href="https://rawphotographysite.com/events" target="_blank">Check out more events on our website</a></li>
+            </ul>
+            <p>Also, check out our professional photography platform: 
+                <a href="https://shutterworx.co" target="_blank">ShutterWorx.co</a>.
+            </p>
+        </div>
+    `;
+
+    // Assuming you have a modal or UI area for showing messages
+    const followUpContainer = document.getElementById('followUpContainer');
+    if (followUpContainer) {
+        followUpContainer.innerHTML = followUpMessage;
+    } else {
+        console.warn("Follow-up container not found!");
+    }
+}
+
         
         // Store event and download info in localStorage for retry
         localStorage.setItem('eventId', eventId);
