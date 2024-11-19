@@ -193,6 +193,7 @@ body {
                 max-height: 300px;
                 opacity: 1;
                 font-size: 2rem;
+                padding: 0;
             }
         }
   /* Hero Section Styles */
