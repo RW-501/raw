@@ -295,3 +295,20 @@ window.cleanAndShortenFileName = function(fileName, maxLength = 20) {
   // Combine the shortened name with the extension
   return shortenedFileName + extension;
 }
+
+
+
+
+      // Format date to a specific format (including time)
+      function formatDate(dateString) { 
+        // Convert the input string to a Date object
+        const date = new Date(dateString);
+        
+        // Format the date
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long', // Full month name
+            day: 'numeric'
+        }).format(date);
+    }
+    

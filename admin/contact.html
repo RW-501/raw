@@ -194,7 +194,7 @@ async function fetchMessages(status = "all") {
                 <td>${msg.name || "Unknown"}</td>
                 <td>${msg.subject || "Unknown"}</td>
                 <td>${msg.phone || msg.email  || "Unknown"}</td>
-                <td>${msg.timestamp || "Unknown"}</td>
+                <td>${formatDate(msg.timestamp) || "Unknown"}</td>
                 <td>${msg.status || "N/A"}</td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="viewMessageDetails('${msg.id}')">
