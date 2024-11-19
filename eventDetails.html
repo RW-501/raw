@@ -413,11 +413,11 @@ async function fetchEventDetails() {
     }
 }
 // Initialize the event details on page load
-window.onload = function() {
-
+window.onload = async function () {
     console.log("window.onload");
 
-   const eventId =  fetchEventDetails(); // Call the function to fetch and display event details
+    try {
+    const eventId = await fetchEventDetails(); // Wait for the eventId to be fetched
 
     function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
@@ -461,6 +461,9 @@ window.shareOnSnapchat = shareOnSnapchat;
 window.copyLink = copyLink;
 window.openUrl = openUrl;
 
+} catch (error) {
+        console.error("Error fetching event details:", error);
+    }
 };
 </script>
 </body>
