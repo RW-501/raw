@@ -29,7 +29,12 @@
     margin-right: 1.2rem;
   }
 
-
+  #downloadContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 
 #event-description {
 
@@ -134,7 +139,7 @@
 
         <div id="downloadContainer" >
 
-        <section id="fileTypeContainer" class="py-5"> 
+        <div id="fileTypeContainer" class="py-5"> 
           <div id="confirmation-message"></div>
           <button id="download-button">Download Now</button>
           
@@ -143,7 +148,7 @@
            <option value="png">PNG</option>
            <option value="pdf">PDF</option>
         </select>
-</section>
+      </div>
 
 
   <!-- Contact Form Section -->
