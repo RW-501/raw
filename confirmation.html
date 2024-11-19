@@ -256,6 +256,8 @@
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,query ,
     where, getDocs,getDoc,  storage, collection, auth, analytics } from '../js/module.js';
+    
+    let eventInfo = null;
 
     // Function to fetch media images for the event
     async function fetchMediaImages(eventId) {
@@ -285,7 +287,6 @@
             return;
         }
 
-    let eventInfo = null;
     
         // Fetch event details from Firestore using the modular SDK
         const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
