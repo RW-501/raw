@@ -565,6 +565,7 @@ function handleError(context, error) {
 // Initialize modal behavior on page load
 document.addEventListener("DOMContentLoaded", () => {
     openModal(); // Automatically open the modal (can be removed if not needed)
+    window.phoneLogin = phoneLogin;
 });
 
 // Show dashboard content
@@ -574,6 +575,7 @@ function showDashboard() {
 }
 
 // Close the modal
+/*
 function closeModal() {
     const modal = document.getElementById("phoneLoginModal");
     modal.style.display = "none";
@@ -581,7 +583,7 @@ function closeModal() {
     document.getElementById("closeModalButton").focus();
 }
 
-
+*/
 
 
 
