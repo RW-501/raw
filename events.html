@@ -111,8 +111,10 @@
 
         .card-title {
     font-size: 1.25rem;
-    margin: 1rem;
-}
+    display: block;
+    height: 2rem;
+    line-height: normal;
+  }
 
 .card img {
     transition: transform 0.3s ease;
@@ -183,9 +185,17 @@
         /* Responsive styles for smaller screens */
         @media (max-width: 768px) {
             .card-img-top {
-                height: 150px;
-            }
-        }
+              max-height: 400px;
+        margin: auto;
+        display: block;
+
+    }
+
+    .media-gallery {
+      text-align: justify;
+    }
+}           
+
     </style>
 
 
