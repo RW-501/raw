@@ -145,6 +145,7 @@
            <option value="jpg">JPEG</option>
            <option value="png">PNG</option>
            <option value="pdf">PDF</option>
+           <option value="zip">ZIP</option>
         </select>
 
              <!-- Event Images -->
@@ -256,7 +257,7 @@
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,query ,
     where, getDocs,getDoc,  storage, collection, auth, analytics } from '../js/module.js';
-    
+
     let eventInfo = null;
 
     // Function to fetch media images for the event
@@ -424,6 +425,9 @@ function handleDownload(eventInfo) {
         downloadFile(eventInfo.eventId, format);
     }
 }
+// Include JSZip for zipping files
+const JSZip = window.JSZip;
+const jsPDF = window.jspdf.jsPDF; // If using jsPDF for PDF creation
 
 async function downloadFile(eventId, format) {
     try {
@@ -431,29 +435,34 @@ async function downloadFile(eventId, format) {
 
         // Fetch media images related to this event
         const imageData = await fetchMediaImages(eventId); // Ensure this function returns an array of image objects
-        let photoCountDownload = 0;
-
-        // Download each image based on format
-        imageData.forEach((img, index) => {
-            const fileName = `Event_${eventId}_${index + 1}.${format}`;
-            const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
-
-            // Create a hidden link to initiate the download
-            const link = document.createElement('a');
-            link.href = photoUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            photoCountDownload++;
-        });
-
-        // Notify user after download
-        if (photoCountDownload > 0) {
-            showToast(`Downloaded ${photoCountDownload} files for Event #${eventId} as ${format}.`);
-        } else {
+        if (!imageData || imageData.length === 0) {
             showError("No media available for download.");
+            return;
+        }
+
+        if (format === 'zip' || format === 'pdf') {
+            // Handle ZIP or PDF generation
+            await downloadAsZipOrPdf(eventId, imageData, format);
+        } else {
+            // Handle individual downloads for jpg/png
+            let photoCountDownload = 0;
+
+            imageData.forEach((img, index) => {
+                const fileName = `Event_${eventId}_${index + 1}.${format}`;
+                const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
+
+                // Create a hidden link to initiate the download
+                const link = document.createElement('a');
+                link.href = photoUrl;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                photoCountDownload++;
+            });
+
+            showToast(`Downloaded ${photoCountDownload} files for Event #${eventId} as ${format}.`);
         }
     } catch (error) {
         console.error("Error during free download:", error);
@@ -461,44 +470,74 @@ async function downloadFile(eventId, format) {
     }
 }
 
-async function downloadPaidFile(eventId, downloadId, format) {
+async function downloadAsZipOrPdf(eventId, imageData, format) {
     try {
-        console.log(`Initiating paid download for Event #${eventId} with Download ID: ${downloadId} as ${format}.`);
+        const zip = new JSZip();
 
-        // Fetch media images related to this event
-        const imageData = await fetchMediaImages(eventId); // Ensure this function returns an array of image objects
-        let photoCountDownload = 0;
+        if (format === 'pdf') {
+            // Create a single PDF file
+            const pdf = new jsPDF();
 
-        // Download each image based on format
-        imageData.forEach((img, index) => {
-            const fileName = `Event_${eventId}_${index + 1}.${format}`;
-            const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
+            for (let i = 0; i < imageData.length; i++) {
+                const img = imageData[i];
+                const imageUrl = img.photoUrl;
 
-            // Create a hidden link to initiate the download
-            const link = document.createElement('a');
-            link.href = photoUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                const imgData = await fetchImageAsBase64(imageUrl);
+                pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
+                if (i < imageData.length - 1) pdf.addPage();
+            }
 
-            photoCountDownload++;
-        });
+            const pdfBlob = pdf.output('blob');
+            const pdfLink = document.createElement('a');
+            pdfLink.href = URL.createObjectURL(pdfBlob);
+            pdfLink.download = `Event_${eventId}.pdf`;
+            document.body.appendChild(pdfLink);
+            pdfLink.click();
+            document.body.removeChild(pdfLink);
 
-        // Notify user after download
-        if (photoCountDownload > 0) {
-            showToast(`Paid download successful: ${photoCountDownload} files for Event #${eventId} as ${format}.`);
-        } else {
-            showError("No media available for paid download.");
+            showToast(`PDF file for Event #${eventId} downloaded successfully.`);
+        } else if (format === 'zip') {
+            // Add each image to the ZIP file
+            for (let i = 0; i < imageData.length; i++) {
+                const img = imageData[i];
+                const response = await fetch(img.photoUrl);
+                const blob = await response.blob();
+                zip.file(`Event_${eventId}_${i + 1}.jpg`, blob);
+            }
+
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            const zipLink = document.createElement('a');
+            zipLink.href = URL.createObjectURL(zipBlob);
+            zipLink.download = `Event_${eventId}.zip`;
+            document.body.appendChild(zipLink);
+            zipLink.click();
+            document.body.removeChild(zipLink);
+
+            showToast(`ZIP file for Event #${eventId} downloaded successfully.`);
         }
     } catch (error) {
-        console.error("Error during paid download:", error);
-        showError("An error occurred during the paid download. Please try again.");
+        console.error("Error during ZIP or PDF generation:", error);
+        showError("An error occurred while generating the file. Please try again.");
     }
 }
 
-
-
+async function fetchImageAsBase64(url) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+}
+/*
+// Example usage
+downloadFile(123, 'zip');
+downloadFile(123, 'pdf');
+downloadFile(123, 'jpg');
+downloadFile(123, 'png');
+*/
 
 // Send Contact Data Function
 async function sendContact() {
