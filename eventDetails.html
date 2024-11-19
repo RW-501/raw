@@ -404,6 +404,7 @@ async function fetchEventDetails() {
             console.log("collectionPrice   ",collectionPrice);
 
             */
+           return eventId;
         } else {
             console.log("No event found with the given ID.");
         }
@@ -416,7 +417,7 @@ window.onload = function() {
 
     console.log("window.onload");
 
-    fetchEventDetails(); // Call the function to fetch and display event details
+   const eventId =  fetchEventDetails(); // Call the function to fetch and display event details
 
     function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
