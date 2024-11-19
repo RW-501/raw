@@ -159,13 +159,16 @@
         import { db, doc, getDoc, collection } from '../js/module.js';
         window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
-    const downloadId = urlParams.get('downloadId');
+    const eventId = urlParams.get('id');
+    const downloadId = urlParams.get('ccc');
     const storedEventId = localStorage.getItem('eventId');
     const storedDownloadId = localStorage.getItem('downloadId');
     
     let eventInfo = null;
     
+
+
+
     // Check if the eventId and downloadId are passed in the URL
     if (eventId) {
         if (downloadId) {
