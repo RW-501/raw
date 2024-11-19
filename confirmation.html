@@ -320,7 +320,7 @@
 
         if (eventDoc.exists()) {
             const eventData = eventDoc.data();  // Access the data from the document
-            console.log("Event Data:", eventData);
+        //    console.log("Event Data:", eventData);
 
         let PhotoCount = 0;
             // Fetch media images related to this event
@@ -436,7 +436,7 @@ function addFollowUpMessage() {
 
 
     
-console.log("window.onload");
+//console.log("window.onload");
   window.setupDownloadableImages = setupDownloadableImages;
   setupDownloadableImages();
 
@@ -693,7 +693,7 @@ async function sendContact() {
 
 // Attach submit event listener to the contact form
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOMContentLoaded event triggered");
+ // console.log("DOMContentLoaded event triggered");
 // Attach the contact form submission handler
   document.getElementById("main-contact-btn").addEventListener("click", function (event) {
     event.preventDefault();
