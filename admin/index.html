@@ -320,7 +320,7 @@
     import {  db, doc,getDoc, query, updateDoc,
     setDoc,     signInWithPopup,
     GoogleAuthProvider,
-    FacebookAuthProvider,
+    FacebookAuthProvider,getAuth, signInWithPhoneNumber, RecaptchaVerifier,
     OAuthProvider,arrayUnion ,
     signOut, addDoc , increment,
     onAuthStateChanged,
@@ -386,16 +386,23 @@ function googleLogin() {
 window.googleLogin = googleLogin;
 
 // Phone Login function
+
+
+// Phone Login function
 function phoneLogin() {
+    const auth = getAuth(); // Get Firebase Auth instance
     const phoneNumber = prompt("Enter your phone number with country code (e.g., +1xxxxxxxxxx):");
-    const appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+
+    // Create reCAPTCHA verifier
+    const appVerifier = new RecaptchaVerifier("recaptcha-container", {
         size: "invisible",
         callback: (response) => { /* reCAPTCHA solved - allow signInWithPhoneNumber. */ },
         "expired-callback": () => alert("reCAPTCHA expired, please try again.")
-    });
+    }, auth);
 
     appVerifier.render();
 
+    // Start phone number sign-in
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
         .then((confirmationResult) => {
             const verificationCode = prompt("Enter the verification code sent to your phone:");
@@ -417,28 +424,6 @@ function phoneLogin() {
         });
 }
 window.phoneLogin = phoneLogin;
-
-// Email Login function
-function emailLogin() {
-    const email = prompt("Enter your email:");
-    const password = prompt("Enter your password:");
-
-    signInWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-            const user = result.user;
-            const userEmail = user.email;
-            if (allowedEmails.includes(userEmail)) {
-                updateLoginRecord(user); // Update login record
-                showDashboard();
-            } else {
-                alert("Access denied: Email not authorized.");
-                auth.signOut();
-            }
-        })
-        .catch((error) => console.error("Email login error:", error));
-}
-window.emailLogin = emailLogin;
-
 // Show the dashboard content
 function showDashboard() {
     document.getElementById("firebaseLogin").style.display = "none";
