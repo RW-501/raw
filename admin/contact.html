@@ -90,14 +90,25 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Contact</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
+                <th scope="col">
+                    <button class="btn btn-link p-0" onclick="sortMessages('name')">Name</button>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-link p-0" onclick="sortMessages('subject')">Subject</button>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-link p-0" onclick="sortMessages('contact')">Contact</button>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-link p-0" onclick="sortMessages('date')">Date</button>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-link p-0" onclick="sortMessages('status')">Status</button>
+                </th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
+        
         <tbody id="messageList">
             <!-- Messages will be dynamically loaded here -->
         </tbody>
@@ -169,6 +180,10 @@
   where, getDocs, storage, collection, auth, analytics  } from '../js/module.js';
 
 // Function to fetch and display messages
+let currentMessages = []; // To store the fetched messages
+let currentSortColumn = 'date'; // Default sort column
+let sortOrder = 'desc'; // Default sort order ('asc' or 'desc')
+
 async function fetchMessages(status = "all") {
     try {
         const contactsCollectionRef = collection(db, "Contacts");
@@ -183,38 +198,69 @@ async function fetchMessages(status = "all") {
         }
 
         const snapshot = await getDocs(messagesQuery);
-        let messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        currentMessages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-        // Sort messages by timestamp in descending order (newest first)
-        messages = messages.sort((a, b) => {
-            const dateA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp);
-            const dateB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp);
-            return dateB - dateA; // Newest first
-        });
-
-        // Render messages in a table or list
-        let msgCount = 0;
-        const messageList = document.getElementById("messageList");
-        messageList.innerHTML = messages.map((msg) => `
-            <tr>
-                <td>${msgCount += 1}</td>
-                <td>${msg.name || "Unknown"}</td>
-                <td>${msg.subject || "Unknown"}</td>
-                <td>${msg.phone || msg.email || "Unknown"}</td>
-                <td>${formatDate(msg.timestamp) || "Unknown"}</td>
-                <td>${msg.status || "N/A"}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" onclick="viewMessageDetails('${msg.id}')">
-                        View Details
-                    </button>
-                </td>
-            </tr>
-        `).join("");
-
+        // Default sorting by date
+        sortMessages('date');
     } catch (error) {
         console.error("Error fetching messages:", error);
     }
 }
+
+function sortMessages(column) {
+    if (currentSortColumn === column) {
+        // Toggle sort order if the same column is clicked
+        sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+        // Set new column and default to ascending
+        currentSortColumn = column;
+        sortOrder = 'asc';
+    }
+
+    // Perform sorting
+    currentMessages.sort((a, b) => {
+        let valueA, valueB;
+
+        if (column === 'date') {
+            valueA = a.timestamp?.toDate ? a.timestamp.toDate() : new Date(a.timestamp);
+            valueB = b.timestamp?.toDate ? b.timestamp.toDate() : new Date(b.timestamp);
+        } else {
+            valueA = a[column] || '';
+            valueB = b[column] || '';
+        }
+
+        if (sortOrder === 'asc') {
+            return valueA > valueB ? 1 : -1;
+        } else {
+            return valueA < valueB ? 1 : -1;
+        }
+    });
+
+    // Re-render messages
+    renderMessages();
+}
+
+function renderMessages() {
+    const messageList = document.getElementById("messageList");
+    let msgCount = 0;
+
+    messageList.innerHTML = currentMessages.map((msg) => `
+        <tr>
+            <td>${msgCount += 1}</td>
+            <td>${msg.name || "Unknown"}</td>
+            <td>${msg.subject || "Unknown"}</td>
+            <td>${msg.phone || msg.email || "Unknown"}</td>
+            <td>${formatDate(msg.timestamp) || "Unknown"}</td>
+            <td>${msg.status || "N/A"}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="viewMessageDetails('${msg.id}')">
+                    View Details
+                </button>
+            </td>
+        </tr>
+    `).join("");
+}
+
 
 // Function to display a specific message's details
 async function viewMessageDetails(messageId) {
@@ -333,7 +379,8 @@ window.onload = function () {
 window.fetchMessages = fetchMessages;
 // Export or attach functions to the global window object if needed
 window.viewMessageDetails = viewMessageDetails;
-
+window.sortMessages = sortMessages;
+window.renderMessages = renderMessages;
 
 fetchMessages("all");
 
