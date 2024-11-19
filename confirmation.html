@@ -372,6 +372,17 @@
     });
 };
 
+
+window.fetchEventDetails = fetchEventDetails;
+// Initialize the event details on page load
+    fetchEventDetails(); // Call the function to fetch and display event details
+
+
+
+
+
+
+
 function showConfirmationMessage(message) {
     document.getElementById('confirmation-message').innerHTML = message;
     document.getElementById('download-button').disabled = false;
@@ -573,11 +584,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-// Initialize the event details on page load
-window.onload = function() {
-    fetchEventDetails(); // Call the function to fetch and display event details
-};
 
 
 </script>
