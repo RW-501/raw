@@ -724,6 +724,8 @@ function handleImageDownload(event) {
     const image = event.target; // The image that was clicked
     const imageUrl = image.src; // Get the src of the clicked image
     const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); // Extract the file name
+    console.log("event  ",event);
+    console.log("imageUrl  ",imageUrl);
 
     // Create a hidden link to initiate the download
     const link = document.createElement('a');
