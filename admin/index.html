@@ -426,6 +426,28 @@ function googleLogin() {
         .catch((error) => console.error("Google login error:", error));
 }
 window.googleLogin = googleLogin;
+window.phoneLogin = phoneLogin;
+
+// Email Login function
+function emailLogin() {
+    const email = prompt("Enter your email:");
+    const password = prompt("Enter your password:");
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+            const user = result.user;
+            const userEmail = user.email;
+            if (allowedEmails.includes(userEmail)) {
+                updateLoginRecord(user); // Update login record
+                showDashboard();
+            } else {
+                alert("Access denied: Email not authorized.");
+                auth.signOut();
+            }
+        })
+        .catch((error) => console.error("Email login error:", error));
+}
+window.emailLogin = emailLogin;
 
 // Phone Login function
 
