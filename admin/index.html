@@ -324,7 +324,7 @@
                 <div id="loading" class="mt-3" style="display: none;">Please wait...</div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Cancel</button>
+                <button id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.phoneLogin = phoneLogin;
 // When opening the modal, set focus on the modal or a specific element inside it
 document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "false");
-document.getElementById("modalInputField").focus();  // Set focus to a specific input in the modal
+document.getElementById("phoneLoginModalLabel").focus();  // Set focus to a specific input in the modal
 
 // When closing the modal, set focus back to a relevant element outside the modal
 document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "true");
