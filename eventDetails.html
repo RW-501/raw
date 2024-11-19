@@ -374,8 +374,8 @@ async function fetchEventDetails() {
 
     if (metaTitle) metaTitle.content = eventData.title;
     if (metaDescription) metaDescription.content = eventData.description;
-    if (metaImage) metaImage.content = eventData.imageUrl; // Ensure a valid image URL is provided
-    if (metaURL) metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventData.id}`;
+    if (metaImage) metaImage.content = eventData.coverUrl; // Ensure a valid image URL is provided
+    if (metaURL) metaURL.content = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
 
 
             function shareOnFacebook() {
