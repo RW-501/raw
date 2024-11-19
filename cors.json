@@ -1,7 +1,11 @@
 [
     {
-      "origin": ["https://rawphotographysite.com"],
-      "method": ["GET"],
+      "origin": [
+        "https://rawphotographysite.com",
+        "http://rawphotographysite.com",
+        "https://rawphotographysite.com/confirmation"  
+     ],
+      "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     }
   ]
