@@ -22,7 +22,7 @@ import {
     FacebookAuthProvider, 
     OAuthProvider, signInAnonymously  ,
     signOut, RecaptchaVerifier,
-    onAuthStateChanged, 
+    onAuthStateChanged,
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword 
 } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js';
@@ -187,7 +187,7 @@ export {  db,getStorage, ref, uploadBytes, getDownloadURL,
       signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
        OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
         createUserWithEmailAndPassword, signInWithEmailAndPassword,
-         where, getDocs, storage, collection, auth, analytics };
+         where, getDocs, storage, getAuth, collection, auth, analytics };
 
 
 // Utility variables
