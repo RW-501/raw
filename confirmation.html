@@ -498,7 +498,7 @@ async function downloadFile(eventId, format) {
             let photoCountDownload = 0;
 
             imageData.forEach((img, index) => {
-                const fileName = `Event_${eventId}_${index + 1}.${format}`;
+                const fileName = `Event_${sanitizeTitle(imageData.title)}_${index + 1}.${format}`;
                 const photoUrl = img.photoUrl; // Ensure this is the correct field for the image URL
                 console.log(`Downloading photo: ${photoUrl}`);
 
