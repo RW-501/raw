@@ -322,7 +322,7 @@
     signInWithEmailAndPassword,query ,
     where, getDocs,getDoc,  storage, collection, auth, analytics } from '../js/module.js';
 // Function to fetch media images for the event
-
+let eventData2 = [];
     // Function to fetch media images for the event
     async function fetchMediaImages(eventId) {
         const mediaRef = collection(db, 'Media');
@@ -423,14 +423,12 @@ async function fetchEventDetails() {
        
        
        
-       const eventData2 = {
+        eventData2 = {
     title: eventData.title,
     description: eventData.description,
     coverUrl: eventData.coverUrl
 };
 
-console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
-setMetaTags(eventData2, eventId);
 
 
         
@@ -476,7 +474,11 @@ window.onload = async function () {
     function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
+    console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
+setMetaTags(eventData2, eventId);
+
     window.open(facebookShareURL, '_blank');
+
 }
 
 
@@ -484,6 +486,9 @@ function shareOnTwitter() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
     const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
+    console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
+setMetaTags(eventData2, eventId);
+
     window.open(twitterShareURL, '_blank');
 }
 
@@ -491,6 +496,9 @@ function shareOnTwitter() {
 function shareOnSnapchat() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const snapchatShareURL = `https://www.snapchat.com/share?url=${encodeURIComponent(shareURL)}&text=Check+out+this+event!`;
+    console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
+setMetaTags(eventData2, eventId);
+
     window.open(snapchatShareURL, '_blank');
 }
 
