@@ -156,14 +156,14 @@
            
                <!-- Event Images -->
                <div id="event-gallery-downloadable" class="media-gallery d-flex flex-wrap gap-2"></div>
-               <div id="" class="mb-3 py-5">Bulk download is disabled for now, tap on a picture to download</div>
+               <div id="" class="mb-3 py-5">Bulk download or tap on a picture to download</div>
 
                
                <select id="file-format">
-                <option disabled value="jpg">JPEG</option>
-                <option  disabled value="png">PNG</option>
-                <option  disabled value="pdf">PDF</option>
-                <option  disabled value="zip">ZIP</option>
+                <option  value="jpg">JPEG</option>
+                <option   value="png">PNG</option>
+                <option   value="pdf">PDF</option>
+                <option   value="zip">ZIP</option>
              </select>
           <button id="download-button" class="mb-3">Download Now</button>
           <div id="followUpContainer" class="mb-3"></div>
@@ -514,7 +514,7 @@ async function downloadFile(eventId, format) {
             imageData.forEach((img, index) => {
                 const fileName = `Event_${eventId}_${index + 1}.${format}`;
                 const photoUrl = img.photoUrl;
-                console.log(`Downloading photo: ${photoUrl}`);
+              //  console.log(`Downloading photo: ${photoUrl}`);
 
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
@@ -717,17 +717,17 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to set up downloadable images
 function setupDownloadableImages() {
     const images = document.querySelectorAll('.downloadable'); // Select all images with class 'downloadable'
-    console.log("setupDownloadableImages");
+   // console.log("setupDownloadableImages");
 
     if (images.length === 0) { // Check if there are no images
-        console.log("No downloadable images found. Retrying...");
+    //    console.log("No downloadable images found. Retrying...");
 
         setTimeout(() => {
-            console.log("Initializing setupDownloadableImages again...");
+       //     console.log("Initializing setupDownloadableImages again...");
             setupDownloadableImages(); // Retry after 10 seconds
         }, 10000); // 10,000 milliseconds = 10 seconds
     } else {
-        console.log("Found downloadable images!");
+      //  console.log("Found downloadable images!");
 
         // Add click event listeners to each image
         images.forEach(image => {
@@ -743,7 +743,7 @@ async function handleImageDownload(event) {
     const imageUrl = image.src; // Get the image source URL
     const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || 'downloaded-image'; // Extract or default file name
 
-    console.log("Image Download Triggered", { event, imageUrl });
+   // console.log("Image Download Triggered", { event, imageUrl });
 
     try {
         // Attempt to fetch the image
@@ -755,7 +755,6 @@ async function handleImageDownload(event) {
 
         // Convert the response to a Blob (binary large object)
         const blob = await response.blob();
-        console.log("Blob received", blob);
 
         // Create a hidden link element
         const link = document.createElement('a');
