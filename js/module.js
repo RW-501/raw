@@ -468,7 +468,8 @@ function getViewedByField() {
         // Find the current film overlay and animate it
         const filmOverlays = document.querySelectorAll('.film-overlay'); 
         filmOverlays.forEach((overlay) => {
-            overlay.style.transform = `translate(-${currentImageIndex * 150}%, -50%)`; // Center on X and Y
+            overlay.style.transform = `translate(-${currentImageIndex * 100})`; // Center on X and Y
+         //  overlay.style.transform = `translate(-${currentImageIndex * 150}%, -50%)`; // Center on X and Y
             overlay.style.top = '50%'; // Vertically center relative to the container
             overlay.style.left = '50%'; // Horizontally center relative to the container
             overlay.style.position = 'absolute'; // Ensure positioning works as expected
