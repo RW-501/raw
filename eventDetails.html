@@ -366,6 +366,7 @@ async function fetchEventDetails() {
                 imgElement.classList.add("rounded", "lazy-image");
                 galleryContainer.appendChild(imgElement);
             });
+            document.addEventListener("DOMContentLoaded", () => {
 
     const metaTitle = document.querySelector('meta[property="og:title"]');
     const metaDescription = document.querySelector('meta[property="og:description"]');
@@ -410,6 +411,9 @@ function openUrl() {
     const eventURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     window.open(eventURL, '_blank');
 }
+
+});
+
 
 window.shareOnFacebook = shareOnFacebook;
 window.shareOnTwitter = shareOnTwitter;
