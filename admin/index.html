@@ -106,60 +106,161 @@
             text-align: center;
             margin-top: 50px;
         }
+
         #qrCanvas {
             margin-top: 20px;
             border: 1px solid #ccc;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
         }
-    </style>
 
-<input type="text" id="qrInput" placeholder="Enter text or URL" />
-<button id="generateBtn">Generate QR Code</button>
-<canvas id="qrCanvas"></canvas>
-<script>
-    // Function to generate QR code
-    function generateQRCode(text, canvas) {
-        const size = 200; // Size of QR code
-        const cellSize = 4; // Size of each square (adjust for density)
-        const canvasSize = size * cellSize;
+        #generateBtn, #downloadBtn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
 
-        canvas.width = canvasSize;
-        canvas.height = canvasSize;
+        #generateBtn:hover, #downloadBtn:hover {
+            background-color: #0056b3;
+        }
 
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvasSize, canvasSize);
+        .spinner {
+            display: none;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #007BFF;
+        }
 
-        // Generate QR code matrix using a simple algorithm
-        // This example uses a basic binary pattern for demonstration purposes
-        // Replace with a real QR code generation logic for actual use
-        for (let y = 0; y < size; y++) {
-            for (let x = 0; x < size; x++) {
-                // Simple pattern for demonstration (replace with real QR data)
-                const isBlack = Math.random() > 0.5; // Example pattern (random dots)
-                ctx.fillStyle = isBlack ? '#000000' : '#ffffff';
-                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        #inputWrapper {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px 12px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            #inputWrapper {
+                width: 90%;
+                margin: auto;
             }
         }
-    }
 
-    // Add event listener to the button
-    const generateBtn = document.getElementById('generateBtn');
-    const qrInput = document.getElementById('qrInput');
-    const qrCanvas = document.getElementById('qrCanvas');
+    </style>
 
-    generateBtn.addEventListener('click', () => {
-        const inputValue = qrInput.value.trim();
-        if (!inputValue) {
-            alert('Please enter text or a URL to generate a QR Code.');
-            return;
+    <div id="inputWrapper">
+        <input type="text" id="qrInput" placeholder="Enter text or URL" />
+        <button id="generateBtn">Generate QR Code</button>
+        <button id="downloadBtn" style="display:none;">Download QR Code</button>
+    </div>
+    <div class="spinner" id="spinner">Generating...</div>
+    <canvas id="qrCanvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.0/dist/qrious.min.js"></script>
+    <script>
+        // Function to sanitize and remove http:// or https://
+        function sanitizeInput(input) {
+            let sanitizedInput = input.trim();
+
+            // Remove http:// or https:// if present
+            sanitizedInput = sanitizedInput.replace(/^https?:\/\//i, '');
+
+            return sanitizedInput;
         }
-        generateQRCode(inputValue, qrCanvas);
-    });
-</script>
 
-    </section>
+        // Function to generate QR Code using QRious library
+        function generateQRCode(text, canvas, image = null, size = 300, level = 'H') {
+            const qr = new QRious({
+                element: canvas,
+                value: text,
+                size: size,
+                level: level,
+                background: '#ffffff',
+                foreground: '#000000',
+            });
 
+            if (image) {
+                const ctx = canvas.getContext('2d');
+                const imageSize = size / 4; // Adjust size of the image in the center (25% of QR size)
+                const xPos = (size - imageSize) / 2; // Center the image horizontally
+                const yPos = (size - imageSize) / 2; // Center the image vertically
 
+                // Wait for the image to load before drawing it onto the canvas
+                const img = new Image();
+                img.onload = function () {
+                    ctx.drawImage(img, xPos, yPos, imageSize, imageSize);
+                };
+                img.src = image; // Set the image source
+            }
+        }
+
+        // Function to handle button click and QR code generation
+        function handleGenerateQRCode() {
+            const inputValue = qrInput.value.trim();
+            if (!inputValue) {
+                alert("Please enter text or a URL to generate a QR Code.");
+                return;
+            }
+
+            // Sanitize the input (remove http:// or https://)
+            const sanitizedInput = sanitizeInput(inputValue);
+
+            // Show loading spinner while generating QR code
+            document.getElementById("spinner").style.display = "inline-block";
+
+            // Delay QR code generation to simulate loading
+            setTimeout(() => {
+                // Generate the QR code with a placeholder image in the center
+                generateQRCode(sanitizedInput, qrCanvas, 'https://rawphotographysite.com/images/main.png'); // Example image URL
+
+                // Hide spinner after QR code generation
+                document.getElementById("spinner").style.display = "none";
+
+                // Show the download button after QR code generation
+                document.getElementById("downloadBtn").style.display = "inline-block";
+
+                // Add click event to redirect when the canvas is clicked
+                qrCanvas.onclick = function () {
+                    window.location.href = sanitizedInput;
+                };
+            }, 500); // Simulate loading delay
+        }
+
+        // Function to download QR code as an image
+        function downloadQRCode() {
+            const canvas = qrCanvas;
+            const imageUrl = canvas.toDataURL("image/png");
+
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = 'qr_code.png';
+            link.click();
+        }
+
+        // Add event listener to the buttons
+        const generateBtn = document.getElementById("generateBtn");
+        const qrInput = document.getElementById("qrInput");
+        const qrCanvas = document.getElementById("qrCanvas");
+        const downloadBtn = document.getElementById("downloadBtn");
+
+        generateBtn.addEventListener("click", handleGenerateQRCode);
+        downloadBtn.addEventListener("click", downloadQRCode);
+    </script>
+</section>
 
 
 <section>
