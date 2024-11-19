@@ -325,7 +325,7 @@
                 <div id="loading" class="mt-3" style="display: none;">Please wait...</div>
             </div>
             <div class="modal-footer">
-                <button id="closeModalButton" class="btn btn-secondary"data-bs-dismiss="modal" aria-label="Close"  onclick="closePhoneModal()">Cancel</button>
+                <button id="closeModalButton" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"  onclick="closePhoneModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -683,11 +683,25 @@ function openPhoneModal() {
 
 
 function closePhoneModal() {
-    const phoneModal = new bootstrap.Modal(document.getElementById("phoneLoginModal"));
-    phoneModal.hide();  // Properly hides the modal and removes the backdrop
-    phoneModal.setAttribute("aria-hidden", "true");
+    // Get the modal element
+    const modalElement = document.getElementById("phoneLoginModal");
+
+    // Create a Bootstrap Modal instance for the element
+    const phoneModal = bootstrap.Modal.getInstance(modalElement);
+
+    // If the modal instance exists, hide it
+    if (phoneModal) {
+        phoneModal.hide(); // Properly hides the modal and removes the backdrop
+    }
+
+    // Optionally, clear any input fields or reset the state inside the modal
+    document.getElementById("phoneNumber").value = "";
+    document.getElementById("verificationCode").value = "";
+
+    // Set focus to a specific button (if needed)
     document.getElementById("closeModalButton").focus();
 }
+
 
 
 window.verifyCode = verifyCode;
