@@ -534,6 +534,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.phoneLogin = phoneLogin;
+// When opening the modal, set focus on the modal or a specific element inside it
+document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "false");
+document.getElementById("modalInputField").focus();  // Set focus to a specific input in the modal
+
+// When closing the modal, set focus back to a relevant element outside the modal
+document.getElementById("phoneLoginModal").setAttribute("aria-hidden", "true");
+document.getElementById("closeModalButton").focus();  // Focus on the button that triggered the modal
 
 // Show the dashboard content
 function showDashboard() {
