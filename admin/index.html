@@ -458,6 +458,8 @@ const recaptchaContainer = document.getElementById("recaptcha-container");
 
 // Phone login function
 function phoneLogin() {
+    openModal();
+
     const phoneNumber = document.getElementById("phoneNumber").value.trim();
     const phoneNumberError = document.getElementById("phoneNumberError");
 
@@ -498,7 +500,6 @@ function phoneLogin() {
                 showLoading(false);
             });
     });
-    openModal();
 }
 
 // Validate phone number using regex for proper format (e.g., +1xxxxxxxxxx)
@@ -554,12 +555,8 @@ function handleError(context, error) {
     console.error(`${context}:`, error);
     alert(`${context}: ${error.message}`);
 }
+window.phoneLogin = phoneLogin;
 
-// Initialize modal behavior on page load
-document.addEventListener("DOMContentLoaded", () => {
-  //  openModal(); // Automatically open the modal (can be removed if not needed)
-    window.phoneLogin = phoneLogin;
-});
 
 // Show dashboard content
 function showDashboard() {
