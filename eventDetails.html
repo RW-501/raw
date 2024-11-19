@@ -261,15 +261,23 @@ async function fetchEventDetails() {
             const downloadBtn = document.getElementById('download-btn');
             downloadBtn.addEventListener('click', () => {
                 if (collectionPrice === 0 || collectionPrice === "") {
-                    window.location.href = `https://rawphotographysite.com/confirmation/?id=${eventId}&ccc=${eventData.accessHandShake}`; // Correct URL
+                   // window.location.href = `https://rawphotographysite.com/confirmation/?id=${eventId}&ccc=${eventData.accessHandShake}`; // Correct URL
                 } else {
-                    window.location.href = `https://rawphotographysite.com/cart/?id=${eventId}`; // Correct URL
+                  //  window.location.href = `https://rawphotographysite.com/cart/?id=${eventId}`; // Correct URL
                 }
+
+                console.log("url 1   ",`https://rawphotographysite.com/confirmation/?id=${eventId}&ccc=${eventData.accessHandShake}`);
+                console.log("url 2   ",`https://rawphotographysite.com/cart/?id=${eventId}`);
+                console.log("eventId   ",eventId);
+            console.log("eventData.accessHandShake   ",eventData.accessHandShake);
+            console.log("collectionPrice   ",collectionPrice);
+
+
             });
 
             console.log("eventId   ",eventId);
             console.log("eventData.accessHandShake   ",eventData.accessHandShake);
-            console.log("eventDoc.id   ",eventDoc.id);
+            console.log("collectionPrice   ",collectionPrice);
 
             
         } else {
