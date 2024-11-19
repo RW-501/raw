@@ -520,11 +520,11 @@ async function getHeaderImages(appearOn) {
             // Query for public images if 'appearOn' is not provided
             headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
         }
-        console.log(`headerImagesQuery ${headerImagesQuery} .`); // Log the number of images found
+    //  /  console.log(`headerImagesQuery ${headerImagesQuery} .`); 
 
         // Execute the query and retrieve the snapshot of matching documents
         const querySnapshot = await getDocs(headerImagesQuery);
-        console.log(`Found ${querySnapshot.size} images.`); // Log the number of images found
+       // console.log(`Found ${querySnapshot.size} images.`); // Log the number of images found
 
         // Map over the documents to extract the 'watermarkedImageUrl' field, ensuring it exists
         const images = querySnapshot.docs.map(doc => {
@@ -552,7 +552,7 @@ window.displayHeaderImages = async function() {
 //async function displayHeaderImages() {
     const page = "HomePage"; // Example of the appearOn value
     const images = await getHeaderImages(page);
-    console.log("Header Images:", images);
+    //console.log("Header Images:", images);
 
     // Logic to display these images on the page
     const imageContainer = document.getElementById("header-images");
