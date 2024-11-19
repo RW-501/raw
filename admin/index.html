@@ -668,10 +668,14 @@ function showDashboard() {
 // Close the modal
 
 function openPhoneModal() {
-    const modal = document.getElementById("phoneLoginModal");
-    modal.style.display = "block";
-    modal.setAttribute("aria-hidden", "fasle");
-   // document.getElementById("closeModalButton").focus();
+    const modal = new bootstrap.Modal(document.getElementById("phoneLoginModal"), {
+        backdrop: 'static',  // Prevent closing by clicking outside
+        keyboard: false      // Disable closing by pressing the escape key
+    });
+    modal.show();
+    
+    // Optionally, focus on a specific element in the modal
+    document.getElementById("phoneNumber").focus();  // Example of focusing on the phone number input
 }
 
 
