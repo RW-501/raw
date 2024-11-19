@@ -691,10 +691,7 @@ async function sendContact() {
 // Attach submit event listener to the contact form
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded event triggered");
-
-  setupDownloadableImages();
-  window.setupDownloadableImages = setupDownloadableImages;
-  // Attach the contact form submission handler
+// Attach the contact form submission handler
   document.getElementById("main-contact-btn").addEventListener("click", function (event) {
     event.preventDefault();
     sendContact();
@@ -767,7 +764,13 @@ async function handleImageDownload(event) {
 }
 
 
-
+// Initialize the event details on page load
+window.onload = function() {
+console.log("window.onload");
+  setupDownloadableImages();
+  window.setupDownloadableImages = setupDownloadableImages;
+  
+};
 
 </script>
 </body>
