@@ -471,6 +471,10 @@ function handleDownload(eventInfo) {
     downloadFile(eventInfo.eventId, format);
 
 }
+function sanitizeTitle(title) {
+    return title.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_');
+}
+
 // Include JSZip for zipping files
 const JSZip = window.JSZip;
 const jsPDF = window.jspdf.jsPDF; // If using jsPDF for PDF creation
@@ -501,7 +505,7 @@ async function downloadFile(eventId, format) {
                 // Create a hidden link to initiate the download
                 const link = document.createElement('a');
                 link.href = photoUrl;
-                link.download = fileName;
+                link.download = sanitizeTitle(fileName);
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -534,11 +538,12 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
                 if (i < imageData.length - 1) pdf.addPage();
             }
+            console.log(`Downloading photo: ${imageData.title}`);
 
             const pdfBlob = pdf.output('blob');
             const pdfLink = document.createElement('a');
             pdfLink.href = URL.createObjectURL(pdfBlob);
-            pdfLink.download = `Event_${eventId}.pdf`;
+            pdfLink.download = `Event_${sanitizeTitle(imageData.title)}.pdf`;
             document.body.appendChild(pdfLink);
             pdfLink.click();
             document.body.removeChild(pdfLink);
@@ -548,15 +553,15 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             // Add each image to the ZIP file
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
-                const response = await fetch(img.photoUrl, { mode: 'no-cors' });
+                const response = await fetch(imageData.photoUrl, { mode: 'no-cors' });
                 const blob = await response.blob();
-                zip.file(`Event_${eventId}_${i + 1}.jpg`, blob);
+                zip.file(`Event_${sanitizeTitle(imageData.title)}_${i + 1}.jpg`, blob);
             }
 
             const zipBlob = await zip.generateAsync({ type: 'blob' });
             const zipLink = document.createElement('a');
             zipLink.href = URL.createObjectURL(zipBlob);
-            zipLink.download = `Event_${eventId}.zip`;
+            zipLink.download = `Event_${sanitizeTitle(imageData.title)}.zip`;
             document.body.appendChild(zipLink);
             zipLink.click();
             document.body.removeChild(zipLink);
