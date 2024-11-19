@@ -433,6 +433,8 @@ function addFollowUpMessage() {
     fetchEventDetails(); // Call the function to fetch and display event details
 
 
+// Call this function when needed (e.g., after the page has loaded or when a new set of images is available)
+    setupDownloadableImages(); // Only set up the downloadable images when the page is loaded
 
 };
 
@@ -730,10 +732,7 @@ function handleImageDownload(event) {
     document.body.removeChild(link); // Remove the link element after the download is triggered
 }
 
-// Call this function when needed (e.g., after the page has loaded or when a new set of images is available)
-window.onload = function() {
-    setupDownloadableImages(); // Only set up the downloadable images when the page is loaded
-}
+
 
 
 </script>
