@@ -546,7 +546,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
                 const imageUrl = img.photoUrl;
-                console.log(`Downloading photo: ${imageUrl}`);
+             //   console.log(`Downloading photo: ${imageUrl}`);
 
                 const imgData = await fetchImageAsBase64(imageUrl);
                 pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
@@ -569,7 +569,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
                 const photoUrl = img.photoUrl;
                // console.log(`Downloading photo: ${photoUrl}`);
 
-               const response = await fetch(imageUrl, { mode: 'cors' });
+               const response = await fetch(photoUrl, { mode: 'cors' });
                if (!response.ok) {
                     throw new Error(`Failed to fetch image ${photoUrl}`);
                 }
