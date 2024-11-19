@@ -525,12 +525,13 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             for (let i = 0; i < imageData.length; i++) {
                 const img = imageData[i];
                 const imageUrl = img.photoUrl;
+                console.log(`Downloading photo: ${photoUrl}`);
 
                 const imgData = await fetchImageAsBase64(imageUrl);
                 pdf.addImage(imgData, 'JPEG', 10, 10, 190, 140); // Adjust dimensions as needed
                 if (i < imageData.length - 1) pdf.addPage();
             }
-
+/*
             const pdfBlob = pdf.output('blob');
             const pdfLink = document.createElement('a');
             pdfLink.href = URL.createObjectURL(pdfBlob);
@@ -538,7 +539,7 @@ async function downloadAsZipOrPdf(eventId, imageData, format) {
             document.body.appendChild(pdfLink);
             pdfLink.click();
             document.body.removeChild(pdfLink);
-
+*/
             showToast(`PDF file for Event #${eventId} downloaded successfully.`);
         } else if (format === 'zip') {
             // Add each image to the ZIP file
