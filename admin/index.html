@@ -535,8 +535,8 @@ function showEmailLoading(isLoading) {
 
 // Close Email Modal
 function closeEmailModal() {
-    const emailModal = document.getElementById("emailLoginModal");
-    emailModal.style.display = "none";
+    const emailModal = new bootstrap.Modal(document.getElementById("emailLoginModal"));
+    emailModal.hide();
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
 }
