@@ -257,7 +257,7 @@ async function fetchEventDetails() {
             });
 
             // Button functionality based on collection price
-            const collectionPrice = eventData.price || 0;
+            const collectionPrice = eventData.collection_price || 0;
             const downloadBtn = document.getElementById('download-btn');
             downloadBtn.addEventListener('click', () => {
                 if (collectionPrice === 0 || collectionPrice === "") {
