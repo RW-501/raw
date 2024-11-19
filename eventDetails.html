@@ -261,7 +261,7 @@ async function fetchEventDetails() {
             const downloadBtn = document.getElementById('download-btn');
             downloadBtn.addEventListener('click', () => {
                 if (collectionPrice === 0 || collectionPrice === "") {
-                    window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.accessHandShake}`; // Correct URL
+                    window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.downloadId}`; // Correct URL
                 } else {
                     window.location.href = `https://rawphotographysite.com/cart?id=${eventId}`; // Correct URL
                 }
@@ -269,12 +269,12 @@ async function fetchEventDetails() {
         
 
             });
-
+/*
             console.log("eventId   ",eventId);
             console.log("eventData.accessHandShake   ",eventData.accessHandShake);
             console.log("collectionPrice   ",collectionPrice);
 
-            
+            */
         } else {
             console.log("No event found with the given ID.");
         }

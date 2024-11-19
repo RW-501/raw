@@ -714,8 +714,8 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
-function generateAccessHandshake() {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+function generateAccessHandshake(extra) {
+    const characters =  `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789${extra}`;
     let accessHandshake = "";
 
     for (let i = 0; i < 5; i++) {
@@ -757,6 +757,7 @@ async function uploadEvent() {
 
         // Generate access handshake code
         const handshakeCode = generateAccessHandshake();
+        const downloadId = generateAccessHandshake("#^&@!");
 
         // Add event to Firestore and get the document reference
         const docRef = await addDoc(collection(db, 'Events'), {
@@ -768,15 +769,17 @@ async function uploadEvent() {
             retrieveCount: 0,
             retriever_IP: [],
             accessHandShake: handshakeCode,
+            downloadId: downloadId,
             status: "active",
             isPublic: true,
             collection_price: "",
             collection_OnSellPrice: "",
-            eventTags: [],
+            type: "Free", /* Paid */
+            eventTags: [], /* Implment */
             accessCode: accessCode || "",
             location: location || "",
             timestamp: new Date(),
-            comments: [],
+            comments: [], /* Implment */
             views: 0,
             deactived: false,
             galleryBool: true

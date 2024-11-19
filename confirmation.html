@@ -156,21 +156,66 @@
   
     
     <script type="module">
-        import { db, doc, getDoc, collection } from '../js/module.js';
+      import {   db,  setDoc,  doc,   signInWithPopup,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    OAuthProvider,arrayUnion ,
+    signOut, addDoc , increment,
+    onAuthStateChanged, getFirestore, orderBy,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,query ,
+    where, getDocs,getDoc,  storage, collection, auth, analytics } from '../js/module.js';
 
-
+    // Function to fetch media images for the event
+    async function fetchMediaImages(eventId) {
+        const mediaRef = collection(db, 'Media');
+        const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
+        const mediaSnapshot = await getDocs(mediaQuery);
+        return mediaSnapshot.docs.map(doc => doc.data());
+    }
 
         window.onload = function() {
 
-          
+          async function fetchEventDetails() {
+    try {
+
+ 
+
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('id');
     const downloadId = urlParams.get('ccc');
     const storedEventId = localStorage.getItem('eventId');
     const storedDownloadId = localStorage.getItem('downloadId');
     
+
+    if (!eventId) {
+            console.error("Event ID not found in the URL.");
+            return;
+        }
+
     let eventInfo = null;
     
+        // Fetch event details from Firestore using the modular SDK
+        const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
+        const eventDoc = await getDoc(eventRef);  // Fetch the document using getDoc
+
+        if (eventDoc.exists()) {
+            const eventData = eventDoc.data();  // Access the data from the document
+            console.log("Event Data:", eventData);
+
+        
+            // Fetch media images related to this event
+            const imageData = await fetchMediaImages(eventId);  // Await the images fetch
+            const galleryContainer = document.getElementById('event-gallery');
+            imageData.forEach(img => {
+                const imgElement = document.createElement('img');
+                imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
+                imgElement.alt = "Event Image";
+                imgElement.classList.add("rounded", "lazy-image");
+                galleryContainer.appendChild(imgElement);
+            });
+
+ 
 
 
 
@@ -183,14 +228,14 @@
                 downloadId: downloadId,
                 type: 'paid'
             };
-            showConfirmationMessage(`Thank you for your purchase! You are about to download Event #${eventId}.`);
+            showConfirmationMessage(`Thank you for your purchase! You are about to download the Event ${eventData.title}.`);
         } else {
             // Free download scenario
             eventInfo = {
                 eventId: eventId,
                 type: 'free'
             };
-            showConfirmationMessage(`You are about to download Event #${eventId} for free!`);
+            showConfirmationMessage(`You can download ${eventData.title} for free!`);
         }
         
         // Store event and download info in localStorage for retry
@@ -210,6 +255,16 @@
         showError('Invalid download request.');
         return;
     }
+
+
+  } else {
+            console.log("No event found with the given ID.");
+        }
+    } catch (error) {
+        console.error("Error fetching event details: ", error);
+    }
+
+  }
 
     // Handle download button click
     document.getElementById('download-button').addEventListener('click', function() {
