@@ -571,7 +571,6 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   
   
   } else {
-    displayHeaderImages();
 
   // Run the function when the page loads
   window.addEventListener('load', applyBackgroundEffect);
@@ -632,6 +631,7 @@ function getRandomDefaultImage(defaultImages) {
         console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
 
         let defaultImages = await getHeaderImages();
+        displayHeaderImages();
 
         
     if(!defaultImages){
