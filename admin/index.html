@@ -575,11 +575,42 @@ window.openEmailModal = openEmailModal;
 
 // Declare globally
 let confirmationResult; 
+function formatPhoneNumber(phoneNumber) {
+    // Remove any non-numeric characters except +
+    let cleanedNumber = phoneNumber.replace(/[^+\d]/g, "");
 
+    // Check if it starts with +1; if not, prepend it
+    if (!cleanedNumber.startsWith("+1")) {
+        if (cleanedNumber.startsWith("1")) {
+            cleanedNumber = `+${cleanedNumber}`;
+        } else {
+            cleanedNumber = `+1${cleanedNumber}`;
+        }
+    }
+
+    // Ensure it follows the correct format: +1 followed by 10 digits
+    const phoneRegex = /^\+1\d{10}$/;
+    if (!phoneRegex.test(cleanedNumber)) {
+        throw new Error("Invalid phone number format. Ensure it contains 10 digits.");
+    }
+
+    return cleanedNumber;
+}
+/*
+// Example usage:
+try {
+    const phoneNumberInput = document.getElementById("phoneNumber").value.trim();
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumberInput);
+    console.log("Formatted Phone Number:", formattedPhoneNumber);
+} catch (error) {
+    console.error("Phone number formatting error:", error.message);
+}
+*/
 // Phone login function
 function phoneLogin() {
-    const phoneNumber = document.getElementById("phoneNumber").value.trim();
-    const phoneNumberError = document.getElementById("phoneNumberError");
+    const phoneNumberInput = document.getElementById("phoneNumber").value.trim();
+    const phoneNumber = formatPhoneNumber(phoneNumberInput);
+       const phoneNumberError = document.getElementById("phoneNumberError");
 
     // Validate phone number format
     if (!validatePhoneNumber(phoneNumber)) {
