@@ -12,8 +12,141 @@
 
 <style>
 
+#Manage_Events {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    
 
-  </style>
+}
+
+#eventsContainer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+   
+}
+
+.mainEventPanel {
+    display: grid;
+    width: 50%;
+    overflow: hidden;
+
+}
+.eventPanel {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+
+
+.event_details_cover {
+    display: grid;
+    gap: 1rem;
+}
+  
+.manageEventsArea {
+    width: 100%;    
+}
+
+.batch-buttons {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+ 
+ 
+
+.event_photos_list {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.media-item {
+    width: 50%;
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    gap: .5rem;
+    padding: 15px;
+    border-radius: 8px;
+    margin:  auto;
+    width: 90%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+}
+
+.media-header {
+    display: grid;
+    width: 100%;
+
+}
+
+.media-item-img-details {
+    display: grid; 
+}
+
+
+
+
+#mainGallerySection {
+    display: grid; 
+    width: 100%;
+    overflow: hidden;
+
+}
+
+#galleryContainer {
+    display: grid; 
+    width: 100%;
+    overflow: hidden;
+}
+.gallery-item {
+    gap: 1.5rem;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    gap: .5rem;
+    padding: 15px;
+    border-radius: 8px;
+    margin: auto;
+    width: 90%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+}
+.media-header {
+ display: grid;
+}
+.gallery-details {
+    display: grid;
+    width: 100%;
+}
+
+
+
+.media-thumbnail {
+    width: 200px;
+}
+
+
+.appearOnContainer {
+    width: 100%;
+}
+
+
+</style>
   
 
 
@@ -287,9 +420,8 @@
 </div>
 
     <!-- Event List with Edit & Delete Options -->
-    <div  class="card mb-4 shadow-lg">
-
-        <div id="eventList" class="mb-4 card-body">
+  
+        <div id="eventList" class="card mb-4 shadow-lg">
             <h5 class="mb-3">Manage Events</h5>
             <div class="list-group" id="eventsContainer"></div>
         </div>
@@ -297,8 +429,7 @@
          
             
         </div>
-        
-    </div>
+  
 </div>
 
                 <!-- Media Gallery Section -->
@@ -889,9 +1020,13 @@ console.log("doc.id    ",doc.id);
             <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
         </div>
     </div>
+
+
+    <div class="mainEventPanel">
     <button class="btn btn-link mt-2 text-decoration-none" style="font-size: 0.9rem;" onclick="toggleDetails('${detailsId}')">
         ${isPublic ? 'Hide' : 'Show'} Details
     </button>
+    <div class="eventPanel">
     <div id="${detailsId}" class="collapse mt-3">
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
@@ -908,6 +1043,9 @@ console.log("doc.id    ",doc.id);
 
     <div id='${eventDetails}' class="event_details_cover ">
     </div>
+    </div>
+    
+    <div>
 
     <div id='${mediaListId}' class="event_photos_list">
     </div>
@@ -926,9 +1064,13 @@ console.error("Error fetching events:", error);
 
 
 // Function to toggle collapsible details
-function toggleDetails(detailsId) {
-    const details = document.getElementById(detailsId);
+function toggleMediaDetails(mediaId) {
+
+    const details = document.getElementById(`m-Details-${mediaId}`);
+    const image = document.getElementById(`m-Image-${mediaId}`);
+    
     details.classList.toggle('collapse');
+    image.classList.toggle('collapse');
 }
 
 // Function to handle analytics view
@@ -997,34 +1139,43 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     mediaItems.forEach((item) => {
         const mediaDiv = document.createElement("div");
         mediaDiv.classList.add("media-item");
+        mediaDiv.id.add(`media-item-${item.id}`);        
         mediaDiv.innerHTML = `
             <div class="media-header">
+                               
+                <button onclick="toggleMediaDetails('${item.id}')">View Details</button>
+           
+                <div class="media-item-img-details">
+
+                <div id="m-Image-${item.id}" class="media-image view-image" data-image-id='${item.id}'>
                 <img 
                     data-src="${item.photoUrl}" 
                     alt="Media" 
                     class="media-thumbnail lazy"
                 >
-                <p>Price: $${item.price}</p>
+                </div>
+            <div id="m-Details-${item.id}" class="media-details collapse">
+                <p>File Type: ${item.fileType}</p>
+                <p>File Size: ${item.fileSize} MB</p>
+                <p>Status: ${item.status}</p>
+                <p>Views: ${item.views}</p>
+                <p>Timestamp: ${new Date(item.timestamp.seconds * 1000).toLocaleString()}</p>
+                        <p>Price: $${item.price}</p>
                 <p>Collection Price: $${item.collectionPrice}</p>
-                        
+            </div>
+
+      </div>
                 <div class="batch-buttons btn-group controls">
                       <button onclick=" addToMainGallery('${item.id}')">Add to Gallery</button>
 
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
                 </button>
-                <button onclick="removeFromMedia('${item.id}')">Delete</button>
-                <button onclick="toggleDetails('${item.id}')">View Details</button>
+                <button class="btn btn-danger btn-sm" onclick="removeFromMedia('${item.id}')">Delete</button>
             </div>
 
             </div>
-            <div id="details-${item.id}" class="media-details collapse">
-                <p>File Type: ${item.fileType}</p>
-                <p>File Size: ${item.fileSize} MB</p>
-                <p>Status: ${item.status}</p>
-                <p>Views: ${item.views}</p>
-                <p>Timestamp: ${new Date(item.timestamp.seconds * 1000).toLocaleString()}</p>
-            </div>
+
         `;
         mediaListContainer.appendChild(mediaDiv);
     });
@@ -1387,45 +1538,52 @@ function closeModal() {
 
             // Create media item card
             const mediaDiv = document.createElement('div');
-            mediaDiv.classList.add('media-item', 'card-body');
+            mediaDiv.classList.add('gallery-item', 'card-body');
             mediaDiv.innerHTML = `
-                <div class="media-header">
-                <div class="flex">
-                                    <div class="box">
-                    <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
+<div class="media-container">
+  <div class="media-header">
+    <div class="flex">
+      <div class="box">
+        <img src="${photoUrl}" alt="Media Image" class="media-thumbnail view-image" data-image-id="${item.id}">
 
-                                        </div>
-                                    <div class="box">
+      </div>
+      <div class="box">
+        <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
 
-                    <button onclick="toggleCollapse('${mediaId}')">Toggle Details</button>
-                    <h4>${category || ''}</h4>
-                    </div>
-                    
-                </div>
+        <button onclick="toggleCollapse('appearOn-${mediaId}', this)">Expand ▼</button>
 
+      </div>
 
+    </div>
+  </div>
 
+  <div id="details-${mediaId}" class="gallery-details ">
 
-                <div id="details-${mediaId}" class="media-details collapse">
-                    <img src="${photoUrl}" alt="Media Image" class="media-thumbnail">
-                    <p>Price: $${price}</p>
-                    <p>Status: ${status}</p>
-                    <p>Public: ${isPublic ? "Yes" : "No"}</p>
-                    <p><img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail"></p>
-                    <div class="media-actions">
-                        <div class="appearOn">
-                            <h3>Appear On</h3>
-                                    
-                            <div id="checkboxes-${mediaId}" class="checkbox-group">
-                                ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
-                            </div>
-                                                           <div class="controls">
-                            <button onclick="handleUpdate('${mediaId}')">Update</button>
-                        <button onclick="removeMedia('${mediaId}')">Remove</button>
-                   </div>
-                  
-                        </div>
-                </div>
+    <div class="box">
+      <h4>${category || ''}</h4>
+      <p>Status: ${status}</p>
+      <p>Public: ${isPublic ? "Yes" : "No"}</p>
+
+      <p>Price: $${price}</p>
+    </div>
+  </div>
+</div>
+
+<div id="appearOn-${mediaId}" class="appearOnContainer media-actions collapse">
+  <div class="appearOn">
+    <h3>Appear On</h3>
+
+    <div id="checkboxes-${mediaId}" class="checkbox-group">
+      ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
+    </div>
+    <div class="controls">
+      <button onclick="handleUpdate('${mediaId}')">Update</button>
+      <button onclick="removeMedia('${mediaId}')">Remove</button>
+    </div>
+
+  </div>
+
+</div>
             `;
 
             galleryContainer.appendChild(mediaDiv);
@@ -1498,10 +1656,22 @@ function handleUpdate(mediaId) {
 
 
 // Toggle the collapse of media details
-function toggleCollapse(mediaId) {
-    const details = document.getElementById(`details-${mediaId}`);
+function toggleCollapse(mediaId, btnDiv) {
+    const details = document.getElementById(mediaId);
+
+    // Toggle the 'collapse' class
     details.classList.toggle('collapse');
+
+    // Update the button content
+    if (btnDiv) {
+        if (details.classList.contains('collapse')) {
+            btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
+        } else {
+            btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
+        }
+    }
 }
+
 
 
 
@@ -1670,7 +1840,7 @@ loadMainGallery();
 
         window.deleteEvent = deleteEvent;
         window.saveEvent = saveEvent;
-        window.toggleDetails  = toggleDetails ;
+        window.toggleMediaDetails  = toggleMediaDetails ;
 
 window.loadMainGallery = loadMainGallery;
 

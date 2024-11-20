@@ -909,7 +909,7 @@ animation: fadeInImage 2s ease-in;
   color: red;
 }
 
-.more-videos-button {
+.more-images-button {
   position: absolute;
   bottom: 30px;
   background-color: #007bff;
@@ -923,7 +923,7 @@ animation: fadeInImage 2s ease-in;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.more-videos-button:hover {
+.more-images-button:hover {
   background-color: #0056b3;
 }
 

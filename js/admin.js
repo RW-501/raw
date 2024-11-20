@@ -305,5 +305,72 @@ function formatDate(timestamp) {
 }
 
 window.formatDate = formatDate;
+
+
    
     
+document.addEventListener("DOMContentLoaded", () => {
+  // Add click listener to lazy-image elements
+  document.body.addEventListener("click", event => {
+      const target = event.target;
+
+      // Check if the clicked element is a lazy-image
+      if (target.classList.contains("view-image")) {
+        const imageSrc = target.src || target.getAttribute("data-src");
+        const imageId = target.src || target.getAttribute("data-image-id");
+
+          // Create the full-screen popup
+          createImagePopup(imageSrc, imageId);
+      }
+  });
+
+  // Function to create the full-screen popup
+  const createImagePopup = (imageSrc, imageId) => {
+      // Create the overlay
+      const overlay = document.createElement("div");
+      overlay.classList.add("fullscreen-popup");
+
+      // Set the inner HTML of the overlay
+      overlay.innerHTML = `
+          <img src="${imageSrc}"  data-image-id='${imageId}' class="popup-image" alt="Full-size image">
+          <button class="close-button">&times;</button>
+          <button class="more-images-button">More Details</button>
+      `;
+
+      // Append the overlay to the body
+      document.body.appendChild(overlay);
+
+      // Add functionality to the close button
+      const closeButton = overlay.querySelector(".close-button");
+      closeButton.addEventListener("click", () => overlay.remove());
+
+      // Add functionality to the "More Videos" button
+      const moreVideosButton = overlay.querySelector(".more-images-button");
+      moreVideosButton.addEventListener("click", () => {
+        const imageId = overlay.getAttribute("data-image-id");
+
+     
+        showTabContent('Manage_Events');
+        const target = document.getElementById(`media-item-${imageId}`);
+        if (target) {
+            target.scrollIntoView({
+                behavior: "smooth", // Optional: smooth scrolling
+                block: "start"      // Optional: aligns to the top of the viewport
+            });
+          }
+       // window.location.href = "/events"
+       //   alert("Redirect to videos or perform another action here.");
+      });
+  };
+});
+
+
+
+
+
+
+
+
+
+
+
