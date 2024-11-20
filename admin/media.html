@@ -1036,13 +1036,10 @@ console.log("doc.id    ",doc.id);
         <div class="d-flex align-items-center">
                 <strong>${title}</strong>
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
-            
+                        <img class="eventCoverThumbnail" src="${coverUrl}" alt="Event Thumbnail"  />
+   <div>
         <div class="align-items-center">
 
-            <img class="eventCoverThumbnail" src="${coverUrl}" alt="Event Thumbnail"  />
-            <div>
-</div>
-        </div>
 
         <div class="batch-buttons btn-group controls">
             <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
@@ -1051,6 +1048,9 @@ console.log("doc.id    ",doc.id);
             <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
         </div>
     </div>
+         
+</div>
+        </div>
 
 
     <div class="mainEventPanel">
