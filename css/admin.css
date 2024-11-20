@@ -415,7 +415,9 @@ a:hover {
   
   
   
-  
+  input {
+    user-select: auto;
+  }
   
       /* Global Styling */
 

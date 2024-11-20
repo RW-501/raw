@@ -1013,7 +1013,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
                 </button>
-                <button onclick="updatePrice('${item.id}')">Update Price</button>
+                <button onclick="removeFromMedia('${item.id}')">Delete</button>
                 <button onclick="toggleDetails('${item.id}')">View Details</button>
             </div>
 
@@ -1176,6 +1176,35 @@ async function saveEvent() {
     }
 }
 
+async function removeFromMedia(eventId) {
+    try {
+        // Query the Media collection for documents with the specified eventId
+        const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+        const mediaSnapshot = await getDocs(mediaQuery);
+
+        // Delete each matching document
+        const deletePromises = mediaSnapshot.docs.map(async (mediaDoc) => {
+            try {
+                await deleteDoc(doc(db, 'Media', mediaDoc.id));
+            } catch (err) {
+                console.error("Error deleting media document:", err);
+            }
+        });
+
+        // Wait for all deletions to complete
+        await Promise.all(deletePromises);
+
+        // Show success toast once all deletions are complete
+        showToast('Event deleted successfully');
+    } catch (error) {
+        console.error("Error querying or deleting media documents:", error);
+        showToast('Failed to delete event media');
+    }
+}
+
+
+window.removeFromMedia = removeFromMedia;
+
     // Delete Event Function
 // Delete Event Function 
 async function deleteEvent(eventId) {
@@ -1207,6 +1236,7 @@ async function deleteEvent(eventId) {
                     );
                 }
 
+                
                 // Delete associated media from Media collection
                 const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
                 const mediaSnapshot = await getDocs(mediaQuery);
