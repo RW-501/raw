@@ -981,7 +981,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
         <h3>${eventTitle}</h3>
         <p>Date: ${eventDate}</p>
         <p>Public: <span class="badge ${publicStatus ? 'bg-success' : 'bg-danger'}">${publicStatus ? "Yes" : "No"}</span></p>
-
+<div class="manageEventsArea">
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
         <p>Total Images: ${imageCount}</p>
         <div class="batch-buttons btn-group controls">
@@ -989,6 +989,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
             <button onclick="batchSetPublic('${eventId}', true)">Set All Public</button>
             <button onclick="batchSetPublic('${eventId}', false)">Set All Private</button>
             <button onclick="batchUpdatePrices('${eventId}')">Update All Prices</button>
+        </div>
         </div>
     `;
 
