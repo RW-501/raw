@@ -1036,7 +1036,8 @@ console.log("doc.id    ",doc.id);
         <div class="box">
                 <strong>${title}</strong>
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
-            
+                    <p>Public: <span class="badge ${isPublic ? 'bg-success' : 'bg-danger'}">${isPublic ? "Yes" : "No"}</span></p>
+
     
 </div>
 
@@ -1150,7 +1151,6 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     // View Media Button
     eventDetailsContainer.innerHTML = `
   
-        <p>Public: <span class="badge ${publicStatus ? 'bg-success' : 'bg-danger'}">${publicStatus ? "Yes" : "No"}</span></p>
 <div class="manageEventsArea">
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
         <p>Total Images: ${imageCount}</p>
@@ -1167,7 +1167,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     mediaItems.forEach((item) => {
         const mediaDiv = document.createElement("div");
         mediaDiv.classList.add("media-item");
-        mediaDiv.id.add(`mediaList-${item.id}`);        
+        mediaDiv.id = `mediaList-${item.id}`;        
         mediaDiv.innerHTML = `
             <div class="media-header">
                                
@@ -1175,7 +1175,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
            
                 <div class="media-item-img-details">
 
-                <div id="m-Image-${item.id}" class="media-image view-image" data-image-id='${item.id}'>
+                <div id="m-Image-${item.id}" class="media-image collapse:not view-image" data-image-id='${item.id}'>
                 <img 
                     data-src="${item.photoUrl}" 
                     alt="Media" 
