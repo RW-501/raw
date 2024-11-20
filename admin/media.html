@@ -1355,9 +1355,22 @@ function closeModal() {
             mediaDiv.classList.add('media-item', 'card-body');
             mediaDiv.innerHTML = `
                 <div class="media-header">
+                <div class="flex">
+                                    <div class="box">
+                    <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
+
+                                        </div>
+                                    <div class="box">
+
                     <button onclick="toggleCollapse('${mediaId}')">Toggle Details</button>
                     <h4>${category || ''}</h4>
+                    </div>
+                    
                 </div>
+
+
+
+
                 <div id="details-${mediaId}" class="media-details collapse">
                     <img src="${photoUrl}" alt="Media Image" class="media-thumbnail">
                     <p>Price: $${price}</p>
