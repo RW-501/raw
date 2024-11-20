@@ -1203,12 +1203,11 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
            
                 <div class="media-item-img-details">
 
-                <div id="m-Image-${item.id}" class="media-image collapse:not view-image" data-image-id='${item.id}'>
+                <div id="m-Image-${item.id}" class="media-image collapse:not" >
                 <img 
                     data-src="${item.photoUrl}" 
                     alt="Media" 
-                    class="media-thumbnail lazy"
-                >
+                    class="media-thumbnail view-image" data-image-id='${item.id}'>
                 </div>
             <div id="m-Details-${item.id}" class="media-details collapse">
                 <p>File Type: ${item.fileType}</p>
