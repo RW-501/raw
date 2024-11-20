@@ -167,11 +167,7 @@
 
 }
 
-.media-header {
- display: flex;
- width: 100%;
 
-}
 .gallery-details {
     display: grid;
     width: 100%;
@@ -1593,7 +1589,8 @@ function closeModal() {
                 MainGallery: false
             };
 
-            // Merge appearOn with default values
+            // Merge appearOn with default values   <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
+
             const appearOnData = { ...defaultAppearOn, ...appearOn };
 
             // Create media item card
@@ -1603,12 +1600,11 @@ function closeModal() {
 <div class="media-container">
   <div class="media-header">
       <div class="box">
-        <img src="${photoUrl}" alt="Media Image" class="media-thumbnail view-image" data-image-id="${mediaId}">
+        <img src="${photoUrl}" alt="Media Image" class="gallery-thumbnail view-image" data-image-id="${mediaId}">
 
       </div>
       <div class="box">
-        <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
-
+      
         <button onclick="toggleCollapse('appearOn-${mediaId}', this)">Expand ▼</button>
 
       </div>
