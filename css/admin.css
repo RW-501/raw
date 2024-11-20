@@ -451,8 +451,9 @@ a:hover {
   
   .list-group-item  {
   
-      background-color: #343434;
-  }
+display:block;
+
+}
       .msg_help {
         display: flex;
         align-items: center;
