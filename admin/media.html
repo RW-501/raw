@@ -95,7 +95,9 @@
     display: grid; 
 }
 
-
+.event-coer {
+    width: 200px;
+}
 
 
 #mainGallerySection {
@@ -1043,13 +1045,17 @@ console.log("doc.id    ",doc.id);
         const eventDetails = `eventDetails-${doc.id}`;
         eventItem.innerHTML = `
     <div class="eventPanelArea">
+
+                <div class="box">
         <div class="box">
-                <strong>${title}</strong>
+  
+            </div>
+        <div class="box">
+           <strong>${title}</strong>
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
                     <p>Public: <span class="badge ${isPublic ? 'bg-success' : 'bg-danger'}">${isPublic ? "Yes" : "No"}</span></p>
-
-    
-</div>
+                    </div>
+                    </div>
 
         <div class="batch-buttons btn-group controls">
             <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
@@ -1065,7 +1071,7 @@ console.log("doc.id    ",doc.id);
         ${isPublic ? 'Hide' : 'Show'} Details
     </button>
 
-    <div class="eventPanel">
+
     <div id="m-Details-${detailsId}" class="collapse mt-3">
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
@@ -1079,15 +1085,15 @@ console.log("doc.id    ",doc.id);
         <p><strong>Comments:</strong> ${comments}</p>
         <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
     </div>
+    <div class="box">
 
     <div id='${eventDetails}' class="event_details_cover ">
     </div>
    
-        <div>
-
-    <div>
+       
 
     <div id='${mediaListId}' class="event_photos_list">
+    </div>
     </div>
 `;
 
@@ -1162,7 +1168,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     eventDetailsContainer.innerHTML = `
   
 <div class="manageEventsArea">
-        <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
+        <img src="${coverPhoto}" alt="Event Cover Photo" class="event-coer"v>
         <p>Total Images: ${imageCount}</p>
         <div class="batch-buttons btn-group controls">
 

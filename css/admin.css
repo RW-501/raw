@@ -768,15 +768,8 @@ display:block;
       margin: 0 !important;
   }
       /* Buttons */
-      #main-content button {
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-      }
+  
+      
     
       #main-content button:hover {
         background-color: #007bb5;
