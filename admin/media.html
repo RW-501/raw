@@ -1065,6 +1065,7 @@ async function batchSetPublic(eventId, isPublic) {
     alert(`All media set to ${isPublic ? "Public" : "Private"}.`);
     viewMedia(eventInfo); // Refresh the view
 }
+window.batchSetPublic = batchSetPublic;
 
 // Batch update prices
 async function batchUpdatePrices(eventId) {
@@ -1087,6 +1088,8 @@ async function batchUpdatePrices(eventId) {
     alert("Prices updated successfully.");
     viewMedia(eventInfo); // Refresh the view
 }
+window.batchUpdatePrices = batchUpdatePrices;
+
 
 // Function to toggle the public status
 async function togglePublicStatus(docId, newStatus) {
@@ -1095,6 +1098,7 @@ async function togglePublicStatus(docId, newStatus) {
     alert(`Photo is now ${newStatus ? "Public" : "Private"}`);
     viewMedia(eventInfo); // Refresh the list
 }
+window.togglePublicStatus = togglePublicStatus;
 
 // Function to update the price
 async function updatePrice(docId) {
@@ -1108,6 +1112,7 @@ async function updatePrice(docId) {
     alert("Price updated successfully.");
     viewMedia(eventInfo); // Refresh the list
 }
+window.updatePrice = updatePrice;
 
 
 
