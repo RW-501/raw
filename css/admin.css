@@ -758,12 +758,8 @@ display:block;
   }
   
   /* Add a border and effect for images inside containers */
-  #main-content div img {
-      margin: auto;
-      display: block;
-      border-color: #555; /* Darker border for images inside divs */
-      border-radius: 10px; /* Slightly more rounded corners */
-  }
+
+  
   .d-flex img {
       margin: 0 !important;
   }
