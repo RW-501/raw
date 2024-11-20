@@ -126,18 +126,31 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
 }
+.media-container {
+    display: grid;
+ width: 100%
+}
 .media-header {
  display: grid;
+ width: 100%;
+
 }
 .gallery-details {
     display: grid;
     width: 100%;
 }
 
+.flex {
+    display: flex;
+}
+
+.media-thumbnail-cover {
+    width: 200px !important;
+}
 
 
 .media-thumbnail {
-    width: 200px;
+    width: 200px !important;
 }
 
 
@@ -993,7 +1006,7 @@ function onEventSaved(eventID) {
         description.toLowerCase().includes(filterText)
     ) {
         const eventItem = document.createElement('div');
-        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'mb-3', 'p-3');
+        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'm-3', 'p-3');
         eventItem.style.border = '1px solid #ddd';
         eventItem.style.borderRadius = '8px';
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
@@ -1016,7 +1029,7 @@ console.log("doc.id    ",doc.id);
             <div>
 </div>
         </div>
-        
+
         <div class="batch-buttons btn-group controls">
             <button class="btn btn-primary btn-sm" onclick="viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
             <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
