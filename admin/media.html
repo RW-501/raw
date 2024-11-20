@@ -1050,7 +1050,7 @@ console.log("doc.id    ",doc.id);
 
 
     <div class="mainEventPanel">
-    <button class="btn btn-link mt-2 text-decoration-none" style="font-size: 0.9rem;" onclick="toggleMediaDetails('${detailsId}')">
+    <button class="btn  mt-2 style="font-size: 0.9rem;" onclick="toggleMediaDetails('${detailsId}')">
         ${isPublic ? 'Hide' : 'Show'} Details
     </button>
 
@@ -1149,8 +1149,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     
     // View Media Button
     eventDetailsContainer.innerHTML = `
-        <h3>${eventTitle}</h3>
-        <p>Date: ${eventDate}</p>
+  
         <p>Public: <span class="badge ${publicStatus ? 'bg-success' : 'bg-danger'}">${publicStatus ? "Yes" : "No"}</span></p>
 <div class="manageEventsArea">
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover">
@@ -1168,7 +1167,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     mediaItems.forEach((item) => {
         const mediaDiv = document.createElement("div");
         mediaDiv.classList.add("media-item");
-        mediaDiv.id.add(`media-item-${item.id}`);        
+        mediaDiv.id.add(`mediaList-${item.id}`);        
         mediaDiv.innerHTML = `
             <div class="media-header">
                                
