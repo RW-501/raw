@@ -1238,12 +1238,14 @@ console.log("doc.id    ",doc.id);
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventID);
 
-        viewMedia(eventInfo);
 }
 });
 } catch (error) {
 console.error("Error fetching events:", error);
 }
+
+viewMedia(eventInfo);
+
 }
 
 function toggleEventDetails(mediaId){
