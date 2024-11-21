@@ -1208,10 +1208,6 @@ eventInfo = [event.eventId, event.eventTitle, event.eventDate, event.publicStatu
 
     <div id="m-Details-${doc.id}" class="collapse mt-3">
 
-   <div id='${eventID}' class="event_details_cover ">
-    </div>
-   
-
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
         <p><strong>Tags:</strong> ${eventTags}</p>
@@ -1223,7 +1219,7 @@ eventInfo = [event.eventId, event.eventTitle, event.eventDate, event.publicStatu
         <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
         <p><strong>Comments:</strong> ${comments}</p>
         <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
-    </div>
+
     <div class="box">
 
 
