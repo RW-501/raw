@@ -1285,7 +1285,9 @@ function viewAnalytics(eventId) {
 let eventInfo = '';
 
 async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhoto) {
-    const mediaCollectionRef = collection(db, "Media");
+
+    console.log("eventId, eventTitle, eventDate, publicStatus, coverPhoto    ", eventId, eventTitle, eventDate, publicStatus, coverPhot)
+    const mediaCollectionRef = collection(db, "Media");  
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
     const mediaListContainer = document.getElementById(`mediaList-${eventId}`);
@@ -1293,11 +1295,11 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
 
     //const mediaListContainer = document.getElementById("mediaList");
     //const eventDetailsContainer = document.getElementById("eventDetails");
-
+/*
     // Reset containers
     mediaListContainer.innerHTML = "";
     eventDetailsContainer.innerHTML = "";
-
+*/
     let imageCount = 0;
      eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
      const mediaItems = [];
