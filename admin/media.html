@@ -285,47 +285,57 @@
                 <h5 id="Add_Event_Label" class="card-title">Add New Event</h5>
                 <form id="eventForm">
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
+                        <label for="eventTitle" class="form-label d-flex justify-content-between">
+                            Event Title
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventTitleDirections" class="directions" style="display:none;">
-                            <p>Enter a descriptive title for your event.</p>
+                            <p>Enter a descriptive title for your event. This will be displayed on the event page and in search results.</p>
                         </div>
-                        <label for="eventTitle" class="form-label">Event Title</label>
                         <input type="text" class="form-control" id="eventTitle" required>
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventDescriptionDirections')">Show/Hide Directions</button>
+                        <label for="eventDescription" class="form-label d-flex justify-content-between">
+                            Description
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventDescriptionDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventDescriptionDirections" class="directions" style="display:none;">
-                            <p>Provide a detailed description of the event, including any relevant information.</p>
+                            <p>Provide a detailed description of the event, including any relevant information such as what will happen, who the target audience is, and any special instructions for attendees.</p>
                         </div>
-                        <label for="eventDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="eventDescription" rows="4"></textarea>
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
+                        <label for="eventLocation" class="form-label d-flex justify-content-between">
+                            Event Location
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventLocationDirections" class="directions" style="display:none;">
-                            <p>Enter the location where the event will take place.</p>
+                            <p>Enter the address or venue name where the event will take place. Be sure to include any specific room or hall details if applicable.</p>
                         </div>
-                        <label for="eventLocation" class="form-label">Event Location</label>
                         <input type="text" class="form-control" id="eventLocation">
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
+                        <label for="eventDate" class="form-label d-flex justify-content-between">
+                            Event Date
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventDateDirections" class="directions" style="display:none;">
-                            <p>Select the date when the event will occur.</p>
+                            <p>Select the date when the event will occur. Please make sure to double-check the date before submitting.</p>
                         </div>
-                        <label for="eventDate" class="form-label">Event Date</label>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
                 
                     <div class="mb-3" id="eventCoverArea">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
+                        <label for="eventCover" class="form-label d-flex justify-content-between">
+                            Cover Photo
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventCoverDirections" class="directions" style="display:none;">
-                            <p>Upload a cover photo for the event. This image will be displayed in previews.</p>
+                            <p>Upload a cover photo for the event. This image will be displayed in previews and represents your event visually.</p>
                         </div>
-                        <label for="eventCover" class="form-label">Cover Photo</label>
                         <div class="center">
                             <img id="eventCoverPreview" src="" alt="Image Preview" />
                         </div>
@@ -333,22 +343,27 @@
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
+                        <label for="eventTags" class="form-label d-flex justify-content-between">
+                            Event Tags
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventTagsDirections" class="directions" style="display:none;">
-                            <p>Enter tags that describe your event, separated by commas.</p>
+                            <p>Enter tags that describe your event, separated by commas. These help categorize and make your event searchable.</p>
                         </div>
-                        <label for="eventTags" class="form-label">Event Tags</label>
                         <input type="text" class="form-control" id="eventTags" placeholder="Enter tags separated by commas">
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
+                        <label for="eventURL" class="form-label d-flex justify-content-between">
+                            Event URL
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventURLDirections" class="directions" style="display:none;">
-                            <p>Create a URL for the event. This will be easy to share.</p>
+                            <p>Create a URL for the event. This URL will be easy to share with others. Consider including relevant keywords for better SEO.</p>
                         </div>
-                        <label for="eventURL" class="form-label">Event URL</label>
                         <input type="text" class="form-control" id="eventURL" placeholder="Enter URL">
                     </div>
+                
                     <div class="mb-3">
                         <label for="displayEventURL" class="form-label">Event URL Display</label>
                         <div class="input-group">
@@ -356,33 +371,53 @@
                             <button class="btn btn-outline-secondary" type="button" id="copyEventURLBtn" onclick="copyEventURL()">Copy</button>
                         </div>
                     </div>
-                    
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide Directions</button>
+                        <label for="eventCollectionPrice" class="form-label d-flex justify-content-between">
+                            Collection Price <small>Leave blank for free</small>
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
-                            <p>If applicable, enter the price for collections. Leave blank for free.</p>
+                            <p>If applicable, enter the price for collections. If your event is free or doesn't require payment, leave this field blank.</p>
                         </div>
-                        <label for="eventCollectionPrice" class="form-label">Collection Price <small>Leave black for free</small></label>
                         <input type="number" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
                     </div>
                 
                     <div class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide Directions</button>
+                        <label for="privateCheckBox" class="form-label d-flex justify-content-between">
+                            Private?
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="privateCheckBoxDirections" class="directions" style="display:none;">
-                            <p>Check this box if you want to make the event private.</p>
+                            <p>Check this box if you want to make the event private. Only those with access will be able to view it.</p>
                         </div>
-                        <label for="privateCheckBox" class="form-label">Private?</label>
                         <input type="checkbox" class="form-control" id="privateCheckBox">
                     </div>
                 
                     <div id="accessCodeArea" class="mb-3">
-                        <button type="button" class="btn btn-link" onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
+                        <label for="accessCode" class="form-label d-flex justify-content-between">
+                            Access Code (if private)
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
+                        </label>
                         <div id="accessCodeAreaDirections" class="directions" style="display:none;">
-                            <p>If your event is private, enter an access code that users will need to view the event.</p>
+                            <p>If your event is private, enter an access code that users will need to view the event. Share this code securely with invitees.</p>
                         </div>
-                        <label for="accessCode" class="form-label">Access Code (if private)</label>
                         <input type="text" class="form-control" id="accessCode" placeholder="Optional">
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="eventStatus" class="form-label d-flex justify-content-between">
+                            Event Status
+                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventStatusDirections')">Show/Hide Directions</button>
+                        </label>
+                        <div id="eventStatusDirections" class="directions" style="display:none;">
+                            <p>Choose the current status of the event. This will determine whether it's active, in draft, or deactivated.</p>
+                        </div>
+                        <select class="form-select" id="eventStatus" onchange="handleEventStatusChange()">
+                            <option value="active">Active</option>
+                            <option value="deactivate">Deactivate</option>
+                            <option value="draft">Draft</option>
+                        </select>
                     </div>
                 
                     <div class="controls">
@@ -391,6 +426,7 @@
                         <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
                     </div>
                 </form>
+                
 
             </div>
         </div>
@@ -1411,11 +1447,16 @@ window.updatePrice = updatePrice;
 
         document.getElementById('privateCheckBox').checked = event.isPublic;
 
-        document.getElementById('privateCheckBox').value = event.status;
-        document.getElementById('privateCheckBox').value = event.shortURL;
-        document.getElementById('privateCheckBox').value = event.collection_price;
-        document.getElementById('privateCheckBox').value = event.eventTags;
-        
+        document.getElementById('eventStatus').value = event.status;
+        document.getElementById('eventShortURL').value = event.shortURL;
+        document.getElementById('eventCollectionPrice').value = event.collection_price;
+
+        const eventTagsInput = document.getElementById('eventTags');
+
+// Example: Populate the input with tags from the `event` object
+const eventTags = event.eventTags || []; // Assume `event.eventTags` is an array
+eventTagsInput.value = eventTags.join(', '); // Display tags as a comma-separated string
+
         document.getElementById('accessCode').value = event.accessCode;
         document.getElementById('uploadEventBTN').disabled;
         document.getElementById('currentEventID').innerText = eventId;
