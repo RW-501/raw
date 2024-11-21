@@ -1174,7 +1174,7 @@ function onEventSaved(eventID) {
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
 console.log("doc.id    ",doc.id);
 
-eventInfo = [event.eventId, event.eventTitle, event.eventDate, event.publicStatus, event.coverPhoto];
+eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
@@ -1285,10 +1285,10 @@ async function viewMedia(eventInfo) {
 
     console.log("eventInfo   ", eventInfo)
     const mediaCollectionRef = collection(db, "Media");  
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventInfo.eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
-    const mediaListContainer = document.getElementById(`mediaList-${eventId}`);
-    const eventDetailsContainer = document.getElementById(`eventDetails-${eventId}`);
+    const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
+    const eventDetailsContainer = document.getElementById(`eventDetails-${eventInfo.eventId}`);
 
     //const mediaListContainer = document.getElementById("mediaList");
     //const eventDetailsContainer = document.getElementById("eventDetails");
