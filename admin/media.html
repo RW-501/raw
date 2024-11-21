@@ -323,7 +323,7 @@
                             <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
                         </label>
                         <div id="eventDateDirections" class="directions" style="display:none;">
-                            <p>Select the date when the event will occur. Please make sure to double-check the date before submitting.</p>
+                            <p>Select the date when the event occurred. Please make sure to double-check the date before submitting.</p>
                         </div>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
@@ -380,7 +380,7 @@
                         <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
                             <p>If applicable, enter the price for collections. If your event is free or doesn't require payment, leave this field blank.</p>
                         </div>
-                        <input type="number" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
+                        <input type="text" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
                     </div>
                 
                     <div class="mb-3">
@@ -421,7 +421,7 @@
                     </div>
                 
                     <div class="controls">
-                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Upload Event</button>
+                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Create Event</button>
                         <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
                         <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
                     </div>
