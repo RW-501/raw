@@ -1294,19 +1294,34 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     
     // View Media Button
     eventDetailsContainer.innerHTML = `
-  
-<div class="manageEventsArea">
-        <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover"v>
+  <div class="manageEventsArea">
+    <div class="d-flex flex-wrap">
+      <!-- Event Cover and Image Count -->
+      <div class="box mb-3">
+        <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover" />
         <p>Total Images: ${imageCount}</p>
-        <div class="batch-buttons btn-group controls">
-
-            <button onclick="batchSetPublic('${eventId}', true)">Set All Public</button>
-            <button onclick="batchSetPublic('${eventId}', false)">Set All Private</button>
-            <button onclick="batchUpdatePrices('${eventId}')">Update All Prices</button>
+      </div>
+      
+      <!-- Update Media Options -->
+      <div class="box mb-3">
+        <small class="form-label d-flex justify-content-between">
+          Update All Media in this Event Options
+          <button type="button" class="btn btn-link" onclick="toggleDirections('updateAllEventDirections')">Show/Hide Directions</button>
+        </small>
+        <div id="updateAllEventDirections" class="directions" style="display:none;">
+          <p>Here, you can update the media associated with this event. Click 'Set All Public' to make all media public, or 'Set All Private' to restrict access. You can also update the prices for all media at once.</p>
         </div>
-        </div>
-    `;
-
+      </div>
+      
+      <!-- Batch Action Buttons -->
+      <div class="btn-group controls mb-3">
+        <button class="btn btn-primary" onclick="batchSetPublic('${eventId}', true)">Set All Public</button>
+        <button class="btn btn-primary" onclick="batchSetPublic('${eventId}', false)">Set All Private</button>
+        <button class="btn btn-primary" onclick="batchUpdatePrices('${eventId}')">Update All Prices</button>
+      </div>
+    </div>
+  </div>
+`;
     // Generate media items
     mediaItems.forEach((item) => {
         const mediaDiv = document.createElement("div");
@@ -1321,6 +1336,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
 
                 <div id="m-Image-${item.id}" class="media-image collapse:not" >
                 <img 
+                    src="${item.photoUrl}" 
                     data-src="${item.photoUrl}" 
                     alt="Media" 
                     class="media-thumbnail view-image" data-image-id='${item.id}'>
