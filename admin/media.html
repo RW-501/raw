@@ -62,7 +62,12 @@
     flex-direction: row;
 }
  
- 
+ .flex-wrap{
+
+  display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
 
 .event_photos_list {
     display: flex;
@@ -177,6 +182,11 @@
     display: flex;
 }
 
+.grid-e{
+    display: grid;
+    justify-content: space-evenly;
+
+}
 .media-thumbnail-cover {
     width: 200px !important;
 }
@@ -1193,14 +1203,14 @@ console.log("doc.id    ",doc.id);
     </div>
     </div>
 
-        
-
-    <button class="btn  mt-2 style="font-size: 0.9rem;" onclick="toggleMediaDetails('${detailsId}')">
-        ${isPublic ? 'Hide' : 'Show'} Details
-    </button>
-
+    
 
     <div id="m-Details-${detailsId}" class="collapse mt-3">
+
+   <div id='${eventDetails}' class="event_details_cover ">
+    </div>
+   
+
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
         <p><strong>Tags:</strong> ${eventTags}</p>
@@ -1215,9 +1225,8 @@ console.log("doc.id    ",doc.id);
     </div>
     <div class="box">
 
-    <div id='${eventDetails}' class="event_details_cover ">
-    </div>
-   
+
+ 
        
 
     <div id='${mediaListId}' class="event_photos_list">
@@ -1241,7 +1250,7 @@ console.error("Error fetching events:", error);
 function toggleMediaDetails(mediaId) {
 
     const details = document.getElementById(`m-Details-${mediaId}`);
-    const image = document.getElementById(`m-Image-${mediaId}`);
+    const image = document.getElementById(`m-Images-${mediaId}`);
     
     details.classList.toggle('collapse');
     image.classList.toggle('collapse');
@@ -1295,7 +1304,7 @@ async function viewMedia(eventId, eventTitle, eventDate, publicStatus, coverPhot
     // View Media Button
     eventDetailsContainer.innerHTML = `
   <div class="manageEventsArea">
-    <div class="d-flex flex-wrap">
+    <div class="flex-wrap">
       <!-- Event Cover and Image Count -->
       <div class="box mb-3">
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover" />
