@@ -1246,9 +1246,9 @@ console.error("Error fetching events:", error);
 }
 }
 
-function toggleEventDetails(sss){
+function toggleEventDetails(mediaId){
     const details = document.getElementById(`m-Details-${mediaId}`);
-    const image = document.getElementById(`m-Images-${mediaId}`);
+    const image = document.getElementById(`mediaList-${mediaId}`);
     
     details.classList.toggle('collapse');
     image.classList.toggle('collapse');
@@ -1258,10 +1258,10 @@ function toggleEventDetails(sss){
 function toggleMediaDetails(mediaId) {
 
     const details = document.getElementById(`m-Details-${mediaId}`);
-    const image = document.getElementById(`m-Images-${mediaId}`);
+
     
     details.classList.toggle('collapse');
-    image.classList.toggle('collapse');
+
 }
 
 // Function to handle analytics view
