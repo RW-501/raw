@@ -1584,13 +1584,34 @@ async function saveEvent() {
         showToast("Error: No event selected to save.", "error");
         return;
     }
+   const collection_price = document.getElementById('eventCollectionPrice').value;
+   let collectionPrice = "free";
 
+
+   if(collection_price == 0 || collection_price == "0" || collection_price == "" || collection_price == null){
+    collectionPrice = "free";
+   }else{
+    collectionPrice = "paid";
+
+   
+}
+
+const eventTagsInput = document.getElementById('eventTags');
+
+    eventTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
     // Get updated event details from the form fields
     const updatedEvent = {
         title: document.getElementById('eventTitle').value.trim(),
         description: document.getElementById('eventDescription').value.trim(),
         eventDate: document.getElementById('eventDate').value.trim(),
+        location: document.getElementById('eventLocation').value.trim(),
         accessCode: document.getElementById('accessCode').value.trim(),
+        isPublic: document.getElementById('privateCheckBox').checked(),
+        status: document.getElementById('eventStatus').value.trim(),
+        shortURL: document.getElementById('eventURL').value.trim(),
+        collection_price: document.getElementById('eventCollectionPrice').value.trim(),
+        eventTags: eventTagsInput,
+        type: collectionPrice
     };
 
     // Validate input
