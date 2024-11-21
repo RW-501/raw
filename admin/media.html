@@ -323,7 +323,7 @@
                             <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
                         </label>
                         <div id="eventDateDirections" class="directions" style="display:none;">
-                            <p>Select the date when the event will occur. Please make sure to double-check the date before submitting.</p>
+                            <p>Select the date when the event occurred. Please make sure to double-check the date before submitting.</p>
                         </div>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
@@ -367,7 +367,7 @@
                     <div class="mb-3">
                         <label for="displayEventURL" class="form-label">Event URL Display</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="displayEventURL" disabled value="https://rawphotographysite.com/events#url">
+                            <input type="text" class="form-control" id="displayEventURL" disabled value="https://rawphotographysite.com/?s=url">
                             <button class="btn btn-outline-secondary" type="button" id="copyEventURLBtn" onclick="copyEventURL()">Copy</button>
                         </div>
                     </div>
@@ -380,7 +380,7 @@
                         <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
                             <p>If applicable, enter the price for collections. If your event is free or doesn't require payment, leave this field blank.</p>
                         </div>
-                        <input type="number" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
+                        <input type="text" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
                     </div>
                 
                     <div class="mb-3">
@@ -403,6 +403,15 @@
                             <p>If your event is private, enter an access code that users will need to view the event. Share this code securely with invitees.</p>
                         </div>
                         <input type="text" class="form-control" id="accessCode" placeholder="Optional">
+                        
+                        <div class="mb-3">
+                            <label for="displayAccessCode" class="form-label">Access Code URL Display</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="displayAccessCode" disabled value="https://rawphotographysite.com/?a=accessCode">
+                                <button class="btn btn-outline-secondary" type="button" id="copyAccessCodeBtn" onclick="copyAccessCode()">Copy</button>
+                            </div>
+                        </div>
+                  
                     </div>
                 
                     <div class="mb-3">
@@ -421,7 +430,7 @@
                     </div>
                 
                     <div class="controls">
-                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Upload Event</button>
+                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Create Event</button>
                         <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
                         <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
                     </div>
@@ -1448,7 +1457,7 @@ window.updatePrice = updatePrice;
         document.getElementById('privateCheckBox').checked = event.isPublic;
 
         document.getElementById('eventStatus').value = event.status;
-        document.getElementById('eventShortURL').value = event.shortURL;
+        document.getElementById('eventURL').value = event.shortURL;
         document.getElementById('eventCollectionPrice').value = event.collection_price;
 
         const eventTagsInput = document.getElementById('eventTags');
@@ -1481,7 +1490,7 @@ document.getElementById('accessCode').addEventListener('input', function() {
     
     // Update the displayed access code
     if (accessCode) {
-    accessCodeDisplay.value = `https://rawphotographysite.com/#a=${accessCode}`;
+    accessCodeDisplay.value = `https://rawphotographysite.com/?a=${accessCode}`;
     } else {
  accessCodeDisplay.value = "Enter your access code"; 
     }
@@ -1510,7 +1519,7 @@ document.getElementById('eventURL').addEventListener('input', function() {
     
     // Update the displayed event URL
     if (shortURL) {
-        eventURLDisplay.value = `https://rawphotographysite.com/#s=${shortURL}`;
+        eventURLDisplay.value = `https://rawphotographysite.com/?s=${shortURL}`;
     } else {
         eventURLDisplay.value = "Enter your URL"; // Default URL
     }
