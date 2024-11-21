@@ -464,7 +464,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+// Sanitize the input to prevent XSS or other malicious inputs
+function sanitizeInput2(input) {
+  // Use a regular expression to remove any unwanted characters, keeping only alphanumeric and basic symbols.
+  return input.replace(/[^a-zA-Z0-9-_]/g, '');
+}
 
         // Sanitize user input to escape HTML characters
         window.sanitizeInput = function(input) {

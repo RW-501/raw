@@ -375,6 +375,8 @@
     where, getDocs,getDoc,  storage, collection, auth, analytics } from '../js/module.js';
 // Function to fetch media images for the event
 let eventData2 = [];
+
+
     // Function to fetch media images for the event
     async function fetchMediaImages(eventId) {
         const mediaRef = collection(db, 'Media');
@@ -437,99 +439,109 @@ let eventData2 = [];
     }
 }
 
+
+
+// Helper function to fetch event data from Firestore based on a given field and value
+async function fetchEventData(field, value) {
+    try {
+        const eventRef = doc(db, 'Events', where(field, '==', value));
+        const eventDoc = await getDoc(eventRef);
+        return eventDoc.exists() ? eventDoc.data() : null;
+    } catch (error) {
+        console.error(`Error fetching event by ${field}:`, error);
+        return null;
+    }
+}
+
+let eventId;
+
+// Main function to fetch event details from URL parameters
 async function fetchEventDetails() {
     try {
+        // Get and sanitize the query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const eventId = urlParams.get('id'); // Get the event ID from the URL query parameters
+        const eventIdURL = sanitizeInput(urlParams.get('id'));
+        const accessCode = sanitizeInput(urlParams.get('a'));
+        const shortURL = sanitizeInput(urlParams.get('s'));
 
-        if (!eventId) {
-            console.error("Event ID not found in the URL.");
+        let eventData = null;
+
+        // Fetch event data based on parameters: access code, short URL, or event ID
+        if (accessCode) {
+            eventData = await fetchEventData('accessCode', accessCode);
+        } else if (shortURL) {
+            eventData = await fetchEventData('shortURL', shortURL);
+        } else if (eventIdURL) {
+            eventData = await fetchEventData('eventId', eventIdURL);
+        }
+
+        // Handle case where no event was found
+        if (!eventData) {
+            console.error("No event found with the given parameters.");
             return;
         }
 
-        // Fetch event details from Firestore using the modular SDK
-        const eventRef = doc(db, 'Events', eventId);  // Reference to the specific event document
-        const eventDoc = await getDoc(eventRef);  // Fetch the document using getDoc
+        // Update the event details on the page
+        updateEventPage(eventData);
 
-        if (eventDoc.exists()) {
-            const eventData = eventDoc.data();  // Access the data from the document
-            console.log("Event Data:", eventData);
+        // Fetch and display related media images for the event
+        await displayEventImages(eventData);
 
-            // Update the event details on the page
-            document.getElementById('event-title').innerText = eventData.title;
-            document.getElementById('event-description').innerText = eventData.description;
-            document.getElementById('event-date').innerText =  formatDate(eventData.eventDate);
-            document.getElementById('event-location').innerText = eventData.location;
+        // Handle download button functionality
+        setupDownloadButton(eventData);
+ 
+        eventId = eventData.eventId;
+        console.log(",  eventId   ",eventId);
 
-            // Fetch media images related to this event
-            const imageData = await fetchMediaImages(eventId);  // Await the images fetch
-            const galleryContainer = document.getElementById('event-gallery');
-            imageData.forEach(img => {
-                const imgElement = document.createElement('img');
-                imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
-                imgElement.alt = "Event Image";
-                imgElement.classList.add("rounded", "lazy-image");
-                galleryContainer.appendChild(imgElement);
-            });
-       //     document.addEventListener("DOMContentLoaded", () => {
-       
-       
-       
-        eventData2 = {
-    title: eventData.title,
-    description: eventData.description,
-    coverUrl: eventData.coverUrl
-};
+        return eventId;
 
-
-
-        
-
-
-// });
-
-
-            // Button functionality based on collection price
-            const collectionPrice = eventData.collection_price || 0;
-            const downloadBtn = document.getElementById('download-btn');
-            downloadBtn.addEventListener('click', () => {
-                if (collectionPrice === 0 || collectionPrice === "") {
-                    window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.downloadId}`; // Correct URL
-                } else {
-                    window.location.href = `https://rawphotographysite.com/cart?id=${eventId}`; // Correct URL
-                }
-
-        
-
-            });
-/*
-            console.log("eventId   ",eventId);
-            console.log("eventData.accessHandShake   ",eventData.accessHandShake);
-            console.log("collectionPrice   ",collectionPrice);
-
-            */
-           return eventId;
-        } else {
-            console.log("No event found with the given ID.");
-        }
     } catch (error) {
         console.error("Error fetching event details: ", error);
     }
 }
-// Initialize the event details on page load
-window.onload = async function () {
-    console.log("window.onload");
 
-    try {
-    const eventId = await fetchEventDetails(); // Wait for the eventId to be fetched
+// Function to update the event details on the page
+function updateEventPage(eventData) {
+    document.getElementById('event-title').innerText = eventData.title;
+    document.getElementById('event-description').innerText = eventData.description;
+    document.getElementById('event-date').innerText = formatDate(eventData.eventDate);
+    document.getElementById('event-location').innerText = eventData.location;
+}
 
-    function shareOnFacebook() {
+// Function to fetch and display media images related to the event
+async function displayEventImages(eventData) {
+    const imageData = await fetchMediaImages(eventData.eventId);  // Assuming eventId is part of eventData
+    const galleryContainer = document.getElementById('event-gallery');
+    imageData.forEach(img => {
+        const imgElement = document.createElement('img');
+        imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
+        imgElement.alt = "Event Image";
+        imgElement.classList.add("rounded", "lazy-image");
+        galleryContainer.appendChild(imgElement);
+    });
+}
+
+// Function to handle the download button functionality
+function setupDownloadButton(eventData) {
+    const collectionPrice = eventData.collection_price || 0;
+    const downloadBtn = document.getElementById('download-btn');
+    downloadBtn.addEventListener('click', () => {
+        if (collectionPrice === 0 || collectionPrice === "") {
+            window.location.href = `https://rawphotographysite.com/confirmation?id=${eventData.eventId}&ccc=${eventData.downloadId}`;
+        } else {
+            window.location.href = `https://rawphotographysite.com/cart?id=${eventData.eventId}`;
+        }
+    });
+}
+
+
+function shareOnFacebook() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
     console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
     setMetaTags( eventId);
 
-window.open(shareOnFacebook, '_blank');
+window.open(facebookShareURL, '_blank');
 
 }
 
@@ -539,9 +551,9 @@ function shareOnTwitter() {
     const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
     const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
     console.log(",  eventId   ",eventId);
-setMetaTags( eventId);
+setMetaTags(eventId);
 
-    window.open(shareOnTwitter, '_blank');
+    window.open(twitterShareURL, '_blank');
 }
 
 
@@ -551,7 +563,7 @@ function shareOnSnapchat() {
     console.log("eventData2   ",eventData2, ",  eventId   ",eventId);
     setMetaTags( eventId);
 
-window.open(shareOnSnapchat, '_blank');
+window.open(snapchatShareURL, '_blank');
 }
 
 function copyLink() {
@@ -565,6 +577,15 @@ function openUrl() {
     const eventURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
     window.open(eventURL, '_blank');
 }
+
+// Initialize the event details on page load
+window.onload = async function () {
+    console.log("window.onload");
+
+    try {
+     eventId = await fetchEventDetails(); // Wait for the eventId to be fetched
+
+  
 
 
 

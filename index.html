@@ -627,13 +627,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function checkAndSendEventDetails() {
+    // Retrieve the current URL
+    const currentURL = window.location.href;
 
+    // Use URLSearchParams to parse the URL for parameters 'a' and 'e'
+    const urlParams = new URLSearchParams(window.location.hash.substring(1)); // Remove the # from the hash part
 
+    // Get the values of 'a' and 'e' from the URL
+    const accessCode = urlParams.get('a');
+    const shortURL = urlParams.get('s');
+
+    // Check if 'a' or 'e' values exist and build the new URL accordingly
+    if (accessCode) {
+        sendEventDetails(`https://rawphotographysite.com/eventDetails?a=${accessCode}`);
+    } else if (shortURL) {
+        sendEventDetails(`https://rawphotographysite.com/eventDetails?s=${shortURL}`);
+    } else {
+        console.log('No event parameters found in the URL.');
+    }
+}
+
+// Function to send the event details URL (can be customized to redirect, fetch, etc.)
+function sendEventDetails(url) {
+    // Here, you could redirect, make a fetch request, etc.
+    // For now, we'll just log the URL for demonstration.
+    console.log('Sending details to:', url);
+    window.location.href = url; // Redirect to the new event details page
+}
 
 
 
 // Execute the function on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Run the check function when the page loads
+checkAndSendEventDetails();
+
     // Fetch Gallery and Site Info from HomePage collection
     const galleryImagesContainer = document.getElementById("gallery-images");
 const mainTextArea = document.getElementById("text-area");

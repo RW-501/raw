@@ -285,42 +285,113 @@
                 <h5 id="Add_Event_Label" class="card-title">Add New Event</h5>
                 <form id="eventForm">
                     <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
+                        <div id="eventTitleDirections" class="directions" style="display:none;">
+                            <p>Enter a descriptive title for your event.</p>
+                        </div>
                         <label for="eventTitle" class="form-label">Event Title</label>
                         <input type="text" class="form-control" id="eventTitle" required>
                     </div>
+                
                     <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventDescriptionDirections')">Show/Hide Directions</button>
+                        <div id="eventDescriptionDirections" class="directions" style="display:none;">
+                            <p>Provide a detailed description of the event, including any relevant information.</p>
+                        </div>
                         <label for="eventDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="eventDescription" rows="4"></textarea>
                     </div>
+                
                     <div class="mb-3">
-                        <label for="location" class="form-label">Event Location</label>
-                        <input type="text" class="form-control" id="location" >
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
+                        <div id="eventLocationDirections" class="directions" style="display:none;">
+                            <p>Enter the location where the event will take place.</p>
+                        </div>
+                        <label for="eventLocation" class="form-label">Event Location</label>
+                        <input type="text" class="form-control" id="eventLocation">
                     </div>
-
-
+                
                     <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
+                        <div id="eventDateDirections" class="directions" style="display:none;">
+                            <p>Select the date when the event will occur.</p>
+                        </div>
                         <label for="eventDate" class="form-label">Event Date</label>
                         <input type="date" class="form-control" id="eventDate" required>
                     </div>
+                
                     <div class="mb-3" id="eventCoverArea">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
+                        <div id="eventCoverDirections" class="directions" style="display:none;">
+                            <p>Upload a cover photo for the event. This image will be displayed in previews.</p>
+                        </div>
                         <label for="eventCover" class="form-label">Cover Photo</label>
-                                        <!-- Cover Photo Area -->
-                                        <div class="center">
-                                            <img id="eventCoverPreview" src="" alt="Image Preview" />
-                </div>
+                        <div class="center">
+                            <img id="eventCoverPreview" src="" alt="Image Preview" />
+                        </div>
                         <input hidden type="file" class="form-control" id="eventCover" accept="image/*" required>
                     </div>
+                
                     <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
+                        <div id="eventTagsDirections" class="directions" style="display:none;">
+                            <p>Enter tags that describe your event, separated by commas.</p>
+                        </div>
+                        <label for="eventTags" class="form-label">Event Tags</label>
+                        <input type="text" class="form-control" id="eventTags" placeholder="Enter tags separated by commas">
+                    </div>
+                
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
+                        <div id="eventURLDirections" class="directions" style="display:none;">
+                            <p>Create a URL for the event. This will be easy to share.</p>
+                        </div>
+                        <label for="eventURL" class="form-label">Event URL</label>
+                        <input type="text" class="form-control" id="eventURL" placeholder="Enter URL">
+                    </div>
+                    <div class="mb-3">
+                        <label for="displayEventURL" class="form-label">Event URL Display</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="displayEventURL" disabled value="https://rawphotographysite.com/events#url">
+                            <button class="btn btn-outline-secondary" type="button" id="copyEventURLBtn" onclick="copyEventURL()">Copy</button>
+                        </div>
+                    </div>
+                    
+                
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide Directions</button>
+                        <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
+                            <p>If applicable, enter the price for collections. Leave blank for free.</p>
+                        </div>
+                        <label for="eventCollectionPrice" class="form-label">Collection Price <small>Leave black for free</small></label>
+                        <input type="number" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
+                    </div>
+                
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide Directions</button>
+                        <div id="privateCheckBoxDirections" class="directions" style="display:none;">
+                            <p>Check this box if you want to make the event private.</p>
+                        </div>
+                        <label for="privateCheckBox" class="form-label">Private?</label>
+                        <input type="checkbox" class="form-control" id="privateCheckBox">
+                    </div>
+                
+                    <div id="accessCodeArea" class="mb-3">
+                        <button type="button" class="btn btn-link" onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
+                        <div id="accessCodeAreaDirections" class="directions" style="display:none;">
+                            <p>If your event is private, enter an access code that users will need to view the event.</p>
+                        </div>
                         <label for="accessCode" class="form-label">Access Code (if private)</label>
                         <input type="text" class="form-control" id="accessCode" placeholder="Optional">
-                    </div> 
+                    </div>
+                
                     <div class="controls">
-                    <button id="uploadEventBTN" type="button" class="btn btn-primary" >Upload Event</button>
-                    <button id="saveEvent" type="button" class="btn btn-primary" >Save Event</button>
-                    <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
-                </div>
-
+                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Upload Event</button>
+                        <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
+                        <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
+                    </div>
                 </form>
+
             </div>
         </div>
 
@@ -1336,6 +1407,15 @@ window.updatePrice = updatePrice;
         document.getElementById('eventTitle').value = event.title;
         document.getElementById('eventDescription').value = event.description;
         document.getElementById('eventDate').value = event.eventDate;
+        document.getElementById('eventLocation').value = event.location;
+
+        document.getElementById('privateCheckBox').checked = event.isPublic;
+
+        document.getElementById('privateCheckBox').value = event.status;
+        document.getElementById('privateCheckBox').value = event.shortURL;
+        document.getElementById('privateCheckBox').value = event.collection_price;
+        document.getElementById('privateCheckBox').value = event.eventTags;
+        
         document.getElementById('accessCode').value = event.accessCode;
         document.getElementById('uploadEventBTN').disabled;
         document.getElementById('currentEventID').innerText = eventId;
@@ -1345,6 +1425,72 @@ window.updatePrice = updatePrice;
 
     }
 
+
+
+// Function to toggle the visibility of the directions
+function toggleDirections(directionId) {
+    var directions = document.getElementById(directionId);
+    directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
+}
+
+// Update the displayed access code based on user input
+document.getElementById('accessCode').addEventListener('input', function() {
+    var accessCode = document.getElementById('accessCode').value;
+    var accessCodeDisplay = document.getElementById('displayAccessCode');
+    
+    // Update the displayed access code
+    if (accessCode) {
+    accessCodeDisplay.value = `https://rawphotographysite.com/#a=${accessCode}`;
+    } else {
+ accessCodeDisplay.value = "Enter your access code"; 
+    }
+});
+
+// Function to copy the access code to clipboard
+function copyAccessCode() {
+    var copyText = document.getElementById("displayAccessCode");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the input field
+    document.execCommand("copy");
+
+    // Optionally, show a confirmation (using a toast or alert, for example)
+    showToast("Access code copied to clipboard!");
+}
+
+
+
+
+// Update the displayed URL based on user input
+document.getElementById('eventURL').addEventListener('input', function() {
+    var shortURL = document.getElementById('eventURL').value;
+    var eventURLDisplay = document.getElementById('displayEventURL');
+    
+    // Update the displayed event URL
+    if (shortURL) {
+        eventURLDisplay.value = `https://rawphotographysite.com/#s=${shortURL}`;
+    } else {
+        eventURLDisplay.value = "Enter your URL"; // Default URL
+    }
+});
+
+// Function to copy the displayed URL to clipboard
+function copyEventURL() {
+    var copyText = document.getElementById("displayEventURL");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the input field
+    document.execCommand("copy");
+
+    // Optionally, show a confirmation (using a toast or alert, for example)
+    showToast("Event URL copied to clipboard!");
+}
+
+
+
+    
 // Save Event Function
 async function saveEvent() {
     console.log("eventCoverArea??????");
@@ -1842,7 +1988,7 @@ function loadWatermarkInputs() {
         }
     });
 
-    showToast("Watermark input values loaded.", "success");
+   // showToast("Watermark input values loaded.", "success");
 }
 
 // Clear watermark input values
@@ -1877,7 +2023,7 @@ window.addEventListener("beforeunload", (event) => {
 
 loadMainGallery();
 
-        
+        window.toggleDirections = toggleDirections;
         window.addMediaToGallery = addMediaToGallery;
 
         window.openAddToGalleryModal = openAddToGalleryModal;
@@ -2030,8 +2176,51 @@ document.getElementById('eventCoverPreview').addEventListener('click', function(
     document.getElementById('eventCover').click();
 
 });
+// Function to toggle visibility of directions
+function toggleDirections(directionsId) {
+    const directions = document.getElementById(directionsId);
+    directions.style.display = (directions.style.display === 'none' || directions.style.display === '') ? 'block' : 'none';
+
+    // Save the directions visibility state in localStorage
+    localStorage.setItem(directionsId, directions.style.display);
+}
+
+// Load saved directions preferences from localStorage
+function loadDirectionsPreferences() {
+    const allDirections = document.querySelectorAll('.directions');
+    allDirections.forEach(direction => {
+        const directionsId = direction.id;
+        const savedState = localStorage.getItem(directionsId);
+        if (savedState) {
+            direction.style.display = savedState;
+        }
+    });
+}
+
+// Call loadDirectionsPreferences on page load
+window.onload = loadDirectionsPreferences;
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const privateCheckBox = document.getElementById("privateCheckBox");
+  const accessCodeArea = document.getElementById("accessCodeArea");
+  const accessCodeInput = document.getElementById("accessCode");
+
+  // Initially hide the accessCodeArea
+  accessCodeArea.style.display = "none";
+
+  // Add event listener for checkbox state change
+  privateCheckBox.addEventListener("change", () => {
+    if (privateCheckBox.checked) {
+      // Show accessCodeArea if checkbox is checked
+      accessCodeArea.style.display = "block";
+    } else {
+      // Hide accessCodeArea and clear input value if checkbox is unchecked
+      accessCodeArea.style.display = "none";
+      accessCodeInput.value = "";
+    }
+  });
+});
 
 
 
