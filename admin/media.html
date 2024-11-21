@@ -1178,7 +1178,7 @@ console.log("doc.id    ",doc.id);
         // Collapsible content
         const detailsId = `details-${doc.id}`;
         const mediaListId = `mediaList-${doc.id}`;
-        const eventDetails = `eventDetails-${doc.id}`;
+        const eventID = `eventDetails-${doc.id}`;
         eventItem.innerHTML = `
     <div class="eventPanelArea">
 
@@ -1195,7 +1195,7 @@ console.log("doc.id    ",doc.id);
                     </div>
 
         <div class="batch-buttons btn-group controls">
-            <button class="btn btn-primary btn-sm" onclick="toggleMediaDetails('${doc.id}')    viewMedia('${doc.id}', '${title}', '${eventDate}', ${isPublic}, '${coverUrl}')">View Media</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleEventDetails('${doc.id}')>toggleMedia</button>
             <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
             <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
@@ -1207,7 +1207,7 @@ console.log("doc.id    ",doc.id);
 
     <div id="m-Details-${detailsId}" class="collapse mt-3">
 
-   <div id='${eventDetails}' class="event_details_cover ">
+   <div id='${eventID}' class="event_details_cover ">
     </div>
    
 
@@ -1236,8 +1236,9 @@ console.log("doc.id    ",doc.id);
 
 
         eventList.appendChild(eventItem);
-        console.log("eventDetails.id    ",eventDetails);
+        console.log("eventDetails.id    ",eventID);
 
+        viewMedia(eventInfo);
 }
 });
 } catch (error) {
@@ -1245,6 +1246,13 @@ console.error("Error fetching events:", error);
 }
 }
 
+function toggleEventDetails(sss){
+    const details = document.getElementById(`m-Details-${mediaId}`);
+    const image = document.getElementById(`m-Images-${mediaId}`);
+    
+    details.classList.toggle('collapse');
+    image.classList.toggle('collapse');
+}
 
 // Function to toggle collapsible details
 function toggleMediaDetails(mediaId) {
