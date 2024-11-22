@@ -1938,7 +1938,7 @@ if(otherDetails){
 async function removeFromMedia(mediaId) {
     try {
         // Query the Media collection for the document with the specified mediaId
-        const mediaQuery = query(collection(db, 'Media'), where("id", "==", mediaId));
+        const mediaQuery = doc(db, 'Media', mediaId); // query(collection(db, 'Media'), where("id", "==", mediaId));
         const mediaSnapshot = await getDocs(mediaQuery);
 
         // Reference Firebase Storage
