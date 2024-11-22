@@ -1224,7 +1224,8 @@ console.log("doc.id    ",doc.id);
     <div class="box">
 
 
- 
+  <div id='${detailsId}' class="event_photos_list"></div>
+  <div id='${mediaListId}' class="event_photos_list"></div>
        
 
   
@@ -1300,7 +1301,7 @@ async function viewMedia(eventId) {
 
     // Reset containers
  //   mediaListContainer.innerHTML = "";
-    eventDetailsContainer.innerHTML = "";
+   // eventDetailsContainer.innerHTML = "";
 
     let imageCount = 0;
      const mediaItems = [];
