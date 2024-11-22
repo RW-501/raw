@@ -500,7 +500,7 @@ function applyFilmStripEffect() {
 async function getHeaderImages(appearOn) {
     try {
         console.log("appearOn:", appearOn);
-       const showBool = false;
+       const showBool = true;
         // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'Media');
         
