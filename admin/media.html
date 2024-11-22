@@ -1440,13 +1440,29 @@ function populateDropdown() {
 window.populateDropdown = populateDropdown;
 
 // Handle dropdown change event
-function handleDropdownChange(event, imageID, div) {
-    const selectedEventId = event.target.value;
-    console.log('image ID: ',imageID, '  Selected Event ID:', selectedEventId);
-    // Add your logic to handle the selected event
+async function handleDropdownChange(event, imageID) {
+    const selectedEventId = event.target.value; // Get the selected event ID
+    console.log('Image ID:', imageID, 'Selected Event ID:', selectedEventId);
 
-    document.getElementsByName(`mediaList-${imageID}`).remove();
+    try {
+        // Firestore reference to the media document by imageID
+        const mediaDocRef = doc(db, "Media", imageID);
+
+        // Update the eventId field in the specified document
+        await updateDoc(mediaDocRef, {
+            eventId: selectedEventId
+        });
+
+        console.log(`Media document ${imageID} updated with eventId: ${selectedEventId}`);
+
+        // Remove associated DOM elements (if required)
+        const element = document.getElementById(`mediaList-${imageID}`);
+        element.remove();
+    } catch (error) {
+        console.error("Error updating media document:", error);
+    }
 }
+
 
 window.handleDropdownChange = handleDropdownChange;
 
