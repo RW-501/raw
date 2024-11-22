@@ -1546,6 +1546,16 @@ window.handleDropdownChange = handleDropdownChange;
       </div>
     </div>
   </div>
+<hr>
+      <div class="box mb-3">
+        <small class="form-label d-flex justify-content-between">
+            Update Media Options
+            <button type="button" class="btn btn-link" onclick="toggleDirections('updateMediaDirections')">Show/Hide Directions</button>
+        </small>
+        <div id="updateMediaDirections" class="directions" style="display:none;">
+            <p>Here, you can update the media details. Click the buttons below to manage visibility, change associated events, and remove items.</p>
+        </div>
+    </div>
 `;
 
 
@@ -1559,54 +1569,59 @@ window.handleDropdownChange = handleDropdownChange;
                 mediaDiv.id = `mediaList-${item.id}`;
                 mediaDiv.innerHTML = `
             <div class="media-header">
-                               
-<button onclick="toggleCollapse('i-Details-${item.id}', this, 'Details', 'm-Images-${item.id}')">Details ▼</button>
-           
-                <div class="media-item-img-details">
-
-                <div id="m-Images-${item.id}" class="media-image collapse:not" >
+        <button onclick="toggleCollapse('i-Details-${item.id}', this, 'Details', 'm-Images-${item.id}')">
+            Details ▼
+        </button>
+        
+        <div class="media-item-img-details">
+            <!-- Media Image Section -->
+            <div id="m-Images-${item.id}" class="media-image collapse:not">
                 <img 
                     src="${item.photoUrl}" 
                     data-src="${item.photoUrl}" 
                     alt="Media" 
-                    class="media-thumbnail view-image" data-image-id='${item.id}'>
-                </div>
+                    class="media-thumbnail view-image" 
+                    data-image-id="${item.id}">
+            </div>
+
+            <!-- Media Details Section -->
             <div id="i-Details-${item.id}" class="media-details collapse">
                 <p>File Type: ${item.fileType}</p>
                 <p>File Size: ${item.fileSize} MB</p>
                 <p>Status: ${item.status}</p>
                 <p>Views: ${item.views}</p>
                 <p>Timestamp: ${new Date(item.timestamp.seconds * 1000).toLocaleString()}</p>
-                        <p>Price: $${item.price}</p>
+                <p>Price: $${item.price}</p>
                 <p>Collection Price: $${item.collectionPrice}</p>
             </div>
+        </div>
 
-      </div>
-               <div class="batch-buttons btn-group controls">
-    <!-- Check if the item is part of the main gallery -->
-    ${mainGalleryIds.includes(item.id) ? `
-        <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
-    ` : ''}
+        <!-- Media Action Buttons -->
+        <div class="batch-buttons btn-group controls">
+            <!-- Add to Gallery Option -->
+            ${mainGalleryIds.includes(item.id) ? `
+                <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
+            ` : ''}
 
-<div class="box">
-    <small >Change Event</small>
-    <select class="eventDropdown" class="form-select" onchange="handleDropdownChange(event,'${item.id}' )">
-        <!-- Options will be dynamically populated -->
-    </select>
-</div>
-
-
-    <!-- Toggle public/private status -->
-    <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
-        ${item.isPublic ? "Make Private" : "Make Public"}
-    </button>
-
-    <!-- Delete Button -->
-    <button class="btn-danger" onclick="removeFromMedia('${item.id}')">Delete</button>
-</div>
-
-
+            <!-- Event Change Dropdown -->
+            <div class="box">
+                <small>Change Event</small>
+                <select 
+                    class="eventDropdown form-select" 
+                    onchange="handleDropdownChange(event, '${item.id}')">
+                    <!-- Options populated dynamically -->
+                </select>
             </div>
+
+            <!-- Toggle public/private status -->
+            <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
+                ${item.isPublic ? "Make Private" : "Make Public"}
+            </button>
+
+            <!-- Delete Button -->
+            <button class="btn btn-danger" onclick="removeFromMedia('${item.id}')">Delete</button>
+        </div>
+    </div>
 
         `;
         mediaListContainer.appendChild(mediaDiv);
