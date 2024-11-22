@@ -1229,11 +1229,13 @@ console.log("doc.id    ",doc.id);
   
     </div>
 
-      <div id='${mediaListId}' class="event_photos_list">
-    </div>
+     
 `;
 
-
+/*
+ <div id='${mediaListId}' class="event_photos_list">
+    </div>
+    */
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventDetailsId);
 
@@ -1289,16 +1291,16 @@ async function viewMedia(eventInfo) {
     const mediaCollectionRef = collection(db, "Media");  
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventInfo.eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
-    const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
+   // const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
     const eventDetailsContainer = document.getElementById(`eventDetails-${eventInfo.eventId}`);
 
     //const mediaListContainer = document.getElementById("mediaList");
     //const eventDetailsContainer = document.getElementById("eventDetails");
-/*
+
     // Reset containers
-    mediaListContainer.innerHTML = "";
+ //   mediaListContainer.innerHTML = "";
     eventDetailsContainer.innerHTML = "";
-*/
+
     let imageCount = 0;
      eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
      const mediaItems = [];
@@ -1384,7 +1386,7 @@ async function viewMedia(eventInfo) {
             </div>
 
         `;
-        mediaListContainer.appendChild(mediaDiv);
+        eventDetailsContainer.appendChild(mediaDiv);
     });
 
     // Initialize lazy loading
