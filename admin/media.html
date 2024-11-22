@@ -1563,6 +1563,14 @@ window.handleDropdownChange = handleDropdownChange;
     </div>
 `;
 
+(async () => {
+    const mainGalleryIds = await fetchMainGalleryIds();
+    if (mainGalleryIds.length > 0) {
+        console.log("Fetched IDs:", mainGalleryIds);
+        // Additional logic here
+    }
+})();
+
 
             // Generate media items
             mediaItems.forEach((item) => {
@@ -2144,7 +2152,13 @@ async function loadMainGallery() {
             return;
         }
 
-        mainGallerySnapshot.forEach(doc => mainGalleryIds.push(doc.id)); // Collect IDs
+        (async () => {
+    const mainGalleryIds = await fetchMainGalleryIds();
+    if (mainGalleryIds.length > 0) {
+        console.log("Fetched IDs:", mainGalleryIds);
+        // Additional logic here
+    }
+})();
 
         // Fetch Media documents
         const mediaRef = collection(db, "Media");
