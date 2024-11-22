@@ -432,7 +432,7 @@
                         <div id="eventStatusDirections" class="directions" style="display:none;">
                             <p>Choose the current status of the event. This will determine whether it's active, in draft, or deactivated.</p>
                         </div>
-                        <select class="form-select" id="eventStatus" onchange="handleEventStatusChange()">
+                        <select class="form-select" id="eventStatus">
                             <option value="active">Active</option>
                             <option value="deactivate">Deactivate</option>
                             <option value="draft">Draft</option>
@@ -2175,7 +2175,6 @@ window.updatePreview = updatePreview;
 
 window.renderCheckboxes = renderCheckboxes;
 window.handleUpdate  = handleUpdate ;
-window.handleEventStatusChange   = handleEventStatusChange  ;
 
 window.toggleEventDetails   = toggleEventDetails  ;
 window.batchSetPublic   = batchSetPublic  ;
