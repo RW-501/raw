@@ -2185,6 +2185,7 @@ galleryContainer.classList.add ("gallery_photos_list");
                         // Create media item card
                         const mediaDiv = document.createElement('div');
                         mediaDiv.classList.add('gallery-item', 'card-body');
+                        mediaDiv.id = `galleryList-${mediaId}`;
                         mediaDiv.innerHTML = `
 <div class="media-container">
   <div class="media-header">
@@ -2192,7 +2193,7 @@ galleryContainer.classList.add ("gallery_photos_list");
       <img src="image_url" alt="Media Image" class="gallery-thumbnail view-image">
     </div>
     <div class="box">
-      <button onclick="toggleCollapse('appearOn-mediaId', this)">Expand ▼</button>
+<button onclick="toggleCollapse('appearOn-${mediaId}', this)" aria-expanded="false">Expand ▼</button>
     </div>
   </div>
 
@@ -2348,8 +2349,14 @@ galleryContainer.classList.add ("gallery_photos_list");
             if (confirmDelete) {
                 // Remove from MainGallery collection
                 await deleteDoc(doc(db, "MainGallery", mediaId));
-                alert('Media successfully removed from the gallery!');
-                loadMainGallery(); // Refresh the gallery list
+
+                const element = document.getElementById(`galleryList-${mediaId}`);
+        if (element) element.remove();
+
+        // Show success toast once all deletions are complete
+        showToast('Media successfully removed from the gallery!');
+
+              //  loadMainGallery(); // Refresh the gallery list
             }
         }
 
