@@ -2172,13 +2172,10 @@ async function loadMainGallery() {
             return;
         }
 
-        (async () => {
-    const mainGalleryIds = await fetchMainGalleryIds();
-    if (mainGalleryIds.length > 0) {
+
+        const mainGalleryIds = await fetchMainGalleryIds();
         console.log("Fetched IDs:", mainGalleryIds);
-        // Additional logic here
-    }
-})();
+
 
         // Fetch Media documents
         const mediaRef = collection(db, "Media");
