@@ -229,7 +229,8 @@
 
         .media-image {
             width: 200px !important;
-            margin: auto;
+    justify-content: center;
+    display: grid;
         }
 
 
@@ -1319,6 +1320,7 @@
   
   <div id='${mediaListId}' class="event_photos_list"></div>
    
+  
   <div class="flex-wrap"> 
   <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
 </div>
@@ -1497,7 +1499,7 @@
                 <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
                     ${item.isPublic ? "Make Private" : "Make Public"}
                 </button>
-                <button class="btn btn-danger btn-sm" onclick="removeFromMedia('${item.id}')">Delete</button>
+                <button class=" btn-danger " onclick="removeFromMedia('${item.id}')">Delete</button>
             </div>
 
             </div>
