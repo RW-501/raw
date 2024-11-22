@@ -1293,9 +1293,9 @@ function toggleCollapse(theId, btnDiv, title) {
 
     if (btnDiv && title) {
         if (details.classList.contains('collapse')) {
-            btnDiv.innerHTML = `"${title} ▼"`; // Set to collapsed state
+            btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
         } else {
-            btnDiv.innerHTML = `"${title} ▲"`; // Set to expanded state
+            btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
         }
     }
 
@@ -1349,7 +1349,7 @@ async function viewMedia(eventId, coverPhoto) {
         // Use the first image as the cover photo
         if (!coverPhoto) coverPhoto = data.photoUrl;
     });
-    eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
+  //  eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
     console.log("mediaItems new    ", mediaItems);
 
     console.log("eventId   ", eventId)
