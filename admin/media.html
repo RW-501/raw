@@ -1570,7 +1570,7 @@ const mainGalleryIds = await fetchMainGalleryIds();
             // Generate media items
             mediaItems.forEach((item) => {
 
-                console.log("Checking if item.id exists in mainGalleryIds:", item.id, mainGalleryIds.includes(item.id));
+              //  console.log("Checking if item.id exists in mainGalleryIds:", item.id, mainGalleryIds.includes(item.id));
 
                 //  console.log("items    ", item);
                 const mediaDiv = document.createElement("div");
@@ -2174,7 +2174,7 @@ async function loadMainGallery() {
 
 
         const mainGalleryIds = await fetchMainGalleryIds();
-        console.log("Fetched IDs:", mainGalleryIds);
+        //console.log("Fetched IDs:", mainGalleryIds);
 
 
         // Fetch Media documents
@@ -2225,6 +2225,7 @@ console.log("appearOnData ",appearOnData);
 
     const mediaDiv = document.createElement('div');
     mediaDiv.classList.add('gallery-item', 'card-body');
+    mediaDiv.id = `galleryList-${mediaId}`;
 
     mediaDiv.innerHTML = `
         <div class="media-container">
@@ -2252,8 +2253,7 @@ console.log("appearOnData ",appearOnData);
                         ${renderCheckboxes(Object.keys(defaultAppearOn), appearOnData, mediaId)}
                   </div>
     <div class="controls">
-      <button onclick="handleUpdate('${mediaId}')">Update</button>
-      <button onclick="removeMedia('${mediaId}')">Remove</button>
+      <button onclick="removeMediaFromGallery('${mediaId}')">Remove</button>
     </div>
 
   </div>
@@ -2289,18 +2289,6 @@ function toggleAppearOn(mediaId, page, isChecked) {
 
 window.toggleAppearOn = toggleAppearOn;
 
-        /**
-         * Handle updating the appearOn field for a media item.
-         * @param {string} mediaId - The ID of the media document to update.
-         */
-        function handleUpdate(mediaId) {
-            const checkboxes = document.querySelectorAll(`#checkboxes-${mediaId} input[type="checkbox"]`);
-            const selectedPages = Array.from(checkboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value);
-
-            updateAppearOn(mediaId, selectedPages);
-        }
 
 
 
@@ -2361,7 +2349,7 @@ window.toggleAppearOn = toggleAppearOn;
         }
 
         // Remove Media Function
-        async function removeMedia(mediaId) {
+        async function removeMediaFromGallery(mediaId) {
             const confirmDelete = confirm("Are you sure you want to remove this media from the gallery?");
             if (confirmDelete) {
                 // Remove from MainGallery collection
@@ -2491,7 +2479,7 @@ window.toggleAppearOn = toggleAppearOn;
             window.toggleCollapse = toggleCollapse;
             window.showTabContent = showTabContent;
             window.updateAppearOn = updateAppearOn;
-            window.removeMedia = removeMedia;
+            window.removeMediaFromGallery = removeMediaFromGallery;
 
             window.handleFileUpload = handleFileUpload;
             window.updatePreview = updatePreview;
