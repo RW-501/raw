@@ -1201,8 +1201,8 @@ console.log("eventInfo    ",eventInfo);
                     </div>
 
         <div class="batch-buttons btn-group controls">
-            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, e-Details-${doc.id},"Event Details")>Event Details</button>
-            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, ${mediaDetailsId},"Media Details")>Media Details</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, e-Details-${doc.id}",'Event Details')>Event Details</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, ${mediaDetailsId}",'Media Details')>Media Details</button>
             <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
             <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
