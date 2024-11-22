@@ -1936,7 +1936,7 @@ function copyAccessCode() {
     }
 }
 
-async function removeFromMedia(mediaId) {
+async function removeFromMedia(mediaId) { 
     try {
         // Reference to the specific Media document
         const mediaRef = doc(db, 'Media', mediaId);
@@ -1955,19 +1955,25 @@ async function removeFromMedia(mediaId) {
         const mediaData = mediaDoc.data();
         const photoUrl = mediaData.photoUrl; // Assuming photoUrl contains the image file path in Firebase Storage
 
-        // Only proceed if there's a photoUrl
+        // Attempt to delete the image from Firebase Storage
         if (photoUrl) {
             const imageRef = ref(storage, photoUrl); // Get reference to the image file
 
-            // Delete the image from Firebase Storage
-            await deleteObject(imageRef);
-            console.log(`Image at ${photoUrl} deleted from Storage`);
-
+            try {
+                await deleteObject(imageRef);
+                console.log(`Image at ${photoUrl} deleted from Storage`);
+            } catch (storageError) {
+                if (storageError.code === 'storage/object-not-found') {
+                    console.warn(`Image at ${photoUrl} does not exist in Storage.`);
+                } else {
+                    console.error("Error deleting image from Storage:", storageError);
+                }
+            }
         } else {
             console.log("No photo associated with this media.");
         }
 
-        // Now delete the media document from Firestore
+        // Delete the media document from Firestore
         await deleteDoc(mediaRef);
         console.log(`Media document with ID: ${mediaId} deleted successfully`);
 
