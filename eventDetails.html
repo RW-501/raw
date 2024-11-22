@@ -496,6 +496,18 @@ async function fetchEventDetails() {
             return;
         }
 
+              // Update the event details on the page
+              updateEventPage(eventData);
+
+// Fetch and display related media images for the event
+await displayEventImages(eventData);
+
+// Handle download button functionality
+setupDownloadButton(eventData);
+
+eventId = eventData.eventId;
+console.log(",  eventId   ",eventId);
+
         // Process and display the event data as needed
         console.log("Fetched Event Data:", eventData);
         // Further processing...
@@ -512,7 +524,7 @@ function sanitizeInput2(input) {
 let eventId;
 
 // Main function to fetch event details from URL parameters
-async function fetchEventDetails() {
+async function fetchEventDetails2() {
     try {
         // Get and sanitize the query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
