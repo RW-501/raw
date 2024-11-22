@@ -1183,6 +1183,7 @@ console.log("eventInfo    ",eventInfo);
         const mediaListId = `mediaList-${doc.id}`;
         
         const eventDetailsId = `eventDetails-${doc.id}`;
+        const mediaDetailsId = `mediaDetails-${doc.id}`;
 
         eventItem.innerHTML = `
     <div class="eventPanelArea">
@@ -1200,7 +1201,8 @@ console.log("eventInfo    ",eventInfo);
                     </div>
 
         <div class="batch-buttons btn-group controls">
-            <button class="btn btn-primary btn-sm" onclick="toggleEventDetails('${doc.id}')">toggleEventDetails</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, e-Details-${doc.id},"Event Details")>Event Details</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, ${mediaDetailsId},"Media Details")>Media Details</button>
             <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
             <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
             <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
@@ -1210,7 +1212,7 @@ console.log("eventInfo    ",eventInfo);
 
     
 
-    <div id="m-Details-${doc.id}" class="collapse mt-3">
+    <div id="e-Details-${doc.id}" class="collapse mt-3">
 
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
@@ -1222,16 +1224,12 @@ console.log("eventInfo    ",eventInfo);
         <p><strong>Timestamp:</strong> ${timestamp}</p>
         <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
         <p><strong>Comments:</strong> ${comments}</p>
-        <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>
-
-
-
-  <div id='${detailsId}' class="event_details"></div>
-       
+        <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>    
   </div>
   
 
-        <div class="box">
+        <div id='${mediaDetailsId}' class="box collapse mt-3">
+  <div id='${detailsId}' class="event_details"></div>
 
   <div id='${eventDetailsId}' class="event_eventDetails"></div>
   <div id='${mediaListId}' class="event_photos_list"></div>
@@ -1254,23 +1252,37 @@ console.error("Error fetching events:", error);
 
 }
 
-function toggleEventDetails(mediaId){
-    const details = document.getElementById(`m-Details-${mediaId}`);
-    const image = document.getElementById(`mediaList-${mediaId}`);
-    
-    details.classList.toggle('collapse');
-  //  image.classList.toggle('collapse');
-}
 
-// Function to toggle collapsible details
-function toggleMediaDetails(mediaId) {
 
-    const details = document.getElementById(`m-Details-${mediaId}`);
+// 
+// Toggle the collapse of media details
+function toggleCollapse(mediaId, btnDiv, title) {
+    const details = document.getElementById(mediaId);
 
-    
+    // Toggle the 'collapse' class
     details.classList.toggle('collapse');
 
+    // Update the button content
+    if (btnDiv) {
+        if (details.classList.contains('collapse')) {
+            btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
+        } else {
+            btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
+        }
+    }
+
+    if (btnDiv && title) {
+        if (details.classList.contains('collapse')) {
+            btnDiv.innerHTML = `"${title} ▼"`; // Set to collapsed state
+        } else {
+            btnDiv.innerHTML = `"${title} ▲"`; // Set to expanded state
+        }
+    }
+
 }
+
+
+
 
 // Function to handle analytics view
 function viewAnalytics(eventId) {
@@ -1354,7 +1366,6 @@ async function viewMedia(eventId, coverPhoto) {
   </div>
 `;
 
-console.log("mediaItems    ", mediaItems);
 
     // Generate media items
     mediaItems.forEach((item) => {
@@ -1367,7 +1378,7 @@ console.log("mediaItems    ", mediaItems);
         mediaDiv.innerHTML = `
             <div class="media-header">
                                
-                <button onclick="toggleMediaDetails('${item.id}')">View Details</button>
+                <button onclick="toggleCollapse(${item.id}, i-Details-${item.id},"Details")>Details</button>
            
                 <div class="media-item-img-details">
 
@@ -1378,7 +1389,7 @@ console.log("mediaItems    ", mediaItems);
                     alt="Media" 
                     class="media-thumbnail view-image" data-image-id='${item.id}'>
                 </div>
-            <div id="m-Details-${item.id}" class="media-details collapse">
+            <div id="i-Details-${item.id}" class="media-details collapse">
                 <p>File Type: ${item.fileType}</p>
                 <p>File Size: ${item.fileSize} MB</p>
                 <p>Status: ${item.status}</p>
@@ -1977,23 +1988,6 @@ function handleUpdate(mediaId) {
 
 
 
-
-// Toggle the collapse of media details
-function toggleCollapse(mediaId, btnDiv) {
-    const details = document.getElementById(mediaId);
-
-    // Toggle the 'collapse' class
-    details.classList.toggle('collapse');
-
-    // Update the button content
-    if (btnDiv) {
-        if (details.classList.contains('collapse')) {
-            btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
-        } else {
-            btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
-        }
-    }
-}
 
 
 
