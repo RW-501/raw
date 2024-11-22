@@ -1172,10 +1172,10 @@ function onEventSaved(eventID) {
         eventItem.style.border = '1px solid #ddd';
         eventItem.style.borderRadius = '8px';
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-console.log("doc.id    ",doc.id);
 
 //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
-eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
+eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverUrl];
+console.log("eventInfo    ",eventInfo);
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
@@ -1240,7 +1240,7 @@ eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, event
     */
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventDetailsId);
-        viewMedia(doc.id, coverPhoto);
+        viewMedia(doc.id, coverUrl);
 
 }
 });
