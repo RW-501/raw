@@ -177,13 +177,16 @@
 }
 
 .eventCoverThumbnail {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     margin: auto;
-    border-radius: 4px;
-
-}
-
+      border: 3px solid #ddd; /* Light gray border */
+      border-radius: 10px; /* Rounded corners */
+      width: 100%; /* Ensure images are responsive */
+      max-width: 100%; /* Prevent images from overflowing */
+      transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
+      box-sizing: border-box; /* Includes padding/border in width/height calculations */
+  }
 
 .gallery-details {
     display: grid;
@@ -1212,13 +1215,14 @@ console.log("eventInfo    ",eventInfo);
                     </div>
                     </div>
 
-        <div class="batch-buttons btn-group controls">
-            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, e-Details-${doc.id}",'Event Details')>Event Details</button>
-            <button class="btn btn-primary btn-sm" onclick="toggleCollapse(${doc.id}, ${mediaDetailsId}",'Media Details')>Media Details</button>
-            <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
-            <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
-        </div>
+<div class="batch-buttons btn-group controls">
+    <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${doc.id}', 'e-Details-${doc.id}', 'Event Details')">Event Details</button>
+    <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${doc.id}', '${mediaDetailsId}', 'Media Details')">Media Details</button>
+    <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
+    <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+</div>
+
     </div>
     </div>
 

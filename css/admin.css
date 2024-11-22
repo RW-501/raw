@@ -734,14 +734,7 @@ display:block;
   }
   
   
-  #main-content img {
-      border: 3px solid #ddd; /* Light gray border */
-      border-radius: 8px; /* Rounded corners */
-      width: 100%; /* Ensure images are responsive */
-      max-width: 100%; /* Prevent images from overflowing */
-      transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
-      box-sizing: border-box; /* Includes padding/border in width/height calculations */
-  }
+
   
   /* Hover effect */
   #main-content img:hover {
