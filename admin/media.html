@@ -1364,8 +1364,9 @@
   <div class="flex-wrap whatIsThis"> 
   <div id='${mediaListId}' class="event_photos_list"></div>
    </div>
-  
+  scrollToDiv(divId)
   <div class="flex-wrap"> 
+  <button class="btn btn-primary btn-sm" onclick=" scrollToDiv(${mediaListId})">Top</button>
   <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
 </div>
 
@@ -1955,6 +1956,18 @@ async function removeFromMedia(mediaId) {
 
 
         window.removeFromMedia = removeFromMedia;
+
+
+        function scrollToDiv(divId) {
+    const targetDiv = document.getElementById(divId);
+    if (targetDiv) {
+        targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        console.error(`Element with ID ${divId} not found`);
+    }
+}
+
+window.scrollToDiv = scrollToDiv;
 
         // Delete Event Function
         // Delete Event Function 
