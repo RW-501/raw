@@ -631,12 +631,12 @@ function checkAndSendEventDetails() {
     // Retrieve the current URL
     const currentURL = window.location.href;
 
-    // Use URLSearchParams to parse the URL for parameters 'a' and 'e'
-    const urlParams = new URLSearchParams(window.location.hash.substring(1)); // Remove the # from the hash part
+// Use URLSearchParams to parse the URL for parameters 'a' and 's'
+const urlParams = new URLSearchParams(window.location.search); // Use .search for the query string
 
-    // Get the values of 'a' and 'e' from the URL
-    const accessCode = urlParams.get('a');
-    const shortURL = urlParams.get('s');
+// Get the values of 'a' and 's' from the URL
+const accessCode = urlParams.get('a');
+const shortURL = urlParams.get('s');
 
     // Check if 'a' or 'e' values exist and build the new URL accordingly
     if (accessCode) {
