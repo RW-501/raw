@@ -1286,7 +1286,7 @@ function viewAnalytics(eventId) {
 let eventInfo = '';
 
 async function viewMedia(eventInfo) {
-   // eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
+    eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
     console.log("eventInfo   ", eventInfo)
     const mediaCollectionRef = collection(db, "Media");  
