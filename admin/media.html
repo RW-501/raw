@@ -1424,6 +1424,7 @@ function populateDropdown() {
     // Select all dropdowns with the specified class
     const dropdowns = document.querySelectorAll('.eventDropdown');
 
+    console.log("populateDropdown   ",dropdowns.length );
     // Loop through each dropdown
     dropdowns.forEach(dropdown => {
         dropdown.innerHTML = ''; // Clear the dropdown before repopulating
