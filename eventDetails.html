@@ -472,6 +472,9 @@ async function fetchEventDetails() {
         const eventIdURL = sanitizeInput2(urlParams.get('id'));
         const accessCode = sanitizeInput2(urlParams.get('a'));
         const shortURL = sanitizeInput2(urlParams.get('s'));
+        console.log(",  urlParams   ",urlParams);
+        console.log(",  accessCode   ",accessCode);
+        console.log(",  shortURL   ",shortURL);
 
         let eventData = null;
 
