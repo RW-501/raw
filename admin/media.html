@@ -2218,11 +2218,18 @@ function renderGalleryItem(media, container) {
                     <h3>Appear On</h3>
                     <div id="checkboxes-${mediaId}">
                         ${renderCheckboxes(Object.keys(defaultAppearOn), appearOnData, mediaId)}
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+                  </div>
+    <div class="controls">
+      <button onclick="handleUpdate('${mediaId}')">Update</button>
+      <button onclick="removeMedia('${mediaId}')">Remove</button>
+    </div>
+
+  </div>
+
+</div>
+         ` ;
+
+
     container.appendChild(mediaDiv);
 }
 
@@ -2248,27 +2255,7 @@ function toggleAppearOn(mediaId, page, isChecked) {
         .catch(error => console.error(`Error updating appearOn:`, error));
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.toggleAppearOn = toggleAppearOn;
 
         /**
          * Handle updating the appearOn field for a media item.
