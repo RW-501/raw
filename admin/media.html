@@ -1,291 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event & Photo Management</title>
     <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-<link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/admin.css">
 
-<style>
-
-#Manage_Events {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    
-
-}
-
-#eventsContainer {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-   
-}
-
-.mainEventPanel {
-    display: grid;
-    width: 50%;
-    overflow: hidden;
-
-}
-.eventPanel {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-.eventPanelArea{
-
-display: grid;
-grid-auto-rows: max-content;
-}
-
-.eventHeaderArea {
-
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 5rem;
-}
-.eventCoverArea {
-    display: grid;
-    max-width: 100%;
-    /* height: 100px; */
-    margin: auto;
-    padding: 0;
-    justify-content: center;
-}
+    <style>
+        #Manage_Events {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
 
 
-.eventCoverThumbnail {
-    width: 200px;
-    height: auto;
-    object-fit: cover;
-    border: 3px solid #ddd;
-    border-radius: 10px;
-    max-width: 100%;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
+        }
 
-.event_details_cover {
-    display: grid;
-    gap: 1rem;
-}
-  
-.manageEventsArea {
-    width: 100%;    
-}
+        #eventsContainer {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
 
-.batch-buttons {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
- 
- .flex-wrap{
+        }
 
-  display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
+        .mainEventPanel {
+            display: grid;
+            width: 50%;
+            overflow: hidden;
 
-.event_photos_list {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    flex-wrap: wrap;
-}
+        }
 
-.media-item {
-    width: 50%;
-    display: flex;
-    overflow: hidden;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    flex-direction: row;
-    gap: .5rem;
-    padding: 15px;
-    border-radius: 8px;
-    margin:  auto;
-    width: 90%;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        .eventPanel {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
 
-}
+        .eventPanelArea {
 
-.media-header {
-    display: grid;
-    width: 100%;
+            display: grid;
+            grid-auto-rows: max-content;
+        }
 
-}
+        .eventHeaderArea {
 
-.media-item-img-details {
-    display: grid; 
-}
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 5rem;
+        }
 
-.event-cover {
-    width: 200px !important;
-}
+        .eventCoverArea {
+            display: grid;
+            max-width: 100%;
+            /* height: 100px; */
+            margin: auto;
+            padding: 0;
+            justify-content: center;
+        }
 
 
-#mainGallerySection {
-    display: grid; 
-    width: 100%;
-    overflow: hidden;
+        .eventCoverThumbnail {
+            width: 200px;
+            height: auto;
+            object-fit: cover;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            max-width: 100%;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
 
-}
+        .event_eventDetails {
+            width: 100%;
 
-#galleryContainer {
-    width: 100%;
-    overflow: hidden;
-    gap: 1.5rem;
-    display: flex;
-    overflow: hidden;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    flex-direction: row;
-}
+        }
 
-.event_photos_list
-{
-    gap: .5rem;
-    display: flex;
-    overflow: hidden;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
-    flex-direction: row;
+        .event_details_cover {
+            display: grid;
+            gap: 1rem;
+        }
 
+        .manageEventsArea {
+            width: 100%;
+        }
 
-}
-.media-thumbnail{
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border-radius: 4px;
+        .batch-buttons {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
 
-}
+        .flex-wrap {
+            width: 100%;
 
-.gallery-item {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
 
-    
-    border-radius: 8px;
-    margin: auto;
-    width: 30%;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    display: table;
-}
-.media-container {
-    display: grid;
- width: 100%
-}
+        .event-cover {
+            width: 200px !important;
+            height: 200px;
+            display: block;
+            object-fit: cover;
+        }
 
+        .event_photos_list {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
 
-.gallery-details {
-    display: grid;
-    width: 100%;
-}
+        .media-item {
+            width: 50%;
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            flex-direction: row;
+            gap: .5rem;
+            padding: 15px;
+            border-radius: 8px;
+            margin: auto;
+            width: 90%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
-.flex {
-    display: flex;
-}
+        }
 
-.grid-e{
-    display: grid;
-    justify-content: space-evenly;
+        .media-header {
+            display: grid;
+            width: 100%;
 
-}
-.media-thumbnail-cover {
-    width: 200px !important;
-}
+        }
 
-
-.media-image {
-    width: 200px !important;
-    margin: auto;
-}
-
-
-.appearOnContainer {
-    width: 100%;
-}
+        .media-item-img-details {
+            display: grid;
+        }
 
 
 
+        #mainGallerySection {
+            display: grid;
+            width: 100%;
+            overflow: hidden;
 
-</style>
-  
+        }
+
+        #galleryContainer {
+            width: 100%;
+            overflow: hidden;
+            gap: 1.5rem;
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .event_photos_list {
+            gap: .5rem;
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            flex-direction: row;
+
+
+        }
+
+        .media-thumbnail {
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            border-radius: 4px;
+
+        }
+
+        .gallery-item {
+
+
+            border-radius: 8px;
+            margin: auto;
+            width: 30%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            display: table;
+        }
+
+        .media-container {
+            display: grid;
+            width: 100%
+        }
+
+
+        .gallery-details {
+            display: grid;
+            width: 100%;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .grid-e {
+            display: grid;
+            justify-content: space-evenly;
+
+        }
+
+        .media-thumbnail-cover {
+            width: 200px !important;
+        }
+
+
+        .media-image {
+            width: 200px !important;
+            margin: auto;
+        }
+
+
+        .appearOnContainer {
+            width: 100%;
+        }
+    </style>
+
 
 
 
 </head>
+
 <body>
 
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="https://shutterworx.co/">ShutterWorx </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="../">Your Site</a>
-            </li>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="https://shutterworx.co/">ShutterWorx </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../">Your Site</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/media">Media</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/contact">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/design">Design</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/analytics">Analytics</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/transactions">Transactions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../admin/settings">Settings</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="../admin/">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Media</li>
-    </ol>
-  </nav>
-  
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/media">Media</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/design">Design</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/analytics">Analytics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/transactions">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/settings">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 
-  <main id="main-content">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../admin/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Media</li>
+        </ol>
+    </nav>
+
+
+
+    <main id="main-content">
 
 
         <h2 class="text-center mb-4">Event & Photo Management</h2>
-    
+
         <!-- Admin Messages Section -->
         <section>
             <div id="admin-messages" class="admin-messages-container">
@@ -293,410 +306,459 @@ grid-auto-rows: max-content;
                 <div id="message-actions" class="message-actions"></div>
             </div>
         </section>
-    
-<!-- Add to Gallery Button 
+
+        <!-- Add to Gallery Button 
 <button onclick="openAddToGalleryModal()">Add to Gallery</button>
 -->
 
-<!-- Toggle Bar -->
-<div class="mediaTabs">
-   <button class="tabButton" onclick="showTabContent('Add_Event')">Add Event</button>
- <!--     <button class="tabButton" onclick="showTabContent('Add_Media')">Add Media</button> -->
-    <button class="tabButton" onclick="showTabContent('Manage_Events')">Manage Events</button>
-    <button class="tabButton" onclick="showTabContent('Manage_Gallery')">Manage Gallery</button>
-</div>
+        <!-- Toggle Bar -->
+        <div class="mediaTabs">
+            <button class="tabButton" onclick="showTabContent('Add_Event')">Add Event</button>
+            <!--     <button class="tabButton" onclick="showTabContent('Add_Media')">Add Media</button> -->
+            <button class="tabButton" onclick="showTabContent('Manage_Events')">Manage Events</button>
+            <button class="tabButton" onclick="showTabContent('Manage_Gallery')">Manage Gallery</button>
+        </div>
 
 
-<div id="Add_Event" class="media_tabs">
+        <div id="Add_Event" class="media_tabs">
 
-        <!-- Event Upload Form -->
-        <div class="card mb-4 shadow-lg">
-            <div class="card-body">
-                <h5 id="Add_Event_Label" class="card-title">Add New Event</h5>
-                <form id="eventForm">
-                    <div class="mb-3">
-                        <label for="eventTitle" class="form-label d-flex justify-content-between">
-                            Event Title
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventTitleDirections" class="directions" style="display:none;">
-                            <p>Enter a descriptive title for your event. This will be displayed on the event page and in search results.</p>
-                        </div>
-                        <input type="text" class="form-control" id="eventTitle" required>
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventDescription" class="form-label d-flex justify-content-between">
-                            Description
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventDescriptionDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventDescriptionDirections" class="directions" style="display:none;">
-                            <p>Provide a detailed description of the event, including any relevant information such as what will happen, who the target audience is, and any special instructions for attendees.</p>
-                        </div>
-                        <textarea class="form-control" id="eventDescription" rows="4"></textarea>
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventLocation" class="form-label d-flex justify-content-between">
-                            Event Location
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventLocationDirections" class="directions" style="display:none;">
-                            <p>Enter the address or venue name where the event will take place. Be sure to include any specific room or hall details if applicable.</p>
-                        </div>
-                        <input type="text" class="form-control" id="eventLocation">
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventDate" class="form-label d-flex justify-content-between">
-                            Event Date
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventDateDirections" class="directions" style="display:none;">
-                            <p>Select the date when the event occurred. Please make sure to double-check the date before submitting.</p>
-                        </div>
-                        <input type="date" class="form-control" id="eventDate" required>
-                    </div>
-                
-                    <div class="mb-3" id="eventCoverArea">
-                        <label for="eventCover" class="form-label d-flex justify-content-between">
-                            Cover Photo
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventCoverDirections" class="directions" style="display:none;">
-                            <p>Upload a cover photo for the event. This image will be displayed in previews and represents your event visually.</p>
-                        </div>
-                        <div class="center">
-                            <img id="eventCoverPreview" src="" alt="Image Preview" />
-                        </div>
-                        <input hidden type="file" class="form-control" id="eventCover" accept="image/*" required>
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventTags" class="form-label d-flex justify-content-between">
-                            Event Tags
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventTagsDirections" class="directions" style="display:none;">
-                            <p>Enter tags that describe your event, separated by commas. These help categorize and make your event searchable.</p>
-                        </div>
-                        <input type="text" class="form-control" id="eventTags" placeholder="Enter tags separated by commas">
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventURL" class="form-label d-flex justify-content-between">
-                            Event URL
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventURLDirections" class="directions" style="display:none;">
-                            <p>Create a URL for the event. This URL will be easy to share with others. Consider including relevant keywords for better SEO.</p>
-                        </div>
-                        <input type="text" class="form-control" id="eventURL" placeholder="Enter URL">
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="displayEventURL" class="form-label">Event URL Display</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="displayEventURL" disabled value="https://rawphotographysite.com/?s=url">
-                            <button class="btn btn-outline-secondary" type="button" id="copyEventURLBtn" onclick="copyEventURL()">Copy</button>
-                        </div>
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventCollectionPrice" class="form-label d-flex justify-content-between">
-                            Collection Price <small>Leave blank for free</small>
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
-                            <p>If applicable, enter the price for collections. If your event is free or doesn't require payment, leave this field blank.</p>
-                        </div>
-                        <input type="text" class="form-control" id="eventCollectionPrice" placeholder="Enter collection price">
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="privateCheckBox" class="form-label d-flex justify-content-between">
-                            Private?
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="privateCheckBoxDirections" class="directions" style="display:none;">
-                            <p>Check this box if you want to make the event private. Only those with access will be able to view it.</p>
-                        </div>
-                        <input type="checkbox" class="form-control" id="privateCheckBox">
-                    </div>
-                
-                    <div id="accessCodeArea" class="mb-3">
-                        <label for="accessCode" class="form-label d-flex justify-content-between">
-                            Access Code (if private)
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="accessCodeAreaDirections" class="directions" style="display:none;">
-                            <p>If your event is private, enter an access code that users will need to view the event. Share this code securely with invitees.</p>
-                        </div>
-                        <input type="text" class="form-control" id="accessCode" placeholder="Optional">
-                        
+            <!-- Event Upload Form -->
+            <div class="card mb-4 shadow-lg">
+                <div class="card-body">
+                    <h5 id="Add_Event_Label" class="card-title">Add New Event</h5>
+                    <form id="eventForm">
                         <div class="mb-3">
-                            <label for="displayAccessCode" class="form-label">Access Code URL Display</label>
+                            <label for="eventTitle" class="form-label d-flex justify-content-between">
+                                Event Title
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventTitleDirections" class="directions" style="display:none;">
+                                <p>Enter a descriptive title for your event. This will be displayed on the event page
+                                    and in search results.</p>
+                            </div>
+                            <input type="text" class="form-control" id="eventTitle" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventDescription" class="form-label d-flex justify-content-between">
+                                Description
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventDescriptionDirections')">Show/Hide
+                                    Directions</button>
+                            </label>
+                            <div id="eventDescriptionDirections" class="directions" style="display:none;">
+                                <p>Provide a detailed description of the event, including any relevant information such
+                                    as what will happen, who the target audience is, and any special instructions for
+                                    attendees.</p>
+                            </div>
+                            <textarea class="form-control" id="eventDescription" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventLocation" class="form-label d-flex justify-content-between">
+                                Event Location
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventLocationDirections" class="directions" style="display:none;">
+                                <p>Enter the address or venue name where the event will take place. Be sure to include
+                                    any specific room or hall details if applicable.</p>
+                            </div>
+                            <input type="text" class="form-control" id="eventLocation">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventDate" class="form-label d-flex justify-content-between">
+                                Event Date
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventDateDirections" class="directions" style="display:none;">
+                                <p>Select the date when the event occurred. Please make sure to double-check the date
+                                    before submitting.</p>
+                            </div>
+                            <input type="date" class="form-control" id="eventDate" required>
+                        </div>
+
+                        <div class="mb-3" id="eventCoverArea">
+                            <label for="eventCover" class="form-label d-flex justify-content-between">
+                                Cover Photo
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventCoverDirections" class="directions" style="display:none;">
+                                <p>Upload a cover photo for the event. This image will be displayed in previews and
+                                    represents your event visually.</p>
+                            </div>
+                            <div class="center">
+                                <img id="eventCoverPreview" src="" alt="Image Preview" />
+                            </div>
+                            <input hidden type="file" class="form-control" id="eventCover" accept="image/*" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventTags" class="form-label d-flex justify-content-between">
+                                Event Tags
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventTagsDirections" class="directions" style="display:none;">
+                                <p>Enter tags that describe your event, separated by commas. These help categorize and
+                                    make your event searchable.</p>
+                            </div>
+                            <input type="text" class="form-control" id="eventTags"
+                                placeholder="Enter tags separated by commas">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventURL" class="form-label d-flex justify-content-between">
+                                Event URL
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventURLDirections" class="directions" style="display:none;">
+                                <p>Create a URL for the event. This URL will be easy to share with others. Consider
+                                    including relevant keywords for better SEO.</p>
+                            </div>
+                            <input type="text" class="form-control" id="eventURL" placeholder="Enter URL">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="displayEventURL" class="form-label">Event URL Display</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="displayAccessCode" disabled value="https://rawphotographysite.com/?a=accessCode">
-                                <button class="btn btn-outline-secondary" type="button" id="copyAccessCodeBtn" onclick="copyAccessCode()">Copy</button>
+                                <input type="text" class="form-control" id="displayEventURL" disabled
+                                    value="https://rawphotographysite.com/?s=url">
+                                <button class="btn btn-outline-secondary" type="button" id="copyEventURLBtn"
+                                    onclick="copyEventURL()">Copy</button>
                             </div>
                         </div>
-                  
-                    </div>
-                
-                    <div class="mb-3">
-                        <label for="eventStatus" class="form-label d-flex justify-content-between">
-                            Event Status
-                            <button type="button" class="btn btn-link" onclick="toggleDirections('eventStatusDirections')">Show/Hide Directions</button>
-                        </label>
-                        <div id="eventStatusDirections" class="directions" style="display:none;">
-                            <p>Choose the current status of the event. This will determine whether it's active, in draft, or deactivated.</p>
+
+                        <div class="mb-3">
+                            <label for="eventCollectionPrice" class="form-label d-flex justify-content-between">
+                                Collection Price <small>Leave blank for free</small>
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide
+                                    Directions</button>
+                            </label>
+                            <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
+                                <p>If applicable, enter the price for collections. If your event is free or doesn't
+                                    require payment, leave this field blank.</p>
+                            </div>
+                            <input type="text" class="form-control" id="eventCollectionPrice"
+                                placeholder="Enter collection price">
                         </div>
-                        <select class="form-select" id="eventStatus">
-                            <option value="active">Active</option>
-                            <option value="deactivate">Deactivate</option>
-                            <option value="draft">Draft</option>
+
+                        <div class="mb-3">
+                            <label for="privateCheckBox" class="form-label d-flex justify-content-between">
+                                Private?
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide
+                                    Directions</button>
+                            </label>
+                            <div id="privateCheckBoxDirections" class="directions" style="display:none;">
+                                <p>Check this box if you want to make the event private. Only those with access will be
+                                    able to view it.</p>
+                            </div>
+                            <input type="checkbox" class="form-control" id="privateCheckBox">
+                        </div>
+
+                        <div id="accessCodeArea" class="mb-3">
+                            <label for="accessCode" class="form-label d-flex justify-content-between">
+                                Access Code (if private)
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="accessCodeAreaDirections" class="directions" style="display:none;">
+                                <p>If your event is private, enter an access code that users will need to view the
+                                    event. Share this code securely with invitees.</p>
+                            </div>
+                            <input type="text" class="form-control" id="accessCode" placeholder="Optional">
+
+                            <div class="mb-3">
+                                <label for="displayAccessCode" class="form-label">Access Code URL Display</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="displayAccessCode" disabled
+                                        value="https://rawphotographysite.com/?a=accessCode">
+                                    <button class="btn btn-outline-secondary" type="button" id="copyAccessCodeBtn"
+                                        onclick="copyAccessCode()">Copy</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eventStatus" class="form-label d-flex justify-content-between">
+                                Event Status
+                                <button type="button" class="btn btn-link"
+                                    onclick="toggleDirections('eventStatusDirections')">Show/Hide Directions</button>
+                            </label>
+                            <div id="eventStatusDirections" class="directions" style="display:none;">
+                                <p>Choose the current status of the event. This will determine whether it's active, in
+                                    draft, or deactivated.</p>
+                            </div>
+                            <select class="form-select" id="eventStatus">
+                                <option value="active">Active</option>
+                                <option value="deactivate">Deactivate</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+
+                        <div class="controls">
+                            <button id="uploadEventBTN" type="button" class="btn btn-primary">Create Event</button>
+                            <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
+                            <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add
+                                Media</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <div id="Add_Media" class="media_tabs">
+            <div class="card mb-4 shadow-lg">
+                <div class="card-body">
+                    <h5 class="card-title">Upload Photos for Events</h5>
+                    <!-- Preview Area -->
+                    <div class="mt-4">
+                        <h5>Preview:</h5>
+                        <div class="center">
+                            <canvas id="watermarkPreview" style="max-width: 100%; height: auto;"></canvas>
+                        </div>
+                        <button id="photoUploadBTN" type="button" class="btn btn-primary mt-3">Add Image for Watermark
+                            Preview</button>
+
+                        <input hidden type="file" id="photoUpload" class="form-control" multiple accept="image/*">
+                    </div>
+                    <div id="watermarkTabs" class="grid">
+
+
+
+                        <div class="dropdown"> <label for="tabSelector" class="form-label">Select Tab</label>
+                            <select class="form-select" id="tabSelector" onchange="showTab(this.value)">
+                                <option value="watermarkTextDiv" selected>Watermark Text</option>
+                                <option value="fontColorDiv">Choose Text Color</option>
+                                <option value="fontFamilyDiv">Watermark Font</option>
+                                <option value="watermarkPositionDiv">Watermark Position</option>
+                                <option value="textGapDiv">Text Gap</option>
+                                <option value="fontSizeDiv">Font Size</option>
+                                <option value="watermarkOpacityDiv">Watermark Opacity</option>
+                                <option value="logoOverlayDiv">Logo Overlay</option>
+                                <option value="logoScaleDiv">Logo Scale</option>
+                            </select>
+                        </div>
+
+                        <div class="watermarkTabs" id="watermarkTextDiv">
+                            <label for="watermarkText" class="form-label">Watermark Text</label>
+                            <input type="text" class="form-control" id="watermarkText"
+                                placeholder="Enter watermark text">
+                        </div>
+
+                        <div class="watermarkTabs" id="fontColorDiv">
+                            <label for="fontColor">Choose Text Color:</label>
+                            <input type="color" id="fontColor" name="fontColor" value="#000000">
+                        </div>
+                        <div class="watermarkTabs" id="fontFamilyDiv">
+                            <label for="fontFamily">Font Family:</label>
+                            <select id="fontFamily">
+                                <option value="Arial">Arial</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Trebuchet MS">Trebuchet MS</option>
+                                <option value="Lucida Console">Lucida Console</option>
+                                <option value="Tahoma">Tahoma</option>
+                                <option value="Impact">Impact</option>
+                                <option value="Comic Sans MS">Comic Sans MS</option>
+                                <option value="Palatino Linotype">Palatino Linotype</option>
+                                <option value="Garamond">Garamond</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Arial Black">Arial Black</option>
+                                <option value="Courier">Courier</option>
+                                <option value="Futura">Futura</option>
+                                <option value="Geneva">Geneva</option>
+                                <option value="Consolas">Consolas</option>
+                                <option value="Lucida Sans">Lucida Sans</option>
+                                <option value="Microsoft Sans Serif">Microsoft Sans Serif</option>
+                            </select>
+                        </div>
+
+                        <div class="watermarkTabs" id="watermarkPositionDiv">
+                            <label for="watermarkPosition" class="form-label">Watermark Position</label>
+                            <select id="watermarkPosition">
+                                <option value="center">Center</option>
+                                <option value="diagonal">Diagonal</option>
+                                <option value="horizontal">Horizontal</option>
+                            </select>
+                        </div>
+
+                        <div class="watermarkTabs" id="textGapDiv">
+                            <label for="textGap">Text Gap:</label>
+                            <input type="range" id="textGap" min="10" max="200" step="5" value="50">
+                        </div>
+
+                        <div class="watermarkTabs" id="fontSizeDiv">
+                            <label for="fontSize">Font Size:</label>
+                            <input type="number" id="fontSize" step="10" value="200" min="10" max="500">
+                        </div>
+
+                        <div class="watermarkTabs" id="watermarkOpacityDiv">
+                            <label for="watermarkOpacity" class="form-label">Watermark Opacity</label>
+                            <input type="range" class="form-control" id="watermarkOpacity" min="0" max="1" step="0.1"
+                                value="0.5">
+                        </div>
+
+                        <div class="watermarkTabs" id="logoOverlayDiv">
+                            <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
+                            <div class="center">
+                                <img id="logoOverlayPreview" src="" alt="Logo Preview" />
+                            </div>
+                            <input hidden type="file" class="form-control" id="logoOverlay" accept="image/*">
+                        </div>
+
+                        <div class="watermarkTabs" id="logoScaleDiv">
+                            <label for="logoScale" class="form-label">Logo Scale (Resize)</label>
+                            <input type="range" class="form-control" id="logoScale" min="0.1" max="1" step="0.1"
+                                value="0.5">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button onclick="clearWatermarkInputs()">Clear Inputs</button>
+                    </div>
+                    <div class="mt-3">
+                        <label for="photoPrice" class="form-label">Photo Price</label>
+                        <input type="number" class="form-control" id="photoPrice"
+                            placeholder="Set price for this photo (optional)">
+                    </div>
+                    <div class="mt-3">
+                        <label for="photoPublic" class="form-label">Make Photo Public</label>
+                        <input type="checkbox" id="photoPublic" class="form-check-input">
+                    </div>
+                    <div class="mt-3">
+                        <label for="collectionPrice" class="form-label">Collection Price</label>
+                        <input type="number" class="form-control" id="collectionPrice"
+                            placeholder="Set price for the entire collection (optional)">
+                    </div>
+                    <button id="bulkUploadPhotos" type="button" class="btn btn-primary mt-3">Upload Photos with
+                        Watermark</button>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div id="Manage_Events" class="media_tabs">
+
+            <div class="card mb-4 shadow-lg">
+                <!-- Event Sorting and Filtering Section onchange="fetchEvents()"-->
+                <div class="mb-4 card-body">
+                    <h5 class="mb-3">Sort & Filter Events</h5>
+                    <div class="form-inline">
+                        <input type="text" class="form-control mb-2 mr-2" id="eventFilter"
+                            placeholder="Search by name or description" onkeyup="fetchEvents()">
+                        <select class="form-control mb-2" id="sortBy">
+                            <option value="eventDate">Sort by Date</option>
+                            <option value="title">Sort by Name</option>
                         </select>
                     </div>
-                
-                    <div class="controls">
-                        <button id="uploadEventBTN" type="button" class="btn btn-primary">Create Event</button>
-                        <button id="saveEvent" type="button" class="btn btn-primary">Save Event</button>
-                        <button id="addMedia" type="button" class="btn btn-primary" onclick="addMediaToEvent()">Add Media</button>
-                    </div>
-                </form>
-                
-
-            </div>
-        </div>
-
-
-    </div>
-    <div id="Add_Media" class="media_tabs">
-        <div class="card mb-4 shadow-lg">
-            <div class="card-body">
-                <h5 class="card-title">Upload Photos for Events</h5>
-                                <!-- Preview Area -->
-                                <div class="mt-4">
-                                    <h5>Preview:</h5>
-                                    <div class="center">
-                                    <canvas id="watermarkPreview" style="max-width: 100%; height: auto;"></canvas>
-                            </div>
-                                    <button id="photoUploadBTN" type="button" class="btn btn-primary mt-3">Add Image for Watermark Preview</button>
-
-                <input hidden type="file" id="photoUpload" class="form-control" multiple accept="image/*">
-            </div>
-<div id="watermarkTabs" class="grid">
-
-           
-            
-            <div class="dropdown">    <label for="tabSelector" class="form-label">Select Tab</label>
-                <select class="form-select" id="tabSelector" onchange="showTab(this.value)">
-                    <option value="watermarkTextDiv" selected>Watermark Text</option>
-                    <option value="fontColorDiv">Choose Text Color</option>
-                    <option value="fontFamilyDiv">Watermark Font</option>
-                    <option value="watermarkPositionDiv">Watermark Position</option>
-                    <option value="textGapDiv">Text Gap</option>
-                    <option value="fontSizeDiv">Font Size</option>
-                    <option value="watermarkOpacityDiv">Watermark Opacity</option>
-                    <option value="logoOverlayDiv">Logo Overlay</option>
-                    <option value="logoScaleDiv">Logo Scale</option>
-                </select>
-            </div>
-
-            <div class="watermarkTabs" id="watermarkTextDiv">
-                <label for="watermarkText" class="form-label">Watermark Text</label>
-                <input type="text" class="form-control" id="watermarkText" placeholder="Enter watermark text">
-            </div>
-            
-            <div class="watermarkTabs" id="fontColorDiv">
-                <label for="fontColor">Choose Text Color:</label>
-                <input type="color" id="fontColor" name="fontColor" value="#000000">
-            </div>
-            <div class="watermarkTabs" id="fontFamilyDiv">
-                <label for="fontFamily">Font Family:</label>
-                <select id="fontFamily">
-                    <option value="Arial">Arial</option>
-                    <option value="Courier New">Courier New</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="Times New Roman">Times New Roman</option>
-                    <option value="Verdana">Verdana</option>
-                    <option value="Trebuchet MS">Trebuchet MS</option>
-                    <option value="Lucida Console">Lucida Console</option>
-                    <option value="Tahoma">Tahoma</option>
-                    <option value="Impact">Impact</option>
-                    <option value="Comic Sans MS">Comic Sans MS</option>
-                    <option value="Palatino Linotype">Palatino Linotype</option>
-                    <option value="Garamond">Garamond</option>
-                    <option value="Helvetica">Helvetica</option>
-                    <option value="Arial Black">Arial Black</option>
-                    <option value="Courier">Courier</option>
-                    <option value="Futura">Futura</option>
-                    <option value="Geneva">Geneva</option>
-                    <option value="Consolas">Consolas</option>
-                    <option value="Lucida Sans">Lucida Sans</option>
-                    <option value="Microsoft Sans Serif">Microsoft Sans Serif</option>
-                </select>
-            </div>
-            
-            <div class="watermarkTabs" id="watermarkPositionDiv">
-                <label for="watermarkPosition" class="form-label">Watermark Position</label>
-                <select id="watermarkPosition">
-                    <option value="center">Center</option>
-                    <option value="diagonal">Diagonal</option>
-                    <option value="horizontal">Horizontal</option>
-                </select>
-            </div>
-            
-            <div class="watermarkTabs" id="textGapDiv">
-                <label for="textGap">Text Gap:</label>
-                <input type="range" id="textGap" min="10" max="200" step="5" value="50">
-            </div>
-            
-            <div class="watermarkTabs" id="fontSizeDiv">
-                <label for="fontSize">Font Size:</label>
-                <input type="number" id="fontSize" step="10" value="200" min="10" max="500">
-            </div>
-            
-            <div class="watermarkTabs" id="watermarkOpacityDiv">
-                <label for="watermarkOpacity" class="form-label">Watermark Opacity</label>
-                <input type="range" class="form-control" id="watermarkOpacity" min="0" max="1" step="0.1" value="0.5">
-            </div>
-            
-            <div class="watermarkTabs" id="logoOverlayDiv">
-                <label for="logoOverlay" class="form-label">Logo Overlay (Optional)</label>
-                <div class="center">
-                    <img id="logoOverlayPreview" src="" alt="Logo Preview" />
                 </div>
-                <input hidden type="file" class="form-control" id="logoOverlay" accept="image/*">
             </div>
-            
-            <div class="watermarkTabs" id="logoScaleDiv">
-                <label for="logoScale" class="form-label">Logo Scale (Resize)</label>
-                <input type="range" class="form-control" id="logoScale" min="0.1" max="1" step="0.1" value="0.5">
+
+            <!-- Event List with Edit & Delete Options -->
+
+            <div id="eventList" class="card mb-4 shadow-lg">
+                <h5 class="mb-3">Manage Events</h5>
+                <div class="list-group" id="eventsContainer"></div>
             </div>
+            <div id="eventMediaContainer">
+
+
+            </div>
+
         </div>
-        <div class="mt-3">
-        <button onclick="clearWatermarkInputs()">Clear Inputs</button>
-</div>
-                <div class="mt-3">
-                    <label for="photoPrice" class="form-label">Photo Price</label>
-                    <input type="number" class="form-control" id="photoPrice" placeholder="Set price for this photo (optional)">
+
+        <!-- Media Gallery Section -->
+
+        <div id="Manage_Gallery" class="media_tabs">
+            <div id="mainGallerySection" class="card mb-4 shadow-lg">
+                <h5 class="mb-3">Manage Gallery</h5>
+
+                <div id="galleryContainer"></div>
+            </div>
+
+
+
+        </div>
+
+    </main>
+
+
+    <div id="currentEventID"></div>
+
+    <!-- Add to Gallery Modal -->
+    <div id="addToGalleryModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Add Media to Gallery</h3>
+            <p>Select a category:</p>
+            <button onclick="addMediaToGallery('portrait')">Portrait</button>
+            <button onclick="addMediaToGallery('event')">Event</button>
+            <button onclick="addMediaToGallery('commercial')">Commercial</button>
+            <button onclick="addMediaToGallery('family')">Family</button>
+            <button onclick="addMediaToGallery('other')">Other</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+
+    <!-- Footer style="display: none;" -->
+    <footer class="bg-dark text-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 <a href="https://ShutterWorx.co" class="text-light">ShutterWorx</a> All rights
+                        reserved.</p>
                 </div>
-                <div class="mt-3">
-                    <label for="photoPublic" class="form-label">Make Photo Public</label>
-                    <input type="checkbox" id="photoPublic" class="form-check-input">
+                <div class="col-md-6 text-md-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="https://ShutterWorx.co/FAQ" class="text-light">FAQs</a>
+                        </li>
+                        <li class="list-inline-item"><a href="https://ShutterWorx.co/join"
+                                class="text-light">Upgrade</a></li>
+                        <li class="list-inline-item"><a href="https://ShutterWorx.co/contact" class="text-light">Contact
+                                Us</a></li>
+                        <li class="list-inline-item"><a href="https://ShutterWorx.co/privacy" class="text-light">Privacy
+                                Policy</a></li>
+                        <li class="list-inline-item"><a href="https://ShutterWorx.co/terms" class="text-light">Terms of
+                                Service</a></li>
+                    </ul>
                 </div>
-                <div class="mt-3">
-                    <label for="collectionPrice" class="form-label">Collection Price</label>
-                    <input type="number" class="form-control" id="collectionPrice" placeholder="Set price for the entire collection (optional)">
-                </div>
-                <button id="bulkUploadPhotos" type="button" class="btn btn-primary mt-3">Upload Photos with Watermark</button>
-    
-
             </div>
         </div>
-    </div>
-    
-    <div id="Manage_Events" class="media_tabs">
-    
-        <div  class="card mb-4 shadow-lg">
-      <!-- Event Sorting and Filtering Section onchange="fetchEvents()"-->
-      <div class="mb-4 card-body">
-        <h5 class="mb-3">Sort & Filter Events</h5>
-        <div class="form-inline">
-            <input type="text" class="form-control mb-2 mr-2" id="eventFilter" placeholder="Search by name or description" onkeyup="fetchEvents()">
-            <select  class="form-control mb-2" id="sortBy" >
-                <option value="eventDate">Sort by Date</option>
-                <option value="title">Sort by Name</option>
-            </select>
-        </div>
-    </div>
-</div>
+    </footer>
 
-    <!-- Event List with Edit & Delete Options -->
-  
-        <div id="eventList" class="card mb-4 shadow-lg">
-            <h5 class="mb-3">Manage Events</h5>
-            <div class="list-group" id="eventsContainer"></div>
-        </div>
-        <div id="eventMediaContainer">
-         
-            
-        </div>
-  
-</div>
+    <script src="../js/admin.js"></script>
 
-                <!-- Media Gallery Section -->
-
-    <div id="Manage_Gallery" class="media_tabs">
-<div id="mainGallerySection" class="card mb-4 shadow-lg">
-    <h5 class="mb-3">Manage Gallery</h5>
-
-    <div id="galleryContainer"></div>
-</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 
+    <!-- Firebase JS SDK and Custom Scripts -->
 
- </div>
-
-  </main>
-
-
-  <div id="currentEventID" ></div>
-
- <!-- Add to Gallery Modal -->
- <div id="addToGalleryModal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <h3>Add Media to Gallery</h3>
-        <p>Select a category:</p>
-        <button onclick="addMediaToGallery('portrait')">Portrait</button>
-        <button onclick="addMediaToGallery('event')">Event</button>
-        <button onclick="addMediaToGallery('commercial')">Commercial</button>
-        <button onclick="addMediaToGallery('family')">Family</button>
-        <button onclick="addMediaToGallery('other')">Other</button>
-        <button onclick="closeModal()">Cancel</button>
-    </div>
-</div>
-
-
-  <!-- Footer style="display: none;" -->
-<footer class="bg-dark text-light py-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <p>&copy; 2024 <a href="https://ShutterWorx.co" class="text-light">ShutterWorx</a> All rights reserved.</p>
-            </div>
-            <div class="col-md-6 text-md-right">
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="https://ShutterWorx.co/FAQ" class="text-light">FAQs</a></li>
-                    <li class="list-inline-item"><a href="https://ShutterWorx.co/join" class="text-light">Upgrade</a></li>
-                    <li class="list-inline-item"><a href="https://ShutterWorx.co/contact" class="text-light">Contact Us</a></li>
-                    <li class="list-inline-item"><a href="https://ShutterWorx.co/privacy" class="text-light">Privacy Policy</a></li>
-                    <li class="list-inline-item"><a href="https://ShutterWorx.co/terms" class="text-light">Terms of Service</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script src="../js/admin.js" ></script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-
-<!-- Firebase JS SDK and Custom Scripts -->
-
-<script type="module">
-    import { db, doc, getDoc, query, updateDoc, 
+    <script type="module">
+        import {
+            db, doc, getDoc, query, updateDoc,
             setDoc, ref, signInWithPopup, orderBy,
-            GoogleAuthProvider, FacebookAuthProvider, 
-            uploadBytes, OAuthProvider, arrayUnion, getStorage ,
-            signOut, addDoc, increment, onAuthStateChanged, 
-            createUserWithEmailAndPassword, signInWithEmailAndPassword, 
-            where, getDocs, storage, collection, 
-            auth, analytics, deleteDoc, getDownloadURL } from '../js/module.js';
+            GoogleAuthProvider, FacebookAuthProvider,
+            uploadBytes, OAuthProvider, arrayUnion, getStorage,
+            signOut, addDoc, increment, onAuthStateChanged,
+            createUserWithEmailAndPassword, signInWithEmailAndPassword,
+            where, getDocs, storage, collection,
+            auth, analytics, deleteDoc, getDownloadURL
+        } from '../js/module.js';
 
 
 
@@ -705,507 +767,507 @@ grid-auto-rows: max-content;
 
 
 
-            function compressBase64Image(base64String, maxWidth = 800, maxHeight = 800) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.src = base64String;
+        function compressBase64Image(base64String, maxWidth = 800, maxHeight = 800) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = base64String;
 
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
 
-            // Set canvas dimensions proportional to the max dimensions
-            const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
+                    // Set canvas dimensions proportional to the max dimensions
+                    const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
 
-            // Draw the image on the canvas
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    // Draw the image on the canvas
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-            // Convert the canvas back to Base64 (reduce quality if needed)
-            resolve(canvas.toDataURL("image/jpeg", 0.8)); // 80% quality
-        };
-    });
-}
-
-
-
-
-
-
-
-    // Bulk Upload Photos Function
-    async function bulkUploadPhotosFunc() {
-
-     const eventId = document.getElementById('currentEventID').innerText;
-
-    const photos = document.getElementById('photoUpload').files;
-    const photoPrice = document.getElementById('photoPrice').value;
-    const collectionPrice = document.getElementById('collectionPrice').value;
-    const isPublic = document.getElementById('photoPublic').checked;
-   
-    console.log("eventId    ",eventId);
-    if (photos.length === 0) {
-        showToast("Please select at least one photo.", "error");
-        return;
-    }
-    if (!eventId) {
-        showToast("Add an Event", "error");
-        return;
-    }
-    // Validation constants
-    const MAX_FILE_SIZE_MB = 200;
-    const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"];
-    const invalidFiles = [];
-    const uploadedFiles = [];
-
-    const watermarkConfig = {
-        text: document.getElementById('watermarkText').value,
-        position: document.getElementById('watermarkPosition').value,
-        opacity: parseFloat(document.getElementById('watermarkOpacity').value),
-        logoFile: document.getElementById('logoOverlay').files[0],
-        scale: parseFloat(document.getElementById('logoScale').value),
-        fontSize: parseInt(document.getElementById('fontSize').value, 10),
-        fontFamily: document.getElementById('fontFamily').value,
-        gap: parseInt(document.getElementById('textGap').value, 10),
-        fontColor: document.getElementById('fontColor').value,
-    };
-
-    for (const photo of photos) {
-        const fileSizeMB = photo.size / (1024 * 1024);
-        const fileType = photo.type;
-
-        const watermarkedImage = await fileToDataURL(photo); // Convert to Base64
-            const compressedImage = await compressBase64Image(watermarkedImage); // Compress the image
-
-        if (!VALID_FILE_TYPES.includes(fileType)) {
-            invalidFiles.push(`${photo.name} (Invalid type: ${fileType})`);
-            continue;
+                    // Convert the canvas back to Base64 (reduce quality if needed)
+                    resolve(canvas.toDataURL("image/jpeg", 0.8)); // 80% quality
+                };
+            });
         }
 
-        if (fileSizeMB > MAX_FILE_SIZE_MB) {
-            invalidFiles.push(`${photo.name} (Too large: ${fileSizeMB.toFixed(2)} MB)`);
-            continue;
-        }
-
-        const photoRef = ref(storage, `eventPhotos/${eventId}/${cleanAndShortenFileName(photo.name)}`);
-        try {
-            // Upload original photo
-            await uploadBytes(photoRef, photo);
-            const photoUrl = await getDownloadURL(photoRef);
-
-            // Apply watermark
-            const photoDataUrl = await fileToDataURL(photo); // Convert file to base64
-            const watermarkedImageUrl = await applyWatermark(
-                photoDataUrl,
-                watermarkConfig.text,
-                watermarkConfig.position,
-                watermarkConfig.opacity,
-                watermarkConfig.logoFile,
-                watermarkConfig.scale,
-                watermarkConfig.fontSize,
-                watermarkConfig.fontFamily,
-                watermarkConfig.gap,
-                watermarkConfig.fontColor
-            );
-
-            // Save details
-            await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, compressedImage, fileSizeMB, fileType);
-            uploadedFiles.push(photo.name);
-
-        } catch (error) {
-            console.error("Error processing photo:", error);
-            showToast(`Failed to upload ${photo.name}`, "error");
-        }
-    }
-
-    // Notify user of results
-    if (invalidFiles.length > 0) {
-        showToast(`These files couldn't be uploaded:\n${invalidFiles.join("\n")}`, "warning");
-    }
-
-    if (uploadedFiles.length > 0) {
-        showTabContent('Manage_Events');
-       // showToast(`Successfully uploaded: ${uploadedFiles.join(", ")}`, "success");
-        showToast(`Successfully uploaded: ${uploadedFiles.length}`, "success");
-    }
-}
-
-// Helper to convert file to data URL (base64 string)
-function fileToDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(e);
-        reader.readAsDataURL(file);
-    });
-}
-
-// Updated savePhotoDetails function
-async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSize, fileType) {
-    const photoDetails = {
-        photoUrl,
-        watermarkedImageUrl,
-        eventId,
-        price: photoPrice,
-        collectionPrice,
-        isPublic,
-        timestamp: new Date(),
-        fileSize: fileSize.toFixed(2),
-        fileType,
-        status: "active",
-        views: 0,
-        deactivated: false,
-    };
-
-    try {
-        const watermarkedRef = ref(storage, `eventPhotos/${eventId}/watermarked_${Date.now()}.png`);
-        const response = await fetch(watermarkedImageUrl);
-        const blob = await response.blob();
-        await uploadBytes(watermarkedRef, blob);
-
-        const watermarkedUrl = await getDownloadURL(watermarkedRef);
-        photoDetails.watermarkedImageUrl = watermarkedUrl;
-
-        const docRef = await addDoc(collection(db, "Media"), photoDetails);
-        console.log("Photo details saved with ID:", docRef.id);
-    } catch (error) {
-        console.error("Error saving photo details:", error);
-        showToast("Error saving photo details to the database.", "error");
-    }
-}
-
-async function handleFileUpload(event) { 
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imageUrl = e.target.result; // Base64 string
-
-            //console.log(imageUrl)
-            currentPreviewImage = imageUrl;
-            updatePreview(); // Ensure a valid string is passed here
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-// Existing listeners
-document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
-
-document.getElementById('watermarkText').addEventListener('input', () => updatePreview());
-document.getElementById('watermarkPosition').addEventListener('change', () => updatePreview());
-document.getElementById('watermarkOpacity').addEventListener('input', () => updatePreview());
-document.getElementById('logoOverlay').addEventListener('change', () => updatePreview());
-document.getElementById('logoScale').addEventListener('input', () => updatePreview());
-
-// New listeners for additional functionalities
-document.getElementById('fontSize').addEventListener('input', () => updatePreview());
-document.getElementById('fontFamily').addEventListener('change', () => updatePreview());
-document.getElementById('textGap').addEventListener('input', () => updatePreview());
-document.getElementById('fontColor').addEventListener('input', () => updatePreview());
 
 
 
 
-let currentPreviewImage = null;
 
 
+        // Bulk Upload Photos Function
+        async function bulkUploadPhotosFunc() {
 
-async function updatePreview(imageUrl) {
-    if (!imageUrl) {
-        imageUrl = currentPreviewImage;
-    }
+            const eventId = document.getElementById('currentEventID').innerText;
 
-    if (!imageUrl) {
-        console.error("No image URL provided or uploaded.");
-        return;
-    }
+            const photos = document.getElementById('photoUpload').files;
+            const photoPrice = document.getElementById('photoPrice').value;
+            const collectionPrice = document.getElementById('collectionPrice').value;
+            const isPublic = document.getElementById('photoPublic').checked;
 
-    const text = document.getElementById('watermarkText').value;
-    const position = document.getElementById('watermarkPosition').value;
-    const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
-    const logoFile = document.getElementById('logoOverlay').files[0];
-    const scale = parseFloat(document.getElementById('logoScale').value);
-    const fontSize = parseInt(document.getElementById('fontSize').value, 10);
-    const fontFamily = document.getElementById('fontFamily').value;
-    const gap = parseInt(document.getElementById('textGap').value, 10);
-    const fontColor = document.getElementById('fontColor').value;  // Get the selected color
+            console.log("eventId    ", eventId);
+            if (photos.length === 0) {
+                showToast("Please select at least one photo.", "error");
+                return;
+            }
+            if (!eventId) {
+                showToast("Add an Event", "error");
+                return;
+            }
+            // Validation constants
+            const MAX_FILE_SIZE_MB = 200;
+            const VALID_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/tiff", "image/svg+xml"];
+            const invalidFiles = [];
+            const uploadedFiles = [];
 
-    const previewCanvas = document.getElementById('watermarkPreview');
-    const previewCtx = previewCanvas.getContext('2d');
-
-    const img = new Image();
-    img.src = imageUrl;
-
-    img.onload = async function () {
-        previewCanvas.width = img.width;
-        previewCanvas.height = img.height;
-
-        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-        previewCtx.drawImage(img, 0, 0);
-
-        try {
-            const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale, fontSize, fontFamily, gap, fontColor);
-            const watermarkedImg = new Image();
-            watermarkedImg.src = watermarkedImage;
-
-            watermarkedImg.onload = function () {
-                previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-                previewCtx.drawImage(watermarkedImg, 0, 0);
+            const watermarkConfig = {
+                text: document.getElementById('watermarkText').value,
+                position: document.getElementById('watermarkPosition').value,
+                opacity: parseFloat(document.getElementById('watermarkOpacity').value),
+                logoFile: document.getElementById('logoOverlay').files[0],
+                scale: parseFloat(document.getElementById('logoScale').value),
+                fontSize: parseInt(document.getElementById('fontSize').value, 10),
+                fontFamily: document.getElementById('fontFamily').value,
+                gap: parseInt(document.getElementById('textGap').value, 10),
+                fontColor: document.getElementById('fontColor').value,
             };
-        } catch (err) {
-            console.error("Error applying watermark:", err);
-        }
-    };
 
-    img.onerror = function () {
-        console.error("Error loading image:", imageUrl);
-    };
-}
-async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fontSize, fontFamily, gap, fontColor) {
-    const img = new Image();
-    img.src = imageUrl;
+            for (const photo of photos) {
+                const fileSizeMB = photo.size / (1024 * 1024);
+                const fileType = photo.type;
 
-    await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-    });
+                const watermarkedImage = await fileToDataURL(photo); // Convert to Base64
+                const compressedImage = await compressBase64Image(watermarkedImage); // Compress the image
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+                if (!VALID_FILE_TYPES.includes(fileType)) {
+                    invalidFiles.push(`${photo.name} (Invalid type: ${fileType})`);
+                    continue;
+                }
 
-    canvas.width = img.width;
-    canvas.height = img.height;
+                if (fileSizeMB > MAX_FILE_SIZE_MB) {
+                    invalidFiles.push(`${photo.name} (Too large: ${fileSizeMB.toFixed(2)} MB)`);
+                    continue;
+                }
 
-    ctx.drawImage(img, 0, 0);
+                const photoRef = ref(storage, `eventPhotos/${eventId}/${cleanAndShortenFileName(photo.name)}`);
+                try {
+                    // Upload original photo
+                    await uploadBytes(photoRef, photo);
+                    const photoUrl = await getDownloadURL(photoRef);
 
-    // Apply text watermark
-    if (text) {
-        ctx.font = `${fontSize}px ${fontFamily}`;
-        ctx.fillStyle = `rgba(${hexToRgb(fontColor).r}, ${hexToRgb(fontColor).g}, ${hexToRgb(fontColor).b}, ${opacity})`;
+                    // Apply watermark
+                    const photoDataUrl = await fileToDataURL(photo); // Convert file to base64
+                    const watermarkedImageUrl = await applyWatermark(
+                        photoDataUrl,
+                        watermarkConfig.text,
+                        watermarkConfig.position,
+                        watermarkConfig.opacity,
+                        watermarkConfig.logoFile,
+                        watermarkConfig.scale,
+                        watermarkConfig.fontSize,
+                        watermarkConfig.fontFamily,
+                        watermarkConfig.gap,
+                        watermarkConfig.fontColor
+                    );
 
-        if (position === "center") {
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(text, img.width / 2, img.height / 2);
-        } else if (position === "diagonal") {
-            ctx.save();
-            ctx.translate(gap, gap);
-            ctx.rotate(Math.PI / 4);
-            ctx.fillText(text, img.width / 2, img.height / 2);
-            ctx.restore();
-        } else if (position === "horizontal") {
-            const yStart = img.height / 2 - gap * 2;
-            for (let y = yStart; y <= img.height; y += gap + fontSize) {
-                ctx.fillText(text, img.width / 2, y);
+                    // Save details
+                    await savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, compressedImage, fileSizeMB, fileType);
+                    uploadedFiles.push(photo.name);
+
+                } catch (error) {
+                    console.error("Error processing photo:", error);
+                    showToast(`Failed to upload ${photo.name}`, "error");
+                }
+            }
+
+            // Notify user of results
+            if (invalidFiles.length > 0) {
+                showToast(`These files couldn't be uploaded:\n${invalidFiles.join("\n")}`, "warning");
+            }
+
+            if (uploadedFiles.length > 0) {
+                showTabContent('Manage_Events');
+                // showToast(`Successfully uploaded: ${uploadedFiles.join(", ")}`, "success");
+                showToast(`Successfully uploaded: ${uploadedFiles.length}`, "success");
             }
         }
-    }
 
-    // Apply logo watermark
-    if (logo) {
-        const logoImg = new Image();
-        logoImg.src = URL.createObjectURL(logo);
+        // Helper to convert file to data URL (base64 string)
+        function fileToDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsDataURL(file);
+            });
+        }
 
-        await new Promise((resolve, reject) => {
-            logoImg.onload = resolve;
-            logoImg.onerror = reject;
-        });
+        // Updated savePhotoDetails function
+        async function savePhotoDetails(photoUrl, photoPrice, collectionPrice, isPublic, eventId, watermarkedImageUrl, fileSize, fileType) {
+            const photoDetails = {
+                photoUrl,
+                watermarkedImageUrl,
+                eventId,
+                price: photoPrice,
+                collectionPrice,
+                isPublic,
+                timestamp: new Date(),
+                fileSize: fileSize.toFixed(2),
+                fileType,
+                status: "active",
+                views: 0,
+                deactivated: false,
+            };
 
-        const logoWidth = logoImg.width * scale;
-        const logoHeight = logoImg.height * scale;
-        const x = img.width - logoWidth - 10;
-        const y = img.height - logoHeight - 10;
+            try {
+                const watermarkedRef = ref(storage, `eventPhotos/${eventId}/watermarked_${Date.now()}.png`);
+                const response = await fetch(watermarkedImageUrl);
+                const blob = await response.blob();
+                await uploadBytes(watermarkedRef, blob);
 
-        ctx.drawImage(logoImg, x, y, logoWidth, logoHeight);
-    }
+                const watermarkedUrl = await getDownloadURL(watermarkedRef);
+                photoDetails.watermarkedImageUrl = watermarkedUrl;
 
-    // Return the watermarked image as a data URL
-    return canvas.toDataURL("image/png");
-}
+                const docRef = await addDoc(collection(db, "Media"), photoDetails);
+                console.log("Photo details saved with ID:", docRef.id);
+            } catch (error) {
+                console.error("Error saving photo details:", error);
+                showToast("Error saving photo details to the database.", "error");
+            }
+        }
 
-// Helper function to convert hex color to RGB for fillStyle
-function hexToRgb(hex) {
-    // Ensure hex starts with # and is 7 characters long
-    hex = hex.replace(/^#/, '');
-    if (hex.length === 3) {
-        hex = hex.split('').map(function (hexChar) {
-            return hexChar + hexChar;
-        }).join('');
-    }
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    return { r, g, b };
-}
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result; // Base64 string
 
-function generateAccessHandshake(extra) {
-    const characters =  `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789${extra}`;
-    let accessHandshake = "";
+                    //console.log(imageUrl)
+                    currentPreviewImage = imageUrl;
+                    updatePreview(); // Ensure a valid string is passed here
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
-    for (let i = 0; i < 5; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        accessHandshake += characters[randomIndex];
-    }
+        // Existing listeners
+        document.getElementById('photoUpload').addEventListener('change', handleFileUpload);
 
-    return accessHandshake;
-}
+        document.getElementById('watermarkText').addEventListener('input', () => updatePreview());
+        document.getElementById('watermarkPosition').addEventListener('change', () => updatePreview());
+        document.getElementById('watermarkOpacity').addEventListener('input', () => updatePreview());
+        document.getElementById('logoOverlay').addEventListener('change', () => updatePreview());
+        document.getElementById('logoScale').addEventListener('input', () => updatePreview());
 
-
-
-
-
-async function uploadEvent() {
-    const title = document.getElementById('eventTitle').value.trim();
-    const description = document.getElementById('eventDescription').value.trim();
-    const eventDate = document.getElementById('eventDate').value.trim();
-    const cover = document.getElementById('eventCover').files[0];
-    const accessCode = document.getElementById('accessCode').value.trim();
-    const location = document.getElementById('location').value.trim();
-
-    // Client-side validation
-    if (!title || !description || !eventDate || !cover) {
-        showToast("Please fill in all required fields.", "error");
-        return;
-    }
-
-    if (cover.size > 10 * 1024 * 1024) { // 10 MB limit
-        showToast("File size is too large. Please upload a file less than 10MB.", "error");
-        return;
-    }
-
-    const storageRef = ref(storage, `eventCovers/${cleanAndShortenFileName(title)}/cover.jpg`);
-    try {
-        // Upload cover image to Firebase Storage
-        await uploadBytes(storageRef, cover);
-        const coverUrl = await getDownloadURL(storageRef);
-
-        // Generate access handshake code
-        const handshakeCode = generateAccessHandshake();
-        const downloadId = generateAccessHandshake("#^&@!");
-
-        // Add event to Firestore and get the document reference
-        const docRef = await addDoc(collection(db, 'Events'), {
-            title,
-            description,
-            eventDate,
-            coverUrl,
-            shortURL: "",
-            retrieveCount: 0,
-            retriever_IP: [],
-            accessHandShake: handshakeCode,
-            downloadId: downloadId,
-            status: "active",
-            isPublic: true,
-            collection_price: "",
-            collection_OnSellPrice: "",
-            type: "Free", /* Paid */
-            eventTags: [], /* Implment */
-            accessCode: accessCode || "",
-            location: location || "",
-            timestamp: new Date(),
-            comments: [], /* Implment */
-            views: 0,
-            deactived: false,
-            galleryBool: true
-        });
-
-        const eventID = docRef.id; // Get the document ID
-     //   console.log("Event ID:", eventID); // Optional: Log it
-        document.getElementById("currentEventID").innerText = eventID; // Display the ID
-
-        // Trigger additional action after saving
-        onEventSaved(eventID);
-
-        showToast("Event uploaded successfully.", "success");
-        document.getElementById('eventForm').reset();
-        fetchEvents(); // Refresh event list
-        showTabContent('Add_Media');
-    } catch (error) {
-        console.error("Error uploading event:", error);
-        showToast("An error occurred while uploading the event.", "error");
-    }
-}
-
-// Function to handle actions after an event is saved
-function onEventSaved(eventID) {
-    // Example: Send the event ID to an API or log it for analytics
-    console.log(`Event saved with ID: ${eventID}`);
-    // Add your API call or additional logic here
-}
+        // New listeners for additional functionalities
+        document.getElementById('fontSize').addEventListener('input', () => updatePreview());
+        document.getElementById('fontFamily').addEventListener('change', () => updatePreview());
+        document.getElementById('textGap').addEventListener('input', () => updatePreview());
+        document.getElementById('fontColor').addEventListener('input', () => updatePreview());
 
 
 
 
+        let currentPreviewImage = null;
+
+
+
+        async function updatePreview(imageUrl) {
+            if (!imageUrl) {
+                imageUrl = currentPreviewImage;
+            }
+
+            if (!imageUrl) {
+                console.error("No image URL provided or uploaded.");
+                return;
+            }
+
+            const text = document.getElementById('watermarkText').value;
+            const position = document.getElementById('watermarkPosition').value;
+            const opacity = parseFloat(document.getElementById('watermarkOpacity').value);
+            const logoFile = document.getElementById('logoOverlay').files[0];
+            const scale = parseFloat(document.getElementById('logoScale').value);
+            const fontSize = parseInt(document.getElementById('fontSize').value, 10);
+            const fontFamily = document.getElementById('fontFamily').value;
+            const gap = parseInt(document.getElementById('textGap').value, 10);
+            const fontColor = document.getElementById('fontColor').value;  // Get the selected color
+
+            const previewCanvas = document.getElementById('watermarkPreview');
+            const previewCtx = previewCanvas.getContext('2d');
+
+            const img = new Image();
+            img.src = imageUrl;
+
+            img.onload = async function () {
+                previewCanvas.width = img.width;
+                previewCanvas.height = img.height;
+
+                previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+                previewCtx.drawImage(img, 0, 0);
+
+                try {
+                    const watermarkedImage = await applyWatermark(img.src, text, position, opacity, logoFile, scale, fontSize, fontFamily, gap, fontColor);
+                    const watermarkedImg = new Image();
+                    watermarkedImg.src = watermarkedImage;
+
+                    watermarkedImg.onload = function () {
+                        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+                        previewCtx.drawImage(watermarkedImg, 0, 0);
+                    };
+                } catch (err) {
+                    console.error("Error applying watermark:", err);
+                }
+            };
+
+            img.onerror = function () {
+                console.error("Error loading image:", imageUrl);
+            };
+        }
+        async function applyWatermark(imageUrl, text, position, opacity, logo, scale, fontSize, fontFamily, gap, fontColor) {
+            const img = new Image();
+            img.src = imageUrl;
+
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+            });
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            // Apply text watermark
+            if (text) {
+                ctx.font = `${fontSize}px ${fontFamily}`;
+                ctx.fillStyle = `rgba(${hexToRgb(fontColor).r}, ${hexToRgb(fontColor).g}, ${hexToRgb(fontColor).b}, ${opacity})`;
+
+                if (position === "center") {
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(text, img.width / 2, img.height / 2);
+                } else if (position === "diagonal") {
+                    ctx.save();
+                    ctx.translate(gap, gap);
+                    ctx.rotate(Math.PI / 4);
+                    ctx.fillText(text, img.width / 2, img.height / 2);
+                    ctx.restore();
+                } else if (position === "horizontal") {
+                    const yStart = img.height / 2 - gap * 2;
+                    for (let y = yStart; y <= img.height; y += gap + fontSize) {
+                        ctx.fillText(text, img.width / 2, y);
+                    }
+                }
+            }
+
+            // Apply logo watermark
+            if (logo) {
+                const logoImg = new Image();
+                logoImg.src = URL.createObjectURL(logo);
+
+                await new Promise((resolve, reject) => {
+                    logoImg.onload = resolve;
+                    logoImg.onerror = reject;
+                });
+
+                const logoWidth = logoImg.width * scale;
+                const logoHeight = logoImg.height * scale;
+                const x = img.width - logoWidth - 10;
+                const y = img.height - logoHeight - 10;
+
+                ctx.drawImage(logoImg, x, y, logoWidth, logoHeight);
+            }
+
+            // Return the watermarked image as a data URL
+            return canvas.toDataURL("image/png");
+        }
+
+        // Helper function to convert hex color to RGB for fillStyle
+        function hexToRgb(hex) {
+            // Ensure hex starts with # and is 7 characters long
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) {
+                hex = hex.split('').map(function (hexChar) {
+                    return hexChar + hexChar;
+                }).join('');
+            }
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return { r, g, b };
+        }
+
+        function generateAccessHandshake(extra) {
+            const characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789${extra}`;
+            let accessHandshake = "";
+
+            for (let i = 0; i < 5; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                accessHandshake += characters[randomIndex];
+            }
+
+            return accessHandshake;
+        }
 
 
 
 
 
-   // Fetch and display events with sorting and filtering
-    async function fetchEvents() {
-    const filterText = document.getElementById('eventFilter').value.toLowerCase();
-    const sortBy = document.getElementById('sortBy').value;
-    const eventList = document.getElementById('eventsContainer');
-    eventList.innerHTML = ''; // Clear previous list
+        async function uploadEvent() {
+            const title = document.getElementById('eventTitle').value.trim();
+            const description = document.getElementById('eventDescription').value.trim();
+            const eventDate = document.getElementById('eventDate').value.trim();
+            const cover = document.getElementById('eventCover').files[0];
+            const accessCode = document.getElementById('accessCode').value.trim();
+            const location = document.getElementById('location').value.trim();
 
-    const eventsCollection = collection(db, 'Events');
-    let eventQuery;
+            // Client-side validation
+            if (!title || !description || !eventDate || !cover) {
+                showToast("Please fill in all required fields.", "error");
+                return;
+            }
 
-    // Sort events
-    if (sortBy === 'date') {
-        eventQuery = query(eventsCollection, orderBy('eventDate'));
-    } else {
-        eventQuery = query(eventsCollection, orderBy('title'));
-    }
+            if (cover.size > 10 * 1024 * 1024) { // 10 MB limit
+                showToast("File size is too large. Please upload a file less than 10MB.", "error");
+                return;
+            }
 
-    try {
-        const snapshot = await getDocs(eventQuery);
+            const storageRef = ref(storage, `eventCovers/${cleanAndShortenFileName(title)}/cover.jpg`);
+            try {
+                // Upload cover image to Firebase Storage
+                await uploadBytes(storageRef, cover);
+                const coverUrl = await getDownloadURL(storageRef);
 
-      snapshot.forEach((doc) => {
-    const event = doc.data();
+                // Generate access handshake code
+                const handshakeCode = generateAccessHandshake();
+                const downloadId = generateAccessHandshake("#^&@!");
 
-    // Fallbacks for missing or null event properties
-    const title = event.title || 'Untitled Event';
-    const description = event.description || 'No description available';
-    const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
-    const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
-    const retrieveCount = event.retrieveCount || 0;
-    const status = event.status || true;
-    const isPublic = event.isPublic || false;
-    const collectionPrice = event.collection_price || 'Not set';
-    const eventTags = event.eventTags || 'No tags';
-    const location = event.location || 'Location not provided';
-    const timestamp = event.timestamp ? new Date(event.timestamp.seconds * 1000).toLocaleString() : 'Timestamp not available';
-    const comments = event.comments || 'No comments';
-    const views = event.views || 0;
-    const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
-    const eventId = doc.id;
+                // Add event to Firestore and get the document reference
+                const docRef = await addDoc(collection(db, 'Events'), {
+                    title,
+                    description,
+                    eventDate,
+                    coverUrl,
+                    shortURL: "",
+                    retrieveCount: 0,
+                    retriever_IP: [],
+                    accessHandShake: handshakeCode,
+                    downloadId: downloadId,
+                    status: "active",
+                    isPublic: true,
+                    collection_price: "",
+                    collection_OnSellPrice: "",
+                    type: "Free", /* Paid */
+                    eventTags: [], /* Implment */
+                    accessCode: accessCode || "",
+                    location: location || "",
+                    timestamp: new Date(),
+                    comments: [], /* Implment */
+                    views: 0,
+                    deactived: false,
+                    galleryBool: true
+                });
 
-    // Filter matching events
-    if (
-        title.toLowerCase().includes(filterText) ||
-        description.toLowerCase().includes(filterText)
-    ) {
-        const eventItem = document.createElement('div');
-        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'm-3', 'p-3');
-        eventItem.style.border = '1px solid #ddd';
-        eventItem.style.borderRadius = '8px';
-        eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                const eventID = docRef.id; // Get the document ID
+                //   console.log("Event ID:", eventID); // Optional: Log it
+                document.getElementById("currentEventID").innerText = eventID; // Display the ID
 
-//eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
-eventInfo = [doc.id, title, eventDate, isPublic, coverUrl];
-console.log("eventInfo    ",eventInfo);
+                // Trigger additional action after saving
+                onEventSaved(eventID);
 
-        // Collapsible content
-        const detailsId = `details-${doc.id}`;
-        const mediaListId = `mediaList-${doc.id}`;
-        
-        const eventDetailsId = `eventDetails-${doc.id}`;
-        const mediaDetailsId = `mediaDetails-${doc.id}`;
+                showToast("Event uploaded successfully.", "success");
+                document.getElementById('eventForm').reset();
+                fetchEvents(); // Refresh event list
+                showTabContent('Add_Media');
+            } catch (error) {
+                console.error("Error uploading event:", error);
+                showToast("An error occurred while uploading the event.", "error");
+            }
+        }
 
-        eventItem.innerHTML = `
+        // Function to handle actions after an event is saved
+        function onEventSaved(eventID) {
+            // Example: Send the event ID to an API or log it for analytics
+            console.log(`Event saved with ID: ${eventID}`);
+            // Add your API call or additional logic here
+        }
+
+
+
+
+
+
+
+
+
+        // Fetch and display events with sorting and filtering
+        async function fetchEvents() {
+            const filterText = document.getElementById('eventFilter').value.toLowerCase();
+            const sortBy = document.getElementById('sortBy').value;
+            const eventList = document.getElementById('eventsContainer');
+            eventList.innerHTML = ''; // Clear previous list
+
+            const eventsCollection = collection(db, 'Events');
+            let eventQuery;
+
+            // Sort events
+            if (sortBy === 'date') {
+                eventQuery = query(eventsCollection, orderBy('eventDate'));
+            } else {
+                eventQuery = query(eventsCollection, orderBy('title'));
+            }
+
+            try {
+                const snapshot = await getDocs(eventQuery);
+
+                snapshot.forEach((doc) => {
+                    const event = doc.data();
+
+                    // Fallbacks for missing or null event properties
+                    const title = event.title || 'Untitled Event';
+                    const description = event.description || 'No description available';
+                    const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
+                    const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
+                    const retrieveCount = event.retrieveCount || 0;
+                    const status = event.status || true;
+                    const isPublic = event.isPublic || false;
+                    const collectionPrice = event.collection_price || 'Not set';
+                    const eventTags = event.eventTags || 'No tags';
+                    const location = event.location || 'Location not provided';
+                    const timestamp = event.timestamp ? new Date(event.timestamp.seconds * 1000).toLocaleString() : 'Timestamp not available';
+                    const comments = event.comments || 'No comments';
+                    const views = event.views || 0;
+                    const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
+                    const eventId = doc.id;
+
+                    // Filter matching events
+                    if (
+                        title.toLowerCase().includes(filterText) ||
+                        description.toLowerCase().includes(filterText)
+                    ) {
+                        const eventItem = document.createElement('div');
+                        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'm-3', 'p-3');
+                        eventItem.style.border = '1px solid #ddd';
+                        eventItem.style.borderRadius = '8px';
+                        eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+                        //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
+                        eventInfo = [doc.id, title, eventDate, isPublic, coverUrl];
+                        console.log("eventInfo    ", eventInfo);
+
+                        // Collapsible content
+                        const detailsId = `details-${doc.id}`;
+                        const mediaListId = `mediaList-${doc.id}`;
+
+                        const eventDetailsId = `eventDetails-${doc.id}`;
+                        const mediaDetailsId = `mediaDetails-${doc.id}`;
+
+                        eventItem.innerHTML = `
     <div class="eventPanelArea">
 
                 <div class="eventHeaderArea">
@@ -1250,123 +1312,126 @@ console.log("eventInfo    ",eventInfo);
         </div>
   
 
-        <div id='${mediaDetailsId}' class="box collapse mt-3">
+        <div id='${mediaDetailsId}' class="event_eventDetails  collapse mt-3">
   <div id='${detailsId}' class="event_details"></div>
 
   <div id='${eventDetailsId}' class="event_eventDetails"></div>
+  
   <div id='${mediaListId}' class="event_photos_list"></div>
-    <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
-
+   
+  <div class="flex-wrap"> 
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
+</div>
     </div>
 
      
 `;
 
 
-        eventList.appendChild(eventItem);
-        console.log("eventDetails.id    ",eventDetailsId);
-        viewMedia(doc.id, coverUrl);
+                        eventList.appendChild(eventItem);
+                        console.log("eventDetails.id    ", eventDetailsId);
+                        viewMedia(doc.id, coverUrl);
 
-}
-});
-} catch (error) {
-console.error("Error fetching events:", error);
-}
-
-
-}
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
 
 
-
-// 
-// Toggle the collapse of media details
-function toggleCollapse(theId, btnDiv, title) {
-    console.log("theId    ",theId);
-
-    const details = document.getElementById(theId);
-
-    // Toggle the 'collapse' class
-    details.classList.toggle('collapse');
-
-    // Update the button content
-    if (btnDiv) {
-        if (details.classList.contains('collapse')) {
-            btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
-        } else {
-            btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
         }
-    }
 
-    if (btnDiv && title) {
-        if (details.classList.contains('collapse')) {
-            btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
-        } else {
-            btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
+
+
+        // 
+        // Toggle the collapse of media details
+        function toggleCollapse(theId, btnDiv, title) {
+            console.log("theId    ", theId);
+
+            const details = document.getElementById(theId);
+
+            // Toggle the 'collapse' class
+            details.classList.toggle('collapse');
+
+            // Update the button content
+            if (btnDiv) {
+                if (details.classList.contains('collapse')) {
+                    btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
+                } else {
+                    btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
+                }
+            }
+
+            if (btnDiv && title) {
+                if (details.classList.contains('collapse')) {
+                    btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
+                } else {
+                    btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
+                }
+            }
+
         }
-    }
-
-}
 
 
 
 
-// Function to handle analytics view
-function viewAnalytics(eventId) {
-    alert(`Viewing analytics for event ID: ${eventId}`);
-    
-    // Navigate to the analytics page, passing the event ID as a URL parameter
-    window.location.href = `../admin/analytics?eventId=${eventId}`;
-}
+        // Function to handle analytics view
+        function viewAnalytics(eventId) {
+            alert(`Viewing analytics for event ID: ${eventId}`);
 
-
-        
+            // Navigate to the analytics page, passing the event ID as a URL parameter
+            window.location.href = `../admin/analytics?eventId=${eventId}`;
+        }
 
 
 
 
 
 
-let eventInfo = '';
 
-async function viewMedia(eventId, coverPhoto) {
-    //eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
-    const mediaCollectionRef = collection(db, "Media");  
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
-    const mediaSnapshot = await getDocs(mediaQuery);
-    const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
-    const eventDetailsContainer = document.getElementById(`eventDetails-${eventId}`);
 
-    //const mediaListContainer = document.getElementById("mediaList");
-    //const eventDetailsContainer = document.getElementById("eventDetails");
+        let eventInfo = '';
 
-    // Reset containers
- //   mediaListContainer.innerHTML = "";
-   // eventDetailsContainer.innerHTML = "";
+        async function viewMedia(eventId, coverPhoto) {
+            //eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
-    let imageCount = 0;
-     const mediaItems = [];
+            const mediaCollectionRef = collection(db, "Media");
+            const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+            const mediaSnapshot = await getDocs(mediaQuery);
+            const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
+            const eventDetailsContainer = document.getElementById(`eventDetails-${eventId}`);
 
-    mediaSnapshot.forEach((doc) => {
-        const data = doc.data();
-        imageCount++;
-        mediaItems.push({ id: doc.id, ...data });
+            //const mediaListContainer = document.getElementById("mediaList");
+            //const eventDetailsContainer = document.getElementById("eventDetails");
 
-        // Use the first image as the cover photo
-        if (!coverPhoto) coverPhoto = data.photoUrl;
-    });
-  //  eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
-    console.log("mediaItems new    ", mediaItems);
+            // Reset containers
+            //   mediaListContainer.innerHTML = "";
+            // eventDetailsContainer.innerHTML = "";
 
-    console.log("eventId   ", eventId)
-    console.log("eventInfo   ", eventInfo)
+            let imageCount = 0;
+            const mediaItems = [];
 
-    // View Media Button
-    eventDetailsContainer.innerHTML = `
+            mediaSnapshot.forEach((doc) => {
+                const data = doc.data();
+                imageCount++;
+                mediaItems.push({ id: doc.id, ...data });
+
+                // Use the first image as the cover photo
+                if (!coverPhoto) coverPhoto = data.photoUrl;
+            });
+            //  eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
+            console.log("mediaItems new    ", mediaItems);
+
+            console.log("eventId   ", eventId)
+            console.log("eventInfo   ", eventInfo)
+
+            // View Media Button
+            eventDetailsContainer.innerHTML = `
   <div class="manageEventsArea">
     <div class="flex-wrap">
       <!-- Event Cover and Image Count -->
-      <div class="box mb-3">
+      <div class="eventCoverArea mb-3">
         <img src="${coverPhoto}" alt="Event Cover Photo" class="event-cover" />
         <p>Total Images: ${imageCount}</p>
       </div>
@@ -1393,15 +1458,15 @@ async function viewMedia(eventId, coverPhoto) {
 `;
 
 
-    // Generate media items
-    mediaItems.forEach((item) => {
+            // Generate media items
+            mediaItems.forEach((item) => {
 
 
-      //  console.log("items    ", item);
-        const mediaDiv = document.createElement("div");
-        mediaDiv.classList.add("gallery-item");
-        mediaDiv.id = `mediaList-${item.id}`;        
-        mediaDiv.innerHTML = `
+                //  console.log("items    ", item);
+                const mediaDiv = document.createElement("div");
+                mediaDiv.classList.add("gallery-item");
+                mediaDiv.id = `mediaList-${item.id}`;
+                mediaDiv.innerHTML = `
             <div class="media-header">
                                
                 <button onclick="toggleCollapse(${item.id}, i-Details-${item.id},"Details")>Details</button>
@@ -1438,471 +1503,471 @@ async function viewMedia(eventId, coverPhoto) {
             </div>
 
         `;
-        eventDetailsContainer.appendChild(mediaDiv);
-    });
-
-    // Initialize lazy loading
-    initializeLazyLoading();
-}
-
-// Lazy loading implementation
-function initializeLazyLoading() {
-    const lazyImages = document.querySelectorAll(".lazy");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove("lazy");
-                observer.unobserve(img);
-            }
-        });
-    });
-
-    lazyImages.forEach((img) => observer.observe(img));
-}
-
-// Batch set public/private
-async function batchSetPublic(eventId, isPublic) {
-    const mediaCollectionRef = collection(db, "Media");
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
-    const mediaSnapshot = await getDocs(mediaQuery);
-
-    const batch = writeBatch(db);
-    mediaSnapshot.forEach((doc) => {
-        batch.update(doc.ref, { isPublic });
-    });
-
-    await batch.commit();
-    alert(`All media set to ${isPublic ? "Public" : "Private"}.`);
-    viewMedia(eventInfo); // Refresh the view
-}
-window.batchSetPublic = batchSetPublic;
-
-// Batch update prices
-async function batchUpdatePrices(eventId) {
-    const newPrice = prompt("Enter the new price for all media:");
-    if (!newPrice || isNaN(newPrice)) {
-        alert("Invalid price.");
-        return;
-    }
-
-    const mediaCollectionRef = collection(db, "Media");
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
-    const mediaSnapshot = await getDocs(mediaQuery);
-
-    const batch = writeBatch(db);
-    mediaSnapshot.forEach((doc) => {
-        batch.update(doc.ref, { price: parseFloat(newPrice) });
-    });
-
-    await batch.commit();
-    alert("Prices updated successfully.");
-    viewMedia(eventInfo); // Refresh the view
-}
-window.batchUpdatePrices = batchUpdatePrices;
-
-
-// Function to toggle the public status
-async function togglePublicStatus(docId, newStatus) {
-    const docRef = doc(db, "Media", docId);
-    await updateDoc(docRef, { isPublic: newStatus });
-    alert(`Photo is now ${newStatus ? "Public" : "Private"}`);
-    viewMedia(eventInfo); // Refresh the list
-}
-window.togglePublicStatus = togglePublicStatus;
-
-// Function to update the price
-async function updatePrice(docId) {
-    const newPrice = prompt("Enter the new price:");
-    if (!newPrice || isNaN(newPrice)) {
-        alert("Invalid price.");
-        return;
-    }
-    const docRef = doc(db, "Media", docId);
-    await updateDoc(docRef, { price: parseFloat(newPrice) });
-    alert("Price updated successfully.");
-    viewMedia(eventInfo); // Refresh the list
-}
-window.updatePrice = updatePrice;
-
-
-
-
-
-
-
-
-
-
-    // Edit Event Function
-    function editEvent(eventId, event) {
-    //    let Event = JSON.stringify(event);
-
-        document.getElementById('eventTitle').value = event.title;
-        document.getElementById('eventDescription').value = event.description;
-        document.getElementById('eventDate').value = event.eventDate;
-        document.getElementById('eventLocation').value = event.location;
-
-        document.getElementById('privateCheckBox').checked = event.isPublic;
-
-        document.getElementById('eventStatus').value = event.status;
-        document.getElementById('eventURL').value = event.shortURL;
-        document.getElementById('eventCollectionPrice').value = event.collection_price;
-
-        const eventTagsInput = document.getElementById('eventTags');
-
-// Example: Populate the input with tags from the `event` object
-const eventTags = event.eventTags || []; // Assume `event.eventTags` is an array
-eventTagsInput.value = eventTags.join(', '); // Display tags as a comma-separated string
-
-        document.getElementById('accessCode').value = event.accessCode;
-        document.getElementById('uploadEventBTN').disabled;
-        document.getElementById('currentEventID').innerText = eventId;
-
-        document.getElementById('Add_Event_Label').innerText = "Update Event";
-        showTabContent('editEvent');
-
-    }
-
-
-
-// Function to toggle the visibility of the directions
-function toggleDirections(directionId) {
-    var directions = document.getElementById(directionId);
-    directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
-}
-
-// Update the displayed access code based on user input
-document.getElementById('accessCode').addEventListener('input', function() {
-    var accessCode = document.getElementById('accessCode').value;
-    var accessCodeDisplay = document.getElementById('displayAccessCode');
-    
-    // Update the displayed access code
-    if (accessCode) {
-    accessCodeDisplay.value = `https://rawphotographysite.com/?a=${accessCode}`;
-    } else {
- accessCodeDisplay.value = "Enter your access code"; 
-    }
-});
-
-// Function to copy the access code to clipboard
-function copyAccessCode() {
-    var copyText = document.getElementById("displayAccessCode");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the text inside the input field
-    document.execCommand("copy");
-
-    // Optionally, show a confirmation (using a toast or alert, for example)
-    showToast("Access code copied to clipboard!");
-}
-
-
-
-
-// Update the displayed URL based on user input
-document.getElementById('eventURL').addEventListener('input', function() {
-    var shortURL = document.getElementById('eventURL').value;
-    var eventURLDisplay = document.getElementById('displayEventURL');
-    
-    // Update the displayed event URL
-    if (shortURL) {
-        eventURLDisplay.value = `https://rawphotographysite.com/?s=${shortURL}`;
-    } else {
-        eventURLDisplay.value = "Enter your URL"; // Default URL
-    }
-});
-
-// Function to copy the displayed URL to clipboard
-function copyEventURL() {
-    var copyText = document.getElementById("displayEventURL");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the text inside the input field
-    document.execCommand("copy");
-
-    // Optionally, show a confirmation (using a toast or alert, for example)
-    showToast("Event URL copied to clipboard!");
-}
-
-
-
-    
-// Save Event Function
-async function saveEvent() {
-    console.log("eventCoverArea??????");
-    const eventId = document.getElementById('currentEventID').innerText.trim();
-    if (!eventId) {
-        console.error("No current event ID found.");
-        showToast("Error: No event selected to save.", "error");
-        return;
-    }
-   const collection_price = document.getElementById('eventCollectionPrice').value;
-   let collectionPrice = "free";
-
-
-   if(collection_price == 0 || collection_price == "0" || collection_price == "" || collection_price == null){
-    collectionPrice = "free";
-   }else{
-    collectionPrice = "paid";
-
-   
-}
-
-const eventTagsInput = document.getElementById('eventTags');
-
-    eventTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
-    // Get updated event details from the form fields
-    const updatedEvent = {
-        title: document.getElementById('eventTitle').value.trim(),
-        description: document.getElementById('eventDescription').value.trim(),
-        eventDate: document.getElementById('eventDate').value.trim(),
-        location: document.getElementById('eventLocation').value.trim(),
-        accessCode: document.getElementById('accessCode').value.trim(),
-        isPublic: document.getElementById('privateCheckBox').checked,
-        status: document.getElementById('eventStatus').value.trim(),
-        shortURL: document.getElementById('eventURL').value.trim(),
-        collection_price: document.getElementById('eventCollectionPrice').value.trim(),
-        eventTags: eventTagsInput,
-        type: collectionPrice
-    };
-
-    // Validate input
-    if (!updatedEvent.title || !updatedEvent.eventDate) {
-        showToast("Please fill out the required fields.", "warning");
-        return;
-    }
-
-    try {
-        // Update the event in Firestore
-        const eventRef = doc(db, 'Events', eventId);
-        await updateDoc(eventRef, updatedEvent);
-
-        showToast('Event saved successfully!', "success");
-
-        // Optional: Re-enable the upload button if needed
-        document.getElementById('uploadEventBTN').disabled = false;
-
-        // Optional: Refresh events list or close modal
-        fetchEvents();
-    } catch (error) {
-        console.error("Error saving event:", error);
-        showToast("Error saving event. Please try again.", "error");
-    }
-}
-
-async function removeFromMedia(eventId) {
-    try {
-        // Query the Media collection for documents with the specified eventId
-        const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
-        const mediaSnapshot = await getDocs(mediaQuery);
-
-        // Delete each matching document
-        const deletePromises = mediaSnapshot.docs.map(async (mediaDoc) => {
-            try {
-                await deleteDoc(doc(db, 'Media', mediaDoc.id));
-            } catch (err) {
-                console.error("Error deleting media document:", err);
-            }
-        });
-
-        // Wait for all deletions to complete
-        await Promise.all(deletePromises);
-
-        // Show success toast once all deletions are complete
-        showToast('Event deleted successfully');
-    } catch (error) {
-        console.error("Error querying or deleting media documents:", error);
-        showToast('Failed to delete event media');
-    }
-}
-
-
-window.removeFromMedia = removeFromMedia;
-
-    // Delete Event Function
-// Delete Event Function 
-async function deleteEvent(eventId) {
-    if (confirm('Are you sure you want to delete this event?')) {
-        try {
-            // Fetch the event document
-            const eventRef = doc(db, 'Events', eventId);
-            const eventSnap = await getDoc(eventRef);
-
-            if (eventSnap.exists()) {
-                const eventData = eventSnap.data();
-
-                // Delete images from Firebase Storage
-                const storage = getStorage();
-                const watermarkedImageRef = ref(storage, eventData.watermarkedImageUrl);
-                const photoRef = ref(storage, eventData.photoUrl);
-
-                // Delete watermarked image
-                if (eventData.watermarkedImageUrl) {
-                    await deleteObject(watermarkedImageRef).catch(err => 
-                        console.error("Error deleting watermarked image:", err)
-                    );
-                }
-
-                // Delete original photo
-                if (eventData.photoUrl) {
-                    await deleteObject(photoRef).catch(err => 
-                        console.error("Error deleting photo:", err)
-                    );
-                }
-
-                
-                // Delete associated media from Media collection
-                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
-                const mediaSnapshot = await getDocs(mediaQuery);
-                mediaSnapshot.forEach(async (mediaDoc) => {
-                    await deleteDoc(doc(db, 'Media', mediaDoc.id)).catch(err => 
-                        console.error("Error deleting media document:", err)
-                    );
+                eventDetailsContainer.appendChild(mediaDiv);
+            });
+
+            // Initialize lazy loading
+            initializeLazyLoading();
+        }
+
+        // Lazy loading implementation
+        function initializeLazyLoading() {
+            const lazyImages = document.querySelectorAll(".lazy");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove("lazy");
+                        observer.unobserve(img);
+                    }
                 });
+            });
 
-                // Delete associated media from MainGallery collection
-                const galleryQuery = query(collection(db, 'MainGallery'), where('eventId', '==', eventId));
-                const gallerySnapshot = await getDocs(galleryQuery);
-                gallerySnapshot.forEach(async (galleryDoc) => {
-                    await deleteDoc(doc(db, 'MainGallery', galleryDoc.id)).catch(err => 
-                        console.error("Error deleting gallery document:", err)
-                    );
-                });
+            lazyImages.forEach((img) => observer.observe(img));
+        }
 
-                // Delete the event itself
-                await deleteDoc(eventRef);
-                showToast('Event deleted successfully');
-                fetchEvents(); // Refresh event list
+        // Batch set public/private
+        async function batchSetPublic(eventId, isPublic) {
+            const mediaCollectionRef = collection(db, "Media");
+            const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+            const mediaSnapshot = await getDocs(mediaQuery);
+
+            const batch = writeBatch(db);
+            mediaSnapshot.forEach((doc) => {
+                batch.update(doc.ref, { isPublic });
+            });
+
+            await batch.commit();
+            alert(`All media set to ${isPublic ? "Public" : "Private"}.`);
+            viewMedia(eventInfo); // Refresh the view
+        }
+        window.batchSetPublic = batchSetPublic;
+
+        // Batch update prices
+        async function batchUpdatePrices(eventId) {
+            const newPrice = prompt("Enter the new price for all media:");
+            if (!newPrice || isNaN(newPrice)) {
+                alert("Invalid price.");
+                return;
+            }
+
+            const mediaCollectionRef = collection(db, "Media");
+            const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+            const mediaSnapshot = await getDocs(mediaQuery);
+
+            const batch = writeBatch(db);
+            mediaSnapshot.forEach((doc) => {
+                batch.update(doc.ref, { price: parseFloat(newPrice) });
+            });
+
+            await batch.commit();
+            alert("Prices updated successfully.");
+            viewMedia(eventInfo); // Refresh the view
+        }
+        window.batchUpdatePrices = batchUpdatePrices;
+
+
+        // Function to toggle the public status
+        async function togglePublicStatus(docId, newStatus) {
+            const docRef = doc(db, "Media", docId);
+            await updateDoc(docRef, { isPublic: newStatus });
+            alert(`Photo is now ${newStatus ? "Public" : "Private"}`);
+            viewMedia(eventInfo); // Refresh the list
+        }
+        window.togglePublicStatus = togglePublicStatus;
+
+        // Function to update the price
+        async function updatePrice(docId) {
+            const newPrice = prompt("Enter the new price:");
+            if (!newPrice || isNaN(newPrice)) {
+                alert("Invalid price.");
+                return;
+            }
+            const docRef = doc(db, "Media", docId);
+            await updateDoc(docRef, { price: parseFloat(newPrice) });
+            alert("Price updated successfully.");
+            viewMedia(eventInfo); // Refresh the list
+        }
+        window.updatePrice = updatePrice;
+
+
+
+
+
+
+
+
+
+
+        // Edit Event Function
+        function editEvent(eventId, event) {
+            //    let Event = JSON.stringify(event);
+
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventDescription').value = event.description;
+            document.getElementById('eventDate').value = event.eventDate;
+            document.getElementById('eventLocation').value = event.location;
+
+            document.getElementById('privateCheckBox').checked = event.isPublic;
+
+            document.getElementById('eventStatus').value = event.status;
+            document.getElementById('eventURL').value = event.shortURL;
+            document.getElementById('eventCollectionPrice').value = event.collection_price;
+
+            const eventTagsInput = document.getElementById('eventTags');
+
+            // Example: Populate the input with tags from the `event` object
+            const eventTags = event.eventTags || []; // Assume `event.eventTags` is an array
+            eventTagsInput.value = eventTags.join(', '); // Display tags as a comma-separated string
+
+            document.getElementById('accessCode').value = event.accessCode;
+            document.getElementById('uploadEventBTN').disabled;
+            document.getElementById('currentEventID').innerText = eventId;
+
+            document.getElementById('Add_Event_Label').innerText = "Update Event";
+            showTabContent('editEvent');
+
+        }
+
+
+
+        // Function to toggle the visibility of the directions
+        function toggleDirections(directionId) {
+            var directions = document.getElementById(directionId);
+            directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
+        }
+
+        // Update the displayed access code based on user input
+        document.getElementById('accessCode').addEventListener('input', function () {
+            var accessCode = document.getElementById('accessCode').value;
+            var accessCodeDisplay = document.getElementById('displayAccessCode');
+
+            // Update the displayed access code
+            if (accessCode) {
+                accessCodeDisplay.value = `https://rawphotographysite.com/?a=${accessCode}`;
             } else {
-                console.error("Event not found for deletion");
+                accessCodeDisplay.value = "Enter your access code";
             }
-        } catch (error) {
-            console.error("Error deleting event:", error);
-        }
-    }
-}
-
-    
-
-    async function addMediaToGallery(category) {
-    const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
-    
-    // Get the selected media
-    const mediaCollectionRef = collection(db, "Media");
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
-    const mediaSnapshot = await getDocs(mediaQuery);
-    
-    // Get the media details and send to MainGallery
-    mediaSnapshot.forEach(async (doc) => {
-        const mediaData = doc.data();
-        const mediaId = doc.id;
-        const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
-
-        // Prepare the data to be added to MainGallery
-        const mainGalleryData = {
-            eventId: eventId,
-            mediaId: mediaId,
-            category: category, // Portrait, Event, Commercial, Family, Other
-            isPublic: isPublic,
-            photoUrl: photoUrl,
-            status: status,
-            watermarkedImageUrl: watermarkedImageUrl,
-            price: price,
-            appearOnHeader: false
-        };
-
-        // Add the media to the MainGallery collection
-        await addDoc(collection(db, "MainGallery"), mainGalleryData);
-
-        // Optionally display a success message
-        alert('Media successfully added to the gallery!');
-    });
-
-    // Close the modal after adding the media
-    closeModal();
-}
-
-
-
-    function openAddToGalleryModal() {
-    // Show the modal
-    document.getElementById("addToGalleryModal").style.display = "block";
-}
-function closeModal() {
-    // Hide the modal
-    document.getElementById("addToGalleryModal").style.display = "none";
-}
-
-
-
-
-/**
- * Load media items from MainGallery collection and render them into the gallery container.
- */
- async function loadMainGallery() { 
-    const galleryContainer = document.getElementById('galleryContainer');
-    galleryContainer.innerHTML = ''; // Clear previous content
-
-
-        try {
-        // Step 1: Fetch all documents from the MainGallery collection
-        const mainGalleryRef = collection(db, "MainGallery");
-        const mainGallerySnapshot = await getDocs(mainGalleryRef);
-
-        if (mainGallerySnapshot.empty) {
-            console.log("No documents found in MainGallery.");
-            showToast('No documents found in MainGallery.', 'info');
-            return;
-        }
-
-        // Step 2: Create an array of imageIds from MainGallery
-        const mainGalleryIds = [];
-        mainGallerySnapshot.forEach(doc => {
-            mainGalleryIds.push(doc.id); // Save the doc ID from MainGallery
         });
 
-        // Step 3: Fetch all documents from the Media collection
-        const mediaRef = collection(db, "Media");
-        const mediaSnapshot = await getDocs(mediaRef);
+        // Function to copy the access code to clipboard
+        function copyAccessCode() {
+            var copyText = document.getElementById("displayAccessCode");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
 
-        if (mediaSnapshot.empty) {
-            console.log("No documents found in Media.");
-            showToast('No documents found in Media.', 'info');
-            return;
+            // Copy the text inside the input field
+            document.execCommand("copy");
+
+            // Optionally, show a confirmation (using a toast or alert, for example)
+            showToast("Access code copied to clipboard!");
         }
 
-        // Step 4: Match the document IDs between MainGallery and Media
-        const matchingIds = [];
-        mediaSnapshot.forEach(doc => {
-            if (mainGalleryIds.includes(doc.id)) {
-                matchingIds.push(doc.id); // Match IDs and add to the result array
 
-                
-            const mediaData = doc.data();
-            const mediaId = doc.id;
-            const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
 
-            // Ensure appearOn has default values if it's missing
-            const defaultAppearOn = {
-                HomePage: false,
-                AboutPage: false,
-                EventPage: false,
-                ContactPage: false,
-                MainGallery: false
+
+        // Update the displayed URL based on user input
+        document.getElementById('eventURL').addEventListener('input', function () {
+            var shortURL = document.getElementById('eventURL').value;
+            var eventURLDisplay = document.getElementById('displayEventURL');
+
+            // Update the displayed event URL
+            if (shortURL) {
+                eventURLDisplay.value = `https://rawphotographysite.com/?s=${shortURL}`;
+            } else {
+                eventURLDisplay.value = "Enter your URL"; // Default URL
+            }
+        });
+
+        // Function to copy the displayed URL to clipboard
+        function copyEventURL() {
+            var copyText = document.getElementById("displayEventURL");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the input field
+            document.execCommand("copy");
+
+            // Optionally, show a confirmation (using a toast or alert, for example)
+            showToast("Event URL copied to clipboard!");
+        }
+
+
+
+
+        // Save Event Function
+        async function saveEvent() {
+            console.log("eventCoverArea??????");
+            const eventId = document.getElementById('currentEventID').innerText.trim();
+            if (!eventId) {
+                console.error("No current event ID found.");
+                showToast("Error: No event selected to save.", "error");
+                return;
+            }
+            const collection_price = document.getElementById('eventCollectionPrice').value;
+            let collectionPrice = "free";
+
+
+            if (collection_price == 0 || collection_price == "0" || collection_price == "" || collection_price == null) {
+                collectionPrice = "free";
+            } else {
+                collectionPrice = "paid";
+
+
+            }
+
+            const eventTagsInput = document.getElementById('eventTags');
+
+            eventTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
+            // Get updated event details from the form fields
+            const updatedEvent = {
+                title: document.getElementById('eventTitle').value.trim(),
+                description: document.getElementById('eventDescription').value.trim(),
+                eventDate: document.getElementById('eventDate').value.trim(),
+                location: document.getElementById('eventLocation').value.trim(),
+                accessCode: document.getElementById('accessCode').value.trim(),
+                isPublic: document.getElementById('privateCheckBox').checked,
+                status: document.getElementById('eventStatus').value.trim(),
+                shortURL: document.getElementById('eventURL').value.trim(),
+                collection_price: document.getElementById('eventCollectionPrice').value.trim(),
+                eventTags: eventTagsInput,
+                type: collectionPrice
             };
 
-            // Merge appearOn with default values   <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
+            // Validate input
+            if (!updatedEvent.title || !updatedEvent.eventDate) {
+                showToast("Please fill out the required fields.", "warning");
+                return;
+            }
 
-            const appearOnData = { ...defaultAppearOn, ...appearOn };
+            try {
+                // Update the event in Firestore
+                const eventRef = doc(db, 'Events', eventId);
+                await updateDoc(eventRef, updatedEvent);
 
-            // Create media item card
-            const mediaDiv = document.createElement('div');
-            mediaDiv.classList.add('gallery-item', 'card-body');
-            mediaDiv.innerHTML = `
+                showToast('Event saved successfully!', "success");
+
+                // Optional: Re-enable the upload button if needed
+                document.getElementById('uploadEventBTN').disabled = false;
+
+                // Optional: Refresh events list or close modal
+                fetchEvents();
+            } catch (error) {
+                console.error("Error saving event:", error);
+                showToast("Error saving event. Please try again.", "error");
+            }
+        }
+
+        async function removeFromMedia(eventId) {
+            try {
+                // Query the Media collection for documents with the specified eventId
+                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+                const mediaSnapshot = await getDocs(mediaQuery);
+
+                // Delete each matching document
+                const deletePromises = mediaSnapshot.docs.map(async (mediaDoc) => {
+                    try {
+                        await deleteDoc(doc(db, 'Media', mediaDoc.id));
+                    } catch (err) {
+                        console.error("Error deleting media document:", err);
+                    }
+                });
+
+                // Wait for all deletions to complete
+                await Promise.all(deletePromises);
+
+                // Show success toast once all deletions are complete
+                showToast('Event deleted successfully');
+            } catch (error) {
+                console.error("Error querying or deleting media documents:", error);
+                showToast('Failed to delete event media');
+            }
+        }
+
+
+        window.removeFromMedia = removeFromMedia;
+
+        // Delete Event Function
+        // Delete Event Function 
+        async function deleteEvent(eventId) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                try {
+                    // Fetch the event document
+                    const eventRef = doc(db, 'Events', eventId);
+                    const eventSnap = await getDoc(eventRef);
+
+                    if (eventSnap.exists()) {
+                        const eventData = eventSnap.data();
+
+                        // Delete images from Firebase Storage
+                        const storage = getStorage();
+                        const watermarkedImageRef = ref(storage, eventData.watermarkedImageUrl);
+                        const photoRef = ref(storage, eventData.photoUrl);
+
+                        // Delete watermarked image
+                        if (eventData.watermarkedImageUrl) {
+                            await deleteObject(watermarkedImageRef).catch(err =>
+                                console.error("Error deleting watermarked image:", err)
+                            );
+                        }
+
+                        // Delete original photo
+                        if (eventData.photoUrl) {
+                            await deleteObject(photoRef).catch(err =>
+                                console.error("Error deleting photo:", err)
+                            );
+                        }
+
+
+                        // Delete associated media from Media collection
+                        const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+                        const mediaSnapshot = await getDocs(mediaQuery);
+                        mediaSnapshot.forEach(async (mediaDoc) => {
+                            await deleteDoc(doc(db, 'Media', mediaDoc.id)).catch(err =>
+                                console.error("Error deleting media document:", err)
+                            );
+                        });
+
+                        // Delete associated media from MainGallery collection
+                        const galleryQuery = query(collection(db, 'MainGallery'), where('eventId', '==', eventId));
+                        const gallerySnapshot = await getDocs(galleryQuery);
+                        gallerySnapshot.forEach(async (galleryDoc) => {
+                            await deleteDoc(doc(db, 'MainGallery', galleryDoc.id)).catch(err =>
+                                console.error("Error deleting gallery document:", err)
+                            );
+                        });
+
+                        // Delete the event itself
+                        await deleteDoc(eventRef);
+                        showToast('Event deleted successfully');
+                        fetchEvents(); // Refresh event list
+                    } else {
+                        console.error("Event not found for deletion");
+                    }
+                } catch (error) {
+                    console.error("Error deleting event:", error);
+                }
+            }
+        }
+
+
+
+        async function addMediaToGallery(category) {
+            const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
+
+            // Get the selected media
+            const mediaCollectionRef = collection(db, "Media");
+            const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
+            const mediaSnapshot = await getDocs(mediaQuery);
+
+            // Get the media details and send to MainGallery
+            mediaSnapshot.forEach(async (doc) => {
+                const mediaData = doc.data();
+                const mediaId = doc.id;
+                const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
+
+                // Prepare the data to be added to MainGallery
+                const mainGalleryData = {
+                    eventId: eventId,
+                    mediaId: mediaId,
+                    category: category, // Portrait, Event, Commercial, Family, Other
+                    isPublic: isPublic,
+                    photoUrl: photoUrl,
+                    status: status,
+                    watermarkedImageUrl: watermarkedImageUrl,
+                    price: price,
+                    appearOnHeader: false
+                };
+
+                // Add the media to the MainGallery collection
+                await addDoc(collection(db, "MainGallery"), mainGalleryData);
+
+                // Optionally display a success message
+                alert('Media successfully added to the gallery!');
+            });
+
+            // Close the modal after adding the media
+            closeModal();
+        }
+
+
+
+        function openAddToGalleryModal() {
+            // Show the modal
+            document.getElementById("addToGalleryModal").style.display = "block";
+        }
+        function closeModal() {
+            // Hide the modal
+            document.getElementById("addToGalleryModal").style.display = "none";
+        }
+
+
+
+
+        /**
+         * Load media items from MainGallery collection and render them into the gallery container.
+         */
+        async function loadMainGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            galleryContainer.innerHTML = ''; // Clear previous content
+
+
+            try {
+                // Step 1: Fetch all documents from the MainGallery collection
+                const mainGalleryRef = collection(db, "MainGallery");
+                const mainGallerySnapshot = await getDocs(mainGalleryRef);
+
+                if (mainGallerySnapshot.empty) {
+                    console.log("No documents found in MainGallery.");
+                    showToast('No documents found in MainGallery.', 'info');
+                    return;
+                }
+
+                // Step 2: Create an array of imageIds from MainGallery
+                const mainGalleryIds = [];
+                mainGallerySnapshot.forEach(doc => {
+                    mainGalleryIds.push(doc.id); // Save the doc ID from MainGallery
+                });
+
+                // Step 3: Fetch all documents from the Media collection
+                const mediaRef = collection(db, "Media");
+                const mediaSnapshot = await getDocs(mediaRef);
+
+                if (mediaSnapshot.empty) {
+                    console.log("No documents found in Media.");
+                    showToast('No documents found in Media.', 'info');
+                    return;
+                }
+
+                // Step 4: Match the document IDs between MainGallery and Media
+                const matchingIds = [];
+                mediaSnapshot.forEach(doc => {
+                    if (mainGalleryIds.includes(doc.id)) {
+                        matchingIds.push(doc.id); // Match IDs and add to the result array
+
+
+                        const mediaData = doc.data();
+                        const mediaId = doc.id;
+                        const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
+
+                        // Ensure appearOn has default values if it's missing
+                        const defaultAppearOn = {
+                            HomePage: false,
+                            AboutPage: false,
+                            EventPage: false,
+                            ContactPage: false,
+                            MainGallery: false
+                        };
+
+                        // Merge appearOn with default values   <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
+
+                        const appearOnData = { ...defaultAppearOn, ...appearOn };
+
+                        // Create media item card
+                        const mediaDiv = document.createElement('div');
+                        mediaDiv.classList.add('gallery-item', 'card-body');
+                        mediaDiv.innerHTML = `
 <div class="media-container">
   <div class="media-header">
       <div class="box">
@@ -1946,71 +2011,69 @@ function closeModal() {
 </div>
             `;
 
-            galleryContainer.appendChild(mediaDiv);
-    
-            }
-        });
+                        galleryContainer.appendChild(mediaDiv);
 
-        // Step 5: Log or process the matching document IDs
-        if (matchingIds.length > 0) {
-            console.log("Matching document IDs:", matchingIds);
-            showToast('Matching IDs found.', 'success');
-            return matchingIds;
-        } else {
-            console.log("No matching document IDs found.");
-            showToast('No matching document IDs found.', 'info');
-            return [];
+                    }
+                });
+
+                // Step 5: Log or process the matching document IDs
+                if (matchingIds.length > 0) {
+                    console.log("Matching document IDs:", matchingIds);
+                    showToast('Matching IDs found.', 'success');
+                    return matchingIds;
+                } else {
+                    console.log("No matching document IDs found.");
+                    showToast('No matching document IDs found.', 'info');
+                    return [];
+                }
+
+
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                galleryContainer.innerHTML = "<p>Error loading gallery. Please try again later.</p>";
+            }
+
         }
 
-    
-} catch (error) {
-        console.error('Error loading gallery:', error);
-        galleryContainer.innerHTML = "<p>Error loading gallery. Please try again later.</p>";
-    }
-
-    }
-
-/*
-  
-
-    */
+        /*
+          
+        
+            */
 
 
 
-/**
- * Render checkboxes for the appearOn settings and set their checked state based on the provided appearOn data.
- * @param {Array<string>} options - Array of checkbox labels/values.
- * @param {Object} appearOn - An object indicating which pages the media should appear on (true or false for each page).
- * @returns {string} - HTML string for the checkbox inputs, with checked checkboxes where applicable.
- */
-function renderCheckboxes(options, appearOn) {
-    return options
-        .map(option => {
-            const checked = appearOn[option] ? 'checked' : '';  // Check if the option is true in appearOn
-            return `
+        /**
+         * Render checkboxes for the appearOn settings and set their checked state based on the provided appearOn data.
+         * @param {Array<string>} options - Array of checkbox labels/values.
+         * @param {Object} appearOn - An object indicating which pages the media should appear on (true or false for each page).
+         * @returns {string} - HTML string for the checkbox inputs, with checked checkboxes where applicable.
+         */
+        function renderCheckboxes(options, appearOn) {
+            return options
+                .map(option => {
+                    const checked = appearOn[option] ? 'checked' : '';  // Check if the option is true in appearOn
+                    return `
                 <div>
                     <input type="checkbox" id="${option}" value="${option}" ${checked}>
                     <label for="${option}">${option}</label>
                 </div>
             `;
-        })
-        .join('');
-}
+                })
+                .join('');
+        }
 
-/**
- * Handle updating the appearOn field for a media item.
- * @param {string} mediaId - The ID of the media document to update.
- */
-function handleUpdate(mediaId) {
-    const checkboxes = document.querySelectorAll(`#checkboxes-${mediaId} input[type="checkbox"]`);
-    const selectedPages = Array.from(checkboxes)
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value);
+        /**
+         * Handle updating the appearOn field for a media item.
+         * @param {string} mediaId - The ID of the media document to update.
+         */
+        function handleUpdate(mediaId) {
+            const checkboxes = document.querySelectorAll(`#checkboxes-${mediaId} input[type="checkbox"]`);
+            const selectedPages = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
 
-    updateAppearOn(mediaId, selectedPages);
-}
-
-
+            updateAppearOn(mediaId, selectedPages);
+        }
 
 
 
@@ -2018,418 +2081,421 @@ function handleUpdate(mediaId) {
 
 
 
-// Function to add a document ID to MainGallery
-async function addToMainGallery(imageId) {
-    try {
-        // Create a reference to the 'MainGallery' collection and set the document with the given ID
-        const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
-
-        // Data to store in the document
-        const mainGalleryData = {
-            imageId, // Store the image ID
-            timestamp: new Date(), // Optional: Add a timestamp
-            status: "active", // Optional: Add a status
-        };
-
-        // Add the data to Firestore
-        await setDoc(imageDocRef, mainGalleryData);
-
-        console.log(`Image with ID ${imageId} added to MainGallery.`);
-        showToast('Image successfully added to MainGallery!', 'success');
-    } catch (error) {
-        console.error("Error adding image to MainGallery:", error);
-        showToast('Failed to add image to MainGallery.', 'error');
-    }
-}
 
 
+        // Function to add a document ID to MainGallery
+        async function addToMainGallery(imageId) {
+            try {
+                // Create a reference to the 'MainGallery' collection and set the document with the given ID
+                const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
 
+                // Data to store in the document
+                const mainGalleryData = {
+                    imageId, // Store the image ID
+                    timestamp: new Date(), // Optional: Add a timestamp
+                    status: "active", // Optional: Add a status
+                };
 
+                // Add the data to Firestore
+                await setDoc(imageDocRef, mainGalleryData);
 
-
-
-/**
- * Update the appearOn field for a specific media item in Firestore.
- * @param {string} imageId - The ID of the media document.
- * @param {Array<string>} selectedPages - The selected pages to update the appearOn array.
- */
-
-// Function to update appearOn array in Firestore
-async function updateAppearOn(imageId, selectedPages) {
-    try {
-        const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
-
-        await updateDoc(imageDocRef, { appearOn: selectedPages });
-
-        showToast(`Successfully updated appearOn for media ID: ${imageId}`, 'success');
-    } catch (error) {
-        console.error('Error updating appearOn array:', error);
-        showToast(`Error updating appearOn for media ID: ${imageId}`, 'error');
-    }
-}
-
-// Remove Media Function
-async function removeMedia(mediaId) {
-    const confirmDelete = confirm("Are you sure you want to remove this media from the gallery?");
-    if (confirmDelete) {
-        // Remove from MainGallery collection
-        await deleteDoc(doc(db, "MainGallery", mediaId));
-        alert('Media successfully removed from the gallery!');
-        loadMainGallery(); // Refresh the gallery list
-    }
-}
-
-function addMediaToEvent(){
-    const eventID = document.getElementById("currentEventID");
-    
-    document.getElementById("addMedia").style.display = 'block';
-    addMedia(eventID);
-}
-
-function addMedia(eventID){
-    document.getElementById("currentEventID").innerText = eventID;
-
-    showTabContent('Add_Media');
-}
-
-
-
-
-
-
-// Save watermark input values
-function saveWatermarkInputs() {
-    const addMediaDiv = document.getElementById("Add_Media");
-    const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea"); // Exclude file inputs
-    const watermarkValues = {};
-
-    inputs.forEach((input) => {
-        watermarkValues[input.id] = input.type === "checkbox" ? input.checked : input.value; // Save value or checkbox state
-    });
-
-    localStorage.setItem("watermarkInputs", JSON.stringify(watermarkValues));
-    showToast("Watermark input values saved.", "success");
-}
-
-// Load watermark input values
-function loadWatermarkInputs() {
-    const savedValues = JSON.parse(localStorage.getItem("watermarkInputs"));
-    if (!savedValues) {
-        showToast("No saved input values found.", "info");
-        return;
-    }
-
-    const addMediaDiv = document.getElementById("Add_Media");
-    const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea");
-
-    inputs.forEach((input) => {
-        if (savedValues.hasOwnProperty(input.id)) {
-            if (input.type === "checkbox") {
-                input.checked = savedValues[input.id]; // Restore checkbox state
-            } else {
-                input.value = savedValues[input.id]; // Restore input value
+                console.log(`Image with ID ${imageId} added to MainGallery.`);
+                showToast('Image successfully added to MainGallery!', 'success');
+            } catch (error) {
+                console.error("Error adding image to MainGallery:", error);
+                showToast('Failed to add image to MainGallery.', 'error');
             }
         }
-    });
 
-   // showToast("Watermark input values loaded.", "success");
-}
 
-// Clear watermark input values
-function clearWatermarkInputs() {
-    const addMediaDiv = document.getElementById("Add_Media");
-    const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea");
 
-    inputs.forEach((input) => {
-        if (input.type === "checkbox") {
-            input.checked = false; // Clear checkbox
-        } else {
-            input.value = ""; // Clear input value
+
+
+
+
+        /**
+         * Update the appearOn field for a specific media item in Firestore.
+         * @param {string} imageId - The ID of the media document.
+         * @param {Array<string>} selectedPages - The selected pages to update the appearOn array.
+         */
+
+        // Function to update appearOn array in Firestore
+        async function updateAppearOn(imageId, selectedPages) {
+            try {
+                const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
+
+                await updateDoc(imageDocRef, { appearOn: selectedPages });
+
+                showToast(`Successfully updated appearOn for media ID: ${imageId}`, 'success');
+            } catch (error) {
+                console.error('Error updating appearOn array:', error);
+                showToast(`Error updating appearOn for media ID: ${imageId}`, 'error');
+            }
         }
-    });
 
-    localStorage.removeItem("watermarkInputs"); // Remove saved values
-    showToast("Watermark input values cleared.", "success");
-}
-
-// Save inputs on close, refresh, or tab navigation
-window.addEventListener("beforeunload", (event) => {
-    saveWatermarkInputs();
-});
-
-
-
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-       
-    fetchEvents(); 
-
-loadMainGallery();
-
-        window.toggleDirections = toggleDirections;
-        window.addMediaToGallery = addMediaToGallery;
-
-        window.openAddToGalleryModal = openAddToGalleryModal;
-        window.closeModal = closeModal;
-
-        window.applyWatermark = applyWatermark;
-        window.editEvent = editEvent;
-        window.copyAccessCode  = copyAccessCode ;
-        window.copyEventURL  = copyEventURL ;
-
-        window.uploadEvent = uploadEvent;
-
-        window.fetchEvents = fetchEvents;
-        window.viewMedia = viewMedia;
-
-        window.deleteEvent = deleteEvent;
-        window.saveEvent = saveEvent;
-
-window.loadMainGallery = loadMainGallery;
-
-window.viewAnalytics = viewAnalytics;
-window.addMedia = addMedia;
-window.toggleCollapse  = toggleCollapse;
-window.showTabContent = showTabContent;
-window.updateAppearOn = updateAppearOn;
-window.removeMedia = removeMedia;
-
-window.handleFileUpload = handleFileUpload;
-window.updatePreview = updatePreview;
-
-window.renderCheckboxes = renderCheckboxes;
-window.handleUpdate  = handleUpdate ;
-
-window.batchSetPublic   = batchSetPublic  ;
-window.addMediaToEvent = addMediaToEvent;
-window.bulkUploadPhotosFunc = bulkUploadPhotosFunc;
-window.fileToDataURL = fileToDataURL;
-window.savePhotoDetails = savePhotoDetails;
- window.addToMainGallery  = addToMainGallery ;
-window.saveWatermarkInputs = saveWatermarkInputs;
-window.clearWatermarkInputs = clearWatermarkInputs;
-window.loadWatermarkInputs = loadWatermarkInputs;
-loadWatermarkInputs();
-
-window.generateAccessHandshake = generateAccessHandshake;
-
-const bulkUploadPhotosBTN = document.getElementById('bulkUploadPhotos');
-    if (bulkUploadPhotosBTN) {
-        bulkUploadPhotosBTN.addEventListener('click', bulkUploadPhotosFunc);
-    }
-
-        const saveEventBTN = document.getElementById('saveEvent');
-    if (saveEventBTN) {
-        saveEventBTN.addEventListener('click', saveEvent);
-    }
-
-    // Listener for the "Upload Event" button
-    const uploadEventButton = document.getElementById('uploadEventBTN');
-    if (uploadEventButton) {
-        uploadEventButton.addEventListener('click', uploadEvent);
-    }
-
-
-    // Listener for the "Sort by" dropdown
-    const sortByDropdown = document.getElementById('sortBy');
-    if (sortByDropdown) {
-        sortByDropdown.addEventListener('change', fetchEvents);
-    }
-
-
-
-// Function to show content for a selected tab
-function showTabContent(tabId) {
-
-    
-    if(tabId == "editEvent"){
-        document.getElementById('Add_Event_Label').innerText = "Update Event";
-        document.getElementById('saveEvent').style.display = "block";
-        document.getElementById('eventCoverArea').style.display = "none";
-        document.getElementById('uploadEventBTN').style.display = "none";
-        document.getElementById("addMedia").style.display = 'block';
-       // showTabContent('editEvent');
-        tabId = "Add_Event";
-    }else{       
-        document.getElementById('saveEvent').style.display = "none";
-        document.getElementById('eventCoverArea').style.display = "block";
-        document.getElementById('uploadEventBTN').style.display = "block";
-        document.getElementById('Add_Event_Label').innerText = "Add New Event";
-        document.getElementById("addMedia").style.display = 'none';
-
-    }
-    // Hide all tab content
-    const allTabs = document.querySelectorAll('.media_tabs');
-    allTabs.forEach((tab) => {
-        tab.style.display = 'none';
-    });
-
-    // Remove 'active' class from all buttons
-    const allButtons = document.querySelectorAll('.tabButton');
-    allButtons.forEach((button) => {
-        button.classList.remove('active');
-    });
-
-    // Show the selected tab content and activate the button
-    const selectedTab = document.getElementById(tabId);
-    if (selectedTab) {
-        selectedTab.style.display = 'block';
-        const activeButton = document.querySelector(`.tabButton[onclick="showTabContent('${tabId}')"]`);
-        if (activeButton) activeButton.classList.add('active');
-
-        // Save the selected tab to local storage
-        localStorage.setItem('activeTab', tabId);
-    }
-}
-
-// Function to load the last selected tab on page load
-function loadLastTab() {
-    // Retrieve the last active tab from local storage
-    const savedTab = localStorage.getItem('activeTab');
-console.log("savedTab");
-    // Show the saved tab if it exists, otherwise show the default tab
-    if (savedTab) {
-        showTabContent(savedTab);
-    } else {
-        showTabContent('Add_Event'); // Default tab
-    }
-}
-
-// Run on page load
-loadLastTab();
-
-// Add an event listener to the file input to handle the file selection
-document.getElementById('eventCover').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Get the selected file
-
-    if (file) {
-        const reader = new FileReader();
-
-        // When the file is loaded, update the image preview
-        reader.onload = function(e) {
-            const coverPreview = document.getElementById('eventCoverPreview');
-            coverPreview.src = e.target.result; // Set the preview image source to the data URL of the file
-        };
-
-        reader.readAsDataURL(file);
-    }
-});
-
-// Add an event listener to the image preview that triggers when the image is clicked
-document.getElementById('eventCoverPreview').addEventListener('click', function() {
-    document.getElementById('eventCover').click();
-
-});
-// Function to toggle visibility of directions
-function toggleDirections(directionsId) {
-    const directions = document.getElementById(directionsId);
-    directions.style.display = (directions.style.display === 'none' || directions.style.display === '') ? 'block' : 'none';
-
-    // Save the directions visibility state in localStorage
-    localStorage.setItem(directionsId, directions.style.display);
-}
-
-// Load saved directions preferences from localStorage
-function loadDirectionsPreferences() {
-    const allDirections = document.querySelectorAll('.directions');
-    allDirections.forEach(direction => {
-        const directionsId = direction.id;
-        const savedState = localStorage.getItem(directionsId);
-        if (savedState) {
-            direction.style.display = savedState;
+        // Remove Media Function
+        async function removeMedia(mediaId) {
+            const confirmDelete = confirm("Are you sure you want to remove this media from the gallery?");
+            if (confirmDelete) {
+                // Remove from MainGallery collection
+                await deleteDoc(doc(db, "MainGallery", mediaId));
+                alert('Media successfully removed from the gallery!');
+                loadMainGallery(); // Refresh the gallery list
+            }
         }
-    });
-}
 
-// Call loadDirectionsPreferences on page load
-window.onload = loadDirectionsPreferences;
+        function addMediaToEvent() {
+            const eventID = document.getElementById("currentEventID");
 
+            document.getElementById("addMedia").style.display = 'block';
+            addMedia(eventID);
+        }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const privateCheckBox = document.getElementById("privateCheckBox");
-  const accessCodeArea = document.getElementById("accessCodeArea");
-  const accessCodeInput = document.getElementById("accessCode");
+        function addMedia(eventID) {
+            document.getElementById("currentEventID").innerText = eventID;
 
-  // Initially hide the accessCodeArea
-  accessCodeArea.style.display = "none";
-
-  // Add event listener for checkbox state change
-  privateCheckBox.addEventListener("change", () => {
-    if (privateCheckBox.checked) {
-      // Show accessCodeArea if checkbox is checked
-      accessCodeArea.style.display = "block";
-    } else {
-      // Hide accessCodeArea and clear input value if checkbox is unchecked
-      accessCodeArea.style.display = "none";
-      accessCodeInput.value = "";
-    }
-  });
-});
+            showTabContent('Add_Media');
+        }
 
 
 
-// Add an event listener to the image preview that triggers when the image is clicked
-document.getElementById('photoUploadBTN').addEventListener('click', function() {
-    document.getElementById('photoUpload').click();
-
-});
-document.getElementById('watermarkPreview').addEventListener('click', function() {
-    document.getElementById('photoUpload').click();
-
-});
 
 
-document.getElementById('logoOverlay').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Get the selected file
 
-    if (file) {
-        const reader = new FileReader();
+        // Save watermark input values
+        function saveWatermarkInputs() {
+            const addMediaDiv = document.getElementById("Add_Media");
+            const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea"); // Exclude file inputs
+            const watermarkValues = {};
 
-        // When the file is loaded, update the image preview
-        reader.onload = function(e) {
-            const logoOverlayPreview = document.getElementById('logoOverlay');
-            logoOverlayPreview.src = e.target.result; // Set the preview image source to the data URL of the file
-        };
+            inputs.forEach((input) => {
+                watermarkValues[input.id] = input.type === "checkbox" ? input.checked : input.value; // Save value or checkbox state
+            });
 
-        reader.readAsDataURL(file);
-    }
-});
+            localStorage.setItem("watermarkInputs", JSON.stringify(watermarkValues));
+            showToast("Watermark input values saved.", "success");
+        }
 
-// Add an event listener to the image preview that triggers when the image is clicked
-document.getElementById('logoOverlayPreview').addEventListener('click', function() {
-    document.getElementById('logoOverlay').click();
+        // Load watermark input values
+        function loadWatermarkInputs() {
+            const savedValues = JSON.parse(localStorage.getItem("watermarkInputs"));
+            if (!savedValues) {
+                showToast("No saved input values found.", "info");
+                return;
+            }
 
-});
-function showTab(tabId) {
-        // Hide all watermark tab content
-        var allTabs = document.querySelectorAll('.watermarkTabs');
-        allTabs.forEach(function(tab) {
-            tab.style.display = 'none';
+            const addMediaDiv = document.getElementById("Add_Media");
+            const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea");
+
+            inputs.forEach((input) => {
+                if (savedValues.hasOwnProperty(input.id)) {
+                    if (input.type === "checkbox") {
+                        input.checked = savedValues[input.id]; // Restore checkbox state
+                    } else {
+                        input.value = savedValues[input.id]; // Restore input value
+                    }
+                }
+            });
+
+            // showToast("Watermark input values loaded.", "success");
+        }
+
+        // Clear watermark input values
+        function clearWatermarkInputs() {
+            const addMediaDiv = document.getElementById("Add_Media");
+            const inputs = addMediaDiv.querySelectorAll("input:not([type='file']), select, textarea");
+
+            inputs.forEach((input) => {
+                if (input.type === "checkbox") {
+                    input.checked = false; // Clear checkbox
+                } else {
+                    input.value = ""; // Clear input value
+                }
+            });
+
+            localStorage.removeItem("watermarkInputs"); // Remove saved values
+            showToast("Watermark input values cleared.", "success");
+        }
+
+        // Save inputs on close, refresh, or tab navigation
+        window.addEventListener("beforeunload", (event) => {
+            saveWatermarkInputs();
         });
 
-        // Show the selected tab
-        var selectedTab = document.getElementById(tabId);
-        if (selectedTab) {
-            selectedTab.style.display = 'block';
-        }
-    }
 
-    // Initially show the first tab or set the default tab to be visible
-    window.onload = function() {
-        document.getElementById('tabSelector').value = 'fontFamilyDiv'; // Set default option
-        showTab('watermarkTextDiv'); // Show default tab
-    };
 
-window.showTab = showTab;
 
-});
-// Attach saveWatermarkInputs to the beforeunload event
-window.addEventListener("beforeunload", (event) => {
-    saveWatermarkInputs();
-});
 
-</script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            fetchEvents();
+
+            loadMainGallery();
+
+            window.toggleDirections = toggleDirections;
+            window.addMediaToGallery = addMediaToGallery;
+
+            window.openAddToGalleryModal = openAddToGalleryModal;
+            window.closeModal = closeModal;
+
+            window.applyWatermark = applyWatermark;
+            window.editEvent = editEvent;
+            window.copyAccessCode = copyAccessCode;
+            window.copyEventURL = copyEventURL;
+
+            window.uploadEvent = uploadEvent;
+
+            window.fetchEvents = fetchEvents;
+            window.viewMedia = viewMedia;
+
+            window.deleteEvent = deleteEvent;
+            window.saveEvent = saveEvent;
+
+            window.loadMainGallery = loadMainGallery;
+
+            window.viewAnalytics = viewAnalytics;
+            window.addMedia = addMedia;
+            window.toggleCollapse = toggleCollapse;
+            window.showTabContent = showTabContent;
+            window.updateAppearOn = updateAppearOn;
+            window.removeMedia = removeMedia;
+
+            window.handleFileUpload = handleFileUpload;
+            window.updatePreview = updatePreview;
+
+            window.renderCheckboxes = renderCheckboxes;
+            window.handleUpdate = handleUpdate;
+
+            window.batchSetPublic = batchSetPublic;
+            window.addMediaToEvent = addMediaToEvent;
+            window.bulkUploadPhotosFunc = bulkUploadPhotosFunc;
+            window.fileToDataURL = fileToDataURL;
+            window.savePhotoDetails = savePhotoDetails;
+            window.addToMainGallery = addToMainGallery;
+            window.saveWatermarkInputs = saveWatermarkInputs;
+            window.clearWatermarkInputs = clearWatermarkInputs;
+            window.loadWatermarkInputs = loadWatermarkInputs;
+            loadWatermarkInputs();
+
+            window.generateAccessHandshake = generateAccessHandshake;
+
+            const bulkUploadPhotosBTN = document.getElementById('bulkUploadPhotos');
+            if (bulkUploadPhotosBTN) {
+                bulkUploadPhotosBTN.addEventListener('click', bulkUploadPhotosFunc);
+            }
+
+            const saveEventBTN = document.getElementById('saveEvent');
+            if (saveEventBTN) {
+                saveEventBTN.addEventListener('click', saveEvent);
+            }
+
+            // Listener for the "Upload Event" button
+            const uploadEventButton = document.getElementById('uploadEventBTN');
+            if (uploadEventButton) {
+                uploadEventButton.addEventListener('click', uploadEvent);
+            }
+
+
+            // Listener for the "Sort by" dropdown
+            const sortByDropdown = document.getElementById('sortBy');
+            if (sortByDropdown) {
+                sortByDropdown.addEventListener('change', fetchEvents);
+            }
+
+
+
+            // Function to show content for a selected tab
+            function showTabContent(tabId) {
+
+
+                if (tabId == "editEvent") {
+                    document.getElementById('Add_Event_Label').innerText = "Update Event";
+                    document.getElementById('saveEvent').style.display = "block";
+                    document.getElementById('eventCoverArea').style.display = "none";
+                    document.getElementById('uploadEventBTN').style.display = "none";
+                    document.getElementById("addMedia").style.display = 'block';
+                    // showTabContent('editEvent');
+                    tabId = "Add_Event";
+                } else {
+                    document.getElementById('saveEvent').style.display = "none";
+                    document.getElementById('eventCoverArea').style.display = "block";
+                    document.getElementById('uploadEventBTN').style.display = "block";
+                    document.getElementById('Add_Event_Label').innerText = "Add New Event";
+                    document.getElementById("addMedia").style.display = 'none';
+
+                }
+                // Hide all tab content
+                const allTabs = document.querySelectorAll('.media_tabs');
+                allTabs.forEach((tab) => {
+                    tab.style.display = 'none';
+                });
+
+                // Remove 'active' class from all buttons
+                const allButtons = document.querySelectorAll('.tabButton');
+                allButtons.forEach((button) => {
+                    button.classList.remove('active');
+                });
+
+                // Show the selected tab content and activate the button
+                const selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.style.display = 'block';
+                    const activeButton = document.querySelector(`.tabButton[onclick="showTabContent('${tabId}')"]`);
+                    if (activeButton) activeButton.classList.add('active');
+
+                    // Save the selected tab to local storage
+                    localStorage.setItem('activeTab', tabId);
+                }
+            }
+
+            // Function to load the last selected tab on page load
+            function loadLastTab() {
+                // Retrieve the last active tab from local storage
+                const savedTab = localStorage.getItem('activeTab');
+                console.log("savedTab");
+                // Show the saved tab if it exists, otherwise show the default tab
+                if (savedTab) {
+                    showTabContent(savedTab);
+                } else {
+                    showTabContent('Add_Event'); // Default tab
+                }
+            }
+
+            // Run on page load
+            loadLastTab();
+
+            // Add an event listener to the file input to handle the file selection
+            document.getElementById('eventCover').addEventListener('change', function (event) {
+                const file = event.target.files[0]; // Get the selected file
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    // When the file is loaded, update the image preview
+                    reader.onload = function (e) {
+                        const coverPreview = document.getElementById('eventCoverPreview');
+                        coverPreview.src = e.target.result; // Set the preview image source to the data URL of the file
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Add an event listener to the image preview that triggers when the image is clicked
+            document.getElementById('eventCoverPreview').addEventListener('click', function () {
+                document.getElementById('eventCover').click();
+
+            });
+            // Function to toggle visibility of directions
+            function toggleDirections(directionsId) {
+                const directions = document.getElementById(directionsId);
+                directions.style.display = (directions.style.display === 'none' || directions.style.display === '') ? 'block' : 'none';
+
+                // Save the directions visibility state in localStorage
+                localStorage.setItem(directionsId, directions.style.display);
+            }
+
+            // Load saved directions preferences from localStorage
+            function loadDirectionsPreferences() {
+                const allDirections = document.querySelectorAll('.directions');
+                allDirections.forEach(direction => {
+                    const directionsId = direction.id;
+                    const savedState = localStorage.getItem(directionsId);
+                    if (savedState) {
+                        direction.style.display = savedState;
+                    }
+                });
+            }
+
+            // Call loadDirectionsPreferences on page load
+            window.onload = loadDirectionsPreferences;
+
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const privateCheckBox = document.getElementById("privateCheckBox");
+                const accessCodeArea = document.getElementById("accessCodeArea");
+                const accessCodeInput = document.getElementById("accessCode");
+
+                // Initially hide the accessCodeArea
+                accessCodeArea.style.display = "none";
+
+                // Add event listener for checkbox state change
+                privateCheckBox.addEventListener("change", () => {
+                    if (privateCheckBox.checked) {
+                        // Show accessCodeArea if checkbox is checked
+                        accessCodeArea.style.display = "block";
+                    } else {
+                        // Hide accessCodeArea and clear input value if checkbox is unchecked
+                        accessCodeArea.style.display = "none";
+                        accessCodeInput.value = "";
+                    }
+                });
+            });
+
+
+
+            // Add an event listener to the image preview that triggers when the image is clicked
+            document.getElementById('photoUploadBTN').addEventListener('click', function () {
+                document.getElementById('photoUpload').click();
+
+            });
+            document.getElementById('watermarkPreview').addEventListener('click', function () {
+                document.getElementById('photoUpload').click();
+
+            });
+
+
+            document.getElementById('logoOverlay').addEventListener('change', function (event) {
+                const file = event.target.files[0]; // Get the selected file
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    // When the file is loaded, update the image preview
+                    reader.onload = function (e) {
+                        const logoOverlayPreview = document.getElementById('logoOverlay');
+                        logoOverlayPreview.src = e.target.result; // Set the preview image source to the data URL of the file
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Add an event listener to the image preview that triggers when the image is clicked
+            document.getElementById('logoOverlayPreview').addEventListener('click', function () {
+                document.getElementById('logoOverlay').click();
+
+            });
+            function showTab(tabId) {
+                // Hide all watermark tab content
+                var allTabs = document.querySelectorAll('.watermarkTabs');
+                allTabs.forEach(function (tab) {
+                    tab.style.display = 'none';
+                });
+
+                // Show the selected tab
+                var selectedTab = document.getElementById(tabId);
+                if (selectedTab) {
+                    selectedTab.style.display = 'block';
+                }
+            }
+
+            // Initially show the first tab or set the default tab to be visible
+            window.onload = function () {
+                document.getElementById('tabSelector').value = 'fontFamilyDiv'; // Set default option
+                showTab('watermarkTextDiv'); // Show default tab
+            };
+
+            window.showTab = showTab;
+
+        });
+        // Attach saveWatermarkInputs to the beforeunload event
+        window.addEventListener("beforeunload", (event) => {
+            saveWatermarkInputs();
+        });
+
+    </script>
 
 </body>
+
 </html>

@@ -830,11 +830,7 @@ display:block;
   }
   
   
-  .event-cover {
-      width: auto;
-      display: block;
-      object-fit: fill;
-  }
+
   #mainGallerySection {
       padding: 2%;
   }
