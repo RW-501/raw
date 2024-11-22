@@ -452,7 +452,7 @@ async function fetchEventData(field, value) {
             const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
              querySnapshot = await getDocs(q);
         }else{
-            querySnapshot = await getDoc(eventRef); 
+            querySnapshot = await getDoc(eventsRef); 
         }
 
 
