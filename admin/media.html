@@ -1337,14 +1337,18 @@
 
         <div id='${mediaDetailsId}' class="event_eventDetails  collapse mt-3">
   <div id='${detailsId}' class="event_details"></div>
-
-  <div id='${eventDetailsId}' class="event_eventDetails"></div>
-   
-  
   
   
   <div class="flex-wrap"> 
-  <div id='${mediaListId}' class="event_photos_list"></div>
+
+  <div id='${eventDetailsId}' class="event_eventDetails"></div>
+      </div>
+
+  
+  
+  
+  <div class="flex-wrap whatIsThis"> 
+  <div id='${mediaDetailsId}' class="event_photos_list"></div>
    </div>
   
   <div class="flex-wrap"> 
@@ -1539,7 +1543,7 @@
             </div>
 
         `;
-                eventDetailsContainer.appendChild(mediaDiv);
+        mediaListContainer.appendChild(mediaDiv);
             });
 
             // Initialize lazy loading
