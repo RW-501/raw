@@ -43,7 +43,6 @@
   
                // Implement your toast display logic here
             //   `${type.toUpperCase()}: ${message}`);
-            console.log("?????????/");
       toast.className = `toast toast-${type}`; // Add classes for styling
       toast.innerText = message; // Set the message text
 

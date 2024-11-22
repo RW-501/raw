@@ -1161,6 +1161,7 @@ function onEventSaved(eventID) {
     const comments = event.comments || 'No comments';
     const views = event.views || 0;
     const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
+    const eventId = doc.id;
 
     // Filter matching events
     if (
@@ -1174,13 +1175,15 @@ function onEventSaved(eventID) {
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
 
 //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
-eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverUrl];
+eventInfo = [doc.id, title, eventDate, isPublic, coverUrl];
 console.log("eventInfo    ",eventInfo);
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
         const mediaListId = `mediaList-${doc.id}`;
+        
         const eventDetailsId = `eventDetails-${doc.id}`;
+
         eventItem.innerHTML = `
     <div class="eventPanelArea">
 
@@ -1224,20 +1227,18 @@ console.log("eventInfo    ",eventInfo);
     <div class="box">
 
 
-  <div id='${detailsId}' class="event_photos_list"></div>
-  <div id='${mediaListId}' class="event_photos_list"></div>
+  <div id='${detailsId}' class="event_details"></div>
        
 
   
     </div>
+  <div id='${eventDetailsId}' class="event_eventDetails"></div>
+  <div id='${mediaListId}' class="event_photos_list"></div>
 
      
 `;
 
-/*
- <div id='${mediaListId}' class="event_photos_list">
-    </div>
-    */
+
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventDetailsId);
         viewMedia(doc.id, coverUrl);
