@@ -1905,10 +1905,10 @@ if(otherDetails){
             }
         }
 
-        async function removeFromMedia(eventId) {
+        async function removeFromMedia(mediaId) {
             try {
                 // Query the Media collection for documents with the specified eventId
-                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', eventId));
+                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', mediaId));
                 const mediaSnapshot = await getDocs(mediaQuery);
 
                 // Delete each matching document
@@ -1922,7 +1922,9 @@ if(otherDetails){
 
                 // Wait for all deletions to complete
                 await Promise.all(deletePromises);
-
+        // Remove associated DOM elements (if required)
+        const element = document.getElementById(`mediaList-${mediaId}`);
+        element.remove();
                 // Show success toast once all deletions are complete
                 showToast('Event deleted successfully');
             } catch (error) {
