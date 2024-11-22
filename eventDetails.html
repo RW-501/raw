@@ -512,11 +512,13 @@ async function fetchEventDetails() {
         updateEventPage(eventData);
         console.log(",  done?    ");
 
+        
+        console.log(",  eventData   ",eventData);
+
         // Fetch and display related media images for the event
         //await
          displayEventImages(eventData);
 
-        console.log(",  eventData   ",eventData);
 
         // Handle download button functionality
         setupDownloadButton(eventData);
