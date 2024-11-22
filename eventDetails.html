@@ -451,6 +451,11 @@ async function fetchEventData(field, value) {
         console.error(`Error fetching event by ${field}:`, error);
         return null;
     }
+
+}
+function sanitizeInput2(input) {
+    if (typeof input !== 'string') return null;
+    return input.trim(); // Optionally escape unwanted characters
 }
 
 let eventId;
@@ -460,9 +465,9 @@ async function fetchEventDetails() {
     try {
         // Get and sanitize the query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const eventIdURL = sanitizeInput(urlParams.get('id'));
-        const accessCode = sanitizeInput(urlParams.get('a'));
-        const shortURL = sanitizeInput(urlParams.get('s'));
+        const eventIdURL = sanitizeInput2(urlParams.get('id'));
+        const accessCode = sanitizeInput2(urlParams.get('a'));
+        const shortURL = sanitizeInput2(urlParams.get('s'));
 
         let eventData = null;
 
