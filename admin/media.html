@@ -1905,33 +1905,53 @@ if(otherDetails){
             }
         }
 
-        async function removeFromMedia(mediaId) {
+        import { getStorage, ref, deleteObject } from "firebase/storage"; // Import Firebase Storage methods
+import { getDocs, query, collection, doc, deleteDoc } from "firebase/firestore"; // Firestore imports
+
+async function removeFromMedia(mediaId) {
+    try {
+        // Query the Media collection for the document with the specified mediaId
+        const mediaQuery = query(collection(db, 'Media'), where("id", "==", mediaId));
+        const mediaSnapshot = await getDocs(mediaQuery);
+
+        // Reference Firebase Storage
+        const storage = getStorage();
+
+        // Delete each matching document and associated image from storage
+        const deletePromises = mediaSnapshot.docs.map(async (mediaDoc) => {
             try {
-                // Query the Media collection for documents with the specified eventId
-                const mediaQuery = query(collection(db, 'Media'), where('eventId', '==', mediaId));
-                const mediaSnapshot = await getDocs(mediaQuery);
+                const mediaData = mediaDoc.data();
+                const photoUrl = mediaData.photoUrl; // Assuming photoUrl contains the image file path in Firebase Storage
+                const imageRef = ref(storage, photoUrl); // Get reference to the image file
 
-                // Delete each matching document
-                const deletePromises = mediaSnapshot.docs.map(async (mediaDoc) => {
-                    try {
-                        await deleteDoc(doc(db, 'Media', mediaDoc.id));
-                    } catch (err) {
-                        console.error("Error deleting media document:", err);
-                    }
-                });
+                // Delete the image from Firebase Storage
+                await deleteObject(imageRef);
 
-                // Wait for all deletions to complete
-                await Promise.all(deletePromises);
+                // Now delete the media document from Firestore
+                await deleteDoc(doc(db, 'Media', mediaDoc.id));
+
+                console.log(`Media with ID: ${mediaId} and photo: ${photoUrl} deleted successfully`);
+
+            } catch (err) {
+                console.error("Error deleting media document or image:", err);
+            }
+        });
+
+        // Wait for all deletions to complete
+        await Promise.all(deletePromises);
+
         // Remove associated DOM elements (if required)
         const element = document.getElementById(`mediaList-${mediaId}`);
-        element.remove();
-                // Show success toast once all deletions are complete
-                showToast('Event deleted successfully');
-            } catch (error) {
-                console.error("Error querying or deleting media documents:", error);
-                showToast('Failed to delete event media');
-            }
-        }
+        if (element) element.remove();
+
+        // Show success toast once all deletions are complete
+        showToast('Media deleted successfully');
+    } catch (error) {
+        console.error("Error querying or deleting media documents:", error);
+        showToast('Failed to delete media');
+    }
+}
+
 
 
         window.removeFromMedia = removeFromMedia;
