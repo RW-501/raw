@@ -2147,7 +2147,7 @@ async function loadMainGallery() {
         mainGallerySnapshot.forEach(doc => mainGalleryIds.push(doc.id)); // Collect IDs
 
         // Fetch Media documents
-        const mediaRef = collection(db, "Media");
+        const mediaRef = collection(db, "MainGallery");
         const mediaSnapshot = await getDocs(mediaRef);
 
         if (mediaSnapshot.empty) {
@@ -2250,7 +2250,7 @@ function renderCheckboxes(options, appearOn, mediaId) {
 }
 
 function toggleAppearOn(mediaId, page, isChecked) {
-    const mediaRef = doc(db, 'Media', mediaId);
+    const mediaRef = doc(db, 'MainGallery', mediaId);
     updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
