@@ -464,12 +464,6 @@ async function fetchEventData(field, value) {
     }
 }
 
-// Sanitize input to ensure it's a valid string
-function sanitizeInput2(input) {
-    if (typeof input !== 'string') return null;
-    return input.trim(); // Optionally escape unwanted characters
-}
-
 // Main function to fetch event details from URL parameters
 async function fetchEventDetails() {
     try {
