@@ -1174,12 +1174,12 @@ function onEventSaved(eventID) {
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
 console.log("doc.id    ",doc.id);
 
-eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
+//eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
         const mediaListId = `mediaList-${doc.id}`;
-        const eventID = `eventDetails-${doc.id}`;
+        const eventDetailsId = `eventDetails-${doc.id}`;
         eventItem.innerHTML = `
     <div class="eventPanelArea">
 
@@ -1226,14 +1226,16 @@ eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
  
        
 
-    <div id='${mediaListId}' class="event_photos_list">
+  
     </div>
+
+      <div id='${mediaListId}' class="event_photos_list">
     </div>
 `;
 
 
         eventList.appendChild(eventItem);
-        console.log("eventDetails.id    ",eventID);
+        console.log("eventDetails.id    ",eventDetailsId);
 
 }
 });
