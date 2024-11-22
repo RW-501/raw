@@ -445,10 +445,16 @@ let eventData2 = [];
 // Fetch event data from Firestore using a query
 async function fetchEventData(field, value) {
     try {
+        let querySnapshot;
         // Query the Events collection where the field matches the value
         const eventsRef = collection(db, 'Events');
-        const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
-        const querySnapshot = await getDocs(q);
+        if(field == "accessCode" || field == "shortURL"){
+            const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
+             querySnapshot = await getDocs(q);
+        }else{
+            querySnapshot = await getDoc(eventRef); 
+        }
+
 
         // Check if any event matches the query
         if (querySnapshot.empty) {
