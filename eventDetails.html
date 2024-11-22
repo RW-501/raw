@@ -442,17 +442,68 @@ let eventData2 = [];
 
 
 // Helper function to fetch event data from Firestore based on a given field and value
+// Fetch event data from Firestore using a query
 async function fetchEventData(field, value) {
     try {
-        const eventRef = doc(db, 'Events', where(field, '==', value));
-        const eventDoc = await getDoc(eventRef);
-        return eventDoc.exists() ? eventDoc.data() : null;
+        // Query the Events collection where the field matches the value
+        const eventsRef = collection(db, 'Events');
+        const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
+        const querySnapshot = await getDocs(q);
+
+        // Check if any event matches the query
+        if (querySnapshot.empty) {
+            console.log(`No events found with ${field}: ${value}`);
+            return null;
+        }
+
+        // Return the first event data (assuming there's only one match)
+        return querySnapshot.docs[0].data();
     } catch (error) {
         console.error(`Error fetching event by ${field}:`, error);
         return null;
     }
-
 }
+
+// Sanitize input to ensure it's a valid string
+function sanitizeInput2(input) {
+    if (typeof input !== 'string') return null;
+    return input.trim(); // Optionally escape unwanted characters
+}
+
+// Main function to fetch event details from URL parameters
+async function fetchEventDetails() {
+    try {
+        // Get and sanitize the query parameters from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventIdURL = sanitizeInput2(urlParams.get('id'));
+        const accessCode = sanitizeInput2(urlParams.get('a'));
+        const shortURL = sanitizeInput2(urlParams.get('s'));
+
+        let eventData = null;
+
+        // Fetch event data based on parameters: access code, short URL, or event ID
+        if (accessCode) {
+            eventData = await fetchEventData('accessCode', accessCode);
+        } else if (shortURL) {
+            eventData = await fetchEventData('shortURL', shortURL);
+        } else if (eventIdURL) {
+            eventData = await fetchEventData('eventId', eventIdURL);
+        }
+
+        // Handle case where no event was found
+        if (!eventData) {
+            console.error("No event found with the given parameters.");
+            return;
+        }
+
+        // Process and display the event data as needed
+        console.log("Fetched Event Data:", eventData);
+        // Further processing...
+    } catch (error) {
+        console.error("Error fetching event details:", error);
+    }
+}
+
 function sanitizeInput2(input) {
     if (typeof input !== 'string') return null;
     return input.trim(); // Optionally escape unwanted characters
