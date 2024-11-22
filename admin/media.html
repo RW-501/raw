@@ -1294,7 +1294,7 @@ async function viewMedia(eventId, coverPhoto) {
     const mediaCollectionRef = collection(db, "Media");  
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
-   // const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
+    const mediaListContainer = document.getElementById(`mediaList-${eventInfo.eventId}`);
     const eventDetailsContainer = document.getElementById(`eventDetails-${eventId}`);
 
     //const mediaListContainer = document.getElementById("mediaList");
@@ -1311,12 +1311,13 @@ async function viewMedia(eventId, coverPhoto) {
         const data = doc.data();
         imageCount++;
         mediaItems.push({ id: doc.id, ...data });
-        console.log("mediaItems new    ", mediaItems);
 
         // Use the first image as the cover photo
         if (!coverPhoto) coverPhoto = data.photoUrl;
     });
     eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
+    console.log("mediaItems new    ", mediaItems);
+
     console.log("eventId   ", eventId)
     console.log("eventInfo   ", eventInfo)
 
