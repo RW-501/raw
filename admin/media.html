@@ -344,7 +344,7 @@
                             <label for="eventTitle" class="form-label d-flex justify-content-between">
                                 Event Title
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventTitleDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventTitleDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventTitleDirections" class="directions" style="display:none;">
                                 <p>Enter a descriptive title for your event. This will be displayed on the event page
@@ -357,8 +357,7 @@
                             <label for="eventDescription" class="form-label d-flex justify-content-between">
                                 Description
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventDescriptionDirections')">Show/Hide
-                                    Directions</button>
+                                    onclick="toggleDirections('eventDescriptionDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventDescriptionDirections" class="directions" style="display:none;">
                                 <p>Provide a detailed description of the event, including any relevant information such
@@ -372,7 +371,7 @@
                             <label for="eventLocation" class="form-label d-flex justify-content-between">
                                 Event Location
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventLocationDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventLocationDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventLocationDirections" class="directions" style="display:none;">
                                 <p>Enter the address or venue name where the event will take place. Be sure to include
@@ -385,7 +384,7 @@
                             <label for="eventDate" class="form-label d-flex justify-content-between">
                                 Event Date
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventDateDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventDateDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventDateDirections" class="directions" style="display:none;">
                                 <p>Select the date when the event occurred. Please make sure to double-check the date
@@ -398,7 +397,7 @@
                             <label for="eventCover" class="form-label d-flex justify-content-between">
                                 Cover Photo
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventCoverDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventCoverDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventCoverDirections" class="directions" style="display:none;">
                                 <p>Upload a cover photo for the event. This image will be displayed in previews and
@@ -414,7 +413,7 @@
                             <label for="eventTags" class="form-label d-flex justify-content-between">
                                 Event Tags
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventTagsDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventTagsDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventTagsDirections" class="directions" style="display:none;">
                                 <p>Enter tags that describe your event, separated by commas. These help categorize and
@@ -428,7 +427,7 @@
                             <label for="eventURL" class="form-label d-flex justify-content-between">
                                 Event URL
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventURLDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventURLDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventURLDirections" class="directions" style="display:none;">
                                 <p>Create a URL for the event. This URL will be easy to share with others. Consider
@@ -451,8 +450,7 @@
                             <label for="eventCollectionPrice" class="form-label d-flex justify-content-between">
                                 Collection Price <small>Leave blank for free</small>
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventCollectionPriceDirections')">Show/Hide
-                                    Directions</button>
+                                    onclick="toggleDirections('eventCollectionPriceDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventCollectionPriceDirections" class="directions" style="display:none;">
                                 <p>If applicable, enter the price for collections. If your event is free or doesn't
@@ -466,8 +464,7 @@
                             <label for="privateCheckBox" class="form-label d-flex justify-content-between">
                                 Private?
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('privateCheckBoxDirections')">Show/Hide
-                                    Directions</button>
+                                    onclick="toggleDirections('privateCheckBoxDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="privateCheckBoxDirections" class="directions" style="display:none;">
                                 <p>Check this box if you want to make the event private. Only those with access will be
@@ -480,7 +477,7 @@
                             <label for="accessCode" class="form-label d-flex justify-content-between">
                                 Access Code (if private)
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('accessCodeAreaDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('accessCodeAreaDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="accessCodeAreaDirections" class="directions" style="display:none;">
                                 <p>If your event is private, enter an access code that users will need to view the
@@ -504,7 +501,7 @@
                             <label for="eventStatus" class="form-label d-flex justify-content-between">
                                 Event Status
                                 <button type="button" class="btn btn-link"
-                                    onclick="toggleDirections('eventStatusDirections')">Show/Hide Directions</button>
+                                    onclick="toggleDirections('eventStatusDirections', this)">Show Directions ▲</button>
                             </label>
                             <div id="eventStatusDirections" class="directions" style="display:none;">
                                 <p>Choose the current status of the event. This will determine whether it's active, in
@@ -1304,7 +1301,7 @@
 <div class="box mb-3">
   <small class="form-label d-flex justify-content-between">
     Event Options
-    <button type="button" class="btn btn-link" onclick="toggleDirections('batchButtonDirections_${doc.id}')">Show/Hide Directions</button>
+    <button type="button" class="btn btn-link" onclick="toggleDirections('batchButtonDirections_${doc.id}', this)">Show Directions ▲</button>
   </small>
   <div id="batchButtonDirections_${doc.id}" class="directions" style="display:none;">
     <p>
@@ -1398,36 +1395,6 @@
 
 
 
-        // 
-        // Toggle the collapse of media details
-        function toggleCollapse(theId, btnDiv, title, otherID) {
-            console.log("theId    ", theId);
-
-            const details = document.getElementById(theId);
-            const otherDetails = document.getElementById(otherID);
-
-            // Toggle the 'collapse' class
-            details.classList.toggle('collapse');
-if(otherDetails){
-    otherDetails.classList.toggle('collapse');
-
-}
-            // Update the button content
-
-            if (btnDiv && title) {
-                if (details.classList.contains('collapse')) {
-                    btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
-                } else {
-                    btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
-                }
-            }
-
-
-
-            
-        }
-
-
         // Function to populate the dropdown with events
 function populateDropdown() {
     // Select all dropdowns with the specified class
@@ -1464,7 +1431,7 @@ async function handleDropdownChange(event, imageID) {
             eventId: selectedEventId
         });
 
-        console.log(`Media document ${imageID} updated with eventId: ${selectedEventId}`);
+        showToast(`Media document ${imageID} updated with eventId: ${selectedEventId}`);
 
         // Remove associated DOM elements (if required)
         const element = document.getElementById(`mediaList-${imageID}`);
@@ -1542,7 +1509,7 @@ window.handleDropdownChange = handleDropdownChange;
       <div class="box mb-3">
         <small class="form-label d-flex justify-content-between">
           Update All Media in this Event Options
-          <button type="button" class="btn btn-link" onclick="toggleDirections('updateAllEventDirections_${eventId}')">Show/Hide Directions</button>
+          <button type="button" class="btn btn-link" onclick="toggleDirections('updateAllEventDirections_${eventId}', this)">Show Directions ▲</button>
         </small>
         <div id="updateAllEventDirections_${eventId}" class="directions" style="display:none;">
           <p>Here, you can update the media associated with this event. Click 'Set All Public' to make all media public, or 'Set All Private' to restrict access. You can also update the prices for all media at once.</p>
@@ -1561,7 +1528,7 @@ window.handleDropdownChange = handleDropdownChange;
       <div class="box mb-3">
         <small class="form-label d-flex justify-content-between">
             Update Media Options
-            <button type="button" class="btn btn-link" onclick="toggleDirections('updateMediaDirections_${eventId}')">Show/Hide Directions</button>
+            <button type="button" class="btn btn-link" onclick="toggleDirections('updateMediaDirections_${eventId}', this)">Show Directions ▲</button>
         </small>
         <div id="updateMediaDirections_${eventId}" class="directions" style="display:none;">
             <p>Here, you can update the media details. Click the buttons below to manage visibility, change associated events, and remove items.</p>
@@ -1770,11 +1737,51 @@ populateDropdown();
         }
 
 
+        // 
+        // Toggle the collapse of media details
+        function toggleCollapse(theId, btnDiv, title, otherID) {
+            console.log("theId    ", theId);
+
+            const details = document.getElementById(theId);
+            const otherDetails = document.getElementById(otherID);
+
+            // Toggle the 'collapse' class
+            details.classList.toggle('collapse');
+if(otherDetails){
+    otherDetails.classList.toggle('collapse');
+
+}
+            // Update the button content
+
+            if (btnDiv && title) {
+                if (details.classList.contains('collapse')) {
+                    btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
+                } else {
+                    btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
+                }
+            }
+
+
+
+            
+        }
+
+
 
         // Function to toggle the visibility of the directions
-        function toggleDirections(directionId) {
+        function toggleDirections(directionId, btnDiv) {
             var directions = document.getElementById(directionId);
             directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
+        
+                if (directions.style.display === 'none') {
+                    btnDiv.innerHTML = `Show Directions ▲`; // Set to collapsed state
+                } else {
+                    btnDiv.innerHTML = `Hide Directions ▼`; // Set to expanded state
+                }
+
+                                // Save the directions visibility state in localStorage
+                                localStorage.setItem(directionsId, directions.style.display);
+        
         }
 
         // Update the displayed access code based on user input
@@ -2525,14 +2532,8 @@ populateDropdown();
                 document.getElementById('eventCover').click();
 
             });
-            // Function to toggle visibility of directions
-            function toggleDirections(directionsId) {
-                const directions = document.getElementById(directionsId);
-                directions.style.display = (directions.style.display === 'none' || directions.style.display === '') ? 'block' : 'none';
 
-                // Save the directions visibility state in localStorage
-                localStorage.setItem(directionsId, directions.style.display);
-            }
+            
 
             // Load saved directions preferences from localStorage
             function loadDirectionsPreferences() {
