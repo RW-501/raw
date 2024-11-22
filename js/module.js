@@ -413,7 +413,7 @@ function getViewedByField() {
     const header = document.getElementById('Main_Header');
     header.style.position = "relative";
     header.style.overflow = "hidden";
-    let filmImages = await getHeaderImages();
+    let filmImages = await getHeaderImages("MainGallery");
 
     if(!filmImages){
     filmImages = [
@@ -547,8 +547,12 @@ async function getHeaderImages(appearOn) {
 window.getHeaderImages = getHeaderImages;
 
 //window.displayHeaderImages = async function() {
-    async function displayHeaderImages() {
-        const page = "HomePage"; // Example of the appearOn value
+    async function displayHeaderImages(page) {
+        if(!page){
+             page = "MainGallery"; // Example of the appearOn value
+        }
+        console.log("Header Images page:", page);
+
         try {
             const images = await getHeaderImages(page); // Fetch header images
             console.log("Header Images:Main", images);
