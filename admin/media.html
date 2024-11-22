@@ -1206,6 +1206,8 @@
 
 
 
+        const eventArray = [];
+
         // Fetch and display events with sorting and filtering
         async function fetchEvents() {
             const filterText = document.getElementById('eventFilter').value.toLowerCase();
@@ -1225,7 +1227,8 @@
 
             try {
                 const snapshot = await getDocs(eventQuery);
-
+             
+                
                 snapshot.forEach((doc) => {
                     const event = doc.data();
 
@@ -1246,6 +1249,8 @@
                     const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
                     const eventId = doc.id;
 
+                    eventArray.push({ id: eventId, title: eventTitle });
+                    
                     // Filter matching events
                     if (
                         title.toLowerCase().includes(filterText) ||
@@ -1348,7 +1353,7 @@
   
   
   <div class="flex-wrap whatIsThis"> 
-  <div id='${mediaDetailsId}' class="event_photos_list"></div>
+  <div id='${mediaListId}' class="event_photos_list"></div>
    </div>
   
   <div class="flex-wrap"> 
@@ -1529,6 +1534,14 @@
     ${mainGalleryIds.includes(item.id) ? `
         <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
     ` : ''}
+
+<div class="box">
+    <label for="eventDropdown">Select an Event</label>
+    <select class="eventDropdown" class="form-select" onchange="handleDropdownChange(event)">
+        <!-- Options will be dynamically populated -->
+    </select>
+</div>
+
 
     <!-- Toggle public/private status -->
     <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
