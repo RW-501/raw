@@ -1542,9 +1542,9 @@ window.handleDropdownChange = handleDropdownChange;
       <div class="box mb-3">
         <small class="form-label d-flex justify-content-between">
           Update All Media in this Event Options
-          <button type="button" class="btn btn-link" onclick="toggleDirections('updateAllEventDirections')">Show/Hide Directions</button>
+          <button type="button" class="btn btn-link" onclick="toggleDirections('updateAllEventDirections_${imageCount}')">Show/Hide Directions</button>
         </small>
-        <div id="updateAllEventDirections" class="directions" style="display:none;">
+        <div id="updateAllEventDirections_${imageCount}" class="directions" style="display:none;">
           <p>Here, you can update the media associated with this event. Click 'Set All Public' to make all media public, or 'Set All Private' to restrict access. You can also update the prices for all media at once.</p>
         </div>
       </div>
