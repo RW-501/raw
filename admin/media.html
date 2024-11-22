@@ -1928,8 +1928,10 @@ function copyAccessCode() {
         // Optional: Re-enable the upload button if needed
         document.getElementById('uploadEventBTN').disabled = false;
 
+        
         // Optional: Refresh events list or close modal
         fetchEvents();
+        showTabContent('Manage_Events');
     } catch (error) {
         console.error("Error saving event:", error);
         showToast("Error saving event. Please try again.", "error");
@@ -2186,44 +2188,35 @@ galleryContainer.classList.add ("gallery_photos_list");
                         mediaDiv.innerHTML = `
 <div class="media-container">
   <div class="media-header">
-      <div class="box">
-        <img src="${photoUrl}" alt="Media Image" class="gallery-thumbnail view-image" data-image-id="${mediaId}">
-
-      </div>
-      <div class="box">
-      
-        <button onclick="toggleCollapse('appearOn-${mediaId}', this)">Expand ▼</button>
-
-      </div>
-
-  </div>
-
-  <div id="details-${mediaId}" class="gallery-details ">
-
     <div class="box">
-      <h4>${category || ''}</h4>
-      <p>Status: ${status}</p>
-      <p>Public: ${isPublic ? "Yes" : "No"}</p>
-
-      <p>Price: $${price}</p>
+      <img src="image_url" alt="Media Image" class="gallery-thumbnail view-image">
+    </div>
+    <div class="box">
+      <button onclick="toggleCollapse('appearOn-mediaId', this)">Expand ▼</button>
     </div>
   </div>
-</div>
 
-<div id="appearOn-${mediaId}" class="appearOnContainer media-actions collapse">
-  <div class="appearOn">
-    <h3>Appear On</h3>
-
-    <div id="checkboxes-${mediaId}" class="checkbox-group">
-      ${renderCheckboxes(['HomePage', 'AboutPage', 'EventPage', 'ContactPage', 'MainGallery'], appearOnData)}
+  <div id="details-mediaId" class="gallery-details">
+    <div class="box">
+      <h4>Category</h4>
+      <p>Status: Active</p>
+      <p>Public: Yes</p>
+      <p>Price: $10</p>
+      <p>Appears on: HomePage, AboutPage</p>
     </div>
-    <div class="controls">
-      <button onclick="handleUpdate('${mediaId}')">Update</button>
-      <button onclick="removeMedia('${mediaId}')">Remove</button>
-    </div>
-
   </div>
 
+  <div id="appearOn-mediaId" class="appearOnContainer collapse">
+    <div class="appearOn">
+      <h3>Appear On</h3>
+      <div id="checkboxes-mediaId">
+        <!-- Checkboxes dynamically generated -->
+        <input type="checkbox" onchange="toggleAppearOn('mediaId', 'HomePage', this.checked)"> HomePage
+        <input type="checkbox" onchange="toggleAppearOn('mediaId', 'AboutPage', this.checked)"> AboutPage
+        <!-- More checkboxes -->
+      </div>
+    </div>
+  </div>
 </div>
             `;
 
