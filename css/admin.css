@@ -829,12 +829,7 @@ display:block;
   
   }
   
-  .eventCoverThumbnail {
-      width: auto;
-      display: block;
-      object-fit: fill;
-      margin: 2%;
-  }
+  
   .event-cover {
       width: auto;
       display: block;
