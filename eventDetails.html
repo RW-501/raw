@@ -464,6 +464,13 @@ async function fetchEventData(field, value) {
     }
 }
 
+function sanitizeInput2(input) {
+    if (typeof input !== 'string') return null;
+    return input.trim(); // Optionally escape unwanted characters
+}
+
+let eventId;
+
 // Main function to fetch event details from URL parameters
 async function fetchEventDetails() {
     try {
@@ -479,58 +486,6 @@ async function fetchEventDetails() {
 
         let eventData = null;
 
-        // Fetch event data based on parameters: access code, short URL, or event ID
-        if (accessCode) {
-            eventData = await fetchEventData('accessCode', accessCode);
-        } else if (shortURL) {
-            eventData = await fetchEventData('shortURL', shortURL);
-        } else if (eventIdURL) {
-            eventData = await fetchEventData('eventId', eventIdURL);
-        }
-
-        // Handle case where no event was found
-        if (!eventData) {
-            console.error("No event found with the given parameters.");
-            return;
-        }
-
-              // Update the event details on the page
-              updateEventPage(eventData);
-
-// Fetch and display related media images for the event
-await displayEventImages(eventData);
-
-// Handle download button functionality
-setupDownloadButton(eventData);
-
-eventId = eventData.eventId;
-console.log(",  eventId   ",eventId);
-
-        // Process and display the event data as needed
-        console.log("Fetched Event Data:", eventData);
-        // Further processing...
-    } catch (error) {
-        console.error("Error fetching event details:", error);
-    }
-}
-
-function sanitizeInput2(input) {
-    if (typeof input !== 'string') return null;
-    return input.trim(); // Optionally escape unwanted characters
-}
-
-let eventId;
-
-// Main function to fetch event details from URL parameters
-async function fetchEventDetails2() {
-    try {
-        // Get and sanitize the query parameters from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const eventIdURL = sanitizeInput2(urlParams.get('id'));
-        const accessCode = sanitizeInput2(urlParams.get('a'));
-        const shortURL = sanitizeInput2(urlParams.get('s'));
-
-        let eventData = null;
 
         // Fetch event data based on parameters: access code, short URL, or event ID
         if (accessCode) {
