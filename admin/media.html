@@ -2127,150 +2127,148 @@ window.scrollToDiv = scrollToDiv;
          * Load media items from MainGallery collection and render them into the gallery container.
          */
          const mainGalleryIds = [];
-        async function loadMainGallery() {
-            const galleryContainer = document.getElementById('galleryContainer');
-            galleryContainer.innerHTML = ''; // Clear previous content
-galleryContainer.classList.add ("gallery_photos_list");
 
-            try {
-                // Step 1: Fetch all documents from the MainGallery collection
-                const mainGalleryRef = collection(db, "MainGallery");
-                const mainGallerySnapshot = await getDocs(mainGalleryRef);
+async function loadMainGallery() {
+    const galleryContainer = document.getElementById('galleryContainer');
+    galleryContainer.innerHTML = ''; // Clear previous content
+    galleryContainer.classList.add("gallery_photos_list");
 
-                if (mainGallerySnapshot.empty) {
-                    console.log("No documents found in MainGallery.");
-                    showToast('No documents found in MainGallery.', 'info');
-                    return;
-                }
+    try {
+        // Fetch MainGallery documents
+        const mainGalleryRef = collection(db, "MainGallery");
+        const mainGallerySnapshot = await getDocs(mainGalleryRef);
 
-                // Step 2: Create an array of imageIds from MainGallery
-                mainGallerySnapshot.forEach(doc => {
-                    mainGalleryIds.push(doc.id); // Save the doc ID from MainGallery
-                });
-
-                // Step 3: Fetch all documents from the Media collection
-                const mediaRef = collection(db, "Media");
-                const mediaSnapshot = await getDocs(mediaRef);
-
-                if (mediaSnapshot.empty) {
-                    console.log("No documents found in Media.");
-                    showToast('No documents found in Media.', 'info');
-                    return;
-                }
-
-                // Step 4: Match the document IDs between MainGallery and Media
-                const matchingIds = [];
-                mediaSnapshot.forEach(doc => {
-                    if (mainGalleryIds.includes(doc.id)) {
-                        matchingIds.push(doc.id); // Match IDs and add to the result array
-
-
-                        const mediaData = doc.data();
-                        const mediaId = doc.id;
-                        const { photoUrl, category, price, status, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
-
-                        // Ensure appearOn has default values if it's missing
-                        const defaultAppearOn = {
-                            HomePage: false,
-                            AboutPage: false,
-                            EventPage: false,
-                            ContactPage: false,
-                            MainGallery: false
-                        };
-
-                        // Merge appearOn with default values   <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="media-thumbnail">
-
-                        const appearOnData = { ...defaultAppearOn, ...appearOn };
-
-                        // Create media item card
-                        const mediaDiv = document.createElement('div');
-                        mediaDiv.classList.add('gallery-item', 'card-body');
-                        mediaDiv.id = `galleryList-${mediaId}`;
-                        mediaDiv.innerHTML = `
-<div class="media-container">
-  <div class="media-header">
-    <div class="box">
-      <img src="image_url" alt="Media Image" class="gallery-thumbnail view-image">
-    </div>
-    <div class="box">
-<button onclick="toggleCollapse('appearOn-${mediaId}', this)" aria-expanded="false">Expand ▼</button>
-    </div>
-  </div>
-
-  <div id="details-mediaId" class="gallery-details">
-    <div class="box">
-      <h4>Category</h4>
-      <p>Status: Active</p>
-      <p>Public: Yes</p>
-      <p>Price: $10</p>
-      <p>Appears on: HomePage, AboutPage</p>
-    </div>
-  </div>
-
-  <div id="appearOn-mediaId" class="appearOnContainer collapse">
-    <div class="appearOn">
-      <h3>Appear On</h3>
-      <div id="checkboxes-mediaId">
-        <!-- Checkboxes dynamically generated -->
-        <input type="checkbox" onchange="toggleAppearOn('mediaId', 'HomePage', this.checked)"> HomePage
-        <input type="checkbox" onchange="toggleAppearOn('mediaId', 'AboutPage', this.checked)"> AboutPage
-        <!-- More checkboxes -->
-      </div>
-    </div>
-  </div>
-</div>
-            `;
-
-                        galleryContainer.appendChild(mediaDiv);
-
-                    }
-                });
-
-                // Step 5: Log or process the matching document IDs
-                if (matchingIds.length > 0) {
-                    console.log("Matching document IDs:", matchingIds);
-                    showToast('Matching IDs found.', 'success');
-                    return matchingIds;
-                } else {
-                    console.log("No matching document IDs found.");
-                    showToast('No matching document IDs found.', 'info');
-                    return [];
-                }
-
-
-            } catch (error) {
-                console.error('Error loading gallery:', error);
-                galleryContainer.innerHTML = "<p>Error loading gallery. Please try again later.</p>";
-            }
-
+        if (mainGallerySnapshot.empty) {
+            console.log("No documents found in MainGallery.");
+            showToast('No documents found in MainGallery.', 'info');
+            return;
         }
 
-        /*
-          
-        
-            */
+        mainGallerySnapshot.forEach(doc => mainGalleryIds.push(doc.id)); // Collect IDs
 
+        // Fetch Media documents
+        const mediaRef = collection(db, "Media");
+        const mediaSnapshot = await getDocs(mediaRef);
 
+        if (mediaSnapshot.empty) {
+            console.log("No documents found in Media.");
+            showToast('No documents found in Media.', 'info');
+            return;
+        }
 
-        /**
-         * Render checkboxes for the appearOn settings and set their checked state based on the provided appearOn data.
-         * @param {Array<string>} options - Array of checkbox labels/values.
-         * @param {Object} appearOn - An object indicating which pages the media should appear on (true or false for each page).
-         * @returns {string} - HTML string for the checkbox inputs, with checked checkboxes where applicable.
-         */
-        function renderCheckboxes(options, appearOn) {
-            return options
-                .map(option => {
-                    const checked = appearOn[option] ? 'checked' : '';  // Check if the option is true in appearOn
-                    return `
+        // Match Media with MainGallery
+        const matchingMedia = [];
+        mediaSnapshot.forEach(doc => {
+            if (mainGalleryIds.includes(doc.id)) {
+                matchingMedia.push({ id: doc.id, ...doc.data() });
+            }
+        });
+
+        if (matchingMedia.length === 0) {
+            console.log("No matching document IDs found.");
+            showToast('No matching document IDs found.', 'info');
+            return;
+        }
+
+        // Render Gallery Items
+        matchingMedia.forEach(media => renderGalleryItem(media, galleryContainer));
+
+    } catch (error) {
+        console.error('Error loading gallery:', error);
+        galleryContainer.innerHTML = "<p>Error loading gallery. Please try again later.</p>";
+    }
+}
+
+function renderGalleryItem(media, container) {
+    const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media;
+
+    const defaultAppearOn = {
+        HomePage: false,
+        AboutPage: false,
+        EventPage: false,
+        ContactPage: false,
+        MainGallery: false
+    };
+    const appearOnData = { ...defaultAppearOn, ...appearOn };
+
+    const mediaDiv = document.createElement('div');
+    mediaDiv.classList.add('gallery-item', 'card-body');
+
+    mediaDiv.innerHTML = `
+        <div class="media-container">
+            <div class="media-header">
+                <div class="box">
+                    <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="gallery-thumbnail view-image">
+                </div>
+                <div class="box">
+                    <button onclick="toggleCollapse('appearOn-${mediaId}', this)" aria-expanded="false">Expand ▼</button>
+                </div>
+            </div>
+            <div id="details-${mediaId}" class="gallery-details">
+                <div class="box">
+                    <h4>${category || "Category"}</h4>
+                    <p>Status: ${status ? 'Active' : 'Inactive'}</p>
+                    <p>Public: ${isPublic ? 'Yes' : 'No'}</p>
+                    <p>Price: $${price || 0}</p>
+                    <p>Appears on: ${Object.keys(appearOnData).filter(page => appearOnData[page]).join(', ') || "None"}</p>
+                </div>
+            </div>
+            <div id="appearOn-${mediaId}" class="appearOnContainer collapse">
+                <div class="appearOn">
+                    <h3>Appear On</h3>
+                    <div id="checkboxes-${mediaId}">
+                        ${renderCheckboxes(Object.keys(defaultAppearOn), appearOnData, mediaId)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    container.appendChild(mediaDiv);
+}
+
+function renderCheckboxes(options, appearOn, mediaId) {
+    return options
+        .map(option => {
+            const checked = appearOn[option] ? 'checked' : '';
+            return `
                 <div>
-                    <input type="checkbox" id="${option}" value="${option}" ${checked}>
-                    <label for="${option}">${option}</label>
+                    <input type="checkbox" id="${option}-${mediaId}" 
+                           onchange="toggleAppearOn('${mediaId}', '${option}', this.checked)" ${checked}>
+                    <label for="${option}-${mediaId}">${option}</label>
                 </div>
             `;
-                })
-                .join('');
-        }
+        })
+        .join('');
+}
+
+function toggleAppearOn(mediaId, page, isChecked) {
+    const mediaRef = doc(db, 'Media', mediaId);
+    updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
+        .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
+        .catch(error => console.error(`Error updating appearOn:`, error));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /**
          * Handle updating the appearOn field for a media item.
