@@ -1283,13 +1283,35 @@
                     </div>
                     </div>
 
-<div class="batch-buttons btn-group controls">
-    <button class="btn btn-primary btn-sm" onclick="toggleCollapse( 'e-Details-${doc.id}', this, 'Event Details')">Event Details</button>
-    <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Media Details')">Media Details</button>
-    <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
-    <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
-    <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+<!-- Batch Button Directions -->
+<div class="box mb-3">
+  <small class="form-label d-flex justify-content-between">
+    Event Options
+    <button type="button" class="btn btn-link" onclick="toggleDirections('batchButtonDirections')">Show/Hide Directions</button>
+  </small>
+  <div id="batchButtonDirections" class="directions" style="display:none;">
+    <p>
+      Use the buttons below to manage your event and media options:
+    </p>
+    <ul>
+      <li><b>Event Details:</b> View detailed information about the selected event.</li>
+      <li><b>Media Details:</b> View and manage media items associated with the event.</li>
+      <li><b>Edit:</b> Edit the event's information and settings.</li>
+      <li><b>Delete:</b> Permanently remove the event and associated data.</li>
+      <li><b>Add Media:</b> Upload new media files for the event.</li>
+    </ul>
+  </div>
 </div>
+
+<!-- Batch Buttons -->
+<div class="batch-buttons btn-group controls">
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('e-Details-${doc.id}', this, 'Event Details')">Event Details</button>
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Media Details')">Media Details</button>
+  <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
+  <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
+  <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+</div>
+
 
     </div>
     </div>
@@ -1428,7 +1450,7 @@
                 if (!coverPhoto) coverPhoto = data.photoUrl;
             });
             //  eventInfo = [eventId, eventTitle, eventDate, publicStatus, coverPhoto];
-            console.log("mediaItems new    ", mediaItems);
+           // console.log("mediaItems new    ", mediaItems);
 
             console.log("eventId   ", eventId)
             console.log("eventInfo   ", eventInfo)
@@ -1476,7 +1498,7 @@
                 mediaDiv.innerHTML = `
             <div class="media-header">
                                
-<button onclick="toggleCollapse('${item.id}', 'i-Details-${item.id}', 'Details')">Details</button>
+<button onclick="toggleCollapse('${item.id}', 'i-Details-${item.id}', 'Details')">Details ▼</button>
            
                 <div class="media-item-img-details">
 
