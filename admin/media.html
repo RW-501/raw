@@ -1844,70 +1844,69 @@ if(otherDetails){
 
 
         // Save Event Function
-        async function saveEvent() {
-            console.log("eventCoverArea??????");
-            const eventId = document.getElementById('currentEventID').innerText.trim();
-            if (!eventId) {
-                console.error("No current event ID found.");
-                showToast("Error: No event selected to save.", "error");
-                return;
-            }
-            const collection_price = document.getElementById('eventCollectionPrice').value;
-            let collectionPrice = "free";
+        async function saveEvent() { 
+    console.log("eventCoverArea??????");
 
+    const eventId = document.getElementById('currentEventID').innerText.trim();
+    if (!eventId) {
+        console.error("No current event ID found.");
+        showToast("Error: No event selected to save.", "error");
+        return;
+    }
 
-            if (collection_price == 0 || collection_price == "0" || collection_price == "" || collection_price == null) {
-                collectionPrice = "free";
-            } else {
-                collectionPrice = "paid";
+    const collection_price = document.getElementById('eventCollectionPrice').value;
+    let collectionPrice = "free";
 
+    if (collection_price == 0 || collection_price == "0" || collection_price == "" || collection_price == null) {
+        collectionPrice = "free";
+    } else {
+        collectionPrice = "paid";
+    }
 
-            }
+    const eventTagsInput = document.getElementById('eventTags');
+    
+    // Process the tags: split by commas, trim whitespace, and filter out empty tags
+    const eventTags = eventTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
 
-            const eventTagsInput = document.getElementById('eventTags');
+    // Get updated event details from the form fields
+    const updatedEvent = {
+        title: document.getElementById('eventTitle').value.trim(),
+        description: document.getElementById('eventDescription').value.trim(),
+        eventDate: document.getElementById('eventDate').value.trim(),
+        location: document.getElementById('eventLocation').value.trim(),
+        accessCode: document.getElementById('accessCode').value.trim(),
+        isPublic: document.getElementById('privateCheckBox').checked,
+        status: document.getElementById('eventStatus').value.trim(),
+        shortURL: document.getElementById('eventURL').value.trim(),
+        collection_price: document.getElementById('eventCollectionPrice').value.trim(),
+        eventTags: eventTags,  // Assign the processed array of tags here
+        type: collectionPrice
+    };
 
-            eventTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
-            // Get updated event details from the form fields
-            const updatedEvent = {
-                title: document.getElementById('eventTitle').value.trim(),
-                description: document.getElementById('eventDescription').value.trim(),
-                eventDate: document.getElementById('eventDate').value.trim(),
-                location: document.getElementById('eventLocation').value.trim(),
-                accessCode: document.getElementById('accessCode').value.trim(),
-                isPublic: document.getElementById('privateCheckBox').checked,
-                status: document.getElementById('eventStatus').value.trim(),
-                shortURL: document.getElementById('eventURL').value.trim(),
-                collection_price: document.getElementById('eventCollectionPrice').value.trim(),
-                eventTags: eventTagsInput,
-                type: collectionPrice
-            };
+    // Validate input
+    if (!updatedEvent.title || !updatedEvent.eventDate) {
+        showToast("Please fill out the required fields.", "warning");
+        return;
+    }
 
-            // Validate input
-            if (!updatedEvent.title || !updatedEvent.eventDate) {
-                showToast("Please fill out the required fields.", "warning");
-                return;
-            }
+    try {
+        // Update the event in Firestore
+        const eventRef = doc(db, 'Events', eventId);
+        await updateDoc(eventRef, updatedEvent);
 
-            try {
-                // Update the event in Firestore
-                const eventRef = doc(db, 'Events', eventId);
-                await updateDoc(eventRef, updatedEvent);
+        showToast('Event saved successfully!', "success");
 
-                showToast('Event saved successfully!', "success");
+        // Optional: Re-enable the upload button if needed
+        document.getElementById('uploadEventBTN').disabled = false;
 
-                // Optional: Re-enable the upload button if needed
-                document.getElementById('uploadEventBTN').disabled = false;
+        // Optional: Refresh events list or close modal
+        fetchEvents();
+    } catch (error) {
+        console.error("Error saving event:", error);
+        showToast("Error saving event. Please try again.", "error");
+    }
+}
 
-                // Optional: Refresh events list or close modal
-                fetchEvents();
-            } catch (error) {
-                console.error("Error saving event:", error);
-                showToast("Error saving event. Please try again.", "error");
-            }
-        }
-
-        import { getStorage, ref, deleteObject } from "firebase/storage"; // Import Firebase Storage methods
-import { getDocs, query, collection, doc, deleteDoc } from "firebase/firestore"; // Firestore imports
 
 async function removeFromMedia(mediaId) {
     try {
