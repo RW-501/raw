@@ -1371,33 +1371,11 @@
                         console.log("eventDetails.id    ", eventDetailsId);
                         viewMedia(doc.id, coverUrl);
 
-// Function to populate the dropdown with events
-function populateDropdown() {
-    // Select all dropdowns with the specified class
-    const dropdowns = document.querySelectorAll('.eventDropdown');
 
-    // Loop through each dropdown
-    dropdowns.forEach(dropdown => {
-        dropdown.innerHTML = ''; // Clear the dropdown before repopulating
-
-        eventArray.forEach(event => {
-            const option = document.createElement('option');
-            option.value = event.id;
-            option.textContent = event.title;
-            dropdown.appendChild(option);
-        });
-    });
-}
 
 
 populateDropdown();
 
-// Handle dropdown change event
-function handleDropdownChange(event) {
-    const selectedEventId = event.target.value;
-    console.log('Selected Event ID:', selectedEventId);
-    // Add your logic to handle the selected event
-}
 
 
                     }
@@ -1441,7 +1419,33 @@ function handleDropdownChange(event) {
         }
 
 
+        // Function to populate the dropdown with events
+function populateDropdown() {
+    // Select all dropdowns with the specified class
+    const dropdowns = document.querySelectorAll('.eventDropdown');
 
+    // Loop through each dropdown
+    dropdowns.forEach(dropdown => {
+        dropdown.innerHTML = ''; // Clear the dropdown before repopulating
+
+        eventArray.forEach(event => {
+            const option = document.createElement('option');
+            option.value = event.id;
+            option.textContent = event.title;
+            dropdown.appendChild(option);
+        });
+    });
+}
+window.populateDropdown = populateDropdown;
+
+// Handle dropdown change event
+function handleDropdownChange(event, imageID) {
+    const selectedEventId = event.target.value;
+    console.log('image ID: ',imageID, '  Selected Event ID:', selectedEventId);
+    // Add your logic to handle the selected event
+}
+
+window.handleDropdownChange = handleDropdownChange;
 
         // Function to handle analytics view
         function viewAnalytics(eventId) {
@@ -1567,7 +1571,7 @@ function handleDropdownChange(event) {
 
 <div class="box">
     <label for="eventDropdown">Select an Event</label>
-    <select class="eventDropdown" class="form-select" onchange="handleDropdownChange(event)">
+    <select class="eventDropdown" class="form-select" onchange="handleDropdownChange(event,'${item.id}' )">
         <!-- Options will be dynamically populated -->
     </select>
 </div>
