@@ -1311,8 +1311,8 @@
 
 <!-- Batch Buttons -->
 <div class="batch-buttons btn-group controls">
-  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('e-Details-${doc.id}', this, 'Event Details')">Event Details</button>
-  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Media Details')">Media Details</button>
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('e-Details-${doc.id}', this, 'Event Details')">Event Details ▼</button>
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Media Details')">Media Details ▼</button>
   <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
   <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
   <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
@@ -1541,7 +1541,7 @@ window.handleDropdownChange = handleDropdownChange;
                 mediaDiv.innerHTML = `
             <div class="media-header">
                                
-<button onclick="toggleCollapse('${item.id}', 'i-Details-${item.id}', 'Details')">Details ▼</button>
+<button onclick="toggleCollapse('i-Details-${item.id}', this, 'Details')">Details ▼</button>
            
                 <div class="media-item-img-details">
 
