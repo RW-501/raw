@@ -508,11 +508,11 @@ async function getHeaderImages(appearOn) {
 
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
-            if (Array.isArray(appearOn)) {
+            if (appearOn) {
                 headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains-any", appearOn));
             } else {
                 // If 'appearOn' is not an array, you can either throw an error or handle it
-                console.error("'appearOn' should be an array.");
+                console.error("'no images for ",appearOn);
                 return [];
             }
         } else {
