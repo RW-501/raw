@@ -1824,18 +1824,6 @@ if(otherDetails){
             }
         });
 
-        // Function to copy the access code to clipboard
-        function copyAccessCode() {
-            var copyText = document.getElementById("displayAccessCode");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-
-            // Copy the text inside the input field
-            document.execCommand("copy");
-
-            // Optionally, show a confirmation (using a toast or alert, for example)
-            showToast("Access code copied to clipboard!");
-        }
 
 
 
@@ -1853,19 +1841,33 @@ if(otherDetails){
             }
         });
 
-        // Function to copy the displayed URL to clipboard
-        function copyEventURL() {
-            var copyText = document.getElementById("displayEventURL");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
+// Function to copy the displayed URL to clipboard
+function copyEventURL() {
+    var copyText = document.getElementById("displayEventURL");
+    
+    // Use the Clipboard API to copy the text
+    navigator.clipboard.writeText(copyText.value).then(function() {
+        // Optionally, show a confirmation (using a toast or alert, for example)
+        showToast("Event URL copied to clipboard!");
+    }).catch(function(err) {
+        console.error("Error copying text: ", err);
+        showToast("Failed to copy Event URL.");
+    });
+}
 
-            // Copy the text inside the input field
-            document.execCommand("copy");
-
-            // Optionally, show a confirmation (using a toast or alert, for example)
-            showToast("Event URL copied to clipboard!");
-        }
-
+// Function to copy the access code to clipboard
+function copyAccessCode() {
+    var copyText = document.getElementById("displayAccessCode");
+    
+    // Use the Clipboard API to copy the text
+    navigator.clipboard.writeText(copyText.value).then(function() {
+        // Optionally, show a confirmation (using a toast or alert, for example)
+        showToast("Access code copied to clipboard!");
+    }).catch(function(err) {
+        console.error("Error copying text: ", err);
+        showToast("Failed to copy Access Code.");
+    });
+}
 
 
 
