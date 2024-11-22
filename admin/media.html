@@ -1476,7 +1476,7 @@
                 mediaDiv.innerHTML = `
             <div class="media-header">
                                
-                <button onclick="toggleCollapse(${item.id}, i-Details-${item.id},"Details")>Details</button>
+<button onclick="toggleCollapse('${item.id}', 'i-Details-${item.id}', 'Details')">Details</button>
            
                 <div class="media-item-img-details">
 
@@ -1498,14 +1498,21 @@
             </div>
 
       </div>
-                <div class="batch-buttons btn-group controls">
-                      <button onclick=" addToMainGallery('${item.id}')">Add to Gallery</button>
+               <div class="batch-buttons btn-group controls">
+    <!-- Check if the item is part of the main gallery -->
+    ${mainGalleryIds.includes(item.id) ? `
+        <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
+    ` : ''}
 
-                <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
-                    ${item.isPublic ? "Make Private" : "Make Public"}
-                </button>
-                <button class=" btn-danger " onclick="removeFromMedia('${item.id}')">Delete</button>
-            </div>
+    <!-- Toggle public/private status -->
+    <button onclick="togglePublicStatus('${item.id}', ${!item.isPublic})">
+        ${item.isPublic ? "Make Private" : "Make Public"}
+    </button>
+
+    <!-- Delete Button -->
+    <button class="btn-danger" onclick="removeFromMedia('${item.id}')">Delete</button>
+</div>
+
 
             </div>
 
@@ -1915,6 +1922,7 @@
         /**
          * Load media items from MainGallery collection and render them into the gallery container.
          */
+         const mainGalleryIds = [];
         async function loadMainGallery() {
             const galleryContainer = document.getElementById('galleryContainer');
             galleryContainer.innerHTML = ''; // Clear previous content
@@ -1932,7 +1940,6 @@
                 }
 
                 // Step 2: Create an array of imageIds from MainGallery
-                const mainGalleryIds = [];
                 mainGallerySnapshot.forEach(doc => {
                     mainGalleryIds.push(doc.id); // Save the doc ID from MainGallery
                 });
