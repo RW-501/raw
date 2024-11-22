@@ -1389,22 +1389,19 @@
 
         // 
         // Toggle the collapse of media details
-        function toggleCollapse(theId, btnDiv, title) {
+        function toggleCollapse(theId, btnDiv, title, otherID) {
             console.log("theId    ", theId);
 
             const details = document.getElementById(theId);
+            const otherDetails = document.getElementById(otherID);
 
             // Toggle the 'collapse' class
             details.classList.toggle('collapse');
+if(otherDetails){
+    otherDetails.classList.toggle('collapse');
 
+}
             // Update the button content
-            if (btnDiv) {
-                if (details.classList.contains('collapse')) {
-                    btnDiv.innerHTML = 'Expand ▼'; // Set to collapsed state
-                } else {
-                    btnDiv.innerHTML = 'Collapse ▲'; // Set to expanded state
-                }
-            }
 
             if (btnDiv && title) {
                 if (details.classList.contains('collapse')) {
@@ -1414,6 +1411,9 @@
                 }
             }
 
+
+
+            
         }
 
 
@@ -1542,11 +1542,11 @@ window.handleDropdownChange = handleDropdownChange;
                 mediaDiv.innerHTML = `
             <div class="media-header">
                                
-<button onclick="toggleCollapse('i-Details-${item.id}', this, 'Details')">Details ▼</button>
+<button onclick="toggleCollapse('i-Details-${item.id}', this, 'Details', 'm-Images-${item.id}')">Details ▼</button>
            
                 <div class="media-item-img-details">
 
-                <div id="m-Image-${item.id}" class="media-image collapse:not" >
+                <div id="m-Images-${item.id}" class="media-image collapse:not" >
                 <img 
                     src="${item.photoUrl}" 
                     data-src="${item.photoUrl}" 
@@ -1601,6 +1601,9 @@ window.handleDropdownChange = handleDropdownChange;
 populateDropdown();
 
         }
+
+
+        
 
         // Lazy loading implementation
         function initializeLazyLoading() {
