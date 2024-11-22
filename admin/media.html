@@ -206,7 +206,12 @@
 
 
 
-
+.gallery_photos_list {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
 
 
 
@@ -2110,7 +2115,7 @@ window.scrollToDiv = scrollToDiv;
         async function loadMainGallery() {
             const galleryContainer = document.getElementById('galleryContainer');
             galleryContainer.innerHTML = ''; // Clear previous content
-
+galleryContainer.classList.add ("gallery_photos_list");
 
             try {
                 // Step 1: Fetch all documents from the MainGallery collection
