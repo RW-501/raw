@@ -1609,7 +1609,7 @@ const mainGalleryIds = await fetchMainGalleryIds();
         <!-- Media Action Buttons -->
         <div class="batch-buttons btn-group controls">
             <!-- Add to Gallery Option -->
-            ${mainGalleryIds.includes(item.id) ? `
+            ${!mainGalleryIds.includes(item.id) ? `
                 <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
             ` : ''}
 
