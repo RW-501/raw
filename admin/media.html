@@ -1440,10 +1440,12 @@ function populateDropdown() {
 window.populateDropdown = populateDropdown;
 
 // Handle dropdown change event
-function handleDropdownChange(event, imageID) {
+function handleDropdownChange(event, imageID, div) {
     const selectedEventId = event.target.value;
     console.log('image ID: ',imageID, '  Selected Event ID:', selectedEventId);
     // Add your logic to handle the selected event
+
+    document.getElementsByName(`mediaList-${imageID}`).remove();
 }
 
 window.handleDropdownChange = handleDropdownChange;
@@ -1571,7 +1573,7 @@ window.handleDropdownChange = handleDropdownChange;
     ` : ''}
 
 <div class="box">
-    <label for="eventDropdown">Select an Event</label>
+    <small >Change Event</small>
     <select class="eventDropdown" class="form-select" onchange="handleDropdownChange(event,'${item.id}' )">
         <!-- Options will be dynamically populated -->
     </select>
