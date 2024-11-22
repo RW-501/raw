@@ -508,12 +508,13 @@ async function getHeaderImages(appearOn) {
 
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
-            if (appearOn) {
-                headerImagesQuery = query(mainGalleryRef, where("appearOn", "array-contains-any", appearOn));
+            headerImagesQuery = query(mainGalleryRef, where("appearOn".appearOn, "==", true));
+            if (headerImagesQuery) {
+                    headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
             } else {
                 // If 'appearOn' is not an array, you can either throw an error or handle it
                 console.error("'no images for ",appearOn);
-                return [];
+                return ;
             }
         } else {
             // Query for public images if 'appearOn' is not provided
