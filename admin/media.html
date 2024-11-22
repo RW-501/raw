@@ -735,17 +735,18 @@
 
 
     <div id="currentEventID"></div>
-
+    <div id="currentMediaID"></div>
+    
    <!-- Add Media to Gallery Modal -->
 <div id="addToGalleryModal" class="modal" style="display:none;"> 
     <div class="modal-content">
         <h3>Add Media to Gallery</h3>
         <p>Select a category:</p>
-        <button onclick="addMediaToGallery('portrait', mediaId)">Portrait</button>
-        <button onclick="addMediaToGallery('event', mediaId)">Event</button>
-        <button onclick="addMediaToGallery('commercial', mediaId)">Commercial</button>
-        <button onclick="addMediaToGallery('family', mediaId)">Family</button>
-        <button onclick="addMediaToGallery('other', mediaId)">Other</button>
+        <button onclick="addMediaToGallery('portrait')">Portrait</button>
+        <button onclick="addMediaToGallery('event')">Event</button>
+        <button onclick="addMediaToGallery('commercial')">Commercial</button>
+        <button onclick="addMediaToGallery('family')">Family</button>
+        <button onclick="addMediaToGallery('other')">Other</button>
         <button onclick="closeModal()">Cancel</button>
     </div>
 </div>
@@ -2106,7 +2107,7 @@ window.scrollToDiv = scrollToDiv;
         mediaId: currentMediaId // Include mediaId in the data
         
     };
-
+const mediaId = document.getElementById('currentMediaID').innerText;
     // Check if the media already exists in the MainGallery
     const mainGalleryQuery = query(collection(db, "MainGallery"), where("mediaId", "==", mediaId));
     const mainGallerySnapshot = await getDocs(mainGalleryQuery);
@@ -2124,7 +2125,7 @@ window.scrollToDiv = scrollToDiv;
     }
 
     // Optionally display a success message
-    alert('Media successfully added or updated in the gallery!');
+    showToast('Media successfully added or updated in the gallery!');
 
     // Close the modal after adding or updating the media
     closeModal();
@@ -2135,6 +2136,7 @@ let currentMediaId = null; // Store the current mediaId globally
 // Function to show the modal and set the mediaId
 function showAddToGalleryModal(mediaId) {
     currentMediaId = mediaId; // Set the global mediaId to the one passed
+    document.getElementById('currentMediaID').innerText = currentMediaId;
     document.getElementById('addToGalleryModal').style.display = 'block'; // Show the modal
 }
 
