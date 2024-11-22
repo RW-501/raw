@@ -1240,7 +1240,7 @@ eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, event
     */
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventDetailsId);
-        viewMedia(doc.id);
+        viewMedia(doc.id, coverPhoto);
 
 }
 });
@@ -1287,7 +1287,7 @@ function viewAnalytics(eventId) {
 
 let eventInfo = '';
 
-async function viewMedia(eventId) {
+async function viewMedia(eventId, coverPhoto) {
     //eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
     const mediaCollectionRef = collection(db, "Media");  
@@ -2175,6 +2175,7 @@ window.updatePreview = updatePreview;
 
 window.renderCheckboxes = renderCheckboxes;
 window.handleUpdate  = handleUpdate ;
+window.handleEventStatusChange   = handleEventStatusChange  ;
 
 window.toggleEventDetails   = toggleEventDetails  ;
 window.batchSetPublic   = batchSetPublic  ;
