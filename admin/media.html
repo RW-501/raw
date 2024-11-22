@@ -1239,6 +1239,7 @@ console.log("doc.id    ",doc.id);
     */
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ",eventDetailsId);
+        viewMedia(doc.id);
 
 }
 });
@@ -1246,7 +1247,6 @@ console.log("doc.id    ",doc.id);
 console.error("Error fetching events:", error);
 }
 
-viewMedia(doc.id);
 
 }
 
@@ -1289,7 +1289,6 @@ let eventInfo = '';
 async function viewMedia(eventId) {
     //eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
-    console.log("eventInfo   ", eventId)
     const mediaCollectionRef = collection(db, "Media");  
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
@@ -1316,6 +1315,8 @@ async function viewMedia(eventId) {
       //  if (!coverPhoto) coverPhoto = data.photoUrl;
     });
     eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
+    console.log("eventId   ", eventId)
+    console.log("eventInfo   ", eventInfo)
 
     // View Media Button
     eventDetailsContainer.innerHTML = `
