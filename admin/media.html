@@ -1563,18 +1563,14 @@ window.handleDropdownChange = handleDropdownChange;
     </div>
 `;
 
-(async () => {
-    const mainGalleryIds = await fetchMainGalleryIds();
-    if (mainGalleryIds.length > 0) {
-        console.log("Fetched IDs:", mainGalleryIds);
-        // Additional logic here
-    }
-})();
+
+const mainGalleryIds = await fetchMainGalleryIds();
 
 
             // Generate media items
             mediaItems.forEach((item) => {
 
+                console.log("Checking if item.id exists in mainGalleryIds:", item.id, mainGalleryIds.includes(item.id));
 
                 //  console.log("items    ", item);
                 const mediaDiv = document.createElement("div");
