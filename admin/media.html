@@ -1374,8 +1374,6 @@
 
 
 
-populateDropdown();
-
 
 
                     }
@@ -1592,10 +1590,14 @@ window.handleDropdownChange = handleDropdownChange;
 
         `;
         mediaListContainer.appendChild(mediaDiv);
+
             });
 
             // Initialize lazy loading
             initializeLazyLoading();
+            
+populateDropdown();
+
         }
 
         // Lazy loading implementation
