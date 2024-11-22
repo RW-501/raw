@@ -2303,6 +2303,10 @@ function toggleAppearOn(mediaId, page, isChecked) {
     updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
+        if(page == "MainGallery"){
+            showAddToGalleryModal(mediaId);
+
+        }
 }
 
 window.toggleAppearOn = toggleAppearOn;
