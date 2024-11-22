@@ -1656,7 +1656,7 @@ const eventTagsInput = document.getElementById('eventTags');
         eventDate: document.getElementById('eventDate').value.trim(),
         location: document.getElementById('eventLocation').value.trim(),
         accessCode: document.getElementById('accessCode').value.trim(),
-        isPublic: document.getElementById('privateCheckBox').checked(),
+        isPublic: document.getElementById('privateCheckBox').checked,
         status: document.getElementById('eventStatus').value.trim(),
         shortURL: document.getElementById('eventURL').value.trim(),
         collection_price: document.getElementById('eventCollectionPrice').value.trim(),
@@ -2169,6 +2169,8 @@ loadMainGallery();
 
         window.applyWatermark = applyWatermark;
         window.editEvent = editEvent;
+        window.copyAccessCode  = copyAccessCode ;
+        window.copyEventURL  = copyEventURL ;
 
         window.uploadEvent = uploadEvent;
 
