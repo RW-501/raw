@@ -452,7 +452,7 @@ async function fetchEventData(field, value) {
             const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
              querySnapshot = await getDocs(q);
         }else{
-            querySnapshot = await getDoc(eventsRef); 
+            querySnapshot = await getDoc(value); 
         }
 
 
@@ -512,7 +512,7 @@ async function fetchEventDetails() {
         updateEventPage(eventData);
         console.log(",  done?    ");
 
-        
+
         console.log(",  eventData   ",eventData);
 
         // Fetch and display related media images for the event
