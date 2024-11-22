@@ -2076,8 +2076,10 @@ window.scrollToDiv = scrollToDiv;
 
 
 
-        async function addMediaToGallery(category, mediaId) {
+        async function addMediaToGallery(category) {
     const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
+
+    const mediaId = document.getElementById('currentMediaID').innerText;
 
     // Get the selected media
     const mediaCollectionRef = collection(db, "Media");
@@ -2104,10 +2106,9 @@ window.scrollToDiv = scrollToDiv;
         watermarkedImageUrl: watermarkedImageUrl,
         price: price,
         appearOnHeader: false,
-        mediaId: currentMediaId // Include mediaId in the data
+        mediaId: mediaId // Include mediaId in the data
         
     };
-const mediaId = document.getElementById('currentMediaID').innerText;
     // Check if the media already exists in the MainGallery
     const mainGalleryQuery = query(collection(db, "MainGallery"), where("mediaId", "==", mediaId));
     const mainGallerySnapshot = await getDocs(mainGalleryQuery);
