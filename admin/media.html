@@ -1174,7 +1174,7 @@ function onEventSaved(eventID) {
         eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
 console.log("doc.id    ",doc.id);
 
-//eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
+eventInfo = [doc.id, title, event.eventDate, isPublic, coverUrl];
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
@@ -1286,6 +1286,7 @@ function viewAnalytics(eventId) {
 let eventInfo = '';
 
 async function viewMedia(eventInfo) {
+   // eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
     console.log("eventInfo   ", eventInfo)
     const mediaCollectionRef = collection(db, "Media");  
@@ -1302,13 +1303,13 @@ async function viewMedia(eventInfo) {
     eventDetailsContainer.innerHTML = "";
 
     let imageCount = 0;
-     eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
      const mediaItems = [];
 
     mediaSnapshot.forEach((doc) => {
         const data = doc.data();
         imageCount++;
         mediaItems.push({ id: doc.id, ...data });
+        console.log("mediaItems new    ", mediaItems);
 
         // Use the first image as the cover photo
       //  if (!coverPhoto) coverPhoto = data.photoUrl;
@@ -1344,6 +1345,9 @@ async function viewMedia(eventInfo) {
     </div>
   </div>
 `;
+
+console.log("mediaItems    ", mediaItems);
+
     // Generate media items
     mediaItems.forEach((item) => {
 
