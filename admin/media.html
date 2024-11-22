@@ -1243,7 +1243,8 @@ console.log("eventInfo    ",eventInfo);
         <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
         <p><strong>Comments:</strong> ${comments}</p>
         <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>    
-  </div>
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse( 'e-Details-${doc.id}', this, 'Close')">Close ▲</button>
+        </div>
   
 
         <div id='${mediaDetailsId}' class="box collapse mt-3">
@@ -1251,6 +1252,8 @@ console.log("eventInfo    ",eventInfo);
 
   <div id='${eventDetailsId}' class="event_eventDetails"></div>
   <div id='${mediaListId}' class="event_photos_list"></div>
+    <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
+
     </div>
 
      
