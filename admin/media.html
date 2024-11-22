@@ -2129,6 +2129,30 @@ window.scrollToDiv = scrollToDiv;
         }
 
 
+/**
+ * Fetches all document IDs from the "MainGallery" Firestore collection.
+ * 
+ * @returns {Promise<string[]>} - A promise that resolves with an array of document IDs.
+ */
+ async function fetchMainGalleryIds() {
+    try {
+        const mainGalleryRef = collection(db, "MainGallery");
+        const mainGallerySnapshot = await getDocs(mainGalleryRef);
+
+        if (mainGallerySnapshot.empty) {
+            console.log("No documents found in MainGallery.");
+            showToast('No documents found in MainGallery.', 'info');
+            return [];
+        }
+
+        // Collect and return IDs
+        return mainGallerySnapshot.docs.map(doc => doc.id);
+    } catch (error) {
+        console.error("Error fetching MainGallery IDs:", error);
+        showToast('Error fetching MainGallery IDs.', 'error');
+        return [];
+    }
+}
 
 
         /**
