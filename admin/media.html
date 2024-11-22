@@ -736,19 +736,19 @@
 
     <div id="currentEventID"></div>
 
-    <!-- Add to Gallery Modal -->
-    <div id="addToGalleryModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h3>Add Media to Gallery</h3>
-            <p>Select a category:</p>
-            <button onclick="addMediaToGallery('portrait')">Portrait</button>
-            <button onclick="addMediaToGallery('event')">Event</button>
-            <button onclick="addMediaToGallery('commercial')">Commercial</button>
-            <button onclick="addMediaToGallery('family')">Family</button>
-            <button onclick="addMediaToGallery('other')">Other</button>
-            <button onclick="closeModal()">Cancel</button>
-        </div>
+   <!-- Add Media to Gallery Modal -->
+<div id="addToGalleryModal" class="modal" style="display:none;"> 
+    <div class="modal-content">
+        <h3>Add Media to Gallery</h3>
+        <p>Select a category:</p>
+        <button onclick="addMediaToGallery('portrait', mediaId)">Portrait</button>
+        <button onclick="addMediaToGallery('event', mediaId)">Event</button>
+        <button onclick="addMediaToGallery('commercial', mediaId)">Commercial</button>
+        <button onclick="addMediaToGallery('family', mediaId)">Family</button>
+        <button onclick="addMediaToGallery('other', mediaId)">Other</button>
+        <button onclick="closeModal()">Cancel</button>
     </div>
+</div>
 
 
     <!-- Footer style="display: none;" -->
@@ -2075,55 +2075,73 @@ window.scrollToDiv = scrollToDiv;
 
 
 
-        async function addMediaToGallery(category) {
-            const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
+        async function addMediaToGallery(category, mediaId) {
+    const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
 
-            // Get the selected media
-            const mediaCollectionRef = collection(db, "Media");
-            const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId));
-            const mediaSnapshot = await getDocs(mediaQuery);
+    // Get the selected media
+    const mediaCollectionRef = collection(db, "Media");
+    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId), where("id", "==", mediaId));
+    const mediaSnapshot = await getDocs(mediaQuery);
 
-            // Get the media details and send to MainGallery
-            mediaSnapshot.forEach(async (doc) => {
-                const mediaData = doc.data();
-                const mediaId = doc.id;
-                const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
+    // Check if the media exists
+    if (mediaSnapshot.empty) {
+        console.error("No media found with the provided mediaId.");
+        return;
+    }
 
-                // Prepare the data to be added to MainGallery
-                const mainGalleryData = {
-                    eventId: eventId,
-                    mediaId: mediaId,
-                    category: category, // Portrait, Event, Commercial, Family, Other
-                    isPublic: isPublic,
-                    photoUrl: photoUrl,
-                    status: status,
-                    watermarkedImageUrl: watermarkedImageUrl,
-                    price: price,
-                    appearOnHeader: false
-                };
+    // Get the media details and send to MainGallery
+    const mediaData = mediaSnapshot.docs[0].data(); // Assumes only one match for mediaId
+    const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
 
-                // Add the media to the MainGallery collection
-                await addDoc(collection(db, "MainGallery"), mainGalleryData);
+    // Prepare the data to be added to MainGallery
+    const mainGalleryData = {
+        eventId: eventId,
+        category: category, // Portrait, Event, Commercial, Family, Other
+        isPublic: isPublic,
+        photoUrl: photoUrl,
+        status: status,
+        watermarkedImageUrl: watermarkedImageUrl,
+        price: price,
+        appearOnHeader: false,
+        mediaId: currentMediaId // Include mediaId in the data
+        
+    };
 
-                // Optionally display a success message
-                alert('Media successfully added to the gallery!');
-            });
+    // Check if the media already exists in the MainGallery
+    const mainGalleryQuery = query(collection(db, "MainGallery"), where("mediaId", "==", mediaId));
+    const mainGallerySnapshot = await getDocs(mainGalleryQuery);
 
-            // Close the modal after adding the media
-            closeModal();
-        }
+    if (!mainGallerySnapshot.empty) {
+        // Media already exists, update it instead of adding
+        const mainGalleryDocId = mainGallerySnapshot.docs[0].id;
+        const mainGalleryDocRef = doc(db, "MainGallery", mainGalleryDocId);
+        await updateDoc(mainGalleryDocRef, mainGalleryData);
+        console.log('Media updated in the gallery!');
+    } else {
+        // Add the media to the MainGallery collection
+        await addDoc(collection(db, "MainGallery"), { ...mainGalleryData, mediaId: mediaId });
+        console.log('Media successfully added to the gallery!');
+    }
 
+    // Optionally display a success message
+    alert('Media successfully added or updated in the gallery!');
 
+    // Close the modal after adding or updating the media
+    closeModal();
+}
 
-        function openAddToGalleryModal() {
-            // Show the modal
-            document.getElementById("addToGalleryModal").style.display = "block";
-        }
-        function closeModal() {
-            // Hide the modal
-            document.getElementById("addToGalleryModal").style.display = "none";
-        }
+let currentMediaId = null; // Store the current mediaId globally
 
+// Function to show the modal and set the mediaId
+function showAddToGalleryModal(mediaId) {
+    currentMediaId = mediaId; // Set the global mediaId to the one passed
+    document.getElementById('addToGalleryModal').style.display = 'block'; // Show the modal
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('addToGalleryModal').style.display = 'none'; // Hide the modal
+}
 
 /**
  * Fetches all document IDs from the "MainGallery" Firestore collection.
