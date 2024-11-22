@@ -512,7 +512,7 @@ async function fetchEventDetails() {
         setupDownloadButton(eventData);
  
         eventId = eventData.eventId;
-        console.log(",  eventId   ",eventId);
+        console.log(",  eventData   ",eventData);
 
         return eventId;
 
@@ -531,6 +531,8 @@ function updateEventPage(eventData) {
 
 // Function to fetch and display media images related to the event
 async function displayEventImages(eventData) {
+    console.log(",  eventData  ggggg ",eventData);
+
     const imageData = await fetchMediaImages(eventData.eventId);  // Assuming eventId is part of eventData
     const galleryContainer = document.getElementById('event-gallery');
     imageData.forEach(img => {
