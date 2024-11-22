@@ -1175,7 +1175,7 @@ function onEventSaved(eventID) {
 console.log("doc.id    ",doc.id);
 
 //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
-//eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
+eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
 
         // Collapsible content
         const detailsId = `details-${doc.id}`;
@@ -1313,7 +1313,7 @@ async function viewMedia(eventId) {
         console.log("mediaItems new    ", mediaItems);
 
         // Use the first image as the cover photo
-      //  if (!coverPhoto) coverPhoto = data.photoUrl;
+        if (!coverPhoto) coverPhoto = data.photoUrl;
     });
     eventInfo = [eventInfo.eventId, eventInfo.eventTitle, eventInfo.eventDate, eventInfo.publicStatus, eventInfo.coverPhoto];
     console.log("eventId   ", eventId)
