@@ -76,6 +76,7 @@
         .gallery-image {
             width: 100%;
             height: auto;
+            opacity: 1;
         }
     </style>
 
@@ -318,32 +319,28 @@ let isFetching = false; // Prevent multiple simultaneous fetches
 let retryCount = 0; // Retry mechanism for failed fetches
 
 // Utility function to create image elements dynamically
-function createImageElement({ watermarkedImageUrl, title, description }) {
+function createImageElement({ watermarkedImageUrl, title, catagory }) {
     const col = document.createElement('div');
     col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
 
     const img = document.createElement('img');
     img.src = watermarkedImageUrl;
-    img.alt = title || description || 'Gallery Image'; // SEO-optimized alt text
+    img.alt = catagory || 'Gallery Image'; // SEO-optimized alt text
     img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
-    img.setAttribute('data-bs-toggle', 'modal');
+   // img.setAttribute('data-bs-toggle', 'modal');
     img.setAttribute('data-image', watermarkedImageUrl);
-    img.setAttribute('data-description', description || '');
+   // img.setAttribute('data-description', description || '');
 
     img.addEventListener('click', () => {
         const modalImage = document.getElementById('modal-image');
         const modalCaption = document.getElementById('modal-caption');
         modalImage.src = watermarkedImageUrl;
-        modalCaption.textContent = description || 'No description available.';
-        modalImage.setAttribute('alt', description || 'Gallery Modal Image'); // Accessibility enhancement
+        modalCaption.textContent = catagory || 'No description available.';
+        modalImage.setAttribute('alt', catagory || 'Gallery Modal Image'); // Accessibility enhancement
     });
 
-    const caption = document.createElement('div');
-    caption.classList.add('caption');
-    caption.textContent = description || 'No description available.';
 
     col.appendChild(img);
-    col.appendChild(caption);
 
     return col;
 }
@@ -352,9 +349,9 @@ function createImageElement({ watermarkedImageUrl, title, description }) {
 function setLoadingSpinner(show) {
     const loadingSpinner = document.getElementById('loading');
     if (show) {
-       // loadingSpinner.style.display = 'block';
+        loadingSpinner.style.display = 'block';
     } else {
-        //loadingSpinner.style.display = 'none';
+        loadingSpinner.style.display = 'none';
     }
 }
 
@@ -389,18 +386,19 @@ async function fetchImages(category = 'all') {
             const mediaQuery = category === 'all'
                 ? query(
                     mediaRef,
+                    where('appearOn.MainGallery', '==', true),
                     where('isPublic', '==', true)
                 )
                 : query(
                     mediaRef,
-                 //   where('appearOn.MainGallery', '==', true),
+                    where('appearOn.MainGallery', '==', true),
                     where('category', '==', category)
                 );
-                console.log("mediaQuery?   ", mediaQuery);
+           //     console.log("mediaQuery?   ", mediaQuery);
 
 
                 const snapshot = await getDocs(mediaQuery);
-            console.log("snapshot?   ", snapshot);
+            //console.log("snapshot?   ", snapshot);
 
             if (snapshot.empty) {
                 console.log('No images found for the selected category.');
@@ -415,7 +413,7 @@ async function fetchImages(category = 'all') {
             const updatedCache = [...cachedImages, ...newImages];
             localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
 
-            console.log("updatedCache?   ", updatedCache);
+         //   console.log("updatedCache?   ", updatedCache);
 
             // Display fetched images
             displayImages(newImages);
@@ -468,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const mainTextArea = document.getElementById("text-area");
 
   if (mainTextArea && galleryImagesContainer) {
-    //fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "MainGallery");
+    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "MainGallery");
   } else {
     console.error("Required elements are missing in the DOM.");
   }
