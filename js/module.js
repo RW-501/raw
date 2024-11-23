@@ -508,7 +508,7 @@ async function getHeaderImages(appearOn) {
 
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
-            headerImagesQuery = query(mainGalleryRef, where("appearOn".appearOn, "==", true));
+             headerImagesQuery = query(mainGalleryRef, where("appearOn.MainGallery", "==", true));
             if (headerImagesQuery) {
                     headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
             } else {
