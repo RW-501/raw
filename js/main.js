@@ -311,32 +311,32 @@ window.setUpdateFooterContent = setUpdateFooterContent;
   function updateFooterContent(pageName) {
     // Define the footer texts for different pages
     const footerTexts = {
-      home: {
+      HOME: {
         text: "Let’s focus on your RAW Beauty and book your session today!",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
       },
-      about: {
+      ABOUT: {
         text: "Learn more about the passion behind RAW Photography and our unique approach.",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
       },
-      gallery: {
+      GALLERY: {
         text: "Explore our stunning photography collection and see our work in action!",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
       },
-      events: {
+      EVENTS: {
         text: "Stay updated with our upcoming photo shoots and special events!",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
       },
-      contact: {
+      CONTACT: {
         text: "Get in touch with RAW Photography to book your session or ask any questions.",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
       },
-      cart: {
+      CART: {
         text: "Review your cart and finalize your booking for the perfect photoshoot!",
         year: new Date().getFullYear(),
         copyWrite: "RAW Photography - Capturing Your Moments Right!"
