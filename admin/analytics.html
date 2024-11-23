@@ -147,8 +147,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">Image Downloads</h5>
-                                <p id="imageDownloads" class="display-4">Loading...</p>
+                                <h5 class="section-title">Total Duration</h5>
+                                <p id="totalDuration" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingImageDownloads"></div>
                             </div>
                         </div>
@@ -156,8 +156,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">Event Purchases</h5>
-                                <p id="eventPurchases" class="display-4">Loading...</p>
+                                <h5 class="section-title">ip Address</h5>
+                                <p id="ipAddress" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingEventPurchases"></div>
                             </div>
                         </div>
@@ -301,8 +301,8 @@
             showLoading('pageViews');
             try {
                 const rangeRef = db.collection('Analytics')
-                    .where('date', '>=', new Date(startDate))
-                    .where('date', '<=', new Date(endDate));
+                    .where('lastViewDate', '>=', new Date(startDate))
+                    .where('lastViewDate', '<=', new Date(endDate));
                 const rangeSnapshot = await rangeRef.get();
     
                 let pageViews = 0;
@@ -311,14 +311,14 @@
     
                 rangeSnapshot.forEach(doc => {
                     const data = doc.data();
-                    pageViews += data.pageViews || 0;
-                    imageDownloads += data.imageDownloads || 0;
-                    eventPurchases += data.eventPurchases || 0;
+                    pageViews += data.userActivitiesCount || 0;
+                    totalDuration += data.totalDuration || 0;
+                    ipAddress += data.ipAddress || 0;
                 });
     
                 document.getElementById('pageViews').textContent = pageViews;
-                document.getElementById('imageDownloads').textContent = imageDownloads;
-                document.getElementById('eventPurchases').textContent = eventPurchases;
+                document.getElementById('totalDuration').textContent = totalDuration;
+                document.getElementById('ipAddress').textContent = ipAddress;
     
                 hideLoading('pageViews');
             } catch (error) {
