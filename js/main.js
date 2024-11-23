@@ -274,8 +274,37 @@ window.hideLoadingSpinner = function() {
     }, 1000); // Delay of 1 second (1000 ms)
   
   
+// Function to dynamically add CSS for nav links and active state
+function addNavLinkStyles() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    /* Default styling for nav links */
+    .nav-links li a {
+      text-decoration: none;
+      padding: 10px 20px;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Styling for the active nav link */
+    .nav-links li a.navActive {
+      color: #fff; /* White text for active item */
+      background-color: #007bff; /* Blue background for active item */
+      border-radius: 5px;
+    }
+
+    .nav-links li a:hover {
+      background-color: #f1f1f1; /* Light background on hover */
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 
 function setUpdateFooterContent() {
+
+  // Call the function to add styles
+addNavLinkStyles();
   // Get all anchor tags inside the nav-links
   const links = document.querySelectorAll('.nav-links a');
 
@@ -285,9 +314,9 @@ function setUpdateFooterContent() {
 
       // Check if the link's href matches the current page URL
       if (link.getAttribute('href').includes(window.location.pathname)) {
-          link.classList.add('active');
+          link.classList.add('navActive');
       } else {
-          link.classList.remove('active'); // Remove active class from non-matching links
+          link.classList.remove('navActive'); // Remove active class from non-matching links
       }
   });
 
