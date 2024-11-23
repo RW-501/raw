@@ -280,62 +280,6 @@
 
 
 
-
-#scrollToDiv {
-            margin-top: 800px;
-            padding: 50px;
-            background-color: #f4f4f4;
-            text-align: center;
-            border: 1px solid #ccc;
-        }
-
-        /* Scroll Button Styles */
-        #scrollButton {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none; /* Initially hidden */
-            background: linear-gradient(135deg, #775fff, #8c7bfe);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 5000;
-            animation: scrollFadeIn 1s ease-out, scrollPulse 2s infinite;
-        }
-
-        #scrollButton:hover {
-            background: linear-gradient(135deg, #feb47b, #ff7e5f);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Animations */
-        @keyframes scrollFadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -55%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
-
-
         body {
 
             background: linear-gradient(to bottom, #fff, #e0e0e0);
@@ -797,8 +741,6 @@
 
     </main>
 
-   <!-- Scroll Button -->
-   <button id="scrollButton" >Top</button>
     <div id="currentEventID"></div>
     <div id="currentMediaID"></div>
     
@@ -2213,7 +2155,7 @@ async function addMediaToGallery(category) {
             console.log("Media successfully added to the gallery!");
             showToast("Media successfully added to the gallery!", "success");
         }
-        document.getElementById(`addToGalleyBtn_${mediaId}`).innerText = "Added";
+        document.getElementById(`addToGalleyBtn_${mediaId}`).innerText = "Added!";
         // Close the modal after adding or updating the media
         closeModal();
     } catch (error) {

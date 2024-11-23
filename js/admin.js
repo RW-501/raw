@@ -365,50 +365,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+// Function to dynamically create and append the scroll button
+function createScrollButton() {
+  // Create the button element
+  const scrollButton = document.createElement('div');
+  scrollButton.id = 'scrollButton';
+  scrollButton.textContent = 'Top';
 
+  // Add styles dynamically
+  const styles = `
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none; /* Initially hidden */
+      background: linear-gradient(135deg, #5f7fff, #7b81fe);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 5000;
+      animation: scrollFadeIn 1s ease-out, scrollPulse 2s infinite;
+  `;
+  scrollButton.style.cssText = styles;
 
-const scrollButton = document.getElementById('scrollButton');
+  // Add hover effect using inline styles
+  scrollButton.addEventListener('mouseenter', () => {
+      scrollButton.style.background = 'linear-gradient(135deg, #7bd7fe, #5f77ff)';
+      scrollButton.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+  });
 
-// Show the button dynamically based on page height
-window.addEventListener('scroll', () => {
-    const pageHeight = document.body.scrollHeight; // Total height of the page
-    const viewportHeight = window.innerHeight;    // Visible height of the window
-    const scrollDistance = window.scrollY;        // Current scroll position
+  scrollButton.addEventListener('mouseleave', () => {
+      scrollButton.style.background = 'linear-gradient(135deg, #5f7fff, #7b81fe)';
+      scrollButton.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+  });
 
-    // Determine when the button should appear:
-    // 1. Ensure the page is significantly taller than the viewport
-    // 2. Show button only after scrolling past 25% of the total page height
-    const isPageTallEnough = pageHeight > viewportHeight * 1.5;
-    const showAfter = pageHeight * 0.25;
+  // Attach the button to the body
+  document.body.appendChild(scrollButton);
 
-    if (isPageTallEnough && scrollDistance > showAfter) {
-        scrollButton.style.display = 'block'; // Show the button
-    } else {
-        scrollButton.style.display = 'none'; // Hide the button
-    }
-});
+  // Scroll to top on click
+  scrollButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-
-// Smooth scroll function
-function scrollToDiv(divId) {
-    const targetDiv = document.getElementById(divId);
-    const mainDiv = document.getElementById("main-content");
-    if (targetDiv) {
-        targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-
-        mainDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  return scrollButton;
 }
 
-window.scrollToDiv = scrollToDiv;
+// Create the scroll button and use it in the scroll listener
+const scrollButton = createScrollButton();
 
-scrollButton.addEventListener('click', () => {
- //   console.log('Scroll button clicked!');
-    scrollToDiv();
+// Scroll listener to toggle button visibility
+window.addEventListener('scroll', () => {
+  const pageHeight = document.body.scrollHeight;
+  const viewportHeight = window.innerHeight;
+  const scrollDistance = window.scrollY;
+
+  const isPageTallEnough = pageHeight > viewportHeight * 1.5;
+  const showAfter = pageHeight * 0.25;
+
+  if (isPageTallEnough && scrollDistance > showAfter) {
+      scrollButton.style.display = 'block';
+  } else {
+      scrollButton.style.display = 'none';
+  }
 });
-
-
-
-
-
