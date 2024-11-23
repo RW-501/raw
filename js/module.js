@@ -687,8 +687,8 @@ function shuffleArray(arr) {
         // Execute the query
         const querySnapshot = await getDocs(mediaQuery);
      //   console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
-
-       // let defaultImages = await getHeaderImages(page);
+/*
+        let defaultImages = await getHeaderImages(page);
 
         
     if(!defaultImages){
@@ -710,6 +710,8 @@ function shuffleArray(arr) {
             return defaultImages[Math.floor(Math.random() * defaultImages.length)];
         };
 
+*/
+
 
 // Convert the snapshot into an array
 let mediaArray = [];
@@ -730,8 +732,8 @@ mediaArray.forEach(data  => {
             }
 
             // Use default images if no imageUrl or thumbnailUrl is provided
-            const imageUrl = data.imageUrl || getRandomDefaultImage();
-            const thumbnailUrl = data.watermarkedImageUrl || getRandomDefaultImage();
+           // const imageUrl = data.imageUrl || getRandomDefaultImage();
+            const thumbnailUrl = data.watermarkedImageUrl; // || getRandomDefaultImage();
 
             // Create and append image element with dynamic image URL   loading="lazy"
             const imageElement = `
