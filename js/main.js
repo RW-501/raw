@@ -344,7 +344,7 @@ window.setUpdateFooterContent = setUpdateFooterContent;
     };
   
     // Check if the page name exists in the footerTexts object, otherwise default to 'home'
-    const pageData = footerTexts[pageName] || footerTexts['home'];
+    const pageData = footerTexts[pageName] || footerTexts['HOME'];
   
     // Check if the elements exist before attempting to update them
     const footerTextElement = document.getElementById('footer-text');
@@ -355,7 +355,7 @@ window.setUpdateFooterContent = setUpdateFooterContent;
     }
     
     if (footerCopyWriteElement) {
-      footerCopyWriteElement.textContent = `&copy; ${pageData.year} ${pageData.copyWrite}`;
+      footerCopyWriteElement.innerHTML = `&copy; ${pageData.year} ${pageData.copyWrite}`;
     }
   }
   window.updateFooterContent = updateFooterContent;
