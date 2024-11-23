@@ -624,9 +624,10 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
   // Function to dynamically style images based on their dimensions
 function styleGalleryImages(galleryContainer) {
-    const galleryItems = galleryContainer.querySelectorAll('.gallery-item img');
   
-    if(galleryItems.length > 0){
+    if(galleryContainer){
+        const galleryItems = galleryContainer.querySelectorAll('.gallery-item img');
+
     galleryItems.forEach(img => {
       img.onload = () => {
         const aspectRatio = img.naturalWidth / img.naturalHeight;
