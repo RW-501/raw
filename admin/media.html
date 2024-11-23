@@ -296,7 +296,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             display: none; /* Initially hidden */
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            background: linear-gradient(135deg, #775fff, #8c7bfe);
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
@@ -306,7 +306,7 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 5000;
-            animation: fadeIn 1s ease-out, pulse 2s infinite;
+            animation: scrollFadeIn 1s ease-out, scrollPulse 2s infinite;
         }
 
         #scrollButton:hover {
@@ -315,7 +315,7 @@
         }
 
         /* Animations */
-        @keyframes fadeIn {
+        @keyframes scrollFadeIn {
             from {
                 opacity: 0;
                 transform: translate(-50%, -55%);
@@ -326,7 +326,7 @@
             }
         }
 
-        @keyframes pulse {
+        @keyframes scrollPulse {
             0%, 100% {
                 transform: translate(-50%, -50%) scale(1);
             }
