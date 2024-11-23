@@ -891,6 +891,8 @@ display:block;
 
 .close-button:hover {
   color: red;
+  background-color: transparent;
+
 }
 
 .more-images-button {
