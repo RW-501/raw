@@ -410,7 +410,7 @@ async function fetchImages(category = 'all') {
             // Process new images and update cache
             const newImages = snapshot.docs
                 .map(doc => doc.data())
-                .filter(data => data.id && data.watermarkedImageUrl);
+                .filter(data => data.mediaId && data.watermarkedImageUrl);
 
             const updatedCache = [...cachedImages, ...newImages];
             localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
