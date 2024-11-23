@@ -2281,15 +2281,19 @@ function renderCheckboxes(options, appearOn, mediaId) {
 
 // Toggle the appearOn visibility for the media
 function toggleAppearOn(mediaId, page, isChecked) {
+
+
     const mediaRef = doc(db, 'MainGallery', mediaId);
     updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
-
+/*
     // If it's for the "MainGallery" page, show the modal for adding the media
     if (page == "MainGallery" && isChecked == true) {
         showAddToGalleryModal(mediaId);
     }
+
+    */
 }
 
 window.toggleAppearOn = toggleAppearOn;
@@ -2425,7 +2429,7 @@ window.toggleAppearOn = toggleAppearOn;
             window.addMedia = addMedia;
             window.toggleCollapse = toggleCollapse;
             window.showTabContent = showTabContent;
-            window.updateAppearOn = updateAppearOn;
+ //           window.updateAppearOn = updateAppearOn;
             window.removeMediaFromGallery = removeMediaFromGallery;
 
             window.handleFileUpload = handleFileUpload;
