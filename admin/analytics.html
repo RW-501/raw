@@ -126,6 +126,7 @@
 
 
         <main id="main-content">
+        <section>
             <div class="container mt-5">
                 <h2 class="text-center mb-4">Website Analytics Dashboard</h2>
                 <section>
@@ -156,8 +157,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">ip Address</h5>
-                                <p id="ipAddress" class="display-4">Loading...</p>
+                                <h5 class="section-title">Total Users:</h5>
+                                <p id="usersDisplay" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingEventPurchases"></div>
                             </div>
                         </div>
@@ -174,8 +175,8 @@
                 </div>
                 <!-- Add more event-specific or general analytics as needed -->
             </div>
-        
-
+        </section>
+<section>
             <title>User Analytics</title>
             <style>
               body {
@@ -200,14 +201,19 @@
               tr:nth-child(even) {
                 background-color: #f2f2f2;
               }
+
+              section {
+                margin: 3rem;
+              }
             </style>
-          </head>
-          <body>
+       
+       
             <h1>User Analytics</h1>
             <div id="userAnalyticsTableContainer">
               <!-- The table will be injected here -->
             </div>
-
+        </section>
+        <section>
 
             <title>Event Analytics</title>
             <style>
@@ -242,7 +248,7 @@
             </div>
           
 
-
+        </section>
 
 
 
@@ -299,67 +305,8 @@
         createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteObject,
          where, getDocs, storage, getAuth, collection, auth, analytics } from '../js/module.js';
     
-        // Function to fetch and display analytics for a specific event
-        async function fetchEventAnalytics(eventId) {
-            showLoading('eventAnalytics');
-            try {
-                const eventRef = db.collection('Events').doc(eventId);
-                const eventDoc = await eventRef.get();
-                
-                if (!eventDoc.exists) {
-                    throw new Error("Event not found.");
-                }
-                
-                const eventData = eventDoc.data();
-                const views = eventData.views || 0;
-                const retrieveCount = eventData.retrieveCount || 0;
-                const ipAddressList = eventData.retriever_IP || [];
-                const accessHandShake = eventData.accessHandShake || '';
-                const eventStatus = eventData.status || 'active';
-                const eventTags = eventData.eventTags || [];
-                const galleryBool = eventData.galleryBool || false;
-    
-                // Display Event Data
-                document.getElementById('eventViews').textContent = views;
-                document.getElementById('eventRetrieveCount').textContent = retrieveCount;
-                document.getElementById('eventIPAddresses').textContent = ipAddressList.join(', ');
-                document.getElementById('eventAccessHandShake').textContent = accessHandShake;
-                document.getElementById('eventStatus').textContent = eventStatus;
-                document.getElementById('eventTags').textContent = eventTags.join(', ');
-                document.getElementById('eventGallery').textContent = galleryBool ? 'Yes' : 'No';
-    
-                hideLoading('eventAnalytics');
-            } catch (error) {
-                displayError("Failed to load event analytics.");
-                hideLoading('eventAnalytics');
-            }
-        }
-    
-        // Function to fetch and display general analytics
-        async function fetchAnalyticsData() {
-            showLoading('pageViews');
-            try {
-                const metricsRef = db.collection('Analytics').doc('metrics');
-                const metricsDoc = await metricsRef.get();
-                
-                if (!metricsDoc.exists) {
-                    throw new Error("Metrics document does not exist.");
-                }
-    
-                const metricsData = metricsDoc.data();
-                document.getElementById('pageViews').textContent = metricsData.pageViews || '0';
-                document.getElementById('imageDownloads').textContent = metricsData.imageDownloads || '0';
-                document.getElementById('eventPurchases').textContent = metricsData.eventPurchases || '0';
-                document.getElementById('userEngagement').textContent = metricsData.userEngagement || '0';
-    
-                hideLoading('pageViews');
-            } catch (error) {
-                displayError("Failed to load analytics data.");
-                hideLoading('pageViews');
-            }
-        }
-    
-        // Function to show loading spinner
+       
+         // Function to show loading spinner
         function showLoading(metric) {
             document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
             document.getElementById(metric).style.display = 'none';
@@ -393,9 +340,11 @@
       const analyticsData = await fetchUserAnalyticsData();
       const totalUsers = analyticsData.length;
 
+
+      document.getElementById('usersDisplay').innerHTML = `<h3>${totalUsers}</h3>`;
       // Create a table with total user count
       let tableHTML = `
-        <h3>Total Users: ${totalUsers}</h3>
+    
         <table>
           <thead>
             <tr>
@@ -403,7 +352,7 @@
               <th>City</th>
               <th>Country</th>
               <th>State</th>
-              <th>Contact Views</th>
+              <th>Last View Date</th>
               <th>Total Duration (Seconds)</th>
               <th>Activities Count</th>
               <th>View Source</th>
@@ -421,11 +370,11 @@
             <td>${user.city}</td>
             <td>${user.country}</td>
             <td>${user.state}</td>
-            <td>${user.contactViews}</td>
-            <td>${user.totalDuration}</td>
+            <td>${user.lastViewDate}</td>
+            <td>${user.totalDuration || 0}</td>
             <td>${user.userActivitiesCount}</td>
-            <td>${user.viewSource}</td>
-            <td>${user.viewMethod}</td>
+            <td>${user.homeViewedBy.viewSource || ""}</td>
+            <td>${user.homeViewedBy.viewMethod || ""}</td>
           </tr>
         `;
       });
@@ -510,54 +459,20 @@ async function fetchEventsData() {
 
 
 
-        // Function to update analytics data based on date range
-        async function updateAnalytics() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-    
-            showLoading('pageViews');
-            try {
-                const rangeRef = db.collection('Analytics')
-                    .where('lastViewDate', '>=', new Date(startDate))
-                    .where('lastViewDate', '<=', new Date(endDate));
-                const rangeSnapshot = await rangeRef.get();
-    
-                let pageViews = 0;
-                let imageDownloads = 0;
-                let eventPurchases = 0;
-    
-                rangeSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    pageViews += data.userActivitiesCount || 0;
-                    totalDuration += data.totalDuration || 0;
-                    ipAddress += data.ipAddress || 0;
-                });
-    
-                document.getElementById('pageViews').textContent = pageViews;
-                document.getElementById('totalDuration').textContent = totalDuration;
-                document.getElementById('ipAddress').textContent = ipAddress;
-    
-                hideLoading('pageViews');
-            } catch (error) {
-                displayError("Failed to update analytics.");
-                hideLoading('pageViews');
-            }
-        }
-    
-        // Window onload event to fetch data when the page loads
+       
+// Window onload event to fetch data when the page loads
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get("eventId");
-            window.fetchEventAnalytics = fetchEventAnalytics;
+
             window.fetchTrendData = fetchTrendData;
-            window.fetchAnalyticsData = fetchAnalyticsData;
 
 console.log("Data ??????????????????????");
 
             if (eventId) {
-                fetchEventAnalytics(eventId);  // Fetch data for the specific event
+              //  fetchEventAnalytics(eventId);  // Fetch data for the specific event
             } else {
-                fetchAnalyticsData();  // Fetch general analytics data
+              //  fetchAnalyticsData();  // Fetch general analytics data
             }
             // my Analyics
             fetchEventsData();
@@ -571,31 +486,10 @@ console.log("Data ??????????????????????");
 
 
 
-            fetchTrendData();  // Fetch and display trend data for general metrics
         };
     
-        // Fetch trend data and display on the trend chart
-        async function fetchTrendData() {
-            try {
-                const trendRef = db.collection('Analytics').doc('trendData');
-                const trendDoc = await trendRef.get();
-    
-                if (!trendDoc.exists) {
-                    throw new Error("Trend data document does not exist.");
-                }
-    
-                const trendData = trendDoc.data();
-                const data = {
-                    labels: trendData.dates || [],
-                    pageViews: trendData.pageViews || []
-                };
-    
-                displayTrendAnalysis(data);
-            } catch (error) {
-                displayError("Failed to load trend data.");
-            }
-        }
-    
+      
+        
         // Display trend data on the trend chart
         function displayTrendAnalysis(data) {
             const ctx = document.getElementById('trendChart').getContext('2d');
