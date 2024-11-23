@@ -2119,13 +2119,13 @@ async function addMediaToGallery(category) {
         // Get the selected media details from Firestore
         const mediaRef = doc(db, "MainGallery", mediaId);
         const mediaDoc = await getDoc(mediaRef);
-
+/*
         if (!mediaDoc.exists()) {
             console.error("No media found with the provided mediaId.");
             showToast("Media not found!", "error");
             return;
         }
-
+*/
         const mediaData = mediaDoc.data();
         const { photoUrl, status, price, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
 
