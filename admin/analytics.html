@@ -291,7 +291,13 @@
 
     <!-- Firebase JS SDK and Custom Scripts -->
     <script type="module">
-        import { db, doc, getDoc, query, updateDoc, increment, collection, where } from '../js/module.js';
+        import {  db,getStorage, ref, uploadBytes, getDownloadURL,
+    doc,arrayUnion, RecaptchaVerifier ,increment, getDoc   ,signInWithPhoneNumber,
+     query, updateDoc , setDoc, addDoc,signInAnonymously , orderBy,
+      signInWithPopup,FacebookAuthProvider, GoogleAuthProvider,startAfter ,
+       OAuthProvider, signOut, onAuthStateChanged, deleteDoc, getFirestore,
+        createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteObject,
+         where, getDocs, storage, getAuth, collection, auth, analytics } from '../js/module.js';
     
         // Function to fetch and display analytics for a specific event
         async function fetchEventAnalytics(eventId) {
