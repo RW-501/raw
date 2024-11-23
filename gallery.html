@@ -389,7 +389,6 @@ async function fetchImages(category = 'all') {
                 where('isPublic', '==', true),
                 where('status', '==', 'active'),
                 where('appearOn.MainGallery', '==', true),
-                orderBy('timestamp', 'desc'),
                 startAfter(lastVisible || 0)
             );
 
