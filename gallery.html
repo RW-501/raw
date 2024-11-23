@@ -144,11 +144,11 @@
 
 <!-- Category Filter & Add Media Buttons -->
 <div class="btn-group mb-4" role="group">
-  <button type="button" class="btn btn-primary" onclick="handleCategory('portrait')">Portrait</button>
-  <button type="button" class="btn btn-primary" onclick="handleCategory('event')">Event</button>
-  <button type="button" class="btn btn-primary" onclick="handleCategory('commercial')">Commercial</button>
-  <button type="button" class="btn btn-primary" onclick="handleCategory('family')">Family</button>
-  <button type="button" class="btn btn-primary" onclick="handleCategory('other')">Other</button>
+  <button type="button" class="btn btn-primary" onclick="fetchImages('portrait')">Portrait</button>
+  <button type="button" class="btn btn-primary" onclick="fetchImages('event')">Event</button>
+  <button type="button" class="btn btn-primary" onclick="fetchImages('commercial')">Commercial</button>
+  <button type="button" class="btn btn-primary" onclick="fetchImages('family')">Family</button>
+  <button type="button" class="btn btn-primary" onclick="fetchImages('other')">Other</button>
 </div>
 
 
@@ -450,7 +450,7 @@ const mainTextArea = document.getElementById("text-area");
   }
 });
 
-
+window.fetchImages = fetchImages;
 
 // Clear cache on page unload
 window.addEventListener('beforeunload', () => {
