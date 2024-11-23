@@ -363,6 +363,7 @@ async function fetchImages(category = 'all') {
     if (isFetching) return; // Debounce repeated calls
     isFetching = true;
     setLoadingSpinner(true);
+    console.log("???? catagory  ",category);
 
     try {
         const mediaRef = collection(db, 'MainGallery');
