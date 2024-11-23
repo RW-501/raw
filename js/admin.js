@@ -388,7 +388,7 @@ function createScrollButton() {
       border-radius: 50px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      z-index: 5000;
+      z-index: 10;
       animation: scrollFadeIn 1s ease-out, scrollPulse 2s infinite;
   `;
   scrollButton.style.cssText = styles;
