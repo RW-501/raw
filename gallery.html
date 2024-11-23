@@ -379,6 +379,7 @@ async function fetchImages(category = 'all') {
             startAfter(lastVisible || 0),
             ...(category !== 'all' ? [where('category', '==', category)] : [])
         );
+        console.log("???? catagory  ",mediaQuery);
 
         const snapshot = await getDocs(mediaQuery);
         if (snapshot.empty) {
