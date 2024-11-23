@@ -360,8 +360,7 @@ function setLoadingSpinner(show) {
 
 // Fetch images from Firebase Firestore based on category
 async function fetchImages(category = 'all') {
-  category = category.trim();
-
+    category = category.trim();
 
     if (isFetching) return; // Prevent multiple simultaneous fetches
     isFetching = true;
@@ -372,8 +371,9 @@ async function fetchImages(category = 'all') {
     try {
         const cachedImages = JSON.parse(localStorage.getItem('cachedImages')) || [];
         const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Clear existing images
 
-        // Filter cached images for the selected category
+        // Filter cached images based on the selected category
         let filteredImages = category === 'all'
             ? cachedImages
             : cachedImages.filter(image => image.category === category);
@@ -384,23 +384,27 @@ async function fetchImages(category = 'all') {
         } else {
             console.log('Fetching from database');
             const mediaRef = collection(db, 'MainGallery');
-            let mediaQuery = query(
-                mediaRef,
-                where('isPublic', '==', true),
-                where('status', '==', 'active'),
-                where('appearOn.MainGallery', '==', true)
-            );
 
-            if (category !== 'all') {
-              console.log('Using category images');
-
-                mediaQuery = query(mediaQuery, where('category', '==', category));
-            }
+            // Build query based on category
+            const mediaQuery = category === 'all'
+                ? query(
+                    mediaRef,
+                    where('isPublic', '==', true),
+                    where('status', '==', 'active'),
+                    where('appearOn.MainGallery', '==', true)
+                )
+                : query(
+                    mediaRef,
+                    where('isPublic', '==', true),
+                    where('status', '==', 'active'),
+                    where('appearOn.MainGallery', '==', true),
+                    where('category', '==', category)
+                );
 
             const snapshot = await getDocs(mediaQuery);
 
             if (snapshot.empty) {
-                console.log('No more images to load.');
+                console.log('No images found for the selected category.');
                 return;
             }
 
@@ -411,9 +415,6 @@ async function fetchImages(category = 'all') {
 
             const updatedCache = [...cachedImages, ...newImages];
             localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
-
-            // Update last visible for pagination
-            lastVisible = snapshot.docs[snapshot.docs.length - 1];
 
             // Display fetched images
             displayImages(newImages);
@@ -438,6 +439,7 @@ async function fetchImages(category = 'all') {
 // Helper function to display images
 function displayImages(images) {
     const gallery = document.getElementById('gallery');
+    gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
         const imageElement = createImageElement(data);
         gallery.appendChild(imageElement);
@@ -447,7 +449,7 @@ function displayImages(images) {
 // Lazy loading enhancement: Load more images on scroll
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        fetchImages();
+      //  fetchImages();
     }
 });
 
