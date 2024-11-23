@@ -2076,63 +2076,75 @@ window.scrollToDiv = scrollToDiv;
 
 
 
-        async function addMediaToGallery(category) {
-    const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
+        import { doc, collection, query, where, getDoc, getDocs, addDoc, updateDoc } from "firebase/firestore"; 
 
-    const mediaId = document.getElementById('currentMediaID').innerText;
+async function addMediaToGallery(category) {
+    try {
+        // Retrieve event-related information
+        const [eventId, eventTitle, eventDate, publicStatus, coverPhoto] = eventInfo;
 
-    console.log("mediaId   ",mediaId);
-    // Get the selected media
-    const mediaCollectionRef = collection(db, "Media");
-    const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId), where("id", "==", mediaId));
-    const mediaSnapshot = await getDocs(mediaQuery);
+        // Retrieve the current media ID
+        const mediaId = document.getElementById("currentMediaID").innerText;
 
-    // Check if the media exists
-    if (mediaSnapshot.empty) {
-        console.error("No media found with the provided mediaId.");
-        return;
+        if (!mediaId) {
+            console.error("No mediaId found.");
+            showToast("No media ID found!", "error");
+            return;
+        }
+
+        console.log("Media ID: ", mediaId);
+
+        // Get the selected media details from Firestore
+        const mediaRef = doc(db, "Media", mediaId);
+        const mediaDoc = await getDoc(mediaRef);
+
+        if (!mediaDoc.exists()) {
+            console.error("No media found with the provided mediaId.");
+            showToast("Media not found!", "error");
+            return;
+        }
+
+        const mediaData = mediaDoc.data();
+        const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
+
+        // Prepare the data to be added or updated in MainGallery
+        const mainGalleryData = {
+            eventId: eventId,
+            category: category, // Portrait, Event, Commercial, Family, Other
+            isPublic: isPublic,
+            photoUrl: photoUrl,
+            status: status,
+            watermarkedImageUrl: watermarkedImageUrl,
+            price: price,
+            appearOnHeader: false,
+            mediaId: mediaId // Include mediaId for reference
+        };
+
+        // Check if the media already exists in MainGallery
+        const mainGalleryQuery = query(collection(db, "MainGallery"), where("mediaId", "==", mediaId));
+        const mainGallerySnapshot = await getDocs(mainGalleryQuery);
+
+        if (!mainGallerySnapshot.empty) {
+            // Media already exists, update it
+            const mainGalleryDocId = mainGallerySnapshot.docs[0].id;
+            const mainGalleryDocRef = doc(db, "MainGallery", mainGalleryDocId);
+            await updateDoc(mainGalleryDocRef, mainGalleryData);
+            console.log("Media updated in the gallery!");
+            showToast("Media updated in the gallery!", "success");
+        } else {
+            // Add the media to the MainGallery collection
+            await addDoc(collection(db, "MainGallery"), mainGalleryData);
+            console.log("Media successfully added to the gallery!");
+            showToast("Media successfully added to the gallery!", "success");
+        }
+
+        // Close the modal after adding or updating the media
+        closeModal();
+    } catch (error) {
+        console.error("Error adding/updating media in the gallery:", error);
+        showToast("Error updating gallery!", "error");
     }
-
-    // Get the media details and send to MainGallery
-    const mediaData = mediaSnapshot.docs[0].data(); // Assumes only one match for mediaId
-    const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
-
-    // Prepare the data to be added to MainGallery
-    const mainGalleryData = {
-        eventId: eventId,
-        category: category, // Portrait, Event, Commercial, Family, Other
-        isPublic: isPublic,
-        photoUrl: photoUrl,
-        status: status,
-        watermarkedImageUrl: watermarkedImageUrl,
-        price: price,
-        appearOnHeader: false,
-        mediaId: mediaId // Include mediaId in the data
-        
-    };
-    // Check if the media already exists in the MainGallery
-    const mainGalleryQuery = query(collection(db, "MainGallery"), where("mediaId", "==", mediaId));
-    const mainGallerySnapshot = await getDocs(mainGalleryQuery);
-
-    if (!mainGallerySnapshot.empty) {
-        // Media already exists, update it instead of adding
-        const mainGalleryDocId = mainGallerySnapshot.docs[0].id;
-        const mainGalleryDocRef = doc(db, "MainGallery", mainGalleryDocId);
-        await updateDoc(mainGalleryDocRef, mainGalleryData);
-        console.log('Media updated in the gallery!');
-    } else {
-        // Add the media to the MainGallery collection
-        await addDoc(collection(db, "MainGallery"), { ...mainGalleryData, mediaId: mediaId });
-        console.log('Media successfully added to the gallery!');
-    }
-
-    // Optionally display a success message
-    showToast('Media successfully added or updated in the gallery!');
-
-    // Close the modal after adding or updating the media
-    closeModal();
 }
-
 
 
 // Function to show the modal and set the mediaId
