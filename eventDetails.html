@@ -433,7 +433,7 @@ let eventData2 = [];
             } else {
                 console.log("Meta tags successfully set after retry.");
             }
-        }, 4000);
+        }, 200);
     } else {
         console.log("Meta tags successfully set.");
     }
@@ -528,13 +528,13 @@ async function fetchEventDetails() {
             console.error("No event found with the given parameters.");
             return;
         }
+        console.log(",  eventData   ",eventData);
 
         // Update the event details on the page
         updateEventPage(eventData);
         console.log(",  done?    ");
 
 
-        console.log(",  eventData   ",eventData);
 
         // Fetch and display related media images for the event
         //await
