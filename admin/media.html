@@ -2173,7 +2173,7 @@ function showAddToGalleryModal(mediaId) {
     document.getElementById('currentMediaID').innerText = mediaId;
     document.getElementById('addToGalleryModal').style.display = 'block'; // Show the modal
 }
-
+window.showAddToGalleryModal = showAddToGalleryModal;
 // Function to close the modal
 function closeModal() {
     document.getElementById('addToGalleryModal').style.display = 'none'; // Hide the modal
