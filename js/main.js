@@ -278,8 +278,14 @@ window.onload = function() {
 
 
 function setUpdateFooterContent(){
+  console.log("setUpdateFooterContent   ");
+
 // Function to update the active class on the navigation links
 document.querySelectorAll('.nav-link').forEach(link => {
+
+  console.log(".nav-link   ",link);
+  console.log("window.location.pathname   ",window.location.pathname);
+
     // Check if the link's href matches the current page URL
     if (window.location.pathname === link.getAttribute('href')) {
       link.classList.add('active');
