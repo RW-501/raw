@@ -2236,6 +2236,7 @@ async function loadMainGallery() {
 
         // Render Gallery Items
         matchingMedia.forEach(media => renderGalleryItem(media, galleryContainer));
+        console.log("matchingMedia:", matchingMedia);
 
     } catch (error) {
         console.error('Error loading gallery:', error);
