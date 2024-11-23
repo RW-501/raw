@@ -391,6 +391,8 @@ async function fetchImages(category = 'all') {
             );
 
             if (category !== 'all') {
+              console.log('Using category images');
+
                 mediaQuery = query(mediaQuery, where('category', '==', category));
             }
 
