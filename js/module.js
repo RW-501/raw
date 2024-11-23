@@ -509,7 +509,7 @@ async function getHeaderImages(appearOn) {
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
 // Dynamically construct the query with a dynamic field
-const field = `appearOn.${appearOn}`;
+const field = `appearOn.HeaderGallery`;
     return query(mainGalleryRef, where(field, "==", true));
             }
             
