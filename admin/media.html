@@ -2074,6 +2074,29 @@ window.scrollToDiv = scrollToDiv;
             }
         }
 
+        async function fetchMainGalleryIds() {
+    try {
+        const mainGalleryRef = collection(db, "MainGallery");
+        const mainGallerySnapshot = await getDocs(mainGalleryRef);
+
+        if (mainGallerySnapshot.empty) {
+            console.log("No documents found in MainGallery.");
+            showToast('No documents found in MainGallery.', 'info');
+            return [];
+        }
+
+        // Collect and return mediaId from MainGallery
+        const mediaIds = mainGallerySnapshot.docs.map(doc => doc.data().mediaId);
+        console.log("Fetched mediaIds:", mediaIds);
+
+        return mediaIds;
+    } catch (error) {
+        console.error("Error fetching MainGallery mediaIds:", error);
+        showToast('Error fetching MainGallery mediaIds.', 'error');
+        return [];
+    }
+}
+window.fetchMainGalleryIds = fetchMainGalleryIds;
 
 
 // Function to add media to the gallery
@@ -2190,7 +2213,7 @@ function renderGalleryItem(media, container) {
     const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media.data();
 
     // Merge appearOn data with default values
-    const appearOnData = { ...defaultAppearOn, ...appearOn };
+    const appearOnData = {  ...appearOn };
     console.log("appearOnData:", appearOnData);
 
     const mediaDiv = document.createElement('div');
