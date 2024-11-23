@@ -283,11 +283,11 @@
 }
 
 .collapse:not(.active) {
-    display: none; /* Ensures hidden content doesn't take up space */
+    display: inherit; /* Ensures hidden content doesn't take up space */
 }
 
 .collapse.active {
-    max-height: 500px; /* Adjust to fit expanded content */
+   /*  max-height: 500px; Adjust to fit expanded content */
     overflow: visible;
     padding: 10px; /* Add padding only when expanded */
     display: block;
