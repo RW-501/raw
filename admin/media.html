@@ -2082,7 +2082,7 @@ window.scrollToDiv = scrollToDiv;
     const mediaId = document.getElementById('currentMediaID').innerText;
 
     // Get the selected media
-    const mediaCollectionRef = collection(db, "MainGallery");
+    const mediaCollectionRef = collection(db, "Media");
     const mediaQuery = query(mediaCollectionRef, where("eventId", "==", eventId), where("id", "==", mediaId));
     const mediaSnapshot = await getDocs(mediaQuery);
 
