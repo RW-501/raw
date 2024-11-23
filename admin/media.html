@@ -2477,6 +2477,12 @@ window.toggleAppearOn = toggleAppearOn;
             // Function to show content for a selected tab
             function showTabContent(tabId) {
 
+                if (tabId == "Manage_Events") {
+                    fetchEvents();
+                }
+                if (tabId == "Manage_Gallery") {
+                    loadMainGallery();
+                }
 
                 if (tabId == "editEvent") {
                     document.getElementById('Add_Event_Label').innerText = "Update Event";
