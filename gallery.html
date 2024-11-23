@@ -396,8 +396,10 @@ async function fetchImages(category = 'all') {
                  //   where('appearOn.MainGallery', '==', true),
                     where('category', '==', category)
                 );
+                console.log("mediaQuery?   ", mediaQuery);
 
-            const snapshot = await getDocs(mediaQuery);
+                
+                const snapshot = await getDocs(mediaQuery);
             console.log("snapshot?   ", snapshot);
 
             if (snapshot.empty) {
