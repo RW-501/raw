@@ -266,7 +266,59 @@
             width: 100%;
         }
 
+/* Ensure grid items have a consistent height */
+.gallery-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 150px; /* Adjust based on your layout */
+    box-sizing: border-box;
+}
 
+/* Manage collapsed and expanded states */
+.collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.collapse:not(.active) {
+    display: none; /* Ensures hidden content doesn't take up space */
+}
+
+.collapse.active {
+    max-height: 500px; /* Adjust to fit expanded content */
+    overflow: visible;
+    padding: 10px; /* Add padding only when expanded */
+    display: block;
+}
+
+/* Media details alignment */
+.media-details {
+    padding: 10px 0;
+}
+
+/* Prevent items from shifting */
+.media-item-img-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Gallery container layout */
+.media-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Adjust for spacing */
+    align-items: start;
+}
+
+.media-thumbnail {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Maintain aspect ratio for images */
+}
 
         .directions {
     background-color: #f9f9f9;
@@ -2595,7 +2647,7 @@ function loadLastTab() {
 }
 
 // Run on page load
-loadLastTab();
+window.onload = loadLastTab();
 
 
             // Add an event listener to the file input to handle the file selection
