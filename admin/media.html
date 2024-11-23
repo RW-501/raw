@@ -1914,6 +1914,12 @@ populateDropdown();
 
     // Update the button content to reflect expanded/collapsed state
     if (btnDiv && title) {
+        if(title == "Expand"){
+            title = "Collaspe";
+        }else if(title == "Collaspe"){
+            title = "Expand";
+        }
+        
         if (details.classList.contains('collapse')) {
             btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
         } else {
@@ -2350,7 +2356,7 @@ function renderGalleryItem(media, container) {
                     <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="gallery-thumbnail view-image">
                 </div>
                 <div class="box">
-                    <button onclick="toggleCollapse('appearOn-${mediaId}', this)" aria-expanded="false">Expand ▼</button>
+                    <button onclick="toggleCollapse('appearOn-${mediaId}', this, "Expand")" aria-expanded="false">Expand ▼</button>
                 </div>
             </div>
             <div id="details-${mediaId}" class="gallery-details">
