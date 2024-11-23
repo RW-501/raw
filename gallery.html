@@ -438,6 +438,8 @@ function displayImages(images) {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
+      console.log("show data?   ", data);
+
         const imageElement = createImageElement(data);
         gallery.appendChild(imageElement);
     });
