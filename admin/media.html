@@ -2225,6 +2225,8 @@ async function loadMainGallery() {
         mediaSnapshot.forEach(doc => {
             if (mainGalleryIds.includes(doc.id)) {
                 matchingMedia.push({ id: doc.id, ...doc.data() });
+                console.log("matchingMedia:", matchingMedia);
+
             }
         });
 
