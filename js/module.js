@@ -686,7 +686,7 @@ function shuffleArray(arr) {
 
         // Execute the query
         const querySnapshot = await getDocs(mediaQuery);
-        console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
+     //   console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
 
         let defaultImages = await getHeaderImages();
 
