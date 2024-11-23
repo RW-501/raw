@@ -2646,13 +2646,13 @@ function switchTab(tabId) {
     if (selectedTab) {
         selectedTab.style.display = 'block';
         setTimeout(() => {
-            selectedTab.style.display = 'block';
+            //selectedTab.style.display = 'block';
             selectedTab.style.opacity = '1';
 
             selectedTab.setAttribute('style', 'display: block !important; opacity: 1 !important;');
 
             selectedTab.classList.add('visibleTab');
-        }, 300);
+        }, 500);
     }
 
     // Activate the button
