@@ -2063,41 +2063,7 @@ async function removeFromMedia(mediaId) {
         window.removeFromMedia = removeFromMedia;
 
 
-        const scrollButton = document.getElementById('scrollButton');
 
-// Show the button dynamically based on page height
-window.addEventListener('scroll', () => {
-    const pageHeight = document.body.scrollHeight;
-    const viewportHeight = window.innerHeight;
-    const scrollDistance = window.scrollY;
-
-    // Show button after scrolling past 25% of the total page height
-    const showAfter = pageHeight * 0.25;
-    if (scrollDistance > showAfter) {
-        scrollButton.style.display = 'block';
-    } else {
-        scrollButton.style.display = 'none';
-    }
-});
-
-// Smooth scroll function
-function scrollToDiv(divId) {
-    const targetDiv = document.getElementById(divId);
-    const mainDiv = document.getElementById("main-content");
-    if (targetDiv) {
-        targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-
-        mainDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
-
-window.scrollToDiv = scrollToDiv;
-
-scrollButton.addEventListener('click', () => {
-    console.log('Scroll button clicked!');
-    scrollToDiv();
-});
 
         // Delete Event Function
         // Delete Event Function 

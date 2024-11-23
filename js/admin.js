@@ -367,7 +367,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+const scrollButton = document.getElementById('scrollButton');
 
+// Show the button dynamically based on page height
+window.addEventListener('scroll', () => {
+    const pageHeight = document.body.scrollHeight; // Total height of the page
+    const viewportHeight = window.innerHeight;    // Visible height of the window
+    const scrollDistance = window.scrollY;        // Current scroll position
+
+    // Determine when the button should appear:
+    // 1. Ensure the page is significantly taller than the viewport
+    // 2. Show button only after scrolling past 25% of the total page height
+    const isPageTallEnough = pageHeight > viewportHeight * 1.5;
+    const showAfter = pageHeight * 0.25;
+
+    if (isPageTallEnough && scrollDistance > showAfter) {
+        scrollButton.style.display = 'block'; // Show the button
+    } else {
+        scrollButton.style.display = 'none'; // Hide the button
+    }
+});
+
+
+// Smooth scroll function
+function scrollToDiv(divId) {
+    const targetDiv = document.getElementById(divId);
+    const mainDiv = document.getElementById("main-content");
+    if (targetDiv) {
+        targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+
+        mainDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+window.scrollToDiv = scrollToDiv;
+
+scrollButton.addEventListener('click', () => {
+ //   console.log('Scroll button clicked!');
+    scrollToDiv();
+});
 
 
 
