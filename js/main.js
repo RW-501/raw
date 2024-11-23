@@ -289,7 +289,7 @@ function addNavLinkStyles() {
     /* Styling for the active nav link */
     .nav-links li a.navActive {
       color: #fff; /* White text for active item */
-      background-color: #007bff; /* Blue background for active item */
+      background-color: #007bff0f; /* Blue background for active item */
       border-radius: 5px;
     }
 
