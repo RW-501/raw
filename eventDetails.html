@@ -506,10 +506,7 @@ async function fetchEventDetails() {
         const eventIdURL = sanitizeInput2(urlParams.get('id'));
         const accessCode = sanitizeInput2(urlParams.get('a'));
         const shortURL = sanitizeInput2(urlParams.get('s'));
-        console.log(",  urlParams   ",urlParams);
-        console.log(",  accessCode   ",accessCode);
-        console.log(",  shortURL   ",shortURL);
-        console.log(",  eventIdURL   ",eventIdURL);
+
 
         let eventData = null;
 
@@ -528,12 +525,12 @@ async function fetchEventDetails() {
             console.error("No event found with the given parameters.");
             return;
         }
-        console.log(",  eventData   ",eventData);
 
+        
         // Update the event details on the page
         updateEventPage(eventData);
-        console.log(",  done?    ");
 
+        
 
 
         // Fetch and display related media images for the event
@@ -545,8 +542,8 @@ async function fetchEventDetails() {
         setupDownloadButton(eventData);
  
         eventId = eventData.id;
-        console.log(",  eventData   ",eventData);
 
+        
         return eventId;
 
     } catch (error) {
@@ -564,8 +561,8 @@ function updateEventPage(eventData) {
 
 // Function to fetch and display media images related to the event
 async function displayEventImages(eventData) {
-    console.log(",  eventData  ggggg ",eventData.data);
 
+    
     const imageData = await fetchMediaImages(eventData.id);  // Assuming eventId is part of eventData
     const galleryContainer = document.getElementById('event-gallery');
     imageData.forEach(img => {
@@ -583,9 +580,9 @@ function setupDownloadButton(eventData) {
     const downloadBtn = document.getElementById('download-btn');
     downloadBtn.addEventListener('click', () => {
         if (collectionPrice === 0 || collectionPrice === "") {
-            window.location.href = `https://rawphotographysite.com/confirmation?id=${eventData.eventId}&ccc=${eventData.downloadId}`;
+            window.location.href = `https://rawphotographysite.com/confirmation?id=${eventData.data.eventId}&ccc=${eventData.data.downloadId}`;
         } else {
-            window.location.href = `https://rawphotographysite.com/cart?id=${eventData.eventId}`;
+            window.location.href = `https://rawphotographysite.com/cart?id=${eventData.data.eventId}`;
         }
     });
 }
@@ -604,7 +601,7 @@ window.open(facebookShareURL, '_blank');
 
 function shareOnTwitter() {
     const shareURL = `https://rawphotographysite.com/eventDetails?id=${eventId}`;
-    const tweetText = `🎉 Event Alert: ${eventData.title}\n📅 Date: ${formatDate(eventData.eventDate)}\n📍 Location: ${eventData.location}\n\n${eventData.description}`;
+    const tweetText = `🎉 Event Alert: ${eventData.data.title}\n📅 Date: ${formatDate(eventData.data.eventDate)}\n📍 Location: ${eventData.data.location}\n\n${eventData.data.description}`;
     const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareURL)}`;
     console.log(",  eventId   ",eventId);
 setMetaTags(eventId);
