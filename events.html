@@ -455,7 +455,11 @@
     errorMessage.style.display = 'none'; // Hide error message
     
     const eventsCollection = collection(db, 'Events');
-const activeEventsQuery = query(eventsCollection, where('status', '==', 'active')); // Filter by status = 'active'
+    const activeEventsQuery = query(
+    eventsCollection, 
+    where('status', '==', 'active'), 
+    where('isPublic', '==', true)
+);
 
     try {
 
