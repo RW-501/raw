@@ -413,7 +413,7 @@ function getViewedByField() {
     const header = document.getElementById('Main_Header');
     header.style.position = "relative";
     header.style.overflow = "hidden";
-    let filmImages = await getHeaderImages("MainGallery");
+    let filmImages = await getHeaderImages("HeaderGallery");
 
     if(!filmImages){
     filmImages = [
@@ -499,7 +499,7 @@ function applyFilmStripEffect() {
 // Function to get header images
 async function getHeaderImages(appearOn) {
     try {
-        console.log("appearOn:", appearOn);
+      //  console.log("appearOn:", appearOn);
        const showBool = true;
         // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'Media');
