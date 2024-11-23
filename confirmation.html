@@ -10,7 +10,7 @@
     <meta property="og:title" content="Event Detail – RAW Photography">
     <meta property="og:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
     <meta property="og:image" content="https://rawphotographysite.com/images/main.jpg">
-    <meta property="og:url" content="https://rawphotographysite.com/event-detail">
+    <meta property="og:url" content="https://rawphotographysite.com/eventDetail">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Event Detail – RAW Photography">
     <meta name="twitter:description" content="Discover detailed information about upcoming photography events hosted by RAW Photography. Book your spot today!">
@@ -158,14 +158,15 @@
            
                <!-- Event Images -->
                <div id="event-gallery-downloadable" class="media-gallery d-flex flex-wrap gap-2"></div>
-               <div id="downloadMSG" class="mb-3 py-5">Bulk download or tap on a picture to download</div>
+               <div id="downloadMSG" class="mb-3 py-5"></div>
+               <div id="downloadMSG2" class="mb-3 py-5">Bulk download or tap on a picture to download</div>
 
                
                <select id="file-format">
                 <option disabled value="jpg">JPEG</option>
                 <option disabled  value="png">PNG</option>
-                <option   value="pdf">PDF</option>
                 <option   value="zip">ZIP</option>
+                <option   value="pdf">PDF</option>
              </select>
           <button id="download-button" class="mb-3">Download Now</button>
           <div id="followUpContainer" class="mb-3"></div>
@@ -507,7 +508,7 @@ function showDownloadMessage(eventId, index, format) {
 }
 
 // Example usage
-showDownloadMessage(12345, 0, "pdf");
+//showDownloadMessage(12345, 0, "pdf");
 
 // Include JSZip for zipping files
 const JSZip = window.JSZip;
