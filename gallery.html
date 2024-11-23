@@ -360,63 +360,85 @@ function setLoadingSpinner(show) {
 
 // Fetch images from Firebase Firestore based on category
 async function fetchImages(category = 'all') {
-    if (isFetching) return; // Debounce repeated calls
+    if (isFetching) return; // Prevent multiple simultaneous fetches
     isFetching = true;
     setLoadingSpinner(true);
-    console.log("???? catagory  ",category);
+
+    console.log("Selected category:", category);
 
     try {
-        const mediaRef = collection(db, 'MainGallery');
-        let mediaQuery;
-
-        // Build the query based on the category
-        mediaQuery = query(
-            mediaRef,
-            where('isPublic', '==', true),
-            where('status', '==', 'active'),
-            where('appearOn.MainGallery', '==', true),
-            orderBy('timestamp'),
-            startAfter(lastVisible || 0),
-            ...(category !== 'all' ? [where('category', '==', category)] : [])
-        );
-        console.log("???? catagory  ",mediaQuery);
-
-        const snapshot = await getDocs(mediaQuery);
-        if (snapshot.empty) {
-            //document.getElementById('loading').textContent = 'No more images to load.';
-            return;
-        }
-
-        // Extract and validate media documents
-        const validMediaDocs = snapshot.docs.map(doc => doc.data()).filter(data => data.id && data.watermarkedImageUrl);
-
-        // Cache fetched images for faster subsequent loads
         const cachedImages = JSON.parse(localStorage.getItem('cachedImages')) || [];
-        cachedImages.push(...validMediaDocs);
-        localStorage.setItem('cachedImages', JSON.stringify(cachedImages));
-
-        // Display images in the gallery
         const gallery = document.getElementById('gallery');
-        validMediaDocs.forEach(data => {
-            const imageElement = createImageElement(data);
-            gallery.appendChild(imageElement);
-        });
 
-        // Update the last visible document for pagination
-        lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        // Filter cached images for the selected category
+        let filteredImages = category === 'all'
+            ? cachedImages
+            : cachedImages.filter(image => image.category === category);
+
+        if (filteredImages.length > 0) {
+            console.log('Using cached images');
+            displayImages(filteredImages);
+        } else {
+            console.log('Fetching from database');
+            const mediaRef = collection(db, 'MainGallery');
+            let mediaQuery = query(
+                mediaRef,
+                where('isPublic', '==', true),
+                where('status', '==', 'active'),
+                where('appearOn.MainGallery', '==', true),
+                orderBy('timestamp', 'desc'),
+                startAfter(lastVisible || 0)
+            );
+
+            if (category !== 'all') {
+                mediaQuery = query(mediaQuery, where('category', '==', category));
+            }
+
+            const snapshot = await getDocs(mediaQuery);
+
+            if (snapshot.empty) {
+                console.log('No more images to load.');
+                return;
+            }
+
+            // Process new images and update cache
+            const newImages = snapshot.docs
+                .map(doc => doc.data())
+                .filter(data => data.id && data.watermarkedImageUrl);
+
+            const updatedCache = [...cachedImages, ...newImages];
+            localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
+
+            // Update last visible for pagination
+            lastVisible = snapshot.docs[snapshot.docs.length - 1];
+
+            // Display fetched images
+            displayImages(newImages);
+        }
     } catch (error) {
         console.error('Error fetching images:', error);
-        retryCount++;
-        if (retryCount <= 3) {
-            console.log('Retrying fetch...');
+
+        if (retryCount < 3) {
+            retryCount++;
+            console.log('Retrying fetch... Attempt:', retryCount);
             fetchImages(category);
         } else {
-           // document.getElementById('loading').textContent = 'Error loading images. Please try again later.';
+            console.error('Failed to fetch images after multiple attempts.');
+            // Show a fallback message to the user if needed
         }
     } finally {
         setLoadingSpinner(false);
         isFetching = false;
     }
+}
+
+// Helper function to display images
+function displayImages(images) {
+    const gallery = document.getElementById('gallery');
+    images.forEach(data => {
+        const imageElement = createImageElement(data);
+        gallery.appendChild(imageElement);
+    });
 }
 
 // Lazy loading enhancement: Load more images on scroll
