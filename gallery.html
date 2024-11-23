@@ -434,6 +434,7 @@ async function fetchImages(category = 'all') {
 
 // Helper function to display images
 function displayImages(images) {
+  console.log("show images?");
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
