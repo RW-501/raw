@@ -429,10 +429,27 @@
       // Insert the table into the container
       document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
     }
+   
 
-    // Display user analytics when the page loads
-    displayUserAnalytics();
-  
+async function fetchUserAnalyticsData() {
+  const analyticsCollection = collection(db, "Analytics"); // reference to the Analytics collection
+  const analyticsSnapshot = await getDocs(analyticsCollection); // fetch all documents in the collection
+  const analyticsList = analyticsSnapshot.docs.map(doc => ({
+    ipAddress: doc.id, // IP address as doc ID
+    city: doc.data().city,
+    country: doc.data().country,
+    state: doc.data().state,
+    contactViews: doc.data().contactViews,
+    totalDuration: doc.data().totalDuration,
+    userActivitiesCount: doc.data().userActivitiesCount,
+    viewSource: doc.data().viewSource,
+    viewMethod: doc.data().viewMethod,
+    contactViewedBy: doc.data().contactViewedBy,
+  }));
+  return analyticsList;
+}
+
+ 
     async function displayEventAnalytics() {
       const events = await fetchEventsData();
 
@@ -466,8 +483,6 @@
       document.getElementById("eventTableContainer").innerHTML = tableHTML;
     }
 
-    // Display event analytics when the page loads
-    displayEventAnalytics();
 async function fetchEventsData() {
   const eventsCollection = collection(db, "Events"); // reference to the Events collection
   const eventsSnapshot = await getDocs(eventsCollection); // fetch all documents in the collection
@@ -540,6 +555,14 @@ console.log("Data ??????????????????????");
             }
             // my Analyics
             fetchEventsData();
+            fetchUserAnalyticsData();
+   // Display user analytics when the page loads
+   displayUserAnalytics();
+  
+    // Display event analytics when the page loads
+    displayEventAnalytics();
+
+
 
 
             fetchTrendData();  // Fetch and display trend data for general metrics
