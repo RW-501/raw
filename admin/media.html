@@ -1611,7 +1611,7 @@ const mainGalleryIds = await fetchMainGalleryIds();
         <div class="batch-buttons btn-group controls">
             <!-- Add to Gallery Option -->
             ${!mainGalleryIds.includes(item.id) ? `
-                <button onclick="showAddToGalleryModal('${item.id}')">Add to Gallery</button>
+                <button id="addToGalleyBtn_${mediaId}" onclick="showAddToGalleryModal('${item.id}')">Add to Gallery</button>
             ` : ''}
 
             <!-- Event Change Dropdown -->
@@ -2159,7 +2159,7 @@ async function addMediaToGallery(category) {
             console.log("Media successfully added to the gallery!");
             showToast("Media successfully added to the gallery!", "success");
         }
-
+        document.getElementById(`addToGalleyBtn_${mediaId}`).innerText = "Added";
         // Close the modal after adding or updating the media
         closeModal();
     } catch (error) {
