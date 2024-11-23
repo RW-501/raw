@@ -660,21 +660,33 @@ function getRandomDefaultImage(defaultImages) {
   window.getRandomDefaultImage = getRandomDefaultImage;
 
 
+// Function to shuffle an array using Fisher-Yates algorithm
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+    }
+    return arr;
+}
+  window.shuffleArray = shuffleArray;
 
-  
   // Fetch HomePage Data
-  window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, Collection) {
+  async function fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, page) {
+
+ // window.fetchGalleryAndSiteInfo = async function (mainTextArea, galleryImagesContainer, page) {
     try {
         // Get collection reference
         const mediaQuery = query(
-            collection(db, "Media"),
+            collection(db, "MainGallery"),
             where("isPublic", "==", true),
-            where("status", "==", "active")
+            where("status", "==", "active"),
+            where(`appearOn.${page}`, "==", true) // Dynamic page key
         );
+        
 
         // Execute the query
         const querySnapshot = await getDocs(mediaQuery);
-        console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, Collection);
+        console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
 
         let defaultImages = await getHeaderImages();
 
@@ -698,8 +710,20 @@ function getRandomDefaultImage(defaultImages) {
             return defaultImages[Math.floor(Math.random() * defaultImages.length)];
         };
 
-        // Loop through the documents in the collection
-        querySnapshot.forEach(doc => {
+// Fetch the query results
+ querySnapshot = await getDocs(mediaQuery);
+
+// Convert the snapshot into an array
+let mediaArray = [];
+querySnapshot.forEach(doc => {
+    mediaArray.push(doc.data());
+});
+
+// Shuffle the array
+mediaArray = shuffleArray(mediaArray);
+
+// Now you can iterate through the shuffled array
+mediaArray.forEach(doc => {
             const data = doc.data();
 
             // Update main text area if the data contains mainText
@@ -713,8 +737,8 @@ function getRandomDefaultImage(defaultImages) {
 
             // Create and append image element with dynamic image URL   loading="lazy"
             const imageElement = `
-                <div class="image-container">
-                        <img src="${thumbnailUrl}" class="lazy-image" alt="${sanitizeInput(data.title || 'Untitled')}">
+                <div class="image-container pageGalleryContainer">
+                        <img src="${thumbnailUrl}" class="lazy-image pageGalleryImage" alt="${sanitizeInput(data.title || 'Untitled')}">
                 </div>`;
             
             // Add the image element to the gallery container
