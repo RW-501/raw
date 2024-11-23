@@ -2191,8 +2191,10 @@ async function loadMainGallery() {
         const mainGallerySnapshot = await getDocs(mainGalleryRef);
 
         if (mainGallerySnapshot.empty) {
+            galleryContainer.innerHTML = "<p>No documents found in MainGallery.</p>";
+
             console.log("No documents found in MainGallery.");
-            showToast('No documents found in MainGallery.', 'info');
+           // showToast('No documents found in MainGallery.', 'info');
             return;
         }
         console.log("mainGallerySnapshot:", mainGallerySnapshot);
