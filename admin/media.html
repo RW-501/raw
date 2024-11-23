@@ -2361,7 +2361,7 @@ function renderGalleryItem(media, container) {
             </div>
             <div id="details-${mediaId}" class="gallery-details">
                 <div class="box">
-                    <h4>${category || "Category"}</h4>
+                    <h4 onclick="showAddToGalleryModal(${mediaId})">Category: ${category || "Add Category"}</h4>
                     <p>Status: ${status ? 'Active' : 'Inactive'}</p>
                     <p>Public: ${isPublic ? 'Yes' : 'No'}</p>
                     <p>Price: $${price || 0}</p>
