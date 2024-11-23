@@ -1611,7 +1611,7 @@ const mainGalleryIds = await fetchMainGalleryIds();
         <div class="batch-buttons btn-group controls">
             <!-- Add to Gallery Option -->
             ${!mainGalleryIds.includes(item.id) ? `
-                <button onclick="addToMainGallery('${item.id}')">Add to Gallery</button>
+                <button onclick="showAddToGalleryModal('${item.id}')">Add to Gallery</button>
             ` : ''}
 
             <!-- Event Change Dropdown -->
@@ -2315,7 +2315,7 @@ function renderCheckboxes(options, appearOn, mediaId) {
 
 function toggleAppearOn(mediaId, page, isChecked) {
     const mediaRef = doc(db, 'Media', mediaId);
-    updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
+    updateDoc(mediaRef, { [`${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
         if(page == "MainGallery" && isChecked == true){
@@ -2334,7 +2334,7 @@ window.toggleAppearOn = toggleAppearOn;
 
 
 
-
+/*
         // Function to add a document ID to MainGallery
         async function addToMainGallery(imageId) {
             try {
@@ -2358,7 +2358,7 @@ window.toggleAppearOn = toggleAppearOn;
                 showToast('Failed to add image to MainGallery.', 'error');
             }
         }
-
+*/
 
 
 
@@ -2529,7 +2529,7 @@ window.toggleAppearOn = toggleAppearOn;
             window.bulkUploadPhotosFunc = bulkUploadPhotosFunc;
             window.fileToDataURL = fileToDataURL;
             window.savePhotoDetails = savePhotoDetails;
-            window.addToMainGallery = addToMainGallery;
+        //    window.addToMainGallery = addToMainGallery;
             window.saveWatermarkInputs = saveWatermarkInputs;
             window.clearWatermarkInputs = clearWatermarkInputs;
             window.loadWatermarkInputs = loadWatermarkInputs;
