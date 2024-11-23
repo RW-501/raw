@@ -309,8 +309,8 @@ addNavLinkStyles();
   const links = document.querySelectorAll('.nav-links a');
 
   links.forEach(link => {
-      console.log("Nav link:", link.href);
-      console.log("Window location:", window.location.pathname);
+    //  console.log("Nav link:", link.href);
+   //   console.log("Window location:", window.location.pathname);
 
       // Check if the link's href matches the current page URL
       if (link.getAttribute('href').includes(window.location.pathname)) {
@@ -322,7 +322,7 @@ addNavLinkStyles();
 
   // Update the footer content if necessary
   const pageName = getPageNameFromPath(window.location.pathname);
-  console.log("Page name for footer:", pageName);
+  //console.log("Page name for footer:", pageName);
   updateFooterContent(pageName);
 }
 

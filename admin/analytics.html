@@ -284,7 +284,7 @@
     
         // Function to hide loading spinner
         function hideLoading(metric) {
-            document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
+          //  document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
             document.getElementById(metric).style.display = 'block';
         }
     
@@ -334,6 +334,8 @@
             window.fetchEventAnalytics = fetchEventAnalytics;
             window.fetchTrendData = fetchTrendData;
             window.fetchAnalyticsData = fetchAnalyticsData;
+
+console.log("Data ??????????????????????");
 
             if (eventId) {
                 fetchEventAnalytics(eventId);  // Fetch data for the specific event

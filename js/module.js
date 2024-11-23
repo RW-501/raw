@@ -384,6 +384,12 @@ function getViewedByField() {
         if (target.classList.contains("lazy-image")) {
             const imageSrc = target.src || target.getAttribute("data-src");
   
+
+            /*
+
+ADD CODE TO ADD MEDIA VIEW COUNT
+
+            */
             // Create the full-screen popup
             createImagePopup(imageSrc);
         }
@@ -583,7 +589,7 @@ async function getHeaderImages(appearOn) {
             })
             .filter((url) => url !== null); // Remove null entries
 
-        console.log(`Found ${images.length} header images.`);
+       // console.log(`Found ${images.length} header images.`);
         return images; // Return the list of image URLs
     } catch (error) {
         console.error("Error fetching header images:", error);
@@ -603,7 +609,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
   } else {
    // window.onload = function() {
         setTimeout(() => {
-            console.log("Running?  ");
+           // console.log("Running?  ");
 
             // Run the functions after a 3-second delay
           //  displayHeaderImages();
