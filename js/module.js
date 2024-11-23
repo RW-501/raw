@@ -556,6 +556,8 @@ headerImagesQuery = query(
 
 window.getHeaderImages = getHeaderImages;
 
+
+/*
 //window.displayHeaderImages = async function() {
     async function displayHeaderImages(page) {
         if(!page){
@@ -599,7 +601,7 @@ window.getHeaderImages = getHeaderImages;
     }
     window.displayHeaderImages = displayHeaderImages;
 
-    
+    */
 
 
 
