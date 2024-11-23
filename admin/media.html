@@ -2632,7 +2632,7 @@ function switchTab(tabId) {
         setTimeout(() => {
             tab.style.display = 'none';
             tab.classList.remove('visibleTab');
-        }, 300);
+        }, 100);
     });
 
     // Remove active class from all buttons
@@ -2645,10 +2645,11 @@ function switchTab(tabId) {
         setTimeout(() => {
             selectedTab.style.display = 'block';
             selectedTab.style.opacity = '1';
+
             selectedTab.setAttribute('style', 'display: block !important; opacity: 1 !important;');
 
             selectedTab.classList.add('visibleTab');
-        }, 50);
+        }, 300);
     }
 
     // Activate the button
