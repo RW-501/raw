@@ -499,7 +499,7 @@ function applyFilmStripEffect() {
 // Function to get header images
 async function getHeaderImages(appearOn) {
     try {
-      //  console.log("appearOn:", appearOn);
+       console.log("getHeaderImages appearOn:", appearOn);
        const showBool = true;
         // Reference the 'Media' collection
         const mainGalleryRef = collection(db, 'MainGallery');
@@ -508,7 +508,6 @@ async function getHeaderImages(appearOn) {
 
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
-            if (appearOn && showBool === true) {
 // Dynamically construct the query with a dynamic field
 headerImagesQuery = query(
     mainGalleryRef, 
@@ -517,7 +516,7 @@ headerImagesQuery = query(
             }
             
           
-            if (headerImagesQuery) {
+            if (!headerImagesQuery) {
 
                     headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
             } else {
@@ -525,12 +524,7 @@ headerImagesQuery = query(
                 console.error("'no images for ",appearOn);
                 return ;
             }
-        } else {
-            // Query for public images if 'appearOn' is not provided
-            headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
-        }
-    //  /  console.log(`headerImagesQuery ${headerImagesQuery} .`); 
-
+    
         // Execute the query and retrieve the snapshot of matching documents
         const querySnapshot = await getDocs(headerImagesQuery);
        // console.log(`Found ${querySnapshot.size} images.`); // Log the number of images found
