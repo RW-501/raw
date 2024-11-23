@@ -265,8 +265,7 @@ window.onload = function() {
   
   
   } else {
-    //console.log("User View");
-    window.setUpdateFooterContent = setUpdateFooterContent;
+    console.log("window.onload setUpdateFooterContent");
   
     setUpdateFooterContent();
     // Run the function on load and on resize
@@ -293,6 +292,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     }
   });
 }
+window.setUpdateFooterContent = setUpdateFooterContent;
 
   // Function to update the footer content based on the page name
   function updateFooterContent(pageName) {
@@ -345,7 +345,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
       footerCopyWriteElement.textContent = `&copy; ${pageData.year} ${pageData.copyWrite}`;
     }
   }
-  
+  window.updateFooterContent = updateFooterContent;
+
   // Function to extract the page name from the URL path
   function getPageNameFromPath(path) {
     // Extract the page name from the URL path
@@ -412,51 +413,6 @@ document.querySelectorAll('.nav-link').forEach(link => {
         }).format(date);
     }
     
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Add click listener to lazy-image elements
-  document.body.addEventListener("click", event => {
-      const target = event.target;
-
-      // Check if the clicked element is a lazy-image
-      if (target.classList.contains("lazy-image")) {
-          const imageSrc = target.src || target.getAttribute("data-src");
-
-          // Create the full-screen popup
-          createImagePopup(imageSrc);
-      }
-  });
-
-  // Function to create the full-screen popup
-  const createImagePopup = (imageSrc) => {
-      // Create the overlay
-      const overlay = document.createElement("div");
-      overlay.classList.add("fullscreen-popup");
-
-      // Set the inner HTML of the overlay
-      overlay.innerHTML = `
-          <img src="${imageSrc}" class="popup-image" alt="Full-size image">
-          <button class="close-button">&times;</button>
-          <button class="more-images-button">More Events</button>
-      `;
-
-      // Append the overlay to the body
-      document.body.appendChild(overlay);
-
-      // Add functionality to the close button
-      const closeButton = overlay.querySelector(".close-button");
-      closeButton.addEventListener("click", () => overlay.remove());
-
-      // Add functionality to the "More Videos" button
-      const moreVideosButton = overlay.querySelector(".more-images-button");
-      moreVideosButton.addEventListener("click", () => {
-        window.location.href = "/events"
-       //   alert("Redirect to videos or perform another action here.");
-      });
-  };
-});
-
 
 
 

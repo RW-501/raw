@@ -375,6 +375,51 @@ function getViewedByField() {
 
 
 
+  document.addEventListener("DOMContentLoaded", () => {
+    // Add click listener to lazy-image elements
+    document.body.addEventListener("click", event => {
+        const target = event.target;
+  
+        // Check if the clicked element is a lazy-image
+        if (target.classList.contains("lazy-image")) {
+            const imageSrc = target.src || target.getAttribute("data-src");
+  
+            // Create the full-screen popup
+            createImagePopup(imageSrc);
+        }
+    });
+  
+    // Function to create the full-screen popup
+    const createImagePopup = (imageSrc) => {
+        // Create the overlay
+        const overlay = document.createElement("div");
+        overlay.classList.add("fullscreen-popup");
+  
+        // Set the inner HTML of the overlay
+        overlay.innerHTML = `
+            <img src="${imageSrc}" class="popup-image" alt="Full-size image">
+            <button class="close-button">&times;</button>
+            <button class="more-images-button">View Events</button>
+        `;
+  
+        // Append the overlay to the body
+        document.body.appendChild(overlay);
+  
+        // Add functionality to the close button
+        const closeButton = overlay.querySelector(".close-button");
+        closeButton.addEventListener("click", () => overlay.remove());
+  
+        // Add functionality to the "More Videos" button
+        const moreVideosButton = overlay.querySelector(".more-images-button");
+        moreVideosButton.addEventListener("click", () => {
+          window.location.href = "/events"
+         //   alert("Redirect to videos or perform another action here.");
+        });
+    };
+  });
+  
+  
+
 
  
 
@@ -548,53 +593,6 @@ async function getHeaderImages(appearOn) {
 
 // Attach to the global window object for debugging or external access
 window.getHeaderImages = getHeaderImages;
-
-/*
-//window.displayHeaderImages = async function() {
-    async function displayHeaderImages(page) {
-        if(!page){
-             page = "MainGallery"; // Example of the appearOn value
-        }
-        console.log("Header Images page:", page);
-
-        try {
-            const images = await getHeaderImages(page); // Fetch header images
-            console.log("Header Images:Main", images);
-    
-            // Verify images is an array
-            if (!Array.isArray(images) || images.length === 0) {
-                console.warn("No header images found for", page);
-                return;
-            }
-    
-            // Get the image container
-            const imageContainer = document.getElementById("header-images");
-            if (!imageContainer) {
-                console.error("Image container not found");
-                return;
-            }
-    
-            // Clear previous images to avoid duplication
-            imageContainer.innerHTML = "";
-    
-            // Loop through the images and add them to the DOM
-            images.forEach((url) => {
-                const img = document.createElement("img");
-                img.src = url;
-                img.alt = "Header Image"; // SEO-friendly alt text
-                img.classList.add("header-image"); // Add a class for styling
-                imageContainer.appendChild(img);
-            });
-    
-            console.log(`Successfully displayed ${images.length} images.`);
-        } catch (error) {
-            console.error("Error displaying header images:", error);
-        }
-    }
-    window.displayHeaderImages = displayHeaderImages;
-
-    */
-
 
 
 
