@@ -257,25 +257,23 @@ window.hideLoadingSpinner = function() {
 
 
   // Scroll to the top of the page when the window is loaded
-window.onload = function() {
-  window.scrollTo(0, 0);
 
-  if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
-    console.log("Admin View");
+  setTimeout(() => {
+      window.scrollTo(0, 0);
+  
+      if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+        console.log("Admin View");
+      } else {
+        console.log("window.onload setUpdateFooterContent");
+  
+        setUpdateFooterContent();
+        // Run the function on load and on resize
+        window.addEventListener("load", adjustFooterForMobile);
+        window.addEventListener("resize", adjustFooterForMobile);
+      }
+    }, 1000); // Delay of 1 second (1000 ms)
   
   
-  } else {
-    console.log("window.onload setUpdateFooterContent");
-  
-    setUpdateFooterContent();
-    // Run the function on load and on resize
-    window.addEventListener('load', adjustFooterForMobile);
-    window.addEventListener('resize', adjustFooterForMobile);
-      
-  
-  }
-};
-
 
 function setUpdateFooterContent() {
   // Get all anchor tags inside the nav-links
