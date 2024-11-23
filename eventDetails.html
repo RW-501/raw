@@ -556,10 +556,10 @@ async function fetchEventDetails() {
 
 // Function to update the event details on the page
 function updateEventPage(eventData) {
-    document.getElementById('event-title').innerText = eventData.title;
-    document.getElementById('event-description').innerText = eventData.description;
-    document.getElementById('event-date').innerText = formatDate(eventData.eventDate);
-    document.getElementById('event-location').innerText = eventData.location;
+    document.getElementById('event-title').innerText = eventData.data.title;
+    document.getElementById('event-description').innerText = eventData.data.description;
+    document.getElementById('event-date').innerText = formatDate(eventData.data.eventDate);
+    document.getElementById('event-location').innerText = eventData.data.location;
 }
 
 // Function to fetch and display media images related to the event
