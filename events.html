@@ -580,6 +580,9 @@ function searchEvents() {
         }
 
        window.searchEvents = searchEvents;
+
+
+
 // Execute  the function on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
     // Fetch Gallery and Site Info from HomePage collection
@@ -587,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const mainTextArea = document.getElementById("text-area");
 
   if (mainTextArea && galleryImagesContainer) {
-    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "EventsPage");
+    fetchGalleryAndSiteInfo(mainTextArea, galleryImagesContainer, "EventPage");
   } else {
     console.error("Required elements are missing in the DOM.");
   }
