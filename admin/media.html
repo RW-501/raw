@@ -2210,7 +2210,7 @@ async function loadMainGallery() {
 function renderGalleryItem(media, container) {
     console.log("media:", media.data());
 
-    const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media.data();
+    const { mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media.data();
     const defaultAppearOn = {
     HomePage: false,
     AboutPage: false,
