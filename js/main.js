@@ -281,9 +281,9 @@ function setUpdateFooterContent(){
  // console.log("setUpdateFooterContent   ");
 
 // Function to update the active class on the navigation links
-document.querySelectorAll('.nav-link').forEach(link => {
+document.querySelectorAll('.nav-links').forEach(link => {
 
-  console.log(".nav-link   ",link);
+  console.log(".nav-links   ",link);
   console.log("window.location.pathname   ",window.location.pathname);
 
     // Check if the link's href matches the current page URL
