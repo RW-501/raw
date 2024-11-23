@@ -2211,6 +2211,13 @@ function renderGalleryItem(media, container) {
     console.log("media:", media);
 
     const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media.data();
+    const defaultAppearOn = {
+    HomePage: false,
+    AboutPage: false,
+    EventPage: false,
+    ContactPage: false,
+    MainGallery: false
+};
 
     // Merge appearOn data with default values
     const appearOnData = {  ...appearOn };
