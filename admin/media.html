@@ -2076,7 +2076,7 @@ window.scrollToDiv = scrollToDiv;
 
 
 
-
+// Function to add media to the gallery
 async function addMediaToGallery(category) {
     try {
         // Retrieve event-related information
@@ -2104,7 +2104,7 @@ async function addMediaToGallery(category) {
         }
 
         const mediaData = mediaDoc.data();
-        const { photoUrl, status, price, isPublic, watermarkedImageUrl } = mediaData;
+        const { photoUrl, status, price, isPublic, watermarkedImageUrl, appearOn = {} } = mediaData;
 
         // Prepare the data to be added or updated in MainGallery
         const mainGalleryData = {
@@ -2115,7 +2115,7 @@ async function addMediaToGallery(category) {
             status: status,
             watermarkedImageUrl: watermarkedImageUrl,
             price: price,
-            appearOnHeader: false,
+            appearOn: appearOn, // Store the appearOn object
             mediaId: mediaId // Include mediaId for reference
         };
 
@@ -2145,10 +2145,8 @@ async function addMediaToGallery(category) {
     }
 }
 
-
 // Function to show the modal and set the mediaId
 function showAddToGalleryModal(mediaId) {
-
     document.getElementById('currentMediaID').innerText = mediaId;
     document.getElementById('addToGalleryModal').style.display = 'block'; // Show the modal
 }
@@ -2158,21 +2156,7 @@ function closeModal() {
     document.getElementById('addToGalleryModal').style.display = 'none'; // Hide the modal
 }
 
-
-
-        /**
-         * Load media items from MainGallery collection and render them into the gallery container.
-         */
-         const defaultAppearOn = {
-    HomePage: false,
-    AboutPage: false,
-    EventPage: false,
-    ContactPage: false,
-    MainGallery: false
-};
-
-const mainGalleryIds = [];
-
+// Load media items from MainGallery collection and render them into the gallery container.
 async function loadMainGallery() {
     const galleryContainer = document.getElementById('galleryContainer');
     galleryContainer.innerHTML = ''; // Clear previous content
@@ -2199,10 +2183,11 @@ async function loadMainGallery() {
     }
 }
 
+// Function to render gallery items in the container
 function renderGalleryItem(media, container) {
     console.log("media:", media);
 
-    const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media;
+    const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media.data();
 
     // Merge appearOn data with default values
     const appearOnData = { ...defaultAppearOn, ...appearOn };
@@ -2248,6 +2233,7 @@ function renderGalleryItem(media, container) {
     container.appendChild(mediaDiv);
 }
 
+// Function to render checkboxes for appearOn pages
 function renderCheckboxes(options, appearOn, mediaId) {
     return options
         .map(option => {
@@ -2263,70 +2249,21 @@ function renderCheckboxes(options, appearOn, mediaId) {
         .join('');
 }
 
+// Toggle the appearOn visibility for the media
 function toggleAppearOn(mediaId, page, isChecked) {
-    const mediaRef = doc(db, 'Media', mediaId);
-    updateDoc(mediaRef, { [`${page}`]: isChecked })
+    const mediaRef = doc(db, 'MainGallery', mediaId);
+    updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
-        if(page == "MainGallery" && isChecked == true){
-            showAddToGalleryModal(mediaId);
 
-        }
+    // If it's for the "MainGallery" page, show the modal for adding the media
+    if (page == "MainGallery" && isChecked == true) {
+        showAddToGalleryModal(mediaId);
+    }
 }
 
 window.toggleAppearOn = toggleAppearOn;
 
-
-
-
-
-async function fetchMainGalleryIds() {
-    try {
-        const mainGalleryRef = collection(db, "MainGallery");
-        const mainGallerySnapshot = await getDocs(mainGalleryRef);
-
-        if (mainGallerySnapshot.empty) {
-            console.log("No documents found in MainGallery.");
-            showToast('No documents found in MainGallery.', 'info');
-            return [];
-        }
-
-        // Collect and return mediaId from MainGallery
-        const mediaIds = mainGallerySnapshot.docs.map(doc => doc.data().mediaId);
-        console.log("Fetched mediaIds:", mediaIds);
-
-        return mediaIds;
-    } catch (error) {
-        console.error("Error fetching MainGallery mediaIds:", error);
-        showToast('Error fetching MainGallery mediaIds.', 'error');
-        return [];
-    }
-}
-window.fetchMainGalleryIds = fetchMainGalleryIds;
-
-
-
-
-
-        /**
-         * Update the appearOn field for a specific media item in Firestore.
-         * @param {string} imageId - The ID of the media document.
-         * @param {Array<string>} selectedPages - The selected pages to update the appearOn array.
-         */
-
-        // Function to update appearOn array in Firestore
-        async function updateAppearOn(imageId, selectedPages) {
-            try {
-                const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
-
-                await updateDoc(imageDocRef, { appearOn: selectedPages });
-
-                showToast(`Successfully updated appearOn for media ID: ${imageId}`, 'success');
-            } catch (error) {
-                console.error('Error updating appearOn array:', error);
-                showToast(`Error updating appearOn for media ID: ${imageId}`, 'error');
-            }
-        }
 
         // Remove Media Function
         async function removeMediaFromGallery(mediaId) {
