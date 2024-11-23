@@ -398,6 +398,7 @@ async function fetchImages(category = 'all') {
                 );
 
             const snapshot = await getDocs(mediaQuery);
+            console.log("snapshot?   ", snapshot);
 
             if (snapshot.empty) {
                 console.log('No images found for the selected category.');
