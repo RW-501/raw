@@ -2117,7 +2117,7 @@ async function addMediaToGallery(category) {
         console.log("Media ID: ", mediaId);
 
         // Get the selected media details from Firestore
-        const mediaRef = doc(db, "MainGallery", mediaId);
+        const mediaRef = doc(db, "Media", mediaId);
         const mediaDoc = await getDoc(mediaRef);
 /*
         if (!mediaDoc.exists()) {
