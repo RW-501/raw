@@ -544,7 +544,7 @@ function applyFilmStripEffect() {
 // Function to get header images
 async function getHeaderImages(appearOn) {
     try {
-        console.log("getHeaderImages appearOn:", appearOn);
+      //  console.log("getHeaderImages appearOn:", appearOn);
 
         // Validate the 'appearOn' parameter
         if (!appearOn || typeof appearOn !== "string") {

@@ -413,7 +413,7 @@ async function fetchImages(category = 'all') {
     isFetching = true;
     setLoadingSpinner(true);
 
-    console.log("Selected category:", category);
+   // console.log("Selected category:", category);
 
     try {
         const cachedImages = JSON.parse(localStorage.getItem('cachedImages')) || [];
@@ -426,10 +426,10 @@ async function fetchImages(category = 'all') {
             : cachedImages.filter(image => image.category === category);
 
         if (filteredImages.length > 0) {
-            console.log('Using cached images');
+          //  console.log('Using cached images');
             displayImages(filteredImages);
         } else {
-            console.log('Fetching from database');
+        //    console.log('Fetching from database');
             const mediaRef = collection(db, 'MainGallery');
 
             // Build query based on category
@@ -487,11 +487,11 @@ async function fetchImages(category = 'all') {
 
 // Helper function to display images
 function displayImages(images) {
-  console.log("show images?");
+//  console.log("show images?");
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
-      console.log("show data?   ", data);
+     // console.log("show data?   ", data);
 
         const imageElement = createImageElement(data);
         gallery.appendChild(imageElement);
