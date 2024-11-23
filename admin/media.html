@@ -2155,7 +2155,7 @@ async function addMediaToGallery(category) {
             showToast("Media updated in the gallery!", "success");
         } else {
             // Add the media to the MainGallery collection
-            await addDoc(collection(db, "MainGallery",mediaId), mainGalleryData);
+            await setDoc(doc(db, "MainGallery", mediaId), mainGalleryData);
             console.log("Media successfully added to the gallery!");
             showToast("Media successfully added to the gallery!", "success");
         }
@@ -2191,7 +2191,7 @@ async function loadMainGallery() {
         const mainGallerySnapshot = await getDocs(mainGalleryRef);
 
         if (mainGallerySnapshot.empty) {
-            galleryContainer.innerHTML = "<p>No documents found in MainGallery.</p>";
+            galleryContainer.innerHTML = "<p>No Media found in Main Gallery.</p>";
 
             console.log("No documents found in MainGallery.");
            // showToast('No documents found in MainGallery.', 'info');
