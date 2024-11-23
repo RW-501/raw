@@ -259,6 +259,22 @@ window.hideLoadingSpinner = function() {
   // Scroll to the top of the page when the window is loaded
 window.onload = function() {
   window.scrollTo(0, 0);
+
+  if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
+    console.log("Admin View");
+  
+  
+  } else {
+    //console.log("User View");
+    window.setUpdateFooterContent = setUpdateFooterContent;
+  
+    setUpdateFooterContent();
+    // Run the function on load and on resize
+    window.addEventListener('load', adjustFooterForMobile);
+    window.addEventListener('resize', adjustFooterForMobile);
+      
+  
+  }
 };
 
 
@@ -369,21 +385,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
 };
 
 
-if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
-  console.log("Admin View");
 
-
-} else {
-  //console.log("User View");
-  window.setUpdateFooterContent = setUpdateFooterContent;
-
-  setUpdateFooterContent();
-  // Run the function on load and on resize
-  window.addEventListener('load', adjustFooterForMobile);
-  window.addEventListener('resize', adjustFooterForMobile);
-    
-
-}
 
 
 
