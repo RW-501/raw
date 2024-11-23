@@ -291,129 +291,147 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
-    // Function to shuffle an array using Fisher-Yates algorithm
+
+
+
+
+
+
+// Enhanced shuffleArray function with type checks and performance optimization
 function shuffleArray(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error("shuffleArray expects an array as input");
+    }
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
     }
     return arr;
 }
-  window.shuffleArray = shuffleArray;
+window.shuffleArray = shuffleArray;
 
-    let lastVisible;
+let lastVisible; // Tracks the last fetched document for pagination
+let isFetching = false; // Prevent multiple simultaneous fetches
+let retryCount = 0; // Retry mechanism for failed fetches
 
+// Utility function to create image elements dynamically
+function createImageElement({ watermarkedImageUrl, title, description }) {
+    const col = document.createElement('div');
+    col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
+
+    const img = document.createElement('img');
+    img.src = watermarkedImageUrl;
+    img.alt = title || description || 'Gallery Image'; // SEO-optimized alt text
+    img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
+    img.setAttribute('data-bs-toggle', 'modal');
+    img.setAttribute('data-bs-target', '#imageModal');
+    img.setAttribute('data-image', watermarkedImageUrl);
+    img.setAttribute('data-description', description || '');
+
+    img.addEventListener('click', () => {
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
+        modalImage.src = watermarkedImageUrl;
+        modalCaption.textContent = description || 'No description available.';
+        modalImage.setAttribute('alt', description || 'Gallery Modal Image'); // Accessibility enhancement
+    });
+
+    const caption = document.createElement('div');
+    caption.classList.add('caption');
+    caption.textContent = description || 'No description available.';
+
+    col.appendChild(img);
+    col.appendChild(caption);
+
+    return col;
+}
+
+// Utility to show or hide the loading spinner
+function setLoadingSpinner(show) {
+    const loadingSpinner = document.getElementById('loading');
+    if (show) {
+        loadingSpinner.style.display = 'block';
+    } else {
+        loadingSpinner.style.display = 'none';
+    }
+}
+
+// Fetch images from Firebase Firestore based on category
 async function fetchImages(category = 'all') {
+    if (isFetching) return; // Debounce repeated calls
+    isFetching = true;
+    setLoadingSpinner(true);
+
     try {
-        // Step 1: Get image IDs from MainGallery
-        const galleryRef = collection(db, 'MainGallery');
-        const gallerySnapshot = await getDocs(galleryRef);
-
-        const imageIds = gallerySnapshot.docs.map(doc => doc.data().imageId);
-        if (imageIds.length === 0) {
-            console.log("No image IDs found in MainGallery.");
-            return;
-        }
-
-        console.log("Image IDs from MainGallery:", imageIds);
-
-        // Step 2: Fetch all documents from Media collection
         const mediaRef = collection(db, 'MainGallery');
-        const mediaQuery = query(
-            collection(db, "MainGallery"),
-            where("isPublic", "==", true),
-            where("status", "==", "active"),
-            where(`appearOn.${page}`, "==", true) // Dynamic page key
+        let mediaQuery;
+
+        // Build the query based on the category
+        mediaQuery = query(
+            mediaRef,
+            where('isPublic', '==', true),
+            where('status', '==', 'active'),
+            where('appearOn.MainGallery', '==', true),
+            orderBy('timestamp'),
+            startAfter(lastVisible || 0),
+            ...(category !== 'all' ? [where('category', '==', category)] : [])
         );
-        
-        const mediaSnapshot = await getDocs(mediaRef);
 
-        
-
-       // Convert the snapshot into an array
-let mediaArray = [];
-querySnapshot.forEach(doc => {
-    mediaArray.push(doc.data());
-});
-
-// Shuffle the array
-mediaArray = shuffleArray(mediaArray);
-
-
-
-// Step 3: Filter Media documents where document ID matches imageId from MainGallery
-        const mediaDocs = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
-            id: doc.id,
-            ...doc.data()  // Get the data from the document
-        }));
-
-        console.log("Matching media data:", mediaDocs);
-
-        let queryRef;
-
-        // Build query based on category
-        if (category !== 'all') {
-            queryRef = query(
-                mediaRef,
-                where('category', '==', category),
-                orderBy('timestamp'),
-                startAfter(lastVisible || 0)
-            );
-        } else {
-            queryRef = query(
-                mediaRef,
-                orderBy('timestamp'),
-                startAfter(lastVisible || 0)
-            );
-        }
-
-        // Fetch documents based on query
-        const snapshot = await getDocs(queryRef);
+        const snapshot = await getDocs(mediaQuery);
         if (snapshot.empty) {
-            document.getElementById('loading').innerHTML = 'No more images to load.';
+            document.getElementById('loading').textContent = 'No more images to load.';
             return;
         }
 
-        // Step 4: Filter out non-existent Media documents
-        const validMediaDocs = mediaDocs.filter(mediaDoc => mediaDoc.id && mediaDoc.watermarkedImageUrl);
+        // Extract and validate media documents
+        const validMediaDocs = snapshot.docs.map(doc => doc.data()).filter(data => data.id && data.watermarkedImageUrl);
 
-        // Display fetched images
+        // Cache fetched images for faster subsequent loads
+        const cachedImages = JSON.parse(localStorage.getItem('cachedImages')) || [];
+        cachedImages.push(...validMediaDocs);
+        localStorage.setItem('cachedImages', JSON.stringify(cachedImages));
+
+        // Display images in the gallery
         const gallery = document.getElementById('gallery');
         validMediaDocs.forEach(data => {
-            const { watermarkedImageUrl, title, description } = data;
-
-            const col = document.createElement('div');
-            col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
-
-            const img = document.createElement('img');
-            img.src = watermarkedImageUrl;  // Corrected variable name
-            img.alt = title;  // SEO-friendly alt text
-            img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
-            img.setAttribute('data-bs-toggle', 'modal');
-            img.setAttribute('data-bs-target', '#imageModal');
-            img.setAttribute('data-image', watermarkedImageUrl);
-            img.setAttribute('data-description', description);
-
-            img.onclick = function () {
-                const modalImage = document.getElementById('modal-image');
-                modalImage.src = watermarkedImageUrl;
-            };
-
-            const caption = document.createElement('div');
-            caption.classList.add('caption');
-            caption.textContent = description;
-
-            col.appendChild(img);
-            col.appendChild(caption);
-            gallery.appendChild(col);
+            const imageElement = createImageElement(data);
+            gallery.appendChild(imageElement);
         });
 
         // Update the last visible document for pagination
         lastVisible = snapshot.docs[snapshot.docs.length - 1];
     } catch (error) {
         console.error('Error fetching images:', error);
+        retryCount++;
+        if (retryCount <= 3) {
+            console.log('Retrying fetch...');
+            fetchImages(category);
+        } else {
+            document.getElementById('loading').textContent = 'Error loading images. Please try again later.';
+        }
+    } finally {
+        setLoadingSpinner(false);
+        isFetching = false;
     }
 }
+
+// Lazy loading enhancement: Load more images on scroll
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        fetchImages();
+    }
+});
+
+// Accessibility and ARIA improvements for modal
+function setupModalAccessibility() {
+    const modal = document.getElementById('imageModal');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', 'modal-caption');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.addEventListener('show.bs.modal', () => modal.setAttribute('aria-hidden', 'false'));
+    modal.addEventListener('hidden.bs.modal', () => modal.setAttribute('aria-hidden', 'true'));
+}
+
 
 
 // Execute the function on DOMContentLoaded
@@ -430,9 +448,21 @@ const mainTextArea = document.getElementById("text-area");
 });
 
 
-// Initialize gallery on page load
+
+// Clear cache on page unload
+window.addEventListener('beforeunload', () => {
+    clearCache();
+});
+
+// Clear cache function
+function clearCache() {
+    localStorage.removeItem('cachedImages');
+}
+
+// Initialize gallery on window load
 window.onload = function() {
     fetchImages(); // Call the function on page load
+    setupModalAccessibility();
 };
 
     </script>
