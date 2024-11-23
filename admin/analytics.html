@@ -176,6 +176,51 @@
             </div>
         
 
+
+            <title>Event Analytics</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f9;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+              }
+              th, td {
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+              }
+              th {
+                background-color: #4CAF50;
+                color: white;
+              }
+              tr:nth-child(even) {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Event Analytics</h1>
+            <div id="eventTableContainer">
+              <!-- The table will be injected here -->
+            </div>
+          
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="error-message" id="errorMessage"></div>
     </main>
 
@@ -293,6 +338,76 @@
             document.getElementById('errorMessage').textContent = message;
         }
     
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+  
+    async function displayEventAnalytics() {
+      const events = await fetchEventsData();
+
+      // Create a table
+      let tableHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Event Title</th>
+              <th>Views</th>
+              <th>Document ID</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      // Loop through events and create table rows
+      events.forEach(event => {
+        tableHTML += `
+          <tr>
+            <td>${event.title}</td>
+            <td>${event.views}</td>
+            <td>${event.id}</td>
+          </tr>
+        `;
+      });
+
+      tableHTML += '</tbody></table>';
+
+      // Insert the table into the container
+      document.getElementById("eventTableContainer").innerHTML = tableHTML;
+    }
+
+    // Display event analytics when the page loads
+    displayEventAnalytics();
+async function fetchEventsData() {
+  const eventsCollection = collection(db, "Events"); // reference to the Events collection
+  const eventsSnapshot = await getDocs(eventsCollection); // fetch all documents in the collection
+  const eventsList = eventsSnapshot.docs.map(doc => ({
+    id: doc.id, // Document ID
+    title: doc.data().title, // Title field
+    views: doc.data().views // Views field
+  }));
+  return eventsList;
+}
+
+
+
+
+
+
+
+
+
+
+
         // Function to update analytics data based on date range
         async function updateAnalytics() {
             const startDate = document.getElementById('startDate').value;
@@ -342,7 +457,10 @@ console.log("Data ??????????????????????");
             } else {
                 fetchAnalyticsData();  // Fetch general analytics data
             }
-    
+            // my Analyics
+            fetchEventsData();
+
+
             fetchTrendData();  // Fetch and display trend data for general metrics
         };
     
