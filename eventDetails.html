@@ -580,9 +580,9 @@ function setupDownloadButton(eventData) {
     const downloadBtn = document.getElementById('download-btn');
     downloadBtn.addEventListener('click', () => {
         if (collectionPrice === 0 || collectionPrice === "") {
-            window.location.href = `https://rawphotographysite.com/confirmation?id=${eventData.data.eventId}&ccc=${eventData.data.downloadId}`;
+            window.location.href = `https://rawphotographysite.com/confirmation?id=${eventId}&ccc=${eventData.data.downloadId}`;
         } else {
-            window.location.href = `https://rawphotographysite.com/cart?id=${eventData.data.eventId}`;
+            window.location.href = `https://rawphotographysite.com/cart?id=${eventId}`;
         }
     });
 }
