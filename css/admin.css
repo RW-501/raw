@@ -8,6 +8,10 @@ html {
   
   }
   
+  h1, h2, h3, h4 {
+    text-transform: capitalize;
+}
+
     /* General body styling */
   body {
       font-family: 'Arial', sans-serif;

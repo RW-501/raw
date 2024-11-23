@@ -472,9 +472,8 @@ main .collapse.active {
             </div>
         </section>
 
-        <!-- Add to Gallery Button 
-<button onclick="openAddToGalleryModal()">Add to Gallery</button>
--->
+  
+        
 
         <!-- Toggle Bar -->
         <div class="mediaTabs">
@@ -2361,7 +2360,7 @@ function renderGalleryItem(media, container) {
             </div>
             <div id="details-${mediaId}" class="gallery-details">
                 <div class="box">
-                    <h4 onclick="showAddToGalleryModal(${mediaId});">Category: ${category || "Add Category"}</h4>
+                    <h4 onclick="showAddToGalleryModal('${mediaId}');">Category: ${category || "Add Category"}</h4>
                     <p>Status: ${status ? 'Active' : 'Inactive'}</p>
                     <p>Public: ${isPublic ? 'Yes' : 'No'}</p>
                     <p>Price: $${price || 0}</p>
@@ -2409,13 +2408,7 @@ function toggleAppearOn(mediaId, page, isChecked) {
     updateDoc(mediaRef, { [`appearOn.${page}`]: isChecked })
         .then(() => showToast(`Updated ${page} visibility for media ${mediaId}`, 'success'))
         .catch(error => console.error(`Error updating appearOn:`, error));
-/*
-    // If it's for the "MainGallery" page, show the modal for adding the media
-    if (page == "MainGallery" && isChecked == true) {
-        showAddToGalleryModal(mediaId);
-    }
 
-    */
 }
 
 window.toggleAppearOn = toggleAppearOn;

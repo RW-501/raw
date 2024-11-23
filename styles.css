@@ -2,6 +2,9 @@
     transition: transform 0.3s ease-in-out;
   }
   
+  h1, h2, h3, h4 {
+    text-transform: capitalize;
+}
 
   /* Hide social media links text on mobile */
 @media (max-width: 767px) {

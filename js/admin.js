@@ -425,7 +425,7 @@ window.addEventListener('scroll', () => {
   const scrollDistance = window.scrollY;
 
   const isPageTallEnough = pageHeight > viewportHeight * 1.5;
-  const showAfter = pageHeight * 0.25;
+  const showAfter = pageHeight * 0.50;
 
   if (isPageTallEnough && scrollDistance > showAfter) {
       scrollButton.style.display = 'block';
