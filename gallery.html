@@ -291,7 +291,16 @@
     signInWithEmailAndPassword,
     where, getDocs, storage, collection, auth, analytics  } from './js/module.js';
 
-    
+    // Function to shuffle an array using Fisher-Yates algorithm
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+    }
+    return arr;
+}
+  window.shuffleArray = shuffleArray;
+
     let lastVisible;
 
 async function fetchImages(category = 'all') {
@@ -309,10 +318,30 @@ async function fetchImages(category = 'all') {
         console.log("Image IDs from MainGallery:", imageIds);
 
         // Step 2: Fetch all documents from Media collection
-        const mediaRef = collection(db, 'Media');
+        const mediaRef = collection(db, 'MainGallery');
+        const mediaQuery = query(
+            collection(db, "MainGallery"),
+            where("isPublic", "==", true),
+            where("status", "==", "active"),
+            where(`appearOn.${page}`, "==", true) // Dynamic page key
+        );
+        
         const mediaSnapshot = await getDocs(mediaRef);
 
-        // Step 3: Filter Media documents where document ID matches imageId from MainGallery
+        
+
+       // Convert the snapshot into an array
+let mediaArray = [];
+querySnapshot.forEach(doc => {
+    mediaArray.push(doc.data());
+});
+
+// Shuffle the array
+mediaArray = shuffleArray(mediaArray);
+
+
+
+// Step 3: Filter Media documents where document ID matches imageId from MainGallery
         const mediaDocs = mediaSnapshot.docs.filter(doc => imageIds.includes(doc.id)).map(doc => ({
             id: doc.id,
             ...doc.data()  // Get the data from the document

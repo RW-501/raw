@@ -847,7 +847,34 @@ main .collapse.active {
         <div id="Manage_Gallery" class="media_tabs">
             <div id="mainGallerySection" class="card mb-4 shadow-lg">
                 <h5 class="mb-3">Manage Gallery</h5>
+    
+                
 
+                <!-- Directions Box -->
+<div class="box mb-3">
+    <div class="form-label d-flex justify-content-between align-items-center">
+        <span>Media Options</span>
+        <button 
+            type="button" 
+            class="btn btn-link d-flex align-items-center gap-1" 
+            onclick="toggleDirections('updateMediaDirections', this)" 
+            aria-expanded="false" 
+            aria-controls="updateMediaDirections">
+            <span>Show Directions ▲</span> 
+        </button>
+    </div>
+    <div id="updateMediaDirections" class="directions p-3 border rounded" style="display: none;">
+        <p class="mb-0">
+            Use this section to update the media details. You can:
+            <ul class="mt-1">
+                <li>Select the pages where the media appears</li>
+                <li>Change its category</li>
+                <li>Update its status</li>
+                <li>Adjust its visibility settings</li>
+            </ul>
+        </p>
+    </div>
+</div>
                 <div id="galleryContainer"></div>
             </div>
 
@@ -2340,7 +2367,8 @@ function renderGalleryItem(media, container) {
     AboutPage: false,
     EventPage: false,
     ContactPage: false,
-    MainGallery: false
+    MainGallery: true,
+    HeaderGallery: false
 };
 
     // Merge appearOn data with default values
@@ -2389,6 +2417,8 @@ function renderGalleryItem(media, container) {
 
 // Function to render checkboxes for appearOn pages
 function renderCheckboxes(options, appearOn, mediaId) {
+    const labelText = option.replace(/([a-z])([A-Z])/g, '$1 $2'); // Add space between camel case
+
     return options
         .map(option => {
             const checked = appearOn[option] ? 'checked' : '';
@@ -2396,7 +2426,7 @@ function renderCheckboxes(options, appearOn, mediaId) {
                 <div>
                     <input type="checkbox" id="${option}-${mediaId}" 
                            onchange="toggleAppearOn('${mediaId}', '${option}', this.checked)" ${checked}>
-                    <label for="${option}-${mediaId}">${option}</label>
+                    <label for="${option}-${mediaId}">${labelText}</label>
                 </div>
             `;
         })
