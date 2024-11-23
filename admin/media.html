@@ -380,6 +380,22 @@
 }
 
 
+/* Initial state for collapsed items */
+.collapse {
+    display: none; /* Content hidden when collapsed */
+}
+
+/* Optional: You can also add smooth transition effects */
+.collapse:not(.active) {
+    display: none;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Optionally, the active class could display the content */
+.collapse.active {
+    display: block;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
 
 
         main {
@@ -1879,32 +1895,33 @@ populateDropdown();
 
         // 
         // Toggle the collapse of media details
-        function toggleCollapse(theId, btnDiv, title, otherID) {
-            console.log("theId    ", theId);
+        function toggleCollapse(theId, btnDiv, title, otherID, imageId) {
+    const details = document.getElementById(theId); // Target the details section
+    const otherDetails = document.getElementById(otherID); // Target the other details section if exists
+    const imageDiv = document.getElementById(imageId); // Target the image section if provided
 
-            const details = document.getElementById(theId);
-            const otherDetails = document.getElementById(otherID);
+    // Toggle the 'collapse' class for the details div (hide or show content)
+    details.classList.toggle('collapse');
+    
+    // Optionally, collapse/expand another details div (if exists)
+    if (otherDetails) {
+        otherDetails.classList.toggle('collapse');
+    }
 
-            // Toggle the 'collapse' class
-            details.classList.toggle('collapse');
-if(otherDetails){
-    otherDetails.classList.toggle('collapse');
+    // If an imageDiv exists, toggle the visibility of it
+    if (imageDiv) {
+        imageDiv.classList.toggle('collapse');
+    }
 
-}
-            // Update the button content
-
-            if (btnDiv && title) {
-                if (details.classList.contains('collapse')) {
-                    btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
-                } else {
-                    btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
-                }
-            }
-
-
-
-            
+    // Update the button content to reflect expanded/collapsed state
+    if (btnDiv && title) {
+        if (details.classList.contains('collapse')) {
+            btnDiv.innerHTML = `${title} ▼`; // Set to collapsed state
+        } else {
+            btnDiv.innerHTML = `${title} ▲`; // Set to expanded state
         }
+    }
+}
 
 
 
