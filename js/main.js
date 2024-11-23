@@ -260,11 +260,11 @@ window.hideLoadingSpinner = function() {
 
   setTimeout(() => {
       window.scrollTo(0, 0);
-  
+      console.log("SETUP ??????????????????????");
+
       if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
         console.log("Admin View");
       } else {
-        console.log("window.onload setUpdateFooterContent");
   
         setUpdateFooterContent();
         // Run the function on load and on resize
