@@ -276,6 +276,70 @@
     margin-top: 5px;
 }
 
+
+
+
+
+
+#scrollToDiv {
+            margin-top: 800px;
+            padding: 50px;
+            background-color: #f4f4f4;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        /* Scroll Button Styles */
+        #scrollButton {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Initially hidden */
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 5000;
+            animation: fadeIn 1s ease-out, pulse 2s infinite;
+        }
+
+        #scrollButton:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -55%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+
+        body {
+
+            background: linear-gradient(to bottom, #fff, #e0e0e0);
+        }
     </style>
 
 
@@ -733,7 +797,8 @@
 
     </main>
 
-
+   <!-- Scroll Button -->
+   <button id="scrollButton" >Top</button>
     <div id="currentEventID"></div>
     <div id="currentMediaID"></div>
     
@@ -1392,7 +1457,6 @@
   <div id='${mediaListId}' class="event_photos_list"></div>
    </div>
   <div class="flex-wrap"> 
-  <button class="btn btn-primary btn-sm" onclick=" scrollToDiv(${mediaDetailsId})">Top</button>
   <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Close')">Close ▲</button>
 </div>
 
@@ -1999,16 +2063,41 @@ async function removeFromMedia(mediaId) {
         window.removeFromMedia = removeFromMedia;
 
 
-        function scrollToDiv(divId) {
+        const scrollButton = document.getElementById('scrollButton');
+
+// Show the button dynamically based on page height
+window.addEventListener('scroll', () => {
+    const pageHeight = document.body.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollDistance = window.scrollY;
+
+    // Show button after scrolling past 25% of the total page height
+    const showAfter = pageHeight * 0.25;
+    if (scrollDistance > showAfter) {
+        scrollButton.style.display = 'block';
+    } else {
+        scrollButton.style.display = 'none';
+    }
+});
+
+// Smooth scroll function
+function scrollToDiv(divId) {
     const targetDiv = document.getElementById(divId);
+    const mainDiv = document.getElementById("main-content");
     if (targetDiv) {
         targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-        console.error(`Element with ID ${divId} not found`);
+
+        mainDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
 window.scrollToDiv = scrollToDiv;
+
+scrollButton.addEventListener('click', () => {
+    console.log('Scroll button clicked!');
+    scrollToDiv();
+});
 
         // Delete Event Function
         // Delete Event Function 
