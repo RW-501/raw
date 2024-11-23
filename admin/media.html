@@ -2356,12 +2356,12 @@ function renderGalleryItem(media, container) {
                     <img src="${watermarkedImageUrl}" alt="Watermarked Image" class="gallery-thumbnail view-image">
                 </div>
                 <div class="box">
-                    <button onclick="toggleCollapse('appearOn-${mediaId}', this, "Expand")" aria-expanded="false">Expand ▼</button>
+                    <button onclick="toggleCollapse('appearOn-${mediaId}', this, 'Expand')" aria-expanded="false">Expand ▼</button>
                 </div>
             </div>
             <div id="details-${mediaId}" class="gallery-details">
                 <div class="box">
-                    <h4 onclick="showAddToGalleryModal(${mediaId})">Category: ${category || "Add Category"}</h4>
+                    <h4 onclick="showAddToGalleryModal(${mediaId});">Category: ${category || "Add Category"}</h4>
                     <p>Status: ${status ? 'Active' : 'Inactive'}</p>
                     <p>Public: ${isPublic ? 'Yes' : 'No'}</p>
                     <p>Price: $${price || 0}</p>
