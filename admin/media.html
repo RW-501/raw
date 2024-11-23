@@ -2526,98 +2526,77 @@ window.toggleAppearOn = toggleAppearOn;
 
             // Function to show content for a selected tab
             function showTabContent(tabId) {
+    if (tabId === "Manage_Events") fetchEvents();
+    if (tabId === "Manage_Gallery") loadMainGallery();
 
-                if (tabId == "Manage_Events") {
-                    fetchEvents();
-                }
-                if (tabId == "Manage_Gallery") {
-                    loadMainGallery();
-                }
+    if (tabId === "editEvent") {
+        configureEditEvent();
+        tabId = "Add_Event"; // Switch to Add Event view
+    } else {
+        resetAddEventForm();
+    }
 
-                if (tabId == "editEvent") {
-                    document.getElementById('Add_Event_Label').innerText = "Update Event";
-                    document.getElementById('saveEvent').style.display = "block";
-                    document.getElementById('eventCoverArea').style.display = "none";
-                    document.getElementById('uploadEventBTN').style.display = "none";
-                    document.getElementById("addMedia").style.display = 'block';
-                    // showTabContent('editEvent');
-                    tabId = "Add_Event";
-                } else {
-                    document.getElementById('saveEvent').style.display = "none";
-                    document.getElementById('eventCoverArea').style.display = "block";
-                    document.getElementById('uploadEventBTN').style.display = "block";
-                    document.getElementById('Add_Event_Label').innerText = "Add New Event";
-                    document.getElementById("addMedia").style.display = 'none';
+    switchTab(tabId);
+}
 
-                }
-// Hide all tab content with transition effects
-const allTabs = document.querySelectorAll('.media_tabs');
-allTabs.forEach((tab) => {
-    tab.style.opacity = '0'; // Start fading out
-    tab.style.display = 'none'; // Hide after fading
-    tab.classList.remove('visibleTab'); // Remove visibility class
-});
+function configureEditEvent() {
+    document.getElementById('Add_Event_Label')?.innerText = "Update Event";
+    document.getElementById('saveEvent')?.style.display = "block";
+    document.getElementById('eventCoverArea')?.style.display = "none";
+    document.getElementById('uploadEventBTN')?.style.display = "none";
+    document.getElementById("addMedia")?.style.display = "block";
+}
 
-// Remove 'active' class from all buttons
-const allButtons = document.querySelectorAll('.tabButton');
-allButtons.forEach((button) => {
-    button.classList.remove('mainActiveTab');
-});
+function resetAddEventForm() {
+    document.getElementById('Add_Event_Label')?.innerText = "Add New Event";
+    document.getElementById('saveEvent')?.style.display = "none";
+    document.getElementById('eventCoverArea')?.style.display = "block";
+    document.getElementById('uploadEventBTN')?.style.display = "block";
+    document.getElementById("addMedia")?.style.display = "none";
+}
 
-// Function to handle tab switching
-function switchTab(tabId, button) {
+function switchTab(tabId) {
+    const allTabs = document.querySelectorAll('.media_tabs');
+    const allButtons = document.querySelectorAll('.tabButton');
+
     // Hide all tabs
     allTabs.forEach((tab) => {
         tab.style.opacity = '0';
         setTimeout(() => {
             tab.style.display = 'none';
             tab.classList.remove('visibleTab');
-        }, 300); // Delay to allow fading out
+        }, 300);
     });
 
     // Remove active class from all buttons
     allButtons.forEach((btn) => btn.classList.remove('mainActiveTab'));
 
-    // Show the selected tab with transition
+    // Show the selected tab
     const selectedTab = document.querySelector(`#${tabId}`);
-    selectedTab.style.display = 'block';
-    setTimeout(() => {
-        selectedTab.style.opacity = '1'; // Fade in
-        selectedTab.classList.add('visibleTab'); // Add visibility class
-    }, 50); // Small delay to trigger CSS transition
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+        setTimeout(() => {
+            selectedTab.style.opacity = '1';
+            selectedTab.classList.add('visibleTab');
+        }, 50);
+    }
 
-    // Add active class to the clicked button
-    button.classList.add('mainActiveTab');
+    // Activate the button
+    const activeButton = document.querySelector(`.tabButton[onclick="showTabContent('${tabId}')"]`);
+    activeButton?.classList.add('mainActiveTab');
+
+    // Save the selected tab to local storage
+    localStorage.setItem('SW_activeTab', tabId);
 }
 
+function loadLastTab() {
+    const savedTab = localStorage.getItem('SW_activeTab');
+    showTabContent(savedTab || 'Add_Event'); // Default to 'Add_Event' tab
+}
 
-                // Show the selected tab content and activate the button
-                const selectedTab = document.getElementById(tabId);
-                if (selectedTab) {
-                    selectedTab.style.display = 'block';
-                    const activeButton = document.querySelector(`.tabButton[onclick="showTabContent('${tabId}')"]`);
-                    if (activeButton) activeButton.classList.add('active');
+// Run on page load
+loadLastTab();
 
-                    // Save the selected tab to local storage
-                    localStorage.setItem('activeTab', tabId);
-                }
-            }
-
-            // Function to load the last selected tab on page load
-            function loadLastTab() {
-                // Retrieve the last active tab from local storage
-                const savedTab = localStorage.getItem('activeTab');
-                console.log("savedTab");
-                // Show the saved tab if it exists, otherwise show the default tab
-                if (savedTab) {
-                    showTabContent(savedTab);
-                } else {
-                    showTabContent('Add_Event'); // Default tab
-                }
-            }
-
-            // Run on page load
-            loadLastTab();
 
             // Add an event listener to the file input to handle the file selection
             document.getElementById('eventCover').addEventListener('change', function (event) {
