@@ -502,14 +502,14 @@ async function getHeaderImages(appearOn) {
       //  console.log("appearOn:", appearOn);
        const showBool = true;
         // Reference the 'Media' collection
-        const mainGalleryRef = collection(db, 'Media');
+        const mainGalleryRef = collection(db, 'MainGallery');
         
         let headerImagesQuery;
 
         // Build the query depending on the 'appearOn' parameter
         if (appearOn && showBool == true ) {
             if (appearOn && showBool === true) {
-                headerImagesQuery = query(mainGalleryRef, where("appearOn.MainGallery", "==", true));
+                headerImagesQuery = query(mainGalleryRef, where(`appearOn.${appearOn}`, "==", true));
             }
             
           
@@ -688,7 +688,7 @@ function shuffleArray(arr) {
         const querySnapshot = await getDocs(mediaQuery);
      //   console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
 
-        let defaultImages = await getHeaderImages();
+       // let defaultImages = await getHeaderImages(page);
 
         
     if(!defaultImages){
