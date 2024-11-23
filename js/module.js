@@ -721,7 +721,7 @@ querySnapshot.forEach(doc => {
 mediaArray = shuffleArray(mediaArray);
 
 // Now you can iterate through the shuffled array
-mediaArray.forEach(data => {
+mediaArray.forEach(doc => {
             const data = doc.data();
 
             // Update main text area if the data contains mainText
