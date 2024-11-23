@@ -626,6 +626,7 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 function styleGalleryImages(galleryContainer) {
     const galleryItems = galleryContainer.querySelectorAll('.gallery-item img');
   
+    if(galleryItems.length > 0){
     galleryItems.forEach(img => {
       img.onload = () => {
         const aspectRatio = img.naturalWidth / img.naturalHeight;
@@ -634,6 +635,8 @@ function styleGalleryImages(galleryContainer) {
         img.parentElement.style.setProperty('--aspect-ratio', aspectRatio.toFixed(2));
       };
     });
+
+}
   }
   
 
