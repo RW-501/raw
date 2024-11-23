@@ -82,6 +82,10 @@
 
           margin: 1rem;
         }
+
+        #loading {
+          display: block;
+        }
     </style>
 
 <body>
@@ -161,12 +165,13 @@
     <section id="gallery" class="py-5">
       <h2 class="text-center mb-4">Gallery</h2>
       <div class="mainContainer">
+             <!-- Loader -->
+             <div id="loading" class="text-center mt-3">
+              <span>Loading...</span>
         <div class="row " id="gallery-images">
           <!-- Dynamic content from Firebase -->
 
-         <!-- Loader -->
-         <div id="loading" class="text-center mt-3">
-          <span>Loading...</span>
+    
       </div>
 
 
