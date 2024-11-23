@@ -1611,7 +1611,7 @@ const mainGalleryIds = await fetchMainGalleryIds();
         <div class="batch-buttons btn-group controls">
             <!-- Add to Gallery Option -->
             ${!mainGalleryIds.includes(item.id) ? `
-                <button id="addToGalleyBtn_${mediaId}" onclick="showAddToGalleryModal('${item.id}')">Add to Gallery</button>
+                <button id="addToGalleyBtn_${item.id}" onclick="showAddToGalleryModal('${item.id}')">Add to Gallery</button>
             ` : ''}
 
             <!-- Event Change Dropdown -->
