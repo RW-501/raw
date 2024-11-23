@@ -2282,36 +2282,29 @@ window.toggleAppearOn = toggleAppearOn;
 
 
 
+async function fetchMainGalleryIds() {
+    try {
+        const mainGalleryRef = collection(db, "MainGallery");
+        const mainGallerySnapshot = await getDocs(mainGalleryRef);
 
-
-
-
-/*
-        // Function to add a document ID to MainGallery
-        async function addToMainGallery(imageId) {
-            try {
-                // Create a reference to the 'MainGallery' collection and set the document with the given ID
-                const imageDocRef = doc(collection(db, 'MainGallery'), imageId);
-
-                // Data to store in the document
-                const mainGalleryData = {
-                    imageId, // Store the image ID
-                    timestamp: new Date(), // Optional: Add a timestamp
-                    status: "active", // Optional: Add a status
-                };
-
-                // Add the data to Firestore
-                await setDoc(imageDocRef, mainGalleryData);
-
-                console.log(`Image with ID ${imageId} added to MainGallery.`);
-                showToast('Image successfully added to MainGallery!', 'success');
-            } catch (error) {
-                console.error("Error adding image to MainGallery:", error);
-                showToast('Failed to add image to MainGallery.', 'error');
-            }
+        if (mainGallerySnapshot.empty) {
+            console.log("No documents found in MainGallery.");
+            showToast('No documents found in MainGallery.', 'info');
+            return [];
         }
-*/
 
+        // Collect and return mediaId from MainGallery
+        const mediaIds = mainGallerySnapshot.docs.map(doc => doc.data().mediaId);
+        console.log("Fetched mediaIds:", mediaIds);
+
+        return mediaIds;
+    } catch (error) {
+        console.error("Error fetching MainGallery mediaIds:", error);
+        showToast('Error fetching MainGallery mediaIds.', 'error');
+        return [];
+    }
+}
+window.fetchMainGalleryIds = fetchMainGalleryIds;
 
 
 
