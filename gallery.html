@@ -388,8 +388,7 @@ async function fetchImages(category = 'all') {
                 mediaRef,
                 where('isPublic', '==', true),
                 where('status', '==', 'active'),
-                where('appearOn.MainGallery', '==', true),
-                startAfter(lastVisible || 0)
+                where('appearOn.MainGallery', '==', true)
             );
 
             if (category !== 'all') {
