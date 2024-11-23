@@ -382,7 +382,7 @@ async function fetchImages(category = 'all') {
 
         const snapshot = await getDocs(mediaQuery);
         if (snapshot.empty) {
-            document.getElementById('loading').textContent = 'No more images to load.';
+            //document.getElementById('loading').textContent = 'No more images to load.';
             return;
         }
 
@@ -410,7 +410,7 @@ async function fetchImages(category = 'all') {
             console.log('Retrying fetch...');
             fetchImages(category);
         } else {
-            document.getElementById('loading').textContent = 'Error loading images. Please try again later.';
+           // document.getElementById('loading').textContent = 'Error loading images. Please try again later.';
         }
     } finally {
         setLoadingSpinner(false);
