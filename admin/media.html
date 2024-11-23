@@ -2132,12 +2132,12 @@ window.scrollToDiv = scrollToDiv;
     closeModal();
 }
 
-let currentMediaId = null; // Store the current mediaId globally
+
 
 // Function to show the modal and set the mediaId
 function showAddToGalleryModal(mediaId) {
-    currentMediaId = mediaId; // Set the global mediaId to the one passed
-    document.getElementById('currentMediaID').innerText = currentMediaId;
+
+    document.getElementById('currentMediaID').innerText = mediaId;
     document.getElementById('addToGalleryModal').style.display = 'block'; // Show the modal
 }
 
