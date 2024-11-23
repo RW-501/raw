@@ -2155,7 +2155,7 @@ async function addMediaToGallery(category) {
             showToast("Media updated in the gallery!", "success");
         } else {
             // Add the media to the MainGallery collection
-            await addDoc(collection(db, "MainGallery"), mainGalleryData);
+            await addDoc(collection(db, "MainGallery",mediaId), mainGalleryData);
             console.log("Media successfully added to the gallery!");
             showToast("Media successfully added to the gallery!", "success");
         }
