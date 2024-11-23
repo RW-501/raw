@@ -2163,7 +2163,15 @@ function closeModal() {
         /**
          * Load media items from MainGallery collection and render them into the gallery container.
          */
-         const mainGalleryIds = [];
+         const defaultAppearOn = {
+    HomePage: false,
+    AboutPage: false,
+    EventPage: false,
+    ContactPage: false,
+    MainGallery: false
+};
+
+const mainGalleryIds = [];
 
 async function loadMainGallery() {
     const galleryContainer = document.getElementById('galleryContainer');
@@ -2181,8 +2189,6 @@ async function loadMainGallery() {
             return;
         }
 
-
-
         // Render Gallery Items
         mainGallerySnapshot.forEach(media => renderGalleryItem(media, galleryContainer));
         console.log("mainGallerySnapshot:", mainGallerySnapshot);
@@ -2194,19 +2200,13 @@ async function loadMainGallery() {
 }
 
 function renderGalleryItem(media, container) {
-    console.log("media : ", media);
+    console.log("media:", media);
 
     const { id: mediaId, photoUrl, category, price, status, isPublic, appearOn = {}, watermarkedImageUrl } = media;
 
-    const defaultAppearOn = {
-        HomePage: false,
-        AboutPage: false,
-        EventPage: false,
-        ContactPage: false,
-        MainGallery: false
-    };
+    // Merge appearOn data with default values
     const appearOnData = { ...defaultAppearOn, ...appearOn };
-console.log("appearOnData ",appearOnData);
+    console.log("appearOnData:", appearOnData);
 
     const mediaDiv = document.createElement('div');
     mediaDiv.classList.add('gallery-item', 'card-body');
@@ -2236,16 +2236,14 @@ console.log("appearOnData ",appearOnData);
                     <h3>Appear On</h3>
                     <div id="checkboxes-${mediaId}">
                         ${renderCheckboxes(Object.keys(defaultAppearOn), appearOnData, mediaId)}
-                  </div>
-    <div class="controls">
-      <button onclick="removeMediaFromGallery('${mediaId}')">Remove</button>
-    </div>
-
-  </div>
-
-</div>
-         ` ;
-
+                    </div>
+                    <div class="controls">
+                        <button onclick="removeMediaFromGallery('${mediaId}')">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 
     container.appendChild(mediaDiv);
 }
