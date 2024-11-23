@@ -2415,10 +2415,11 @@ function renderGalleryItem(media, container) {
 
 // Function to render checkboxes for appearOn pages
 function renderCheckboxes(options, appearOn, mediaId) {
-    const labelText = option.replace(/([a-z])([A-Z])/g, '$1 $2'); // Add space between camel case
 
     return options
         .map(option => {
+            const labelText = option.replace(/([a-z])([A-Z])/g, '$1 $2'); // Add space between camel case
+
             const checked = appearOn[option] ? 'checked' : '';
             return `
                 <div>
