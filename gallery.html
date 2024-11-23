@@ -360,6 +360,9 @@ function setLoadingSpinner(show) {
 
 // Fetch images from Firebase Firestore based on category
 async function fetchImages(category = 'all') {
+  category = category.trim();
+
+
     if (isFetching) return; // Prevent multiple simultaneous fetches
     isFetching = true;
     setLoadingSpinner(true);
