@@ -271,7 +271,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
       
       // Pass the page name to the updateFooterContent function based on the path
       const pageName = getPageNameFromPath(window.location.pathname);
-      console.log("pageName   ,pageName");
+      console.log("pageName footer   ",pageName);
 
       updateFooterContent(pageName);
     }
@@ -375,7 +375,8 @@ if (window.checkUrl("/admin/") || window.checkUrl("/admin")) {
 
 } else {
   //console.log("User View");
-  
+  window.setUpdateFooterContent = setUpdateFooterContent;
+
   setUpdateFooterContent();
   // Run the function on load and on resize
   window.addEventListener('load', adjustFooterForMobile);
