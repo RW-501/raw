@@ -389,14 +389,10 @@ async function fetchImages(category = 'all') {
             const mediaQuery = category === 'all'
                 ? query(
                     mediaRef,
-                    where('isPublic', '==', true),
-                    where('status', '==', 'active'),
                     where('appearOn.MainGallery', '==', true)
                 )
                 : query(
                     mediaRef,
-                    where('isPublic', '==', true),
-                    where('status', '==', 'active'),
                     where('appearOn.MainGallery', '==', true),
                     where('category', '==', category)
                 );
