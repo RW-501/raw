@@ -327,7 +327,6 @@ function createImageElement({ watermarkedImageUrl, title, description }) {
     img.alt = title || description || 'Gallery Image'; // SEO-optimized alt text
     img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
     img.setAttribute('data-bs-toggle', 'modal');
-    img.setAttribute('data-bs-target', '#imageModal');
     img.setAttribute('data-image', watermarkedImageUrl);
     img.setAttribute('data-description', description || '');
 
@@ -425,15 +424,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Accessibility and ARIA improvements for modal
-function setupModalAccessibility() {
-    const modal = document.getElementById('imageModal');
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-labelledby', 'modal-caption');
-    modal.setAttribute('aria-hidden', 'true');
-    modal.addEventListener('show.bs.modal', () => modal.setAttribute('aria-hidden', 'false'));
-    modal.addEventListener('hidden.bs.modal', () => modal.setAttribute('aria-hidden', 'true'));
-}
+
 
 
 
@@ -465,7 +456,6 @@ function clearCache() {
 // Initialize gallery on window load
 window.onload = function() {
     fetchImages(); // Call the function on page load
-    setupModalAccessibility();
 };
 
     </script>
