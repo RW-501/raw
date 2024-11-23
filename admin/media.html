@@ -2642,10 +2642,12 @@ function switchTab(tabId) {
     // Show the selected tab
     const selectedTab = document.querySelector(`#${tabId}`);
     if (selectedTab) {
-        selectedTab.style.display = 'block !important';
+        selectedTab.style.display = 'block';
         setTimeout(() => {
-            selectedTab.style.display = 'block !important';
-            selectedTab.style.opacity = '1 !important';
+            selectedTab.style.display = 'block';
+            selectedTab.style.opacity = '1';
+            selectedTab.setAttribute('style', 'display: block !important; opacity: 1 !important;');
+
             selectedTab.classList.add('visibleTab');
         }, 50);
     }
