@@ -499,46 +499,46 @@ function applyFilmStripEffect() {
 // Function to get header images
 async function getHeaderImages(appearOn) {
     try {
-       console.log("getHeaderImages appearOn:", appearOn);
-       const showBool = true;
-        // Reference the 'Media' collection
-        const mainGalleryRef = collection(db, 'MainGallery');
-        
-        let headerImagesQuery;
+        console.log("getHeaderImages appearOn:", appearOn);
 
-        // Build the query depending on the 'appearOn' parameter
-        if (appearOn && showBool == true ) {
-// Dynamically construct the query with a dynamic field
-const field = `appearOn.HeaderGallery`;
-    return query(mainGalleryRef, where(field, "==", true));
-            }
-            
-          
-            if (!headerImagesQuery) {
+        // Validate the 'appearOn' parameter
+        if (!appearOn || typeof appearOn !== "string") {
+            console.error("Invalid 'appearOn' parameter:", appearOn);
+            return [];
+        }
 
-                    headerImagesQuery = query(mainGalleryRef, where("isPublic", "==", true));
-            } else {
-                // If 'appearOn' is not an array, you can either throw an error or handle it
-                console.error("'no images for ",appearOn);
-                return ;
-            }
-    
-        // Execute the query and retrieve the snapshot of matching documents
+        const mainGalleryRef = collection(db, "MainGallery");
+
+        // Construct the query
+        let headerImagesQuery = query(
+            mainGalleryRef,
+            where("isPublic", "==", true) // Common condition
+        );
+
+        if (appearOn) {
+            headerImagesQuery = query(
+                headerImagesQuery,
+                where(`appearOn.${appearOn}`, "==", true) // Add dynamic field condition
+            );
+        }
+
+        // Execute the query
         const querySnapshot = await getDocs(headerImagesQuery);
-       // console.log(`Found ${querySnapshot.size} images.`); // Log the number of images found
 
-        // Map over the documents to extract the 'watermarkedImageUrl' field, ensuring it exists
-        const images = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            // Check if 'watermarkedImageUrl' exists before accessing it
-            if (data.watermarkedImageUrl) {
-                return data.watermarkedImageUrl;
-            } else {
-                console.warn("Missing 'watermarkedImageUrl' in document:", doc.id);
-                return null; // Handle missing image URLs if necessary
-            }
-        }).filter(image => image !== null); // Remove any null values from the result
+        // Map over the documents to extract the 'watermarkedImageUrl' field
+        const images = querySnapshot.docs
+            .map((doc) => {
+                const data = doc.data();
+                if (data.watermarkedImageUrl) {
+                    return data.watermarkedImageUrl;
+                } else {
+                    console.warn("Missing 'watermarkedImageUrl' in document:", doc.id);
+                    return null;
+                }
+            })
+            .filter((url) => url !== null); // Remove null entries
 
+        console.log(`Found ${images.length} header images.`);
         return images; // Return the list of image URLs
     } catch (error) {
         console.error("Error fetching header images:", error);
@@ -546,8 +546,8 @@ const field = `appearOn.HeaderGallery`;
     }
 }
 
+// Attach to the global window object for debugging or external access
 window.getHeaderImages = getHeaderImages;
-
 
 /*
 //window.displayHeaderImages = async function() {
