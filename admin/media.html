@@ -277,16 +277,16 @@
 }
 
 /* Manage collapsed and expanded states */
-.collapse {
+main .collapse {
 
     transition: max-height 0.3s ease, padding 0.3s ease;
 }
 
-.collapse:not(.active) {
+main .collapse:not(.active) {
     display: inherit; /* Ensures hidden content doesn't take up space */
 }
 
-.collapse.active {
+main .collapse.active {
    /*  max-height: 500px; Adjust to fit expanded content */
     overflow: visible;
     padding: 10px; /* Add padding only when expanded */
@@ -380,18 +380,18 @@
 
 
 /* Initial state for collapsed items */
-.collapse {
+main .collapse {
     display: none; /* Content hidden when collapsed */
 }
 
 /* Optional: You can also add smooth transition effects */
-.collapse:not(.active) {
+main .collapse:not(.active) {
     display: none;
     transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 /* Optionally, the active class could display the content */
-.collapse.active {
+main .collapse.active {
     display: block;
     transition: max-height 0.3s ease, opacity 0.3s ease;
 }
