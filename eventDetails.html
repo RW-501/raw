@@ -631,6 +631,23 @@ function openUrl() {
     window.open(eventURL, '_blank');
 }
 
+async function updateEventViews(eventId) {
+    try {
+        // Reference to the specific document in the Events collection
+        const eventRef = doc(db, "Events", eventId);
+
+        // Increment the views field by 1
+        await updateDoc(eventRef, {
+            views: increment(1)
+        });
+
+        console.log(`Views count updated for event ID: ${eventId}`);
+    } catch (error) {
+        console.error(`Error updating views for event ID: ${eventId}`, error);
+    }
+}
+
+window.updateEventViews = updateEventViews;
 // Initialize the event details on page load
 window.onload = async function () {
     console.log("window.onload");
@@ -639,7 +656,7 @@ window.onload = async function () {
      eventId = await fetchEventDetails(); // Wait for the eventId to be fetched
 
   
-
+     updateEventViews(eventId);
 
 
 
