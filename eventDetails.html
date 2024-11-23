@@ -446,29 +446,50 @@ let eventData2 = [];
 async function fetchEventData(field, value) {
     try {
         let querySnapshot;
-        // Query the Events collection where the field matches the value
+
+        // Reference the Events collection
         const eventsRef = collection(db, 'Events');
-        if(field == "accessCode" || field == "shortURL"){
-            const q = query(eventsRef, where(field, '==', value)); // Use query and where to filter by field
-             querySnapshot = await getDocs(q);
-        }else{
-            querySnapshot = await getDoc(value); 
+
+        // Determine the query method based on the field
+        if (field === "accessCode" || field === "shortURL") {
+            const q = query(eventsRef, where(field, '==', value)); // Filter by field
+            querySnapshot = await getDocs(q);
+        } else {
+            const docRef = doc(eventsRef, value); // Assume `value` is the document ID for direct fetch
+            querySnapshot = await getDoc(docRef);
         }
 
-
-        // Check if any event matches the query
+        // Check if any event matches the query (for queries with getDocs)
         if (querySnapshot.empty) {
             console.log(`No events found with ${field}: ${value}`);
             return null;
         }
 
-        // Return the first event data (assuming there's only one match)
-        return querySnapshot.docs[0].data();
+        // Return document ID and data (for getDocs query)
+        if (querySnapshot.docs) {
+            const firstDoc = querySnapshot.docs[0];
+            return {
+                id: firstDoc.id,
+                data: firstDoc.data()
+            };
+        }
+
+        // Return document ID and data (for getDoc direct fetch)
+        if (querySnapshot.exists()) {
+            return {
+                id: querySnapshot.id,
+                data: querySnapshot.data()
+            };
+        }
+
+        console.log(`No matching document found with ${field}: ${value}`);
+        return null;
     } catch (error) {
         console.error(`Error fetching event by ${field}:`, error);
         return null;
     }
 }
+
 
 function sanitizeInput2(input) {
     if (typeof input !== 'string') return null;
@@ -523,7 +544,7 @@ async function fetchEventDetails() {
         // Handle download button functionality
         setupDownloadButton(eventData);
  
-        eventId = eventData.eventId;
+        eventId = eventData.id;
         console.log(",  eventData   ",eventData);
 
         return eventId;
@@ -545,7 +566,7 @@ function updateEventPage(eventData) {
 async function displayEventImages(eventData) {
     console.log(",  eventData  ggggg ",eventData);
 
-    const imageData = await fetchMediaImages(eventData.eventId);  // Assuming eventId is part of eventData
+    const imageData = await fetchMediaImages(eventData.id);  // Assuming eventId is part of eventData
     const galleryContainer = document.getElementById('event-gallery');
     imageData.forEach(img => {
         const imgElement = document.createElement('img');
