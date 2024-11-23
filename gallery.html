@@ -414,7 +414,7 @@ async function fetchImages(category = 'all') {
 
             const updatedCache = [...cachedImages, ...newImages];
             localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
-            
+
             console.log("updatedCache?   ", updatedCache);
 
             // Display fetched images
