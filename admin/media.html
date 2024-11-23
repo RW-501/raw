@@ -2278,7 +2278,10 @@ async function addMediaToGallery(category) {
             console.log("Media successfully added to the gallery!");
             showToast("Media successfully added to the gallery!", "success");
         }
-        document.getElementById(`addToGalleyBtn_${mediaId}`).innerText = "Added!";
+        if(document.getElementById(`addToGalleyBtn_${mediaId}`)){
+            document.getElementById(`addToGalleyBtn_${mediaId}`).innerText = "Added!";
+
+        }
         // Close the modal after adding or updating the media
         closeModal();
     } catch (error) {
