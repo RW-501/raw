@@ -142,12 +142,15 @@
     <div class="container mt-5">
         <h2 class="text-center mb-4">Photography Gallery</h2>
 
-        <!-- Category Filter -->
-        <div class="btn-group mb-4" role="group">
-            <button type="button" class="btn btn-primary" onclick="filterCategory('portrait')">Portrait</button>
-            <button type="button" class="btn btn-primary" onclick="filterCategory('event')">Event</button>
-            <button type="button" class="btn btn-primary" onclick="filterCategory('commercial')">Commercial</button>
-        </div>
+<!-- Category Filter & Add Media Buttons -->
+<div class="btn-group mb-4" role="group">
+  <button type="button" class="btn btn-primary" onclick="handleCategory('portrait')">Portrait</button>
+  <button type="button" class="btn btn-primary" onclick="handleCategory('event')">Event</button>
+  <button type="button" class="btn btn-primary" onclick="handleCategory('commercial')">Commercial</button>
+  <button type="button" class="btn btn-primary" onclick="handleCategory('family')">Family</button>
+  <button type="button" class="btn btn-primary" onclick="handleCategory('other')">Other</button>
+</div>
+
 
          <!-- Public Gallery Section -->
     <section id="gallery" class="py-5">
