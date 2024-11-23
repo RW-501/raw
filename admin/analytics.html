@@ -176,6 +176,38 @@
             </div>
         
 
+            <title>User Analytics</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f9;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+              }
+              th, td {
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+              }
+              th {
+                background-color: #4CAF50;
+                color: white;
+              }
+              tr:nth-child(even) {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>User Analytics</h1>
+            <div id="userAnalyticsTableContainer">
+              <!-- The table will be injected here -->
+            </div>
+
 
             <title>Event Analytics</title>
             <style>
@@ -351,6 +383,55 @@
  
 
 
+    async function displayUserAnalytics() {
+      const analyticsData = await fetchUserAnalyticsData();
+      const totalUsers = analyticsData.length;
+
+      // Create a table with total user count
+      let tableHTML = `
+        <h3>Total Users: ${totalUsers}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>IP Address</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>State</th>
+              <th>Contact Views</th>
+              <th>Total Duration (Seconds)</th>
+              <th>Activities Count</th>
+              <th>View Source</th>
+              <th>View Method</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      // Loop through analytics data and create table rows
+      analyticsData.forEach(user => {
+        tableHTML += `
+          <tr>
+            <td>${user.ipAddress}</td>
+            <td>${user.city}</td>
+            <td>${user.country}</td>
+            <td>${user.state}</td>
+            <td>${user.contactViews}</td>
+            <td>${user.totalDuration}</td>
+            <td>${user.userActivitiesCount}</td>
+            <td>${user.viewSource}</td>
+            <td>${user.viewMethod}</td>
+          </tr>
+        `;
+      });
+
+      tableHTML += '</tbody></table>';
+
+      // Insert the table into the container
+      document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+    }
+
+    // Display user analytics when the page loads
+    displayUserAnalytics();
   
     async function displayEventAnalytics() {
       const events = await fetchEventsData();
