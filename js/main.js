@@ -278,7 +278,7 @@ window.onload = function() {
 
 
 function setUpdateFooterContent(){
-  console.log("setUpdateFooterContent   ");
+ // console.log("setUpdateFooterContent   ");
 
 // Function to update the active class on the navigation links
 document.querySelectorAll('.nav-link').forEach(link => {

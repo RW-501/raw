@@ -347,11 +347,11 @@ function getViewedByField() {
  function setTrackingListeners(ipAddress) {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
-    console.log("startViewTimer");
+    //console.log("startViewTimer");
 
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
-          console.log("TrackingListeners  last");
+         // console.log("TrackingListeners  last");
 
             updateViewData(ipAddress);
         }
@@ -686,32 +686,8 @@ function shuffleArray(arr) {
 
         // Execute the query
         const querySnapshot = await getDocs(mediaQuery);
-     //   console.log("mainTextArea, galleryImagesContainer, Collection", mainTextArea, galleryImagesContainer, page);
-/*
-        let defaultImages = await getHeaderImages(page);
-
+    
         
-    if(!defaultImages){
-        // Define default images
-         defaultImages = [
-            "https://shutterworx.co/images/default_1.gif",
-            "https://shutterworx.co/images/default_2.gif",
-            "https://shutterworx.co/images/default_3.gif",
-            "https://shutterworx.co/images/default_4.gif",
-            "https://shutterworx.co/images/placeholder1.gif",
-            "https://shutterworx.co/images/placeholder2.gif",
-            "https://shutterworx.co/images/placeholder3.gif",
-            "https://shutterworx.co/images/placeholder4.gif"
-        ];
-    }
-
-        // Helper function to get a random image from the defaultImages array
-        const getRandomDefaultImage = () => {
-            return defaultImages[Math.floor(Math.random() * defaultImages.length)];
-        };
-
-*/
-
 
 // Convert the snapshot into an array
 let mediaArray = [];
@@ -770,7 +746,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!mainGrid) return; // Exit if the grid doesn't exist
   
     const images = mainGrid.querySelectorAll('.lazy-image');
-   console.log('Image already loaded:',images.length);
+//   console.log('Image already loaded:',images.length);
    
     // Observer for Lazy Loading.
     const observer = new IntersectionObserver(
