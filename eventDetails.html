@@ -574,7 +574,7 @@ async function displayEventImages(eventData) {
     const galleryContainer = document.getElementById('event-gallery');
     imageData.doc.forEach(img => {
 
-        console.log("need id imageData.id   ",imageData.doc.id, ",  imageData   ",imageData.doc);
+        console.log("need id imageData.id   ",imageData.doc, ",  imageData   ",imageData.data);
         const imgElement = document.createElement('img');
         imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
         imgElement.alt = "Event Image";
