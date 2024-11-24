@@ -1411,10 +1411,14 @@ main .collapse.active {
     eventArray.length = 0; // Clear eventArray to avoid duplicates
 
     const eventsCollection = collection(db, "Events");
-    const eventQuery = query(
-        eventsCollection,
-        orderBy(sortBy === "date" ? "eventDate" : "title")
-    );
+    let eventQuery;
+
+// Sort events
+if (sortBy === "date") {
+  eventQuery = query(eventsCollection, orderBy("eventDate"));
+} else {
+  eventQuery = query(eventsCollection, orderBy("title"));
+}
 
 
   try {
