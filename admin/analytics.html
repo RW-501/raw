@@ -455,6 +455,7 @@ async function displayEventAnalytics() {
               <th>Views</th>
             <th>Retrieve Count</th>
               <th>Event ID</th>
+              <th>Add Date</th>
             </tr>
           </thead>
           <tbody>
@@ -468,6 +469,7 @@ async function displayEventAnalytics() {
             <td>${event.views}</td>
             <td>${event.retrieveCount}</td>
             <td>${event.id}</td>
+            <td>${event.timestamp}</td>
           </tr>
         `;
       });
@@ -497,7 +499,7 @@ async function fetchEventsData() {
 
 
 
-
+window.toggleDetailSection  = toggleDetailSection ;
 
        
 // Window onload event to fetch data when the page loads
