@@ -148,8 +148,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">Total Duration</h5>
-                                <p id="totalDuration" class="display-4">Loading...</p>
+                                <h5 class="section-title">Total Views</h5>
+                                <p id="totalViewDisplay" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingImageDownloads"></div>
                             </div>
                         </div>
@@ -254,7 +254,10 @@
     <title>Media Overview</title>
     <style>
 
-
+tbody {
+  overflow-y: scroll;
+  max-height: 500px;
+}
         .totals {
             margin-bottom: 20px;
         }
@@ -725,8 +728,8 @@ function renderContacts(contacts) {
     const msgCountDisplay = document.getElementById('msgCountDisplay');
     if (msgCountDisplay) {
         msgCountDisplay.innerHTML = `
-            <h3>Total Messages: ${contacts.length}</h3>
-            <p>Unread Messages: ${unReadMsg}</p>
+            <h3>${contacts.length}</h3>
+            <p>Unread: ${unReadMsg}</p>
         `;
     } else {
         console.error("Message count display element not found.");
@@ -780,8 +783,15 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
         return;
     }
 
+    // Calculate total views
+    const totalViews = mediaList.reduce((sum, media) => sum + (media.views || 0), 0);
+
+    // Sort mediaList by views (descending)
+    const sortedMediaList = [...mediaList].sort((a, b) => (b.views || 0) - (a.views || 0));
+
     // Display totals
     const totals = document.getElementById('spaceUsedDisplay');
+    const views = document.getElementById('totalViewDisplay');
     if (totals) {
         totals.className = 'totals';
         totals.innerHTML = `
@@ -789,7 +799,12 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
             <p><strong>Total Space Usage:</strong> ${totalSpaceUsage}</p>
         `;
     }
-
+    if (views) {
+      views.className = 'views';
+      views.innerHTML = `
+            <p>${totalViews}</p>
+        `;
+    }
     // Create table
     const table = document.createElement('table');
     table.className = 'media-table';
@@ -807,9 +822,18 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
             </tr>
         </thead>
         <tbody>
-            ${mediaList.map(media => `
-                <tr>
-                    <td>${media.eventId || "N/A"}</td>
+            ${sortedMediaList.map((media, index) => `
+                <tr class="${index < 3 ? 'top-media-row' : ''}">
+                    <td>
+                        <div id="m-Images-${media.id}" class="media-image">
+                            <img 
+                                src="${media.photoUrl}" 
+                                data-src="${media.photoUrl}" 
+                                alt="Media" 
+                                class="media-thumbnail view-image" 
+                                data-image-id="${media.id}">
+                        </div>
+                    </td>
                     <td>${media.views || 0}</td>
                     <td>${media.price || 0}</td>
                     <td>${formatFileSize(media.fileSize || 0)}</td>
@@ -821,9 +845,10 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
             `).join('')}
         </tbody>
     `;
+
+    // Append table to container
     container.appendChild(table);
 }
-
 
 window.toggleDetailSection  = toggleDetailSection ;
 
