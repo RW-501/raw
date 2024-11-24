@@ -572,9 +572,9 @@ async function displayEventImages(eventData) {
     
     const imageData = await fetchMediaImages(eventData.id);  // Assuming eventId is part of eventData
     const galleryContainer = document.getElementById('event-gallery');
-    imageData.forEach(img => {
+    imageData.doc.forEach(img => {
 
-        console.log("need id imageData.id   ",imageData.data.id, ",  imageData   ",imageData.id);
+        console.log("need id imageData.id   ",imageData.doc.id, ",  imageData   ",imageData.doc);
         const imgElement = document.createElement('img');
         imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
         imgElement.alt = "Event Image";
