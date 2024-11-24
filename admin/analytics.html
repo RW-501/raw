@@ -768,12 +768,11 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
 }
 
 // Call the function on page load
-fetchAndRenderMedia();
+fetchAndRender();
 
 
 
-
-
+window.fetchAndRenderMedia = fetchAndRender;
 
 window.toggleDetailSection  = toggleDetailSection ;
 
