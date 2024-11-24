@@ -402,13 +402,13 @@
          // Function to show loading spinner
         function showLoading(metric) {
          //   document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'inline-block';
-            document.getElementById(metric).style.display = 'none';
+         //   document.getElementById(metric).style.display = 'none';
         }
     
         // Function to hide loading spinner
         function hideLoading(metric) {
           //  document.getElementById('loading' + metric.charAt(0).toUpperCase() + metric.slice(1)).style.display = 'none';
-            document.getElementById(metric).style.display = 'block';
+         //   document.getElementById(metric).style.display = 'block';
         }
     
         // Function to display error message
@@ -428,13 +428,21 @@
  * @param {Object} options - Formatting options
  * @returns {string} - Formatted date and time
  */
- function formatDate(dateString, options = {}) {
-  // Parse the date string into a Date object
-  const date = new Date(dateString);
+ function formatDate(dateInput, options = {}) {
+  let date;
+
+  // Check if the input is a Firestore timestamp object (with seconds and nanoseconds)
+  if (dateInput && dateInput.seconds && dateInput.nanoseconds) {
+    // Convert Firestore timestamp to JavaScript Date object
+    date = new Date(dateInput.seconds * 1000 + dateInput.nanoseconds / 1000000);
+  } else {
+    // Parse the date string into a Date object
+    date = new Date(dateInput);
+  }
 
   // Check if the date is valid
   if (isNaN(date)) {
-    console.error("Invalid date string:", dateString);
+    console.error("Invalid date string:", dateInput);
     return "Invalid Date";
   }
 
@@ -456,7 +464,6 @@
   // Return formatted date
   return date.toLocaleString("en-US", finalOptions);
 }
-
 // Function to format the "viewedBy" data into an HTML structure
 function formatViewedBy(viewedByData = {}) {
   return `
@@ -519,23 +526,33 @@ async function displayUserAnalytics() {
       </tr>
     `;
 
-    // Add collapsible detail row
-    tableHTML += `
-      <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
-        <td colspan="8">
-          <div class="user-details">
-            <h4>Details for ${user.ipAddress}</h4>
-    ${formatViewedBy(user.contactViewedBy)}
-    ${formatViewedBy(user.eventDetailsViewedBy)}
-    ${formatViewedBy(user.homeViewedBy)}
-    ${formatViewedBy(user.aboutViewedBy)}
-    ${formatViewedBy(user.confirmationViewedBy)}
-    ${formatViewedBy(user.eventsViewedBy)}
-    ${formatViewedBy(user.galleryViewedBy)}
-          </div>
-        </td>
-      </tr>
-    `;
+    // Filter out invalid `viewedBy` data
+    const viewedByDetails = [
+      user.contactViewedBy,
+      user.eventDetailsViewedBy,
+      user.homeViewedBy,
+      user.aboutViewedBy,
+      user.confirmationViewedBy,
+      user.eventsViewedBy,
+      user.galleryViewedBy
+    ]
+      .filter(detail => detail) // Exclude undefined, null, or empty values
+      .map(detail => formatViewedBy(detail)) // Format valid entries
+      .join(""); // Combine them into a single string
+
+    // Only include the collapsible row if there are valid details
+    if (viewedByDetails) {
+      tableHTML += `
+        <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
+          <td colspan="8">
+            <div class="user-details">
+              <h4>Details for ${user.ipAddress}</h4>
+              ${viewedByDetails}
+            </div>
+          </td>
+        </tr>
+      `;
+    }
   });
 
   // Close table
