@@ -355,8 +355,7 @@
           <th>Last View Date</th>
           <th>Total Duration (Seconds)</th>
           <th>Activities Count</th>
-          <th>View Source</th>
-          <th>View Method</th>
+          <th>User Blocked</th>
         </tr>
       </thead>
       <tbody>
@@ -373,8 +372,7 @@
         <td>${user.lastViewDate}</td>
         <td>${user.totalDuration || 0}</td>
         <td>${user.userActivitiesCount}</td>
-        <td>${user.viewSource || ""}</td>
-        <td>${user.viewMethod || ""}</td>
+        <td>${user.userBlocked || ""}</td>
       </tr>
       <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
         <td colspan="9">
