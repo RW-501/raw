@@ -306,7 +306,7 @@ function getViewedByField() {
 
 
 // Function to update view data on unload or visibility change
- async function updateViewData(ipAddress) {
+ async function updateViewData(ipAddress, timer, exitTrack) {
     const viewEndTime = Date.now();
     const durationOfView = (viewEndTime - viewStartTime) / 1000;
     const viewedByField = getViewedByField();
@@ -325,7 +325,9 @@ function getViewedByField() {
             viewMethod: navigator.userAgentData?.mobile ? "mobile" : "desktop",
             durationOfView: durationOfView,
             contactViews: increment(1),
-            viewSource: getViewSource()
+            viewSource: getViewSource(),
+            timer: timer,
+            exitTrack: exitTrack
         },
         ipAddress,
         ...locationData,
@@ -348,12 +350,15 @@ function getViewedByField() {
     window.addEventListener('beforeunload', setInternalPageSource);
     window.addEventListener('load', startViewTimer);
     //console.log("startViewTimer");
+    let timer = 20000;
+
+    triggerUpdateWithTimeout(ipAddress, timer);
 
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
          // console.log("TrackingListeners  last");
 
-            updateViewData(ipAddress);
+            updateViewData(ipAddress, '', "offLoad");
         }
     });
 }
@@ -372,7 +377,16 @@ function getViewedByField() {
 
 
 
-
+// Function to trigger the update after 20 seconds
+function triggerUpdateWithTimeout(ipAddress, time) {
+    
+    // Set a timeout for 20 seconds (20000 milliseconds)
+    setTimeout(() => {
+      // Call the updateViewData function after the delay
+      updateViewData(ipAddress, time, 'timeOut');
+    }, time);  // 20,000 milliseconds = 20 seconds
+  }
+  
 
 
   document.addEventListener("DOMContentLoaded", () => {

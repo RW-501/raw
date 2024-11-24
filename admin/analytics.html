@@ -335,60 +335,76 @@
 
  
 
+        async function displayUserAnalytics() {
+  // Fetch the user analytics data
+  const analyticsData = await fetchUserAnalyticsData();
+  const totalUsers = analyticsData.length;
 
-    async function displayUserAnalytics() {
-      const analyticsData = await fetchUserAnalyticsData();
-      const totalUsers = analyticsData.length;
+  // Display the total user count
+  document.getElementById('usersDisplay').innerHTML = `<h3>Total Users: ${totalUsers}</h3>`;
 
+  // Create the main table structure
+  let tableHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>State</th>
+          <th>Last View Date</th>
+          <th>Total Duration (Seconds)</th>
+          <th>Activities Count</th>
+          <th>View Source</th>
+          <th>View Method</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
 
-      document.getElementById('usersDisplay').innerHTML = `<h3>${totalUsers}</h3>`;
-      // Create a table with total user count
-      let tableHTML = `
-    
-        <table>
-          <thead>
-            <tr>
-              <th>IP Address</th>
-              <th>City</th>
-              <th>Country</th>
-              <th>State</th>
-              <th>Last View Date</th>
-              <th>Total Duration (Seconds)</th>
-              <th>Activities Count</th>
-              <th>View Source</th>
-              <th>View Method</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+  // Loop through each user's data and create a table row
+  analyticsData.forEach(user => {
+    tableHTML += `
+      <tr>
+        <td><button class="collapsible" onclick="toggleDetailSection('${user.ipAddress}')">${user.ipAddress}</button></td>
+        <td>${user.city}</td>
+        <td>${user.country}</td>
+        <td>${user.state}</td>
+        <td>${user.lastViewDate}</td>
+        <td>${user.totalDuration || 0}</td>
+        <td>${user.userActivitiesCount}</td>
+        <td>${user.viewSource || ""}</td>
+        <td>${user.viewMethod || ""}</td>
+      </tr>
+      <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
+        <td colspan="9">
+          <div class="user-details">
+            <h4>Details for ${user.ipAddress}</h4>
+            <p><strong>Contact Views:</strong> ${user.contactViews}</p>
+            <p><strong>Contact Viewed By:</strong> ${JSON.stringify(user.contactViewedBy)}</p>
+            <p><strong>Duration of View:</strong> ${user.totalDuration}</p>
+            <p><strong>Last View Date:</strong> ${user.lastViewDate}</p>
+            <p><strong>View Source:</strong> ${user.viewSource}</p>
+            <p><strong>View Method:</strong> ${user.viewMethod}</p>
+            <p><strong>User Activities Count:</strong> ${user.userActivitiesCount}</p>
+            <p><strong>Location:</strong> ${user.city}, ${user.state}, ${user.country}</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
 
-      // Loop through analytics data and create table rows
-      analyticsData.forEach(user => {
-        tableHTML += `
-          <tr>
-            <td>${user.ipAddress}</td>
-            <td>${user.city}</td>
-            <td>${user.country}</td>
-            <td>${user.state}</td>
-            <td>${user.lastViewDate}</td>
-            <td>${user.totalDuration || 0}</td>
-            <td>${user.userActivitiesCount}</td>
-            <td>${user.homeViewedBy.viewSource || ""}</td>
-            <td>${user.homeViewedBy.viewMethod || ""}</td>
-          </tr>
-        `;
-      });
+  // Close the table tag
+  tableHTML += '</tbody></table>';
 
-      tableHTML += '</tbody></table>';
+  // Insert the table into the container
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+}
 
-      // Insert the table into the container
-      document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
-    }
-   
-
+// Fetch user analytics data from Firestore
 async function fetchUserAnalyticsData() {
-  const analyticsCollection = collection(db, "Analytics"); // reference to the Analytics collection
-  const analyticsSnapshot = await getDocs(analyticsCollection); // fetch all documents in the collection
+  const analyticsCollection = collection(db, "Analytics"); // Reference to the Analytics collection
+  const analyticsSnapshot = await getDocs(analyticsCollection); // Fetch all documents in the collection
   const analyticsList = analyticsSnapshot.docs.map(doc => ({
     ipAddress: doc.id, // IP address as doc ID
     city: doc.data().city,
@@ -400,12 +416,34 @@ async function fetchUserAnalyticsData() {
     viewSource: doc.data().viewSource,
     viewMethod: doc.data().viewMethod,
     contactViewedBy: doc.data().contactViewedBy,
+    lastViewDate: doc.data().lastViewDate,
   }));
   return analyticsList;
 }
 
- 
-    async function displayEventAnalytics() {
+// Function to toggle the display of user details based on IP address
+function toggleDetailSection(ipAddress) {
+  const detailRow = document.getElementById(`details-${ipAddress}`);
+  if (detailRow.style.display === "none") {
+    detailRow.style.display = "table-row"; // Show the detail section
+  } else {
+    detailRow.style.display = "none"; // Hide the detail section
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function displayEventAnalytics() {
       const events = await fetchEventsData();
 
       // Create a table
