@@ -464,7 +464,8 @@ async function fetchImages(category = 'all') {
             const updatedCache = [...cachedImages, ...newImages];
             localStorage.setItem('cachedImages', JSON.stringify(updatedCache));
 
-         //   console.log("updatedCache?   ", updatedCache);
+            console.log("updatedCache?   ", updatedCache);
+            console.log("newImages?   ", newImages);
 
             // Display fetched images
             displayImages(newImages);
@@ -492,7 +493,7 @@ function displayImages(images) {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
-      console.log("show data? need id   ", data);
+      console.log("show data? need id   ", images);
 
         const imageElement = createImageElement(data);
         gallery.appendChild(imageElement);

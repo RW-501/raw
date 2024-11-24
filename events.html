@@ -493,7 +493,6 @@ querySnapshot.forEach(async (doc) => {
                     <div class="flex-grow-1 p-3 MediaCollection">
                         <div class="media-gallery d-flex flex-wrap gap-2">
                             ${mediaImages.map(image => `
-                            ${        console.log("need id image  ",image.id, ",  image   ",image)}                              <img 
                                     src="${image.watermarkedImageUrl}" 
                                     alt="Media Image" data-id="${image.id}"
                                     class="media-thumbnail rounded lazy-image" 
