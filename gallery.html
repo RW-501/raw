@@ -349,26 +349,26 @@ let isFetching = false; // Prevent multiple simultaneous fetches
 let retryCount = 0; // Retry mechanism for failed fetches
 
 // Utility function to create image elements dynamically
-function createImageElement({ watermarkedImageUrl, title, catagory, mediaId }) {
+function createImageElement({ data}) {
     const col = document.createElement('div');
     col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
-    console.log("show data? catagory   ", catagory);
+    console.log("show data? catagory   ", data);
 
     const img = document.createElement('img');
-    img.src = watermarkedImageUrl;
-    img.alt = catagory || 'Gallery Image'; // SEO-optimized alt text
+    img.src = data.watermarkedImageUrl;
+    img.alt = data.catagory || 'Gallery Image'; // SEO-optimized alt text
     img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
-    img.setAttribute("data-id", mediaId);
+    img.setAttribute("data-id", data.mediaId);
    // img.setAttribute('data-bs-toggle', 'modal');
-    img.setAttribute('data-image', watermarkedImageUrl);
+    img.setAttribute('data-image',data.watermarkedImageUrl);
    // img.setAttribute('data-description', description || '');
 
     img.addEventListener('click', () => {
         const modalImage = document.getElementById('modal-image');
         const modalCaption = document.getElementById('modal-caption');
-        modalImage.src = watermarkedImageUrl;
-        modalCaption.textContent = catagory || 'No description available.';
-        modalImage.setAttribute('alt', catagory || 'Gallery Modal Image'); // Accessibility enhancement
+        modalImage.src = data.watermarkedImageUrl;
+        modalCaption.textContent = data.catagory || 'No description available.';
+        modalImage.setAttribute('alt', data.catagory || 'Gallery Modal Image'); // Accessibility enhancement
     });
 
 
