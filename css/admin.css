@@ -505,8 +505,8 @@ display:block;
     
       .tabButton {
         background-color: #009cfa;
-        color: white;
-        border: none;
+        color: #555555;
+                border: none;
         padding: 12px 20px;
         border-radius: 8px;
         font-size: 16px;

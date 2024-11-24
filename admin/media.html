@@ -1902,6 +1902,8 @@ populateDropdown();
             document.getElementById('eventStatus').value = event.status;
             document.getElementById('eventURL').value = event.shortURL;
             document.getElementById('eventCollectionPrice').value = event.collection_price;
+            document.getElementById('displayEventURL').value = `https://rawphotographysite.com/?a=${event.shortURL}`;
+            document.getElementById('displayAccessCode').value = `https://rawphotographysite.com/?a=${event.accessCode}`;
 
             const eventTagsInput = document.getElementById('eventTags');
 
