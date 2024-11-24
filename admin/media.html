@@ -1999,22 +1999,6 @@ populateDropdown();
 
 
 
-        // Function to toggle the visibility of the directions
-        function toggleDirections(directionId, btnDiv) {
-            var directions = document.getElementById(directionId);
-            directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
-        
-                if (directions.style.display === 'none') {
-                    btnDiv.innerHTML = `Show Directions ▲`; // Set to collapsed state
-                } else {
-                    btnDiv.innerHTML = `Hide Directions ▼`; // Set to expanded state
-                }
-
-                                // Save the directions visibility state in localStorage
-                                localStorage.setItem(directionsId, directions.style.display);
-        
-        }
-
         // Update the displayed access code based on user input
         document.getElementById('accessCode').addEventListener('input', function () {
             var accessCode = document.getElementById('accessCode').value;
@@ -2771,6 +2755,52 @@ window.onload = loadLastTab();
 
             
 
+        // Function to toggle the visibility of the directions
+        function toggleDirections(directionId, btnDiv) {
+            var directions = document.getElementById(directionId);
+            directions.style.display = (directions.style.display === 'none') ? 'block' : 'none';
+        
+                if (directions.style.display === 'none') {
+                    btnDiv.innerHTML = `Show Directions ▲`; // Set to collapsed state
+                } else {
+                    btnDiv.innerHTML = `Hide Directions ▼`; // Set to expanded state
+                }
+
+                                // Save the directions visibility state in localStorage
+                                localStorage.setItem(directionsId, directions.style.display);
+        
+        }
+
+
+
+        function setDirectionsOnLoad() {
+    // Find all divs with the class 'directions'
+    var directionsElements = document.querySelectorAll('.directions');
+
+    // Loop through each element
+    directionsElements.forEach(function (directions) {
+        var directionId = directions.id; // Get the id of the div
+        var btnDiv = document.querySelector(`[data-btn="${directionId}"]`); // Find the corresponding button
+
+        // Retrieve visibility state from localStorage
+        var savedState = localStorage.getItem(directionId);
+
+        // Set visibility based on saved state or default to 'none'
+        directions.style.display = savedState || 'none';
+
+        // Set button text based on the visibility state
+        if (btnDiv) {
+            if (directions.style.display === 'none') {
+                btnDiv.innerHTML = `Show Directions ▲`; // Collapsed state
+            } else {
+                btnDiv.innerHTML = `Hide Directions ▼`; // Expanded state
+            }
+        }
+    });
+}
+
+
+
             // Load saved directions preferences from localStorage
             function loadDirectionsPreferences() {
                 const allDirections = document.querySelectorAll('.directions');
@@ -2781,6 +2811,8 @@ window.onload = loadLastTab();
                         direction.style.display = savedState;
                     }
                 });
+                setDirectionsOnLoad();
+                console.log("loadDirectionsPreferences");
             }
 
             // Call loadDirectionsPreferences on page load
