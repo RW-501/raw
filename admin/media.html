@@ -1473,25 +1473,36 @@ main .collapse.active {
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
                     <p>Public: <span class="badge ${isPublic ? 'bg-success' : 'bg-danger'}">${isPublic ? "Yes" : "No"}</span></p>
                   
-                         <div class="mb-3">
-                            <label for="eDisplayEventURL" class="form-label">Event URL Display</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="eDisplayEventURL" disabled
-                                    value="https://rawphotographysite.com/?s=${event.shortURL}">
-                                <button class="btn btn-outline-secondary" type="button" id="eCopyEventURLBtn"
-                                    onclick="copyEventURL()">Copy</button>
-                            </div>
-                        </div>
+                        <div class="mb-3">
+    <label for="eDisplayEventURL" class="form-label">Event URL Display</label>
+    <div class="input-group">
+        <!-- Check for shortURL and display appropriate content -->
+        ${event.shortURL ? `
+        <input type="text" class="form-control" id="eDisplayEventURL" disabled
+            value="https://rawphotographysite.com/?s=${event.shortURL}">
+        <button class="btn btn-outline-secondary" type="button" id="eCopyEventURLBtn"
+            onclick="copyEventURL()">Copy</button>
+        ` : `
+        <div class="form-text text-danger">Event URL not available. Please add a short URL on the edit event page.</div>
+        `}
+    </div>
+</div>
 
-                           <div class="mb-3">
-                                <label for="eDisplayAccessCode" class="form-label">Access Code URL Display</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="eDisplayAccessCode" disabled
-                                        value="https://rawphotographysite.com/?a=${event.accessCode}">
-                                    <button class="btn btn-outline-secondary" type="button" id="eCopyAccessCodeBtn"
-                                        onclick="copyAccessCode()">Copy</button>
-                                </div>
-                            </div>
+<div class="mb-3">
+    <label for="eDisplayAccessCode" class="form-label">Access Code URL Display</label>
+    <div class="input-group">
+        <!-- Check for accessCode and display appropriate content -->
+        ${event.accessCode ? `
+        <input type="text" class="form-control" id="eDisplayAccessCode" disabled
+            value="https://rawphotographysite.com/?a=${event.accessCode}">
+        <button class="btn btn-outline-secondary" type="button" id="eCopyAccessCodeBtn"
+            onclick="copyAccessCode()">Copy</button>
+        ` : `
+        <div class="form-text text-danger">Access code not available. Please add an access code on the edit event page.</div>
+        `}
+    </div>
+</div>
+
 
 
                     </div>
@@ -1924,7 +1935,7 @@ populateDropdown();
             document.getElementById('eventStatus').value = event.status;
             document.getElementById('eventURL').value = event.shortURL;
             document.getElementById('eventCollectionPrice').value = event.collection_price;
-            document.getElementById('displayEventURL').value = `https://rawphotographysite.com/?a=${event.shortURL}`;
+            document.getElementById('displayEventURL').value = `https://rawphotographysite.com/?s=${event.shortURL}`;
             document.getElementById('displayAccessCode').value = `https://rawphotographysite.com/?a=${event.accessCode}`;
 
             const eventTagsInput = document.getElementById('eventTags');
