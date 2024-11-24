@@ -139,8 +139,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">Page Views</h5>
-                                <p id="pageViews" class="display-4">Loading...</p>
+                                <h5 class="section-title">Storage</h5>
+                                <p id="spaceUsedDisplay" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingPageViews"></div>
                             </div>
                         </div>
@@ -166,8 +166,8 @@
                     <div class="col-md-3">
                         <div class="card analytics-card shadow-sm">
                             <div class="card-body">
-                                <h5 class="section-title">User Engagement</h5>
-                                <p id="userEngagement" class="display-4">Loading...</p>
+                                <h5 class="section-title">Total Messages</h5>
+                                <p id="msgCountDisplay" class="display-4">Loading...</p>
                                 <div class="loading-spinner loading" id="loadingUserEngagement"></div>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
         </section>
 
 
-        
+
 <section>
             <title>User Analytics</title>
             <style>
@@ -477,7 +477,7 @@ async function displayUserAnalytics() {
   const totalUsers = analyticsData.length;
 
   // Display the total user count
-  document.getElementById('usersDisplay').innerHTML = `<h3>Total Users: ${totalUsers}</h3>`;
+  document.getElementById('usersDisplay').innerHTML = `<h3>${totalUsers}</h3>`;
 
   // Construct the table structure
   let tableHTML = `
@@ -630,8 +630,8 @@ async function fetchEventsData() {
 
 async function fetchAndRenderContacts() {
     // Reference to the Contacts collection in Firebase
-    const contactsCollection = firebase.firestore().collection('Contacts');
-    
+    const contactsCollection = collection(db, "Contacts"); // Reference to the Analytics collection
+ 
     try {
         // Fetch documents from the Contacts collection
         const snapshot = await contactsCollection.get();
@@ -651,6 +651,8 @@ function renderContacts(contacts) {
     const container = document.getElementById('contacts-container');
     container.innerHTML = ""; // Clear the container
 
+    let unReadMsg = 0; // Counter for unread messages
+
     contacts.forEach(contact => {
         // Create a card for each contact
         const card = document.createElement('div');
@@ -662,13 +664,25 @@ function renderContacts(contacts) {
             <p><strong>Status:</strong> ${contact.status || "No Status"}</p>
             <p><strong>Subject:</strong> ${contact.subject || "No Subject"}</p>
             <p><strong>Messages:</strong> ${contact.messages || 0}</p>
-            <p><strong>Timestamp:</strong> ${new Date(contact.timestamp).toLocaleString() || "No Timestamp"}</p>
+            <p><strong>Timestamp:</strong> ${contact.timestamp ? new Date(contact.timestamp).toLocaleString() : "No Timestamp"}</p>
             <button class="view-btn" onclick="goToAdminContact('${contact.id}')">View Details</button>
         `;
+
+        // Increment unread message count if the status is "unread"
+        if (contact.status === "unread") {
+            unReadMsg += 1;
+        }
 
         // Append the card to the container
         container.appendChild(card);
     });
+
+    // Update the display for total messages and unread messages
+    const msgCountDisplay = document.getElementById('msgCountDisplay');
+    msgCountDisplay.innerHTML = `
+        <h3>Total Messages: ${contacts.length}</h3>
+        <p>Unread Messages: ${unReadMsg}</p>
+    `;
 }
 
 function goToAdminContact(docId) {
@@ -681,7 +695,7 @@ fetchAndRenderContacts();
 
 
 async function fetchAndRenderMedia() {
-    const mediaCollection = firebase.firestore().collection('Media');
+    const mediaCollection = collection(db, "Media"); // Reference to the Analytics collection
 
     try {
         // Fetch documents from the Media collection
@@ -713,14 +727,14 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
     const container = document.getElementById('media-container');
 
     // Display totals
-    const totals = document.createElement('div');
+    const totals = document.getElementById('spaceUsedDisplay');
     totals.className = 'totals';
     totals.innerHTML = `
         <p><strong>Total Media:</strong> ${totalMediaCount}</p>
         <p><strong>Total Space Usage:</strong> ${totalSpaceUsage}</p>
     `;
-    container.appendChild(totals);
 
+    
     // Create table
     const table = document.createElement('table');
     table.className = 'media-table';
@@ -772,7 +786,6 @@ window.toggleDetailSection  = toggleDetailSection ;
             const eventId = urlParams.get("eventId");
 
 
-console.log("Data ??????????????????????");
 
             if (eventId) {
               //  fetchEventAnalytics(eventId);  // Fetch data for the specific event
