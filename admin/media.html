@@ -1472,6 +1472,28 @@ main .collapse.active {
            <strong>${title}</strong>
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
                     <p>Public: <span class="badge ${isPublic ? 'bg-success' : 'bg-danger'}">${isPublic ? "Yes" : "No"}</span></p>
+                  
+                         <div class="mb-3">
+                            <label for="eDisplayEventURL" class="form-label">Event URL Display</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="eDisplayEventURL" disabled
+                                    value="https://rawphotographysite.com/?s=${event.shortURL}">
+                                <button class="btn btn-outline-secondary" type="button" id="eCopyEventURLBtn"
+                                    onclick="copyEventURL()">Copy</button>
+                            </div>
+                        </div>
+
+                           <div class="mb-3">
+                                <label for="eDisplayAccessCode" class="form-label">Access Code URL Display</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="eDisplayAccessCode" disabled
+                                        value="https://rawphotographysite.com/?a=${event.accessCode}">
+                                    <button class="btn btn-outline-secondary" type="button" id="eCopyAccessCodeBtn"
+                                        onclick="copyAccessCode()">Copy</button>
+                                </div>
+                            </div>
+
+
                     </div>
                     </div>
 
