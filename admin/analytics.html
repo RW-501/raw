@@ -738,26 +738,19 @@ function goToAdminContact(docId) {
     window.location.href = `/admin/contact?msg=${docId}`;
 }
 
-// Call the function on page load
-fetchAndRenderContacts();
 
 
 async function fetchAndRender(collectionName = "Media", renderFunction = renderMediaTable, loadingContainerId = "media-container") {
- /*   const container = document.getElementById(loadingContainerId);
-    if (container) {
-    //    showLoading(container); // Show loading if container is valid
+    const container = document.getElementById(loadingContainerId);
+    if (!container) {
+        console.error("Loading container not found!");
+        return;
     }
-    // Call the function on page load
-fetchAndRender('Media', renderMediaTable, 'media-container');
 
-*/
+    // Show loading message if the container is valid
+    container.innerHTML = "<p>Loading...</p>";  // Optional: show loading message
+
     try {
-        // Ensure collectionName is not empty
-        if (!collectionName) {
-            console.error("Collection name cannot be empty");
-            return;
-        }
-
         const collectionRef = collection(db, collectionName);
         const snapshot = await getDocs(collectionRef);
         const dataList = snapshot.docs.map(doc => ({
@@ -768,14 +761,9 @@ fetchAndRender('Media', renderMediaTable, 'media-container');
         renderFunction(dataList); // Call the render function to display data
     } catch (error) {
         console.error(`Error fetching data from ${collectionName}:`, error);
-        if (container) {
-            container.innerHTML = `<p>Error loading data. Please try again later.</p>`;
-        }
+        container.innerHTML = `<p>Error loading data. Please try again later.</p>`;
     }
 }
-
-
-fetchAndRender();
 
 
 
@@ -864,7 +852,10 @@ window.toggleDetailSection  = toggleDetailSection ;
     // Display event analytics when the page loads
     displayEventAnalytics();
 
+// Call the function on page load
+fetchAndRenderContacts();
 
+fetchAndRender();
 
 
         };
