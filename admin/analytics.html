@@ -176,6 +176,9 @@
                 <!-- Add more event-specific or general analytics as needed -->
             </div>
         </section>
+
+
+        
 <section>
             <title>User Analytics</title>
             <style>
@@ -240,8 +243,7 @@
                 background-color: #f2f2f2;
               }
             </style>
-          </head>
-          <body>
+
             <h1>Event Analytics</h1>
             <div id="eventTableContainer">
               <!-- The table will be injected here -->
@@ -250,14 +252,105 @@
 
         </section>
 
+<section>
+
+
+    <title>Media Overview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .totals {
+            margin-bottom: 20px;
+        }
+
+        .media-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .media-table th,
+        .media-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .media-table th {
+            background-color: #f4f4f4;
+        }
+
+        .media-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <h1>Media Collection Overview</h1>
+    <div id="media-container"></div>
+
+</section>
 
 
 
 
 
 
+<section>
 
+    <title>Contacts Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
+        #contacts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .contact-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .view-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .view-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <h1>Contact Messages</h1>
+    <div id="contacts-container"></div>
+
+</section>
 
         <div class="error-message" id="errorMessage"></div>
     </main>
@@ -535,8 +628,135 @@ async function fetchEventsData() {
   return eventsList;
 }
 
+async function fetchAndRenderContacts() {
+    // Reference to the Contacts collection in Firebase
+    const contactsCollection = firebase.firestore().collection('Contacts');
+    
+    try {
+        // Fetch documents from the Contacts collection
+        const snapshot = await contactsCollection.get();
+        const contacts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Render the contacts in the UI
+        renderContacts(contacts);
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+}
+
+function renderContacts(contacts) {
+    const container = document.getElementById('contacts-container');
+    container.innerHTML = ""; // Clear the container
+
+    contacts.forEach(contact => {
+        // Create a card for each contact
+        const card = document.createElement('div');
+        card.className = 'contact-card';
+
+        // Populate the card with contact details
+        card.innerHTML = `
+            <h3>${contact.name || "No Name Provided"}</h3>
+            <p><strong>Status:</strong> ${contact.status || "No Status"}</p>
+            <p><strong>Subject:</strong> ${contact.subject || "No Subject"}</p>
+            <p><strong>Messages:</strong> ${contact.messages || 0}</p>
+            <p><strong>Timestamp:</strong> ${new Date(contact.timestamp).toLocaleString() || "No Timestamp"}</p>
+            <button class="view-btn" onclick="goToAdminContact('${contact.id}')">View Details</button>
+        `;
+
+        // Append the card to the container
+        container.appendChild(card);
+    });
+}
+
+function goToAdminContact(docId) {
+    // Redirect to the admin contact page with the docId in the query string
+    window.location.href = `/admin/contact?msg=${docId}`;
+}
+
+// Call the function on page load
+fetchAndRenderContacts();
 
 
+async function fetchAndRenderMedia() {
+    const mediaCollection = firebase.firestore().collection('Media');
+
+    try {
+        // Fetch documents from the Media collection
+        const snapshot = await mediaCollection.get();
+        const mediaList = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Calculate totals
+        const totalMediaCount = mediaList.length;
+        const totalSpaceUsage = mediaList.reduce((acc, media) => acc + (media.fileSize || 0), 0);
+
+        // Render results
+        renderMediaTable(mediaList, totalMediaCount, formatFileSize(totalSpaceUsage));
+    } catch (error) {
+        console.error("Error fetching media data:", error);
+    }
+}
+
+function formatFileSize(sizeInBytes) {
+    if (sizeInBytes < 1024) return `${sizeInBytes} B`;
+    if (sizeInBytes < 1024 ** 2) return `${(sizeInBytes / 1024).toFixed(2)} KB`;
+    if (sizeInBytes < 1024 ** 3) return `${(sizeInBytes / (1024 ** 2)).toFixed(2)} MB`;
+    return `${(sizeInBytes / (1024 ** 3)).toFixed(2)} GB`;
+}
+
+function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
+    const container = document.getElementById('media-container');
+
+    // Display totals
+    const totals = document.createElement('div');
+    totals.className = 'totals';
+    totals.innerHTML = `
+        <p><strong>Total Media:</strong> ${totalMediaCount}</p>
+        <p><strong>Total Space Usage:</strong> ${totalSpaceUsage}</p>
+    `;
+    container.appendChild(totals);
+
+    // Create table
+    const table = document.createElement('table');
+    table.className = 'media-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Event ID</th>
+                <th>Views</th>
+                <th>Price</th>
+                <th>File Size</th>
+                <th>File Type</th>
+                <th>Is Public</th>
+                <th>Status</th>
+                <th>Deactivated</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${mediaList.map(media => `
+                <tr>
+                    <td>${media.eventId || "N/A"}</td>
+                    <td>${media.views || 0}</td>
+                    <td>${media.price || 0}</td>
+                    <td>${formatFileSize(media.fileSize || 0)}</td>
+                    <td>${media.fileType || "Unknown"}</td>
+                    <td>${media.isPublic ? "Yes" : "No"}</td>
+                    <td>${media.status || "N/A"}</td>
+                    <td>${media.deactivated ? "Yes" : "No"}</td>
+                </tr>
+            `).join('')}
+        </tbody>
+    `;
+    container.appendChild(table);
+}
+
+// Call the function on page load
+fetchAndRenderMedia();
 
 
 
