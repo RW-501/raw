@@ -379,11 +379,18 @@ let eventData2 = [];
 
     // Function to fetch media images for the event
     async function fetchMediaImages(eventId) {
-        const mediaRef = collection(db, 'Media');
-        const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
-        const mediaSnapshot = await getDocs(mediaQuery);
-        return mediaSnapshot.docs.map(doc => doc.data());
-    }
+    const mediaRef = collection(db, 'Media');
+    const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
+    const mediaSnapshot = await getDocs(mediaQuery);
+    
+    return mediaSnapshot.docs.map(doc => {
+        return {
+            id: doc.id,      // Include the document ID
+            ...doc.data()    // Spread the document data
+        };
+    });
+}
+
 
     // Function to fetch event details
     function setMetaTags( eventId) {
