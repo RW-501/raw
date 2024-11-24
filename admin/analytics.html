@@ -694,27 +694,25 @@ function goToAdminContact(docId) {
 fetchAndRenderContacts();
 
 
-async function fetchAndRenderMedia() {
-    const mediaCollection = collection(db, "Media"); // Reference to the Analytics collection
-
+async function fetchAndRender(collectionName, renderFunction, loadingContainerId) {
+    const container = document.getElementById(loadingContainerId);
+    showLoading(container);
+    
     try {
-        // Fetch documents from the Media collection
-        const snapshot = await mediaCollection.get();
-        const mediaList = snapshot.docs.map(doc => ({
+        const collectionRef = collection(db, collectionName);
+        const snapshot = await getDocs(collectionRef);
+        const dataList = snapshot.docs.map(doc => ({
             id: doc.id,
-            ...doc.data()
+            ...doc.data(),
         }));
-
-        // Calculate totals
-        const totalMediaCount = mediaList.length;
-        const totalSpaceUsage = mediaList.reduce((acc, media) => acc + (media.fileSize || 0), 0);
-
-        // Render results
-        renderMediaTable(mediaList, totalMediaCount, formatFileSize(totalSpaceUsage));
+        renderFunction(dataList);
     } catch (error) {
-        console.error("Error fetching media data:", error);
+        console.error(`Error fetching data from ${collectionName}:`, error);
+        container.innerHTML = `<p>Error loading data. Please try again later.</p>`;
     }
 }
+
+
 
 function formatFileSize(sizeInBytes) {
     if (sizeInBytes < 1024) return `${sizeInBytes} B`;
