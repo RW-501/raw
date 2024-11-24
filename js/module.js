@@ -387,7 +387,23 @@ function triggerUpdateWithTimeout(ipAddress, time) {
     }, time);  // 20,000 milliseconds = 20 seconds
   }
   
+  async function updateMediaViews(mediaId) {
+    try {
+        // Reference to the specific document in the Events collection
+        const mediaRef = doc(db, "Media", mediaId);
 
+        // Increment the views field by 1
+        await updateDoc(mediaRef, {
+            views: increment(1)
+        });
+
+        console.log(`Views count updated for media ID: ${mediaId}`);
+    } catch (error) {
+        console.error(`Error updating views for media ID: ${mediaId}`, error);
+    }
+}
+
+window.updateMediaViews = updateMediaViews;
 
   document.addEventListener("DOMContentLoaded", () => {
     // Add click listener to lazy-image elements
@@ -396,9 +412,13 @@ function triggerUpdateWithTimeout(ipAddress, time) {
   
         // Check if the clicked element is a lazy-image
         if (target.classList.contains("lazy-image")) {
-            const imageSrc = target.src || target.getAttribute("data-src");
+            const imageSrc = target.src || target.getAttribute("data-src");  
+             const mediaId = target.getAttribute("data-id");
   
 
+
+            updateMediaViews(mediaId)
+            
             /*
 
 ADD CODE TO ADD MEDIA VIEW COUNT

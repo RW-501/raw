@@ -349,7 +349,7 @@ let isFetching = false; // Prevent multiple simultaneous fetches
 let retryCount = 0; // Retry mechanism for failed fetches
 
 // Utility function to create image elements dynamically
-function createImageElement({ watermarkedImageUrl, title, catagory }) {
+function createImageElement({ watermarkedImageUrl, title, catagory, imageId }) {
     const col = document.createElement('div');
     col.classList.add('col-md-4', 'col-sm-6', 'col-12', 'mb-4');
 
@@ -357,6 +357,7 @@ function createImageElement({ watermarkedImageUrl, title, catagory }) {
     img.src = watermarkedImageUrl;
     img.alt = catagory || 'Gallery Image'; // SEO-optimized alt text
     img.classList.add('img-fluid', 'gallery-image', 'lazyload', 'lazy-image');
+    img.setAttribute("data-id", imageId);
    // img.setAttribute('data-bs-toggle', 'modal');
     img.setAttribute('data-image', watermarkedImageUrl);
    // img.setAttribute('data-description', description || '');
@@ -491,7 +492,7 @@ function displayImages(images) {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear the gallery before displaying new images
     images.forEach(data => {
-     // console.log("show data?   ", data);
+      console.log("show data? need id   ", data);
 
         const imageElement = createImageElement(data);
         gallery.appendChild(imageElement);

@@ -566,10 +566,12 @@ async function displayEventImages(eventData) {
     const imageData = await fetchMediaImages(eventData.id);  // Assuming eventId is part of eventData
     const galleryContainer = document.getElementById('event-gallery');
     imageData.forEach(img => {
+        console.log("need id img.data   ",img.data, ",  img   ",img);
         const imgElement = document.createElement('img');
         imgElement.src = img.watermarkedImageUrl; // Ensure 'watermarkedImageUrl' is the correct field
         imgElement.alt = "Event Image";
         imgElement.classList.add("rounded", "lazy-image");
+        imgElement.setAttribute("data-id", img.data.id);
         galleryContainer.appendChild(imgElement);
     });
 }
