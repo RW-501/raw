@@ -329,18 +329,20 @@
 
 
 
-// Function to format the date in a user-friendly way
+
+
+// Helper function to format date to user-friendly format
 function formatDate(dateString) {
-  const date = new Date(dateString); // Convert string to Date object
+  const date = new Date(dateString);
   return date.toLocaleString("en-US", {
-    weekday: "long",    // "Monday"
-    year: "numeric",    // "2024"
-    month: "long",      // "November"
-    day: "numeric",     // "21"
-    hour: "numeric",    // "12"
-    minute: "numeric",  // "11"
-    second: "numeric",  // "26"
-    hour12: true,       // Use 12-hour clock (AM/PM)
+    weekday: "long", // "Monday"
+    year: "numeric", // "2024"
+    month: "long", // "November"
+    day: "numeric", // "21"
+    hour: "numeric", // "12"
+    minute: "numeric", // "11"
+    second: "numeric", // "26"
+    hour12: true // Use 12-hour clock with AM/PM
   });
 }
 
@@ -348,7 +350,56 @@ function formatDate(dateString) {
 
  
 
-        async function displayUserAnalytics() {
+   // Function to format the data
+function formatViewedBy(viewedByData) {
+  return `
+    <ul>
+      <li><strong>Duration of View:</strong> ${viewedByData.durationOfView} seconds</li>
+      <li><strong>Contact Views:</strong> ${viewedByData.contactViews}</li>
+      <li><strong>View Method:</strong> ${viewedByData.viewMethod}</li>
+      <li><strong>View Source:</strong> ${viewedByData.viewSource}</li>
+      <li><strong>View Date:</strong> ${formatDate(viewedByData.viewDate)}</li>
+    </ul>
+  `;
+}
+
+// Example usage with multiple objects
+async function displayUserAnalytics() {
+  const user = {
+    contactViewedBy: {
+      durationOfView: 271.711,
+      contactViews: 1,
+      viewMethod: "desktop",
+      viewSource: "Direct Visit",
+      viewDate: "2024-11-21T12:11:26.785Z"
+    },
+    eventDetailsViewedBy: {
+      durationOfView: 500,
+      contactViews: 3,
+      viewMethod: "mobile",
+      viewSource: "Referral",
+      viewDate: "2024-11-20T15:30:10.321Z"
+    },
+    // Additional data objects
+    homeViewedBy: {
+      durationOfView: 120,
+      contactViews: 2,
+      viewMethod: "desktop",
+      viewSource: "Search Engine",
+      viewDate: "2024-11-22T08:00:50.123Z"
+    },
+  };
+
+  // Construct the UI
+  let htmlContent = `<h3>User Analytics</h3>`;
+
+  htmlContent += `
+    <p><strong>Contact Viewed By:</strong> ${formatViewedBy(user.contactViewedBy)}</p>
+    <p><strong>Event Details Viewed By:</strong> ${formatViewedBy(user.eventDetailsViewedBy)}</p>
+    <p><strong>Home Viewed By:</strong> ${formatViewedBy(user.homeViewedBy)}</p>
+  `;
+
+
   // Fetch the user analytics data
   const analyticsData = await fetchUserAnalyticsData();
   const totalUsers = analyticsData.length;
@@ -391,14 +442,15 @@ function formatDate(dateString) {
         <td colspan="9">
           <div class="user-details">
             <h4>Details for ${user.ipAddress}</h4>
-            <p><strong>Contact Views:</strong> ${user.contactViews}</p>
-            <p><strong>Contact Viewed By:</strong> ${JSON.stringify(user.contactViewedBy)}</p>
             <p><strong>Duration of View:</strong> ${user.totalDuration}</p>
             <p><strong>Last View Date:</strong> ${formatDate(user.lastViewDate)}</p>
             <p><strong>View Source:</strong> ${user.viewSource}</p>
             <p><strong>View Method:</strong> ${user.viewMethod}</p>
             <p><strong>User Activities Count:</strong> ${user.userActivitiesCount}</p>
             <p><strong>Location:</strong> ${user.city}, ${user.state}, ${user.country}</p>
+         <hr/>
+            ${htmlContent}
+
           </div>
         </td>
       </tr>
@@ -421,12 +473,19 @@ async function fetchUserAnalyticsData() {
     city: doc.data().city,
     country: doc.data().country,
     state: doc.data().state,
-    contactViews: doc.data().contactViews,
     totalDuration: doc.data().totalDuration,
     userActivitiesCount: doc.data().userActivitiesCount,
     viewSource: doc.data().viewSource,
     viewMethod: doc.data().viewMethod,
     contactViewedBy: doc.data().contactViewedBy,
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
+    homeViewedBy: doc.data().homeViewedBy,
+    aboutViewedBy: doc.data().aboutViewedBy,
+    confirmationViewedBy: doc.data().confirmationViewedBy,
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
+    eventsViewedBy: doc.data().eventsViewedBy,
+    galleryViewedBy: doc.data().galleryViewedBy,
+    homeViewedBy: doc.data().homeViewedBy,
     lastViewDate: doc.data().lastViewDate,
   }));
   return analyticsList;
