@@ -329,7 +329,20 @@
 
 
 
-
+// Function to format the date in a user-friendly way
+function formatDate(dateString) {
+  const date = new Date(dateString); // Convert string to Date object
+  return date.toLocaleString("en-US", {
+    weekday: "long",    // "Monday"
+    year: "numeric",    // "2024"
+    month: "long",      // "November"
+    day: "numeric",     // "21"
+    hour: "numeric",    // "12"
+    minute: "numeric",  // "11"
+    second: "numeric",  // "26"
+    hour12: true,       // Use 12-hour clock (AM/PM)
+  });
+}
 
 
 
@@ -381,7 +394,7 @@
             <p><strong>Contact Views:</strong> ${user.contactViews}</p>
             <p><strong>Contact Viewed By:</strong> ${JSON.stringify(user.contactViewedBy)}</p>
             <p><strong>Duration of View:</strong> ${user.totalDuration}</p>
-            <p><strong>Last View Date:</strong> ${user.lastViewDate}</p>
+            <p><strong>Last View Date:</strong> ${formatDate(user.lastViewDate)}</p>
             <p><strong>View Source:</strong> ${user.viewSource}</p>
             <p><strong>View Method:</strong> ${user.viewMethod}</p>
             <p><strong>User Activities Count:</strong> ${user.userActivitiesCount}</p>
@@ -452,6 +465,8 @@ async function displayEventAnalytics() {
               <th>Event Title</th>
               <th>Views</th>
             <th>Retrieve Count</th>
+              <th>Status</th>
+              <th>Public</th>
               <th>Event ID</th>
               <th>Add Date</th>
             </tr>
@@ -466,6 +481,8 @@ async function displayEventAnalytics() {
             <td>${event.title}</td>
             <td>${event.views}</td>
             <td>${event.retrieveCount}</td>
+            <td>${event.status}</td>
+            <td>${event.isPublic}</td>
             <td>${event.id}</td>
             <td>${event.timestamp}</td>
           </tr>
@@ -484,7 +501,12 @@ async function fetchEventsData() {
   const eventsList = eventsSnapshot.docs.map(doc => ({
     id: doc.id, // Document ID
     title: doc.data().title, // Title field
-    views: doc.data().views // Views field
+    views: doc.data().views, // Views field
+    retrieveCount: doc.data().retrieveCount, 
+    isPublic: doc.data().isPublic, 
+    timestamp: doc.data().timestamp, 
+    status: doc.data().status 
+    
   }));
   return eventsList;
 }
