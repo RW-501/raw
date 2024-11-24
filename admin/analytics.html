@@ -473,33 +473,6 @@ async function fetchUserAnalyticsData() {
 displayUserAnalytics();
 
 
-// Function to toggle the display of user details based on IP address
-function toggleDetailSection(ipAddress) {
-  const detailRow = document.getElementById(`details-${ipAddress}`);
-  if (detailRow.style.display === "none") {
-    detailRow.style.display = "table-row"; // Show the detail section
-  } else {
-    detailRow.style.display = "none"; // Hide the detail section
-  }
-}
-
-
-
-
-
-/*
-
-    contactViewedBy: doc.data().contactViewedBy,
-    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
-    homeViewedBy: doc.data().homeViewedBy,
-    aboutViewedBy: doc.data().aboutViewedBy,
-    confirmationViewedBy: doc.data().confirmationViewedBy,
-    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
-    eventsViewedBy: doc.data().eventsViewedBy,
-    galleryViewedBy: doc.data().galleryViewedBy,
-    homeViewedBy: doc.data().homeViewedBy,*/
-
-
 
 
 
