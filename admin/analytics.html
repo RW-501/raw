@@ -453,7 +453,8 @@ async function displayEventAnalytics() {
             <tr>
               <th>Event Title</th>
               <th>Views</th>
-              <th>Document ID</th>
+            <th>Retrieve Count</th>
+              <th>Event ID</th>
             </tr>
           </thead>
           <tbody>
@@ -465,6 +466,7 @@ async function displayEventAnalytics() {
           <tr>
             <td>${event.title}</td>
             <td>${event.views}</td>
+            <td>${event.retrieveCount}</td>
             <td>${event.id}</td>
           </tr>
         `;
