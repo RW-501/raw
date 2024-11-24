@@ -425,9 +425,13 @@ async function displayUserAnalytics() {
         <td colspan="8">
           <div class="user-details">
             <h4>Details for ${user.ipAddress}</h4>
-            ${formatViewedBy(user.contactViewedBy)}
-            ${formatViewedBy(user.eventDetailsViewedBy)}
-            ${formatViewedBy(user.homeViewedBy)}
+    ${formatViewedBy(data.contactViewedBy)}
+    ${formatViewedBy(data.eventDetailsViewedBy)}
+    ${formatViewedBy(data.homeViewedBy)}
+    ${formatViewedBy(data.aboutViewedBy)}
+    ${formatViewedBy(data.confirmationViewedBy)}
+    ${formatViewedBy(data.eventsViewedBy)}
+    ${formatViewedBy(data.galleryViewedBy)}
           </div>
         </td>
       </tr>
@@ -453,11 +457,13 @@ async function fetchUserAnalyticsData() {
     totalDuration: doc.data().totalDuration,
     userActivitiesCount: doc.data().userActivitiesCount,
     userBlocked: doc.data().userBlocked || false,
-    viewSource: doc.data().viewSource,
-    viewMethod: doc.data().viewMethod,
-    contactViewedBy: doc.data().contactViewedBy || {},
-    eventDetailsViewedBy: doc.data().eventDetailsViewedBy || {},
-    homeViewedBy: doc.data().homeViewedBy || {},
+    contactViewedBy: doc.data().contactViewedBy || {}, // Ensure fallback is an empty object
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy || {}, 
+    homeViewedBy: doc.data().homeViewedBy || {}, 
+    aboutViewedBy: doc.data().aboutViewedBy || {}, 
+    confirmationViewedBy: doc.data().confirmationViewedBy || {}, 
+    eventsViewedBy: doc.data().eventsViewedBy || {}, 
+    galleryViewedBy: doc.data().galleryViewedBy || {}, 
     lastViewDate: doc.data().lastViewDate,
   }));
   return analyticsList;
