@@ -742,11 +742,14 @@ function goToAdminContact(docId) {
 fetchAndRenderContacts();
 
 
-async function fetchAndRender(collectionName, renderFunction, loadingContainerId) {
+async function fetchAndRender(collectionName = "Media", renderFunction = renderMediaTable, loadingContainerId = "media-container") {
  /*   const container = document.getElementById(loadingContainerId);
     if (container) {
     //    showLoading(container); // Show loading if container is valid
     }
+    // Call the function on page load
+fetchAndRender('Media', renderMediaTable, 'media-container');
+
 */
     try {
         // Ensure collectionName is not empty
@@ -833,8 +836,6 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
     container.appendChild(table);
 }
 
-// Call the function on page load
-fetchAndRender('Media', renderMediaTable, 'media-container');
 
 window.toggleDetailSection  = toggleDetailSection ;
 
