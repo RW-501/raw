@@ -1404,26 +1404,25 @@ main .collapse.active {
 
         // Fetch and display events with sorting and filtering
         async function fetchEvents() {
-  const filterText = document.getElementById("eventFilter").value.toLowerCase();
-  const sortBy = document.getElementById("sortBy").value;
-  const eventList = document.getElementById("eventsContainer");
-  eventList.innerHTML = ""; // Clear previous list
+    const filterText = document.getElementById("eventFilter").value.toLowerCase();
+    const sortBy = document.getElementById("sortBy").value;
+    const eventList = document.getElementById("eventsContainer");
+    eventList.innerHTML = ""; // Clear previous list
+    eventArray.length = 0; // Clear eventArray to avoid duplicates
 
-  const eventsCollection = collection(db, "Events");
-  let eventQuery;
+    const eventsCollection = collection(db, "Events");
+    const eventQuery = query(
+        eventsCollection,
+        orderBy(sortBy === "date" ? "eventDate" : "title")
+    );
 
-  // Sort events
-  if (sortBy === "date") {
-    eventQuery = query(eventsCollection, orderBy("eventDate"));
-  } else {
-    eventQuery = query(eventsCollection, orderBy("title"));
-  }
 
   try {
     const snapshot = await getDocs(eventQuery);
 
     snapshot.forEach((doc) => {
       const event = doc.data();
+      const eventId = doc.id;
 
       // Fallbacks for missing or null event properties
       const title = event.title || "Untitled Event";
@@ -1444,24 +1443,29 @@ main .collapse.active {
       const comments = event.comments || "No comments";
       const views = event.views || 0;
       const galleryBool = event.galleryBool ? "Enabled" : "Disabled";
-      const eventId = doc.id;
 
       eventArray.push({ id: eventId, title: title });
 
-      // Filter matching events
-      if (
-        title.toLowerCase().includes(filterText) ||
-        description.toLowerCase().includes(filterText)
-      ) {
-        const eventItem = document.createElement("div");
-        eventItem.classList.add(
-          "list-group-item",
-          "d-flex",
-          "flex-column",
-          "align-items-start",
-          "m-3",
-          "p-3"
-        );
+     
+            // Avoid duplicate entries
+            if (!eventArray.some(e => e.id === eventId)) {
+                eventArray.push({ id: eventId, title: event.title });
+
+                // Filter and render events
+                if (
+                    event.title?.toLowerCase().includes(filterText) ||
+                    event.description?.toLowerCase().includes(filterText)
+                ) {
+                    const eventItem = document.createElement("div");
+                    eventItem.classList.add(
+                        "list-group-item",
+                        "d-flex",
+                        "flex-column",
+                        "align-items-start",
+                        "m-3",
+                        "p-3"
+                    );
+
         eventItem.style.border = "1px solid #ddd";
         eventItem.style.borderRadius = "8px";
         eventItem.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
@@ -1632,6 +1636,8 @@ main .collapse.active {
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ", eventDetailsId);
         viewMedia(doc.id, coverUrl);
+
+                }
     }
     });
   } catch (error) {
