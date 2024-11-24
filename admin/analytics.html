@@ -865,8 +865,62 @@ window.toggleDetailSection  = toggleDetailSection ;
 
         };
     
-      
-        
+        function displayUserTrendAnalysis(analyticsData) {
+  const trendData = analyticsData.reduce((acc, user) => {
+    const date = new Date(user.lastViewDate).toLocaleDateString(); // Aggregate by date
+    if (!acc[date]) {
+      acc[date] = { totalDuration: 0, activitiesCount: 0, blockedCount: 0 };
+    }
+    acc[date].totalDuration += user.totalDuration;
+    acc[date].activitiesCount += user.userActivitiesCount;
+    if (user.userBlocked) acc[date].blockedCount++;
+    return acc;
+  }, {});
+
+  // Display aggregated trend data as a graph
+  displayTrendAnalysis(trendData);
+}
+
+function generateActionableInsights(analyticsData) {
+  const totalUsers = analyticsData.length;
+  const peakTimes = calculatePeakTimes(analyticsData);
+  const blockedUsers = analyticsData.filter(user => user.userBlocked).length;
+  
+  const insights = [];
+  
+  if (blockedUsers / totalUsers > 0.1) {
+    insights.push("Consider reviewing the user blocking criteria, as 10% of users are blocked.");
+  }
+
+  if (peakTimes.length > 0) {
+    insights.push(`Consider scheduling promotions around peak times: ${peakTimes.join(', ')}`);
+  }
+
+  // Add more recommendations based on further data analysis
+
+  return insights;
+}
+
+function calculateUserEngagementScore(user) {
+  return user.totalDuration * 0.5 + user.userActivitiesCount * 0.3 + (user.userBlocked ? 0 : 10);
+}
+function crossAnalyzeUserEventData(userData, eventData) {
+  const eventViews = eventData.reduce((acc, event) => {
+    acc[event.id] = event.views;
+    return acc;
+  }, {});
+
+  userData.forEach(user => {
+    const interactedEvents = user.eventsViewedBy || [];
+    interactedEvents.forEach(eventId => {
+      if (eventViews[eventId]) {
+        console.log(`User ${user.ipAddress} interacted with event ${eventId}, which has ${eventViews[eventId]} views.`);
+      }
+    });
+  });
+}
+
+
         // Display trend data on the trend chart
         function displayTrendAnalysis(data) {
             const ctx = document.getElementById('trendChart').getContext('2d');
