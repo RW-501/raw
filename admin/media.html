@@ -1444,7 +1444,6 @@ main .collapse.active {
       const views = event.views || 0;
       const galleryBool = event.galleryBool ? "Enabled" : "Disabled";
 
-      eventArray.push({ id: eventId, title: title });
 
      
             // Avoid duplicate entries
@@ -1636,13 +1635,12 @@ main .collapse.active {
         eventList.appendChild(eventItem);
         console.log("eventDetails.id    ", eventDetailsId);
         viewMedia(doc.id, coverUrl);
-
-                }
     }
-    });
-  } catch (error) {
-    console.error("Error fetching events:", error);
-  }
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching events:", error);
+    }
 }
 
 
