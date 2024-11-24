@@ -436,7 +436,7 @@ async function displayUserAnalytics() {
         <td>${user.lastViewDate}</td>
         <td>${user.totalDuration || 0}</td>
         <td>${user.userActivitiesCount}</td>
-        <td>${user.userBlocked || ""}</td>
+        <td>${user.userBlocked }</td>
       </tr>
       <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
         <td colspan="9">
@@ -543,7 +543,7 @@ async function displayEventAnalytics() {
             <td>${event.status}</td>
             <td>${event.isPublic}</td>
             <td>${event.id}</td>
-            <td>${event.timestamp}</td>
+            <td>${formatDate(event.timestamp)}</td>
           </tr>
         `;
       });
