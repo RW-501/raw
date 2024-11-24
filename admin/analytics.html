@@ -329,12 +329,17 @@
 
 
 
-
-
-// Helper function to format date to user-friendly format
-function formatDate(dateString) {
+/**
+ * Helper function to format date and time based on specified options
+ * @param {string} dateString - The date string to format
+ * @param {Object} options - Formatting options
+ * @returns {string} - Formatted date and time
+ */
+ function formatDate(dateString, options = {}) {
   const date = new Date(dateString);
-  return date.toLocaleString("en-US", {
+
+  // Default formatting options
+  const defaultOptions = {
     weekday: "long", // "Monday"
     year: "numeric", // "2024"
     month: "long", // "November"
@@ -343,71 +348,45 @@ function formatDate(dateString) {
     minute: "numeric", // "11"
     second: "numeric", // "26"
     hour12: true // Use 12-hour clock with AM/PM
-  });
+  };
+
+  // Merge user options with defaults
+  const finalOptions = { ...defaultOptions, ...options };
+
+  // Return formatted date
+  return date.toLocaleString("en-US", finalOptions);
 }
 
-
-
- 
-
-   // Function to format the data
-function formatViewedBy(viewedByData) {
+// Function to format the "viewedBy" data into an HTML structure
+function formatViewedBy(viewedByData = {}) {
   return `
     <ul>
-      <li><strong>Duration of View:</strong> ${viewedByData.durationOfView} seconds</li>
-      <li><strong>Contact Views:</strong> ${viewedByData.contactViews}</li>
-      <li><strong>View Method:</strong> ${viewedByData.viewMethod}</li>
-      <li><strong>View Source:</strong> ${viewedByData.viewSource}</li>
-      <li><strong>View Date:</strong> ${formatDate(viewedByData.viewDate)}</li>
+      <li><strong>Duration of View:</strong> ${viewedByData.durationOfView || 'N/A'} seconds</li>
+      <li><strong>Contact Views:</strong> ${viewedByData.contactViews || 'N/A'}</li>
+      <li><strong>View Method:</strong> ${viewedByData.viewMethod || 'N/A'}</li>
+      <li><strong>View Source:</strong> ${viewedByData.viewSource || 'N/A'}</li>
+      <li><strong>View Date:</strong> ${viewedByData.viewDate ? formatDate(viewedByData.viewDate) : 'N/A'}</li>
     </ul>
   `;
 }
 
-// Example usage with multiple objects
+// Function to toggle visibility of detail rows
+function toggleDetailSection(rowId) {
+  const detailRow = document.getElementById(`details-${rowId}`);
+  if (detailRow) {
+    detailRow.style.display = detailRow.style.display === 'none' ? 'table-row' : 'none';
+  }
+}
+
+// Main function to display user analytics
 async function displayUserAnalytics() {
-  const user = {
-    contactViewedBy: {
-      durationOfView: 271.711,
-      contactViews: 1,
-      viewMethod: "desktop",
-      viewSource: "Direct Visit",
-      viewDate: "2024-11-21T12:11:26.785Z"
-    },
-    eventDetailsViewedBy: {
-      durationOfView: 500,
-      contactViews: 3,
-      viewMethod: "mobile",
-      viewSource: "Referral",
-      viewDate: "2024-11-20T15:30:10.321Z"
-    },
-    // Additional data objects
-    homeViewedBy: {
-      durationOfView: 120,
-      contactViews: 2,
-      viewMethod: "desktop",
-      viewSource: "Search Engine",
-      viewDate: "2024-11-22T08:00:50.123Z"
-    },
-  };
-
-  // Construct the UI
-  let htmlContent = `<h3>User Analytics</h3>`;
-
-  htmlContent += `
-    <p><strong>Contact Viewed By:</strong> ${formatViewedBy(user.contactViewedBy)}</p>
-    <p><strong>Event Details Viewed By:</strong> ${formatViewedBy(user.eventDetailsViewedBy)}</p>
-    <p><strong>Home Viewed By:</strong> ${formatViewedBy(user.homeViewedBy)}</p>
-  `;
-
-
-  // Fetch the user analytics data
-  const analyticsData = await fetchUserAnalyticsData();
+  const analyticsData = await fetchUserAnalyticsData(); // Fetch the data
   const totalUsers = analyticsData.length;
 
   // Display the total user count
   document.getElementById('usersDisplay').innerHTML = `<h3>Total Users: ${totalUsers}</h3>`;
 
-  // Create the main table structure
+  // Construct the table structure
   let tableHTML = `
     <table>
       <thead>
@@ -425,49 +404,47 @@ async function displayUserAnalytics() {
       <tbody>
   `;
 
-  // Loop through each user's data and create a table row
   analyticsData.forEach(user => {
+    // Add main row
     tableHTML += `
       <tr>
         <td><button class="collapsible" onclick="toggleDetailSection('${user.ipAddress}')">${user.ipAddress}</button></td>
-        <td>${user.city}</td>
-        <td>${user.country}</td>
-        <td>${user.state}</td>
-        <td>${user.lastViewDate}</td>
+        <td>${user.city || 'N/A'}</td>
+        <td>${user.country || 'N/A'}</td>
+        <td>${user.state || 'N/A'}</td>
+        <td>${user.lastViewDate ? formatDate(user.lastViewDate) : 'N/A'}</td>
         <td>${user.totalDuration || 0}</td>
-        <td>${user.userActivitiesCount}</td>
-        <td>${user.userBlocked }</td>
+        <td>${user.userActivitiesCount || 0}</td>
+        <td>${user.userBlocked ? 'Yes' : 'No'}</td>
       </tr>
+    `;
+
+    // Add collapsible detail row
+    tableHTML += `
       <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
-        <td colspan="9">
+        <td colspan="8">
           <div class="user-details">
             <h4>Details for ${user.ipAddress}</h4>
-            <p><strong>Duration of View:</strong> ${user.totalDuration}</p>
-            <p><strong>Last View Date:</strong> ${formatDate(user.lastViewDate)}</p>
-            <p><strong>View Source:</strong> ${user.viewSource}</p>
-            <p><strong>View Method:</strong> ${user.viewMethod}</p>
-            <p><strong>User Activities Count:</strong> ${user.userActivitiesCount}</p>
-            <p><strong>Location:</strong> ${user.city}, ${user.state}, ${user.country}</p>
-         <hr/>
-            ${htmlContent}
-
+            ${formatViewedBy(user.contactViewedBy)}
+            ${formatViewedBy(user.eventDetailsViewedBy)}
+            ${formatViewedBy(user.homeViewedBy)}
           </div>
         </td>
       </tr>
     `;
   });
 
-  // Close the table tag
+  // Close table
   tableHTML += '</tbody></table>';
 
   // Insert the table into the container
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+  document.getElementById('userAnalyticsTableContainer').innerHTML = tableHTML;
 }
 
 // Fetch user analytics data from Firestore
 async function fetchUserAnalyticsData() {
   const analyticsCollection = collection(db, "Analytics"); // Reference to the Analytics collection
-  const analyticsSnapshot = await getDocs(analyticsCollection); // Fetch all documents in the collection
+  const analyticsSnapshot = await getDocs(analyticsCollection); // Fetch all documents
   const analyticsList = analyticsSnapshot.docs.map(doc => ({
     ipAddress: doc.id, // IP address as doc ID
     city: doc.data().city,
@@ -475,21 +452,20 @@ async function fetchUserAnalyticsData() {
     state: doc.data().state,
     totalDuration: doc.data().totalDuration,
     userActivitiesCount: doc.data().userActivitiesCount,
+    userBlocked: doc.data().userBlocked || false,
     viewSource: doc.data().viewSource,
     viewMethod: doc.data().viewMethod,
-    contactViewedBy: doc.data().contactViewedBy,
-    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
-    homeViewedBy: doc.data().homeViewedBy,
-    aboutViewedBy: doc.data().aboutViewedBy,
-    confirmationViewedBy: doc.data().confirmationViewedBy,
-    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
-    eventsViewedBy: doc.data().eventsViewedBy,
-    galleryViewedBy: doc.data().galleryViewedBy,
-    homeViewedBy: doc.data().homeViewedBy,
+    contactViewedBy: doc.data().contactViewedBy || {},
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy || {},
+    homeViewedBy: doc.data().homeViewedBy || {},
     lastViewDate: doc.data().lastViewDate,
   }));
   return analyticsList;
 }
+
+// Execute the function on page load
+displayUserAnalytics();
+
 
 // Function to toggle the display of user details based on IP address
 function toggleDetailSection(ipAddress) {
@@ -505,7 +481,17 @@ function toggleDetailSection(ipAddress) {
 
 
 
+/*
 
+    contactViewedBy: doc.data().contactViewedBy,
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
+    homeViewedBy: doc.data().homeViewedBy,
+    aboutViewedBy: doc.data().aboutViewedBy,
+    confirmationViewedBy: doc.data().confirmationViewedBy,
+    eventDetailsViewedBy: doc.data().eventDetailsViewedBy,
+    eventsViewedBy: doc.data().eventsViewedBy,
+    galleryViewedBy: doc.data().galleryViewedBy,
+    homeViewedBy: doc.data().homeViewedBy,*/
 
 
 
