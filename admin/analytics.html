@@ -464,6 +464,9 @@
   // Return formatted date
   return date.toLocaleString("en-US", finalOptions);
 }
+
+
+
 // Function to format the "viewedBy" data into an HTML structure
 function formatViewedBy(viewedByData = {}) {
   return `
@@ -652,13 +655,35 @@ async function fetchEventsData() {
   return eventsList;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function fetchAndRenderContacts() {
     // Reference to the Contacts collection in Firebase
-    const contactsCollection = collection(db, "Contacts"); // Reference to the Analytics collection
- 
+    const contactsCollection = collection(db, "Contacts"); // Reference to the Contacts collection in Firestore
+    
     try {
         // Fetch documents from the Contacts collection
-        const snapshot = await contactsCollection.get();
+        const snapshot = await getDocs(contactsCollection);
         const contacts = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -673,6 +698,11 @@ async function fetchAndRenderContacts() {
 
 function renderContacts(contacts) {
     const container = document.getElementById('contacts-container');
+    if (!container) {
+        console.error("Container not found!");
+        return; // Exit if the container element is not found
+    }
+
     container.innerHTML = ""; // Clear the container
 
     let unReadMsg = 0; // Counter for unread messages
@@ -703,10 +733,14 @@ function renderContacts(contacts) {
 
     // Update the display for total messages and unread messages
     const msgCountDisplay = document.getElementById('msgCountDisplay');
-    msgCountDisplay.innerHTML = `
-        <h3>Total Messages: ${contacts.length}</h3>
-        <p>Unread Messages: ${unReadMsg}</p>
-    `;
+    if (msgCountDisplay) {
+        msgCountDisplay.innerHTML = `
+            <h3>Total Messages: ${contacts.length}</h3>
+            <p>Unread Messages: ${unReadMsg}</p>
+        `;
+    } else {
+        console.error("Message count display element not found.");
+    }
 }
 
 function goToAdminContact(docId) {
@@ -720,24 +754,39 @@ fetchAndRenderContacts();
 
 async function fetchAndRender(collectionName, renderFunction, loadingContainerId) {
     const container = document.getElementById(loadingContainerId);
-    showLoading(container);
-    
+    if (container) {
+        showLoading(container); // Show loading if container is valid
+    }
+
     try {
+        // Ensure collectionName is not empty
+        if (!collectionName) {
+            console.error("Collection name cannot be empty");
+            return;
+        }
+
         const collectionRef = collection(db, collectionName);
         const snapshot = await getDocs(collectionRef);
         const dataList = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
         }));
-        renderFunction(dataList);
+
+        renderFunction(dataList); // Call the render function to display data
     } catch (error) {
         console.error(`Error fetching data from ${collectionName}:`, error);
-        container.innerHTML = `<p>Error loading data. Please try again later.</p>`;
+        if (container) {
+            container.innerHTML = `<p>Error loading data. Please try again later.</p>`;
+        }
     }
 }
 
+// Helper function to show loading indicator
+function showLoading(container) {
+    container.innerHTML = `<p>Loading...</p>`;
+}
 
-
+// Helper function to format file size
 function formatFileSize(sizeInBytes) {
     if (sizeInBytes < 1024) return `${sizeInBytes} B`;
     if (sizeInBytes < 1024 ** 2) return `${(sizeInBytes / 1024).toFixed(2)} KB`;
@@ -745,18 +794,24 @@ function formatFileSize(sizeInBytes) {
     return `${(sizeInBytes / (1024 ** 3)).toFixed(2)} GB`;
 }
 
+// Render the media table
 function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
     const container = document.getElementById('media-container');
+    if (!container) {
+        console.error("Media container not found.");
+        return;
+    }
 
     // Display totals
     const totals = document.getElementById('spaceUsedDisplay');
-    totals.className = 'totals';
-    totals.innerHTML = `
-        <p><strong>Total Media:</strong> ${totalMediaCount}</p>
-        <p><strong>Total Space Usage:</strong> ${totalSpaceUsage}</p>
-    `;
+    if (totals) {
+        totals.className = 'totals';
+        totals.innerHTML = `
+            <p><strong>Total Media:</strong> ${totalMediaCount}</p>
+            <p><strong>Total Space Usage:</strong> ${totalSpaceUsage}</p>
+        `;
+    }
 
-    
     // Create table
     const table = document.createElement('table');
     table.className = 'media-table';
@@ -792,11 +847,7 @@ function renderMediaTable(mediaList, totalMediaCount, totalSpaceUsage) {
 }
 
 // Call the function on page load
-fetchAndRender();
-
-
-
-window.fetchAndRenderMedia = fetchAndRender;
+fetchAndRender('Media', renderMediaTable, 'media-container');
 
 window.toggleDetailSection  = toggleDetailSection ;
 
