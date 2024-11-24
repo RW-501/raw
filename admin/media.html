@@ -1404,70 +1404,80 @@ main .collapse.active {
 
         // Fetch and display events with sorting and filtering
         async function fetchEvents() {
-            const filterText = document.getElementById('eventFilter').value.toLowerCase();
-            const sortBy = document.getElementById('sortBy').value;
-            const eventList = document.getElementById('eventsContainer');
-            eventList.innerHTML = ''; // Clear previous list
+  const filterText = document.getElementById("eventFilter").value.toLowerCase();
+  const sortBy = document.getElementById("sortBy").value;
+  const eventList = document.getElementById("eventsContainer");
+  eventList.innerHTML = ""; // Clear previous list
 
-            const eventsCollection = collection(db, 'Events');
-            let eventQuery;
+  const eventsCollection = collection(db, "Events");
+  let eventQuery;
 
-            // Sort events
-            if (sortBy === 'date') {
-                eventQuery = query(eventsCollection, orderBy('eventDate'));
-            } else {
-                eventQuery = query(eventsCollection, orderBy('title'));
-            }
+  // Sort events
+  if (sortBy === "date") {
+    eventQuery = query(eventsCollection, orderBy("eventDate"));
+  } else {
+    eventQuery = query(eventsCollection, orderBy("title"));
+  }
 
-            try {
-                const snapshot = await getDocs(eventQuery);
-             
-                
-                snapshot.forEach((doc) => {
-                    const event = doc.data();
+  try {
+    const snapshot = await getDocs(eventQuery);
 
-                    // Fallbacks for missing or null event properties
-                    const title = event.title || 'Untitled Event';
-                    const description = event.description || 'No description available';
-                    const eventDate = event.eventDate ? new Date(event.eventDate).toLocaleDateString() : 'Date not available';
-                    const coverUrl = event.coverUrl || 'default-thumbnail.png'; // Default if coverUrl is missing
-                    const retrieveCount = event.retrieveCount || 0;
-                    const status = event.status || true;
-                    const isPublic = event.isPublic || false;
-                    const collectionPrice = event.collection_price || 'Not set';
-                    const eventTags = event.eventTags || 'No tags';
-                    const location = event.location || 'Location not provided';
-                    const timestamp = event.timestamp ? new Date(event.timestamp.seconds * 1000).toLocaleString() : 'Timestamp not available';
-                    const comments = event.comments || 'No comments';
-                    const views = event.views || 0;
-                    const galleryBool = event.galleryBool ? 'Enabled' : 'Disabled';
-                    const eventId = doc.id;
+    snapshot.forEach((doc) => {
+      const event = doc.data();
 
-                    eventArray.push({ id: eventId, title: title });
-                    
-                    // Filter matching events
-                    if (
-                        title.toLowerCase().includes(filterText) ||
-                        description.toLowerCase().includes(filterText)
-                    ) {
-                        const eventItem = document.createElement('div');
-                        eventItem.classList.add('list-group-item', 'd-flex', 'flex-column', 'align-items-start', 'm-3', 'p-3');
-                        eventItem.style.border = '1px solid #ddd';
-                        eventItem.style.borderRadius = '8px';
-                        eventItem.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+      // Fallbacks for missing or null event properties
+      const title = event.title || "Untitled Event";
+      const description = event.description || "No description available";
+      const eventDate = event.eventDate
+        ? new Date(event.eventDate).toLocaleDateString()
+        : "Date not available";
+      const coverUrl = event.coverUrl || "default-thumbnail.png"; // Default if coverUrl is missing
+      const retrieveCount = event.retrieveCount || 0;
+      const status = event.status || true;
+      const isPublic = event.isPublic || false;
+      const collectionPrice = event.collection_price || "Not set";
+      const eventTags = event.eventTags || "No tags";
+      const location = event.location || "Location not provided";
+      const timestamp = event.timestamp
+        ? new Date(event.timestamp.seconds * 1000).toLocaleString()
+        : "Timestamp not available";
+      const comments = event.comments || "No comments";
+      const views = event.views || 0;
+      const galleryBool = event.galleryBool ? "Enabled" : "Disabled";
+      const eventId = doc.id;
 
-                        //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
-                        eventInfo = [doc.id, title, eventDate, isPublic, coverUrl];
-                        console.log("eventInfo    ", eventInfo);
+      eventArray.push({ id: eventId, title: title });
 
-                        // Collapsible content
-                        const detailsId = `details-${doc.id}`;
-                        const mediaListId = `mediaList-${doc.id}`;
+      // Filter matching events
+      if (
+        title.toLowerCase().includes(filterText) ||
+        description.toLowerCase().includes(filterText)
+      ) {
+        const eventItem = document.createElement("div");
+        eventItem.classList.add(
+          "list-group-item",
+          "d-flex",
+          "flex-column",
+          "align-items-start",
+          "m-3",
+          "p-3"
+        );
+        eventItem.style.border = "1px solid #ddd";
+        eventItem.style.borderRadius = "8px";
+        eventItem.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
 
-                        const eventDetailsId = `eventDetails-${doc.id}`;
-                        const mediaDetailsId = `mediaDetails-${doc.id}`;
+        //eventInfo = [eventId = doc.id, eventTitle = title, eventDate = event.eventDate, publicStatus = isPublic,coverPhoto = coverUrl];
+        eventInfo = [doc.id, title, eventDate, isPublic, coverUrl];
+        console.log("eventInfo    ", eventInfo);
 
-                        eventItem.innerHTML = `
+        // Collapsible content
+        const detailsId = `details-${doc.id}`;
+        const mediaListId = `mediaList-${doc.id}`;
+
+        const eventDetailsId = `eventDetails-${doc.id}`;
+        const mediaDetailsId = `mediaDetails-${doc.id}`;
+
+        eventItem.innerHTML = `
     <div class="eventPanelArea">
 
                 <div class="eventHeaderArea">
@@ -1478,20 +1488,26 @@ main .collapse.active {
         <div class="box">
            <strong>${title}</strong>
                 <p style="margin: 0; font-size: 0.9rem; color: #666;">${eventDate}</p>
-                    <p>Public: <span class="badge ${isPublic ? 'bg-success' : 'bg-danger'}">${isPublic ? "Yes" : "No"}</span></p>
+                    <p>Public: <span class="badge ${
+                      isPublic ? "bg-success" : "bg-danger"
+                    }">${isPublic ? "Yes" : "No"}</span></p>
                   
                         <div class="mb-3">
     <label for="eDisplayEventURL" class="form-label">Event URL Display</label>
     <div class="input-group">
         <!-- Check for shortURL and display appropriate content -->
-        ${event.shortURL ? `
+        ${
+          event.shortURL
+            ? `
         <input type="text" class="form-control" id="eDisplayEventURL" disabled
             value="https://rawphotographysite.com/?s=${event.shortURL}">
         <button class="btn btn-outline-secondary" type="button" id="eCopyEventURLBtn"
             onclick="copyEventURL()">Copy</button>
-        ` : `
+        `
+            : `
         <div class="form-text text-danger">Event URL not available. Please add a short URL on the edit event page.</div>
-        `}
+        `
+        }
     </div>
 </div>
 
@@ -1499,14 +1515,18 @@ main .collapse.active {
     <label for="eDisplayAccessCode" class="form-label">Access Code URL Display</label>
     <div class="input-group">
         <!-- Check for accessCode and display appropriate content -->
-        ${event.accessCode ? `
+        ${
+          event.accessCode
+            ? `
         <input type="text" class="form-control" id="eDisplayAccessCode" disabled
             value="https://rawphotographysite.com/?a=${event.accessCode}">
         <button class="btn btn-outline-secondary" type="button" id="eCopyAccessCodeBtn"
             onclick="copyAccessCode()">Copy</button>
-        ` : `
+        `
+            : `
         <div class="form-text text-danger">Access code not available. Please add an access code on the edit event page.</div>
-        `}
+        `
+        }
     </div>
 </div>
 
@@ -1519,9 +1539,13 @@ main .collapse.active {
 <div class="box mb-3">
   <small class="form-label d-flex justify-content-between">
     Event Options
-    <button type="button" class="btn btn-link" onclick="toggleDirections("batchButtonDirections_${doc.id}", this)">Show Directions ▲</button>
+    <button type="button" class="btn btn-link" onclick="toggleDirections("batchButtonDirections_${
+      doc.id
+    }", this)">Show Directions ▲</button>
   </small>
-  <div id="batchButtonDirections_${doc.id}" class="directions" style="display:none;">
+  <div id="batchButtonDirections_${
+    doc.id
+  }" class="directions" style="display:none;">
     <p>
       Use the buttons below to manage your event and media options:
     </p>
@@ -1537,11 +1561,19 @@ main .collapse.active {
 
 <!-- Batch Buttons -->
 <div class="batch-buttons btn-group controls">
-  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('e-Details-${doc.id}', this, 'Event Details')">Event Details ▼</button>
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse('e-Details-${
+    doc.id
+  }', this, 'Event Details')">Event Details ▼</button>
   <button class="btn btn-primary btn-sm" onclick="toggleCollapse('${mediaDetailsId}', this, 'Media Details')">Media Details ▼</button>
-  <button class="btn btn-warning btn-sm" onclick='editEvent("${doc.id}", ${JSON.stringify(event)})'>Edit</button>
-  <button class="btn btn-danger btn-sm" onclick="deleteEvent('${doc.id}')">Delete</button>
-  <button class="btn btn-primary btn-sm" onclick="addMedia('${doc.id}')">Add Media</button>
+  <button class="btn btn-warning btn-sm" onclick='editEvent("${
+    doc.id
+  }", ${JSON.stringify(event)})'>Edit</button>
+  <button class="btn btn-danger btn-sm" onclick="deleteEvent('${
+    doc.id
+  }')">Delete</button>
+  <button class="btn btn-primary btn-sm" onclick="addMedia('${
+    doc.id
+  }')">Add Media</button>
 </div>
 
 
@@ -1553,7 +1585,9 @@ main .collapse.active {
     <div id="e-Details-${doc.id}" class="collapse mt-3">
 
         <p><strong>Description:</strong> ${description}</p>
-        <p><strong>Status:</strong> <span class="badge ${status ? 'bg-success' : 'bg-danger'}">${status ? "Yes" : "No"}</span></p>
+        <p><strong>Status:</strong> <span class="badge ${
+          status ? "bg-success" : "bg-danger"
+        }">${status ? "Yes" : "No"}</span></p>
         <p><strong>Tags:</strong> ${eventTags}</p>
         <p><strong>Location:</strong> ${location}</p>
         <p><strong>Collection Price:</strong> $${collectionPrice}</p>
@@ -1562,8 +1596,12 @@ main .collapse.active {
         <p><strong>Timestamp:</strong> ${timestamp}</p>
         <p><strong>Gallery Enabled:</strong> ${galleryBool}</p>
         <p><strong>Comments:</strong> ${comments}</p>
-        <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${doc.id}')">View Analytics</button>    
-  <button class="btn btn-primary btn-sm" onclick="toggleCollapse( 'e-Details-${doc.id}', this, 'Close')">Close ▲</button>
+        <button class="btn btn-secondary btn-sm" onclick="viewAnalytics('${
+          doc.id
+        }')">View Analytics</button>    
+  <button class="btn btn-primary btn-sm" onclick="toggleCollapse( 'e-Details-${
+    doc.id
+  }', this, 'Close')">Close ▲</button>
         </div>
   
 
@@ -1590,25 +1628,16 @@ main .collapse.active {
 
      
 `;
-
-
-                        eventList.appendChild(eventItem);
-                        console.log("eventDetails.id    ", eventDetailsId);
-                        viewMedia(doc.id, coverUrl);
-
-
-
-
-
-
-                    }
-                });
-            } catch (error) {
-                console.error("Error fetching events:", error);
-            }
-
-
-        }
+}
+        eventList.appendChild(eventItem);
+        console.log("eventDetails.id    ", eventDetailsId);
+        viewMedia(doc.id, coverUrl);
+     
+    });
+  } catch (error) {
+    console.error("Error fetching events:", error);
+  }
+}
 
 
 
