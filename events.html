@@ -493,9 +493,9 @@ querySnapshot.forEach(async (doc) => {
                     <div class="flex-grow-1 p-3 MediaCollection">
                         <div class="media-gallery d-flex flex-wrap gap-2">
                             ${mediaImages.map(image => `
-                            ${        console.log("need id image  ",image.data, ",  image   ",image)}                              <img 
+                            ${        console.log("need id image  ",image.id, ",  image   ",image)}                              <img 
                                     src="${image.watermarkedImageUrl}" 
-                                    alt="Media Image" data-id="${image.doc.id}"
+                                    alt="Media Image" data-id="${image.id}"
                                     class="media-thumbnail rounded lazy-image" 
                                     style="width: 70px; height: 70px; object-fit: cover; cursor: pointer;" 
                                     >
@@ -560,7 +560,12 @@ async function fetchMediaImages(eventId) {
     const mediaQuery = query(mediaRef, where('eventId', '==', eventId));
     const mediaSnapshot = await getDocs(mediaQuery);
 
-    return mediaSnapshot.docs.map(doc => doc.data());
+    return mediaSnapshot.docs.map(doc => {
+        return {
+            id: doc.id,      // Include the document ID
+            ...doc.data()    // Spread the document data
+        };
+    });
 }
 
 
