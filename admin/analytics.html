@@ -591,51 +591,6 @@ async function displayUserAnalytics() {
   }));
   
  
-  let tableHTML2 = `
-    <table>
-      <thead>
-        <tr>
-          <th>IP Address</th>
-          <th>City</th>
-          <th>Engagement Score</th>
-          <th>Related Events</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
- /*
-  
-  
-  combinedData.forEach(user => {
-    tableHTML3 += `
-      <tr>
-        <td>${user.ipAddress}</td>
-        <td>${user.city || "N/A"}</td>
-        <td>${user.engagementScore || "N/A"}</td>
-        <td>${user.relatedEventsTitles.join(", ") || "None"}</td>
-      </tr>
-    `;
-  });
-
-  tableHTML3 += `</tbody></table>`;
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML3;
-*/
-
-
-
-  userEngagementData.forEach((user) => {
-    tableHTML2 += `
-      <tr>
-        <td>${user.ipAddress}</td>
-        <td>${user.city || "N/A"}</td>
-        <td>${user.engagementScore}</td>
-       <td>${user.relatedEventsTitles.join(", ") || "None"}</td>
-
-      </tr>`;
-  });
-  
-  tableHTML2 += `</tbody></table>`;
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML2;
   
   // Display trends
   displayUserTrendAnalysis(userEngagementData);
@@ -644,9 +599,8 @@ async function displayUserAnalytics() {
   const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
   document.getElementById("insightsContainer").innerText = insights;
 
-/*  const insights2 = generateActionableInsights(combinedData, eventsData);
-document.getElementById("insightsContainer2").innerText = insights2;
-*/
+
+  
   const totalUsers = analyticsData.length;
 
   // Display the total user count
