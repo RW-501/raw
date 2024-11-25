@@ -552,7 +552,7 @@ function goToAdminContact(docId) {
 
   // Function to format the "viewedBy" data into an HTML structure
 function formatViewedBy(viewedByData = {}) {
-  return 
+  return `
     <ul>
       <li><strong>Duration of View:</strong> ${
         viewedByData.durationOfView || "N/A"
@@ -565,7 +565,7 @@ function formatViewedBy(viewedByData = {}) {
       <li><strong>View Date:</strong> ${
         viewedByData.viewDate ? formatDate(viewedByData.viewDate) : "N/A"
       }</li>
-    </ul>
+    </ul>`
   ;
 }
 
