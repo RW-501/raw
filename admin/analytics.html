@@ -556,58 +556,75 @@ function goToAdminContact(docId) {
 
 
 
-// Function to format the "viewedBy" data into an HTML structure
+
+  // Function to format the "viewedBy" data into an HTML structure
 function formatViewedBy(viewedByData = {}) {
-  return `
+  return 
     <ul>
-      <li><strong>Duration of View:</strong> ${viewedByData.durationOfView || 'N/A'} seconds</li>
-      <li><strong>Contact Views:</strong> ${viewedByData.contactViews || 'N/A'}</li>
-      <li><strong>View Method:</strong> ${viewedByData.viewMethod || 'N/A'}</li>
-      <li><strong>View Source:</strong> ${viewedByData.viewSource || 'N/A'}</li>
-      <li><strong>View Date:</strong> ${viewedByData.viewDate ? formatDate(viewedByData.viewDate) : 'N/A'}</li>
+      <li><strong>Duration of View:</strong> ${
+        viewedByData.durationOfView || "N/A"
+      } seconds</li>
+      <li><strong>Contact Views:</strong> ${
+        viewedByData.contactViews || "N/A"
+      }</li>
+      <li><strong>View Method:</strong> ${viewedByData.viewMethod || "N/A"}</li>
+      <li><strong>View Source:</strong> ${viewedByData.viewSource || "N/A"}</li>
+      <li><strong>View Date:</strong> ${
+        viewedByData.viewDate ? formatDate(viewedByData.viewDate) : "N/A"
+      }</li>
     </ul>
-  `;
+  ;
 }
+
 
 // Function to toggle visibility of detail rows
 function toggleDetailSection(rowId) {
   const detailRow = document.getElementById(`details-${rowId}`);
   if (detailRow) {
-    detailRow.style.display = detailRow.style.display === 'none' ? 'table-row' : 'none';
+    detailRow.style.display =
+      detailRow.style.display === "none" ? "table-row" : "none";
   }
 }
 
+
 // Main function to display user analytics
 async function displayUserAnalytics() {
-  let tableHTML = '';
-
   const analyticsData = await fetchUserAnalyticsData();
-  const eventsData = await fetchEventsData();
-  const combinedData = crossAnalyzeUserEventData(analyticsData, eventsData);
 
   const userEngagementData = analyticsData.map((user) => ({
     ...user,
     engagementScore: calculateUserEngagementScore(user)
   }));
-  
- 
-  
+
+  userEngagementData.forEach((user) => {
+    tableHTML += 
+      <tr>
+        <td>${user.ipAddress}</td>
+        <td>${user.city || "N/A"}</td>
+        <td>${user.engagementScore}</td>
+      </tr>;
+  });
+
+  tableHTML += "</tbody></table>";
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+
   // Display trends
   displayUserTrendAnalysis(userEngagementData);
 
   // Generate actionable insights
-  const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
+  const insights = generateActionableInsights(
+    userEngagementData,
+    await fetchEventsData()
+  );
   document.getElementById("insightsContainer").innerText = insights;
 
-
-  
   const totalUsers = analyticsData.length;
 
   // Display the total user count
-  document.getElementById('usersDisplay').innerHTML = `<h3>${totalUsers}</h3>`;
+  document.getElementById("usersDisplay").innerHTML = <h3>${totalUsers}</h3>;
 
   // Construct the table structure
-   tableHTML = `
+  let tableHTML = `
     <table>
       <thead>
         <tr>
@@ -621,25 +638,27 @@ async function displayUserAnalytics() {
           <th>User Blocked</th>
         </tr>
       </thead>
-      <tbody>
-  `;
+      <tbody>`
+  ;
 
-  analyticsData.forEach(user => {
+  analyticsData.forEach((user) => {
     // Add main row
     tableHTML += `
       <tr>
-        <td><button class="collapsible" onclick="toggleDetailSection('${user.ipAddress}')">${user.ipAddress}</button></td>
-        <td>${user.city || 'N/A'}</td>
-        <td>${user.country || 'N/A'}</td>
-        <td>${user.state || 'N/A'}</td>
-        <td>${user.lastViewDate ? formatDate(user.lastViewDate) : 'N/A'}</td>
+        <td><button class="collapsible" onclick="toggleDetailSection('${
+          user.ipAddress
+        }')">${user.ipAddress}</button></td>
+        <td>${user.city || "N/A"}</td>
+        <td>${user.country || "N/A"}</td>
+        <td>${user.state || "N/A"}</td>
+        <td>${user.lastViewDate ? formatDate(user.lastViewDate) : "N/A"}</td>
         <td>${user.totalDuration || 0}</td>
         <td>${user.userActivitiesCount || 0}</td>
-        <td>${user.userBlocked ? 'Yes' : 'No'}</td>
-      </tr>
-    `;
+        <td>${user.userBlocked ? "Yes" : "No"}</td>
+      </tr>`;
 
-    // Filter out invalid `viewedBy` data
+
+    // Filter out invalid viewedBy data
     const viewedByDetails = [
       user.contactViewedBy,
       user.eventDetailsViewedBy,
@@ -649,13 +668,13 @@ async function displayUserAnalytics() {
       user.eventsViewedBy,
       user.galleryViewedBy
     ]
-      .filter(detail => detail) // Exclude undefined, null, or empty values
-      .map(detail => formatViewedBy(detail)) // Format valid entries
+      .filter((detail) => detail) // Exclude undefined, null, or empty values
+      .map((detail) => formatViewedBy(detail)) // Format valid entries
       .join(""); // Combine them into a single string
 
     // Only include the collapsible row if there are valid details
     if (viewedByDetails) {
-      tableHTML += `
+      tableHTML += 
         <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
           <td colspan="8">
             <div class="user-details">
@@ -664,16 +683,17 @@ async function displayUserAnalytics() {
             </div>
           </td>
         </tr>
-      `;
+      ;
     }
   });
 
   // Close table
-  tableHTML += '</tbody></table>';
+  tableHTML += "</tbody></table>";
 
   // Insert the table into the container
-  document.getElementById('userAnalyticsTableContainer').innerHTML = tableHTML;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
 }
+
 
 // Fetch user analytics data from Firestore
 async function fetchUserAnalyticsData() {
