@@ -177,6 +177,17 @@
             </div>
         </section>
 
+        
+<section>
+
+
+  <div class="engagementTables" id="userAnalyticsTableContainer"></div>
+
+
+  <div class="engagementTables" id="insightsContainer"></div>
+
+
+  </section>
 
 
 <section>
@@ -269,10 +280,13 @@ tbody {
         }
 
         .media-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    max-height: 500px;
+    overflow-y: scroll;
+    display: block;
+}
 
         .media-table th,
         .media-table td {
@@ -904,80 +918,127 @@ fetchAndRender();
   displayTrendAnalysis(trendData);
 }
 
-function generateActionableInsights(analyticsData) {
-  const totalUsers = analyticsData.length;
-  const peakTimes = calculatePeakTimes(analyticsData);
-  const blockedUsers = analyticsData.filter(user => user.userBlocked).length;
-  
+function generateActionableInsights(userAnalytics, eventAnalytics) {
   const insights = [];
-  
-  if (blockedUsers / totalUsers > 0.1) {
-    insights.push("Consider reviewing the user blocking criteria, as 10% of users are blocked.");
-  }
 
-  if (peakTimes.length > 0) {
-    insights.push(`Consider scheduling promotions around peak times: ${peakTimes.join(', ')}`);
-  }
+  // Highlight top-performing events
+  const topEvents = eventAnalytics
+    .sort((a, b) => b.averageEngagementScore - a.averageEngagementScore)
+    .slice(0, 3);
+  insights.push("Top 3 Events Driving Engagement:");
+  topEvents.forEach((event, index) =>
+    insights.push(`${index + 1}. ${event.eventTitle} with Avg Engagement: ${event.averageEngagementScore}`)
+  );
 
-  // Add more recommendations based on further data analysis
+  // Identify under-engaged user segments
+  const underEngagedUsers = userAnalytics.filter((user) => calculateUserEngagementScore(user) < 10);
+  insights.push(`Number of under-engaged users: ${underEngagedUsers.length}`);
 
-  return insights;
+  return insights.join("\n");
 }
+
 
 function calculateUserEngagementScore(user) {
-  return user.totalDuration * 0.5 + user.userActivitiesCount * 0.3 + (user.userBlocked ? 0 : 10);
+  const { totalDuration = 0, userActivitiesCount = 0, lastViewDate } = user;
+
+  // Calculate recency factor
+  const now = new Date();
+  const lastView = lastViewDate ? new Date(lastViewDate.seconds * 1000) : null;
+  const recencyScore = lastView
+    ? Math.max(0, 10 - Math.floor((now - lastView) / (1000 * 60 * 60 * 24)))
+    : 0;
+
+  // Engagement formula: activities + duration weight + recency weight
+  const engagementScore = userActivitiesCount * 2 + totalDuration * 0.1 + recencyScore;
+  return Math.round(engagementScore * 100) / 100; // Round to 2 decimals
 }
-function crossAnalyzeUserEventData(userData, eventData) {
-  const eventViews = eventData.reduce((acc, event) => {
-    acc[event.id] = event.views;
-    return acc;
+
+async function crossAnalyzeUserEventData(users, events) {
+  const analysis = events.map((event) => {
+    const relevantUsers = users.filter((user) =>
+      user.eventsViewedBy?.some((view) => view.eventId === event.id)
+    );
+
+    return {
+      eventTitle: event.title,
+      views: relevantUsers.length,
+      averageEngagementScore: (
+        relevantUsers.reduce((sum, user) => sum + calculateUserEngagementScore(user), 0) /
+        relevantUsers.length
+      ).toFixed(2) || 0
+    };
+  });
+
+  return analysis;
+}
+
+        // Display trend data on the trend chart
+        async function displayUserTrendAnalysis(analyticsData) {
+  const activityTrends = analyticsData.reduce((trends, user) => {
+    const day = new Date(user.lastViewDate.seconds * 1000).toDateString();
+    trends[day] = (trends[day] || 0) + user.userActivitiesCount;
+    return trends;
   }, {});
 
-  userData.forEach(user => {
-    const interactedEvents = user.eventsViewedBy || [];
-    interactedEvents.forEach(eventId => {
-      if (eventViews[eventId]) {
-        console.log(`User ${user.ipAddress} interacted with event ${eventId}, which has ${eventViews[eventId]} views.`);
-      }
-    });
+  const trendData = Object.entries(activityTrends).map(([date, count]) => ({ date, count }));
+
+  // Use Chart.js for a simple trend line chart
+  const ctx = document.getElementById("trendChart").getContext("2d");
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: trendData.map((data) => data.date),
+      datasets: [
+        {
+          label: "User Activity Trend",
+          data: trendData.map((data) => data.count),
+          borderColor: "#4caf50",
+          fill: false
+        }
+      ]
+    }
   });
 }
 
+async function displayUserAnalytics() {
+  const analyticsData = await fetchUserAnalyticsData();
+  
+  const userEngagementData = analyticsData.map((user) => ({
+    ...user,
+    engagementScore: calculateUserEngagementScore(user)
+  }));
+  
+  // Display engagement scores
+  let tableHTML = `<table>
+    <thead>
+      <tr>
+        <th>IP Address</th>
+        <th>City</th>
+        <th>Engagement Score</th>
+      </tr>
+    </thead>
+    <tbody>`;
+  
+  userEngagementData.forEach((user) => {
+    tableHTML += `
+      <tr>
+        <td>${user.ipAddress}</td>
+        <td>${user.city || "N/A"}</td>
+        <td>${user.engagementScore}</td>
+      </tr>`;
+  });
+  
+  tableHTML += `</tbody></table>`;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+  
+  // Display trends
+  displayUserTrendAnalysis(userEngagementData);
 
-        // Display trend data on the trend chart
-        function displayTrendAnalysis(data) {
-            const ctx = document.getElementById('trendChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Page Views',
-                        data: data.pageViews,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Date'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Number of Views'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    
+  // Generate actionable insights
+  const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
+  document.getElementById("insightsContainer").innerText = insights;
+}
+
     </script>
     
 
