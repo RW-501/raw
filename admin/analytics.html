@@ -184,9 +184,11 @@
   <div class="engagementTables" id="userAnalyticsTableContainer"></div>
 
 
+  <div class="engagementTables" id="userAnalyticsTableContainer"></div>
   <div class="engagementTables" id="insightsContainer"></div>
+  <div class="engagementTables" id="insightsContainer2"></div>
 
-
+  
   </section>
 
 
@@ -435,6 +437,80 @@ tbody {
 
 
 
+
+
+        async function fetchAndRenderContacts() {
+    // Reference to the Contacts collection in Firebase
+    const contactsCollection = collection(db, "Contacts"); // Reference to the Contacts collection in Firestore
+    
+    try {
+        // Fetch documents from the Contacts collection
+        const snapshot = await getDocs(contactsCollection);
+        const contacts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Render the contacts in the UI
+        renderContacts(contacts);
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+}
+
+function renderContacts(contacts) {
+    const container = document.getElementById('contacts-container');
+    if (!container) {
+        console.error("Container not found!");
+        return; // Exit if the container element is not found
+    }
+
+    container.innerHTML = ""; // Clear the container
+
+    let unReadMsg = 0; // Counter for unread messages
+
+    contacts.forEach(contact => {
+        // Create a card for each contact
+        const card = document.createElement('div');
+        card.className = 'contact-card';
+
+        // Populate the card with contact details
+        card.innerHTML = `
+            <h3>${contact.name || "No Name Provided"}</h3>
+            <p><strong>Status:</strong> ${contact.status || "No Status"}</p>
+            <p><strong>Subject:</strong> ${contact.subject || "No Subject"}</p>
+            <p><strong>Messages:</strong> ${contact.messages || 0}</p>
+            <p><strong>Timestamp:</strong> ${contact.timestamp ? new Date(contact.timestamp).toLocaleString() : "No Timestamp"}</p>
+            <button class="view-btn" onclick="goToAdminContact('${contact.id}')">View Details</button>
+        `;
+
+        // Increment unread message count if the status is "unread"
+        if (contact.status === "unread") {
+            unReadMsg += 1;
+        }
+
+        // Append the card to the container
+        container.appendChild(card);
+    });
+
+    // Update the display for total messages and unread messages
+    const msgCountDisplay = document.getElementById('msgCountDisplay');
+    if (msgCountDisplay) {
+        msgCountDisplay.innerHTML = `
+            <h3>${contacts.length}</h3>
+            <p>Unread: ${unReadMsg}</p>
+        `;
+    } else {
+        console.error("Message count display element not found.");
+    }
+}
+
+function goToAdminContact(docId) {
+    // Redirect to the admin contact page with the docId in the query string
+    window.location.href = `/admin/contact?msg=${docId}`;
+}
+
+
 /**
  * Helper function to format date and time based on specified options
  * @param {string} dateString - The date string to format
@@ -503,7 +579,69 @@ function toggleDetailSection(rowId) {
 
 // Main function to display user analytics
 async function displayUserAnalytics() {
-  const analyticsData = await fetchUserAnalyticsData(); // Fetch the data
+
+  const analyticsData = await fetchUserAnalyticsData();
+  const eventsData = await fetchEventsData();
+  const combinedData = crossAnalyzeUserEventData(analyticsData, eventsData);
+
+  const userEngagementData = analyticsData.map((user) => ({
+    ...user,
+    engagementScore: calculateUserEngagementScore(user)
+  }));
+  
+  
+  
+  
+  let tableHTML2 = `
+    <table>
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th>City</th>
+          <th>Engagement Score</th>
+          <th>Related Events</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  combinedData.forEach(user => {
+    tableHTML += `
+      <tr>
+        <td>${user.ipAddress}</td>
+        <td>${user.city || "N/A"}</td>
+        <td>${user.engagementScore || "N/A"}</td>
+        <td>${user.relatedEventsTitles.join(", ") || "None"}</td>
+      </tr>
+    `;
+  });
+
+  tableHTML2 += `</tbody></table>`;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML2;
+
+
+  userEngagementData.forEach((user) => {
+    tableHTML += `
+      <tr>
+        <td>${user.ipAddress}</td>
+        <td>${user.city || "N/A"}</td>
+        <td>${user.engagementScore}</td>
+      </tr>`;
+  });
+  
+  tableHTML += `</tbody></table>`;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+  
+  // Display trends
+  displayUserTrendAnalysis(userEngagementData);
+
+  // Generate actionable insights
+  const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
+  document.getElementById("insightsContainer").innerText = insights;
+
+  const insights2 = generateActionableInsights(combinedData, eventsData);
+document.getElementById("insightsContainer2").innerText = insights2;
+
   const totalUsers = analyticsData.length;
 
   // Display the total user count
@@ -688,80 +826,6 @@ async function fetchEventsData() {
 
 
 
-
-
-async function fetchAndRenderContacts() {
-    // Reference to the Contacts collection in Firebase
-    const contactsCollection = collection(db, "Contacts"); // Reference to the Contacts collection in Firestore
-    
-    try {
-        // Fetch documents from the Contacts collection
-        const snapshot = await getDocs(contactsCollection);
-        const contacts = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
-
-        // Render the contacts in the UI
-        renderContacts(contacts);
-    } catch (error) {
-        console.error("Error fetching contacts:", error);
-    }
-}
-
-function renderContacts(contacts) {
-    const container = document.getElementById('contacts-container');
-    if (!container) {
-        console.error("Container not found!");
-        return; // Exit if the container element is not found
-    }
-
-    container.innerHTML = ""; // Clear the container
-
-    let unReadMsg = 0; // Counter for unread messages
-
-    contacts.forEach(contact => {
-        // Create a card for each contact
-        const card = document.createElement('div');
-        card.className = 'contact-card';
-
-        // Populate the card with contact details
-        card.innerHTML = `
-            <h3>${contact.name || "No Name Provided"}</h3>
-            <p><strong>Status:</strong> ${contact.status || "No Status"}</p>
-            <p><strong>Subject:</strong> ${contact.subject || "No Subject"}</p>
-            <p><strong>Messages:</strong> ${contact.messages || 0}</p>
-            <p><strong>Timestamp:</strong> ${contact.timestamp ? new Date(contact.timestamp).toLocaleString() : "No Timestamp"}</p>
-            <button class="view-btn" onclick="goToAdminContact('${contact.id}')">View Details</button>
-        `;
-
-        // Increment unread message count if the status is "unread"
-        if (contact.status === "unread") {
-            unReadMsg += 1;
-        }
-
-        // Append the card to the container
-        container.appendChild(card);
-    });
-
-    // Update the display for total messages and unread messages
-    const msgCountDisplay = document.getElementById('msgCountDisplay');
-    if (msgCountDisplay) {
-        msgCountDisplay.innerHTML = `
-            <h3>${contacts.length}</h3>
-            <p>Unread: ${unReadMsg}</p>
-        `;
-    } else {
-        console.error("Message count display element not found.");
-    }
-}
-
-function goToAdminContact(docId) {
-    // Redirect to the admin contact page with the docId in the query string
-    window.location.href = `/admin/contact?msg=${docId}`;
-}
-
-
 async function fetchAndRender(collectionName = "Media", renderFunction = renderMediaTable, loadingContainerId = "media-container") {
     const container = document.getElementById(loadingContainerId);
     if (!container) {
@@ -902,22 +966,8 @@ fetchAndRender();
 
         };
     
-        function displayUserTrendAnalysis(analyticsData) {
-  const trendData = analyticsData.reduce((acc, user) => {
-    const date = new Date(user.lastViewDate).toLocaleDateString(); // Aggregate by date
-    if (!acc[date]) {
-      acc[date] = { totalDuration: 0, activitiesCount: 0, blockedCount: 0 };
-    }
-    acc[date].totalDuration += user.totalDuration;
-    acc[date].activitiesCount += user.userActivitiesCount;
-    if (user.userBlocked) acc[date].blockedCount++;
-    return acc;
-  }, {});
-
-  // Display aggregated trend data as a graph
-  displayTrendAnalysis(trendData);
-}
-
+      
+        
 function generateActionableInsights(userAnalytics, eventAnalytics) {
   const insights = [];
 
@@ -1000,44 +1050,8 @@ async function crossAnalyzeUserEventData(users, events) {
   });
 }
 
-async function displayUserAnalytics() {
-  const analyticsData = await fetchUserAnalyticsData();
-  
-  const userEngagementData = analyticsData.map((user) => ({
-    ...user,
-    engagementScore: calculateUserEngagementScore(user)
-  }));
-  
-  // Display engagement scores
-  let tableHTML = `<table>
-    <thead>
-      <tr>
-        <th>IP Address</th>
-        <th>City</th>
-        <th>Engagement Score</th>
-      </tr>
-    </thead>
-    <tbody>`;
-  
-  userEngagementData.forEach((user) => {
-    tableHTML += `
-      <tr>
-        <td>${user.ipAddress}</td>
-        <td>${user.city || "N/A"}</td>
-        <td>${user.engagementScore}</td>
-      </tr>`;
-  });
-  
-  tableHTML += `</tbody></table>`;
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
-  
-  // Display trends
-  displayUserTrendAnalysis(userEngagementData);
 
-  // Generate actionable insights
-  const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
-  document.getElementById("insightsContainer").innerText = insights;
-}
+
 
     </script>
     
