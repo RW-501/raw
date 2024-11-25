@@ -579,6 +579,7 @@ function toggleDetailSection(rowId) {
 
 // Main function to display user analytics
 async function displayUserAnalytics() {
+  let tableHTML = '';
 
   const analyticsData = await fetchUserAnalyticsData();
   const eventsData = await fetchEventsData();
@@ -592,7 +593,7 @@ async function displayUserAnalytics() {
   /*
   
   
-  let tableHTML2 = `
+  let tableHTML3 = `
     <table>
       <thead>
         <tr>
@@ -616,12 +617,11 @@ async function displayUserAnalytics() {
     `;
   });
 
-  tableHTML2 += `</tbody></table>`;
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML2;
+  tableHTML3 += `</tbody></table>`;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML3;
 */
-
   userEngagementData.forEach((user) => {
-    tableHTML += `
+    tableHTML2 += `
       <tr>
         <td>${user.ipAddress}</td>
         <td>${user.city || "N/A"}</td>
@@ -629,8 +629,8 @@ async function displayUserAnalytics() {
       </tr>`;
   });
   
-  tableHTML += `</tbody></table>`;
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
+  tableHTML2 += `</tbody></table>`;
+  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML2;
   
   // Display trends
   displayUserTrendAnalysis(userEngagementData);
@@ -648,7 +648,7 @@ document.getElementById("insightsContainer2").innerText = insights2;
   document.getElementById('usersDisplay').innerHTML = `<h3>${totalUsers}</h3>`;
 
   // Construct the table structure
-  let tableHTML = `
+   tableHTML = `
     <table>
       <thead>
         <tr>
