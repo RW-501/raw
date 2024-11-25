@@ -590,10 +590,8 @@ async function displayUserAnalytics() {
     engagementScore: calculateUserEngagementScore(user)
   }));
   
-  /*
-  
-  
-  let tableHTML3 = `
+ 
+  let tableHTML2 = `
     <table>
       <thead>
         <tr>
@@ -605,9 +603,11 @@ async function displayUserAnalytics() {
       </thead>
       <tbody>
   `;
-
+ /*
+  
+  
   combinedData.forEach(user => {
-    tableHTML += `
+    tableHTML3 += `
       <tr>
         <td>${user.ipAddress}</td>
         <td>${user.city || "N/A"}</td>
@@ -620,12 +620,17 @@ async function displayUserAnalytics() {
   tableHTML3 += `</tbody></table>`;
   document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML3;
 */
+
+
+
   userEngagementData.forEach((user) => {
     tableHTML2 += `
       <tr>
         <td>${user.ipAddress}</td>
         <td>${user.city || "N/A"}</td>
         <td>${user.engagementScore}</td>
+       <td>${user.relatedEventsTitles.join(", ") || "None"}</td>
+
       </tr>`;
   });
   
