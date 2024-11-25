@@ -667,7 +667,7 @@ async function displayUserAnalytics() {
 
     // Only include the collapsible row if there are valid details
     if (viewedByDetails) {
-      tableHTML += 
+      tableHTML += `
         <tr id="details-${user.ipAddress}" class="details-row" style="display: none;">
           <td colspan="8">
             <div class="user-details">
@@ -676,7 +676,7 @@ async function displayUserAnalytics() {
             </div>
           </td>
         </tr>
-      ;
+      `;
     }
   });
 
