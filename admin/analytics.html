@@ -589,18 +589,7 @@ async function displayUserAnalytics() {
     engagementScore: calculateUserEngagementScore(user)
   }));
 
-  userEngagementData.forEach((user) => {
-    tableHTML += `
-      <tr>
-        <td>${user.ipAddress}</td>
-        <td>${user.city || "N/A"}</td>
-        <td>${user.engagementScore}</td>
-      </tr>`;
-  });
-
-  tableHTML += "</tbody></table>";
-  document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML;
-
+ 
   // Display trends
   displayUserTrendAnalysis(userEngagementData);
 
