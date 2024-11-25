@@ -589,7 +589,7 @@ async function displayUserAnalytics() {
     engagementScore: calculateUserEngagementScore(user)
   }));
   
-  
+  /*
   
   
   let tableHTML2 = `
@@ -618,7 +618,7 @@ async function displayUserAnalytics() {
 
   tableHTML2 += `</tbody></table>`;
   document.getElementById("userAnalyticsTableContainer").innerHTML = tableHTML2;
-
+*/
 
   userEngagementData.forEach((user) => {
     tableHTML += `
@@ -639,9 +639,9 @@ async function displayUserAnalytics() {
   const insights = generateActionableInsights(userEngagementData, await fetchEventsData());
   document.getElementById("insightsContainer").innerText = insights;
 
-  const insights2 = generateActionableInsights(combinedData, eventsData);
+/*  const insights2 = generateActionableInsights(combinedData, eventsData);
 document.getElementById("insightsContainer2").innerText = insights2;
-
+*/
   const totalUsers = analyticsData.length;
 
   // Display the total user count
