@@ -363,13 +363,7 @@ function createImageElement({ watermarkedImageUrl,mediaId, catagory }) {
     img.setAttribute('data-image',watermarkedImageUrl);
    // img.setAttribute('data-description', description || '');
 
-    img.addEventListener('click', () => {
-        const modalImage = document.getElementById('modal-image');
-        const modalCaption = document.getElementById('modal-caption');
-        modalImage.src = watermarkedImageUrl;
-        modalCaption.textContent = catagory || 'No description available.';
-        modalImage.setAttribute('alt', catagory || 'Gallery Modal Image'); // Accessibility enhancement
-    });
+
 
 
     col.appendChild(img);
