@@ -590,12 +590,12 @@ async function displayUserAnalytics() {
   }));
 
   userEngagementData.forEach((user) => {
-    tableHTML += 
+    tableHTML += `
       <tr>
         <td>${user.ipAddress}</td>
         <td>${user.city || "N/A"}</td>
         <td>${user.engagementScore}</td>
-      </tr>;
+      </tr>`;
   });
 
   tableHTML += "</tbody></table>";
