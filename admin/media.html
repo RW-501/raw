@@ -1968,7 +1968,7 @@ populateDropdown();
         // Edit Event Function
         function editEvent(eventId, event) {
             //    let Event = JSON.stringify(event);
-
+//eventCoverArea
             document.getElementById('eventTitle').value = event.title;
             document.getElementById('eventDescription').value = event.description;
             document.getElementById('eventDate').value = event.eventDate;
@@ -1981,6 +1981,11 @@ populateDropdown();
             document.getElementById('eventCollectionPrice').value = event.collection_price;
             document.getElementById('displayEventURL').value = `https://rawphotographysite.com/?s=${event.shortURL}`;
             document.getElementById('displayAccessCode').value = `https://rawphotographysite.com/?a=${event.accessCode}`;
+
+
+            document.getElementById('eventCoverArea').src = event.coverUrl;
+
+
 
             const eventTagsInput = document.getElementById('eventTags');
 
@@ -2707,7 +2712,7 @@ window.toggleAppearOn = toggleAppearOn;
 function configureEditEvent() {
     document.getElementById('Add_Event_Label').innerText = "Update Event";
     document.getElementById('saveEvent').style.display = "block";
-    document.getElementById('eventCoverArea').style.display = "none";
+    document.getElementById('eventCoverArea').style.display = "block";
     document.getElementById('uploadEventBTN').style.display = "none";
     document.getElementById("addMedia").style.display = "block";
 }
