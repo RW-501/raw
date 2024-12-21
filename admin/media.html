@@ -409,9 +409,11 @@ main .collapse.active {
     font-size: .7rem;
 }
 #eventCoverPreview {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background-color: #747577;
+    display: block;
+    
 }
 
 
@@ -2734,6 +2736,9 @@ function resetAddEventForm() {
     document.getElementById('Add_Event_Label').innerText = "Add New Event";
     document.getElementById('saveEvent').style.display = "none";
     document.getElementById('eventCoverArea').style.display = "block";
+    document.getElementById('eventCoverPreview').style.contentVisibility = "hidden";
+
+
     document.getElementById('uploadEventBTN').style.display = "block";
     document.getElementById("addMedia").style.display = "none";
 }
@@ -2795,6 +2800,8 @@ window.onload = loadLastTab();
                     // When the file is loaded, update the image preview
                     reader.onload = function (e) {
                         const coverPreview = document.getElementById('eventCoverPreview');
+                        document.getElementById('eventCoverPreview').style.contentVisibility = "visible";
+
                         coverPreview.src = e.target.result; // Set the preview image source to the data URL of the file
                     };
 
