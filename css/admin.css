@@ -777,12 +777,12 @@ display:block;
         transform: scale(0.95);
       }
     
-  
-    
       .card-body label {
         color: #606060;
         font-size: 14px;
+        align-items: flex-end;
       }
+    
     
       .card-body input {
         padding: 12px;
